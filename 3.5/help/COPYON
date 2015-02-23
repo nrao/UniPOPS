@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COPYON:  Turns on the ability to make hardcopies of the'
+PRINT 'graphics screen.'
+PRINT ' '

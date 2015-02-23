@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CCLICK:  (ADVERB) Set by the CLICK verb to the value that'
+PRINT 'would be returned by the CCUR function.'
+PRINT ' '

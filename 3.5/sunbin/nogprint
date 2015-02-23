@@ -1,0 +1,6 @@
+#! /bin/csh -f
+# @(#)nogprint.sh	5.1 06/22/94
+# Script for printing text to the system printer
+#
+echo "nogprint is no longer used.  Report this message to a unipops guru."
+exit(1)

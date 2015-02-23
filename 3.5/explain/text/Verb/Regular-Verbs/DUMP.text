@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+        Syntax:    DUMP (first-word, num-words)
+
+	DUMP is a programmers' debugging utility for dumping the
+	contents of the program's CORE memory.
+
+	No adverbs are used or set by DUMP.
+
+	The general user probably will have no reason to use DUMP.
+
+	EXAMPLE:
+
+	You want to find out what is in core between integer*2 words
+	3456 and 3460.  Type:
+
+		DUMP (3456,5)           Will print the contents of
+					these memory locations in
+					various formats.
+
+		
+
+	

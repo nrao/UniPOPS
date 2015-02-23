@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LOG:  (FUNCTION) Returns the natural (base e) logarithm '
+PRINT 'of the given parameter.'
+PRINT ' '

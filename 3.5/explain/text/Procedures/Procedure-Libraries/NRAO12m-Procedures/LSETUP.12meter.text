@@ -1,0 +1,118 @@
+	LSETUP.12meter is a list of BATCH commands and alises
+	that together install all of the standard NRAO 12-meter
+	spectral line analysis procedures.   The spectral line setup
+	file provided for new users at the 12-meter simply BATCHes this 
+	file.  In other words, the default LSETUP file for 12-meter users 
+	should look something like this:
+
+		BATCH LSETUP.12meter
+
+	Users are free to tailor this file as they see fit.
+
+	By typing "EDIT LSETUP.12meter" at a UniPOPS prompt, you
+	will be given a copy of this file which you can edit
+	as you wish.  This should not be attempted until you are
+	familiar with what the standard version consists of.
+
+	The following procedures are available by BATCHing LSETUP.12meter.
+	(see the individual documentation and the listing for each
+	procedure for more information):
+
+	General Procedures:		File Name:
+
+		A			a.prc
+		ADD			add.prc
+		ADDFEED			addfeed.prc
+		ALL			all.prc
+		ANNOTATE		annotate.prc
+		HEAD			head.prc
+		LDISK			ldisk.prc
+		NEWFEED			addfeed.prc
+		RESET			reset.prc (depends on ALL)
+
+	Set the preferred data stream (filter bank or hybrid spectrometer,
+	(LSETUP.12meter initially does an FBDATA):
+
+		FBDATA			fbdata.prc
+		HCDATA			hcdata.prc
+
+	Data display:
+
+		BADCH			badch.prc
+		CBOTH			cboth.prc
+		DISP12M			disp12m.prc
+		G			g.prc
+		G1			gcdisp12m.prc
+		G2			gcdisp12m.prc
+		GCDISP12M		gcdisp12m.prc
+		GDISP12M		gdisp12m.prc
+		GGET1			gdisp12m.prc
+		GGET2			gdisp12m.prc
+		S1			disp12m.prc
+		S2			disp12m.prc
+		XX			xx12m.prc
+
+	Baseline and Gauss related:
+
+		BSET			bset.prc
+		BSET1			bset1.prc
+		BSET2			bset2.prc
+		BSETS			bsets.prc
+		GSET			gset.prc
+		GSHOW			gshow.prc
+
+	Simplifies the use of TEMP:
+
+		T			t.prc
+		TONNS			tonns.prc
+	
+	Process spectral-line five-point scans:
+
+		FIVEL1			fivel1.prc
+		FIVEL2			fivel2.prc
+		FIVELINE		fiveline.prc
+
+	Averaging scans:
+
+		C1			cbavg.prc
+		C1P1			c1p1.prc
+		C1P2			c1p2.prc
+		C2			cbavg.prc
+		CB			cb.prc
+		CB1			cb1.prc
+		CB2			cb2.prc
+		CBAVG			cbavg.prc
+		CSTACK			cstack.prc
+		HALVES			halves.prc
+		PRCSTACK		prcstack.prc
+		PSTACK			pstack.prc
+	
+	Other Procedures:
+
+		FBMODE			fbmode.prc
+		FOLD			fold.prc
+		GFBMODE			gfbmode.prc
+		PSMSAVE			psmsave.prc
+
+	Aliases set by CSETUP.12meter:
+
+		Alias			Actual
+
+		LF			FIVELINE
+		LF1			FIVEL1
+		LF2			FIVEL2
+		MAKECOPY		GCOPY
+
+	Aliases set by disp12m.prc
+
+		Alias			Actual
+
+		F			S1
+
+	Aliases set by gdisp12m.prc
+
+		Alias			Actual
+
+		GF			GGET1
+		GGETS			GDISP12M
+		GS			GGET2

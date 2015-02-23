@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SYSHELP:  (PSEUDO) Asks the system for documentation about'
+PRINT 'the specified system command.  Syntax: SYSHELP sys_command'
+PRINT ' '

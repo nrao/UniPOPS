@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'PRCDIR:  (PSEUDO) Lists the files on disk which contain'
+PRINT 'procedures and which can be "BATCH"ed into the program.'
+PRINT ' '

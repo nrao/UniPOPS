@@ -1,0 +1,34 @@
+	(SCALAR ADVERB)
+
+	LST_MIN and LST_MAX specify the range in LST used by the SELECT
+	verb.  The units are hours.
+
+	Scans will be SELECTed if they have an LST within the range
+	specified by LST_MIN through LST_MAX, inclusive.
+
+	If LST_MIN is set to the DEFAULT value, there is no lower limit
+	to the range.  Similarly, if LST_MAX is set to the DEFAULT
+	value, there is no upper limit to the range.
+
+	LST_MIN and LST_MAX are used by : SELECT
+
+	No verbs change LST_MIN or LST_MAX.
+
+	Initial values of LST_MIN and LST_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans observered on or after an LST of 15.7 hours,
+	specify:
+
+		LST_MIN = 15.7; LST_MAX = DEFAULT
+
+	To select all scans observered before or at an LST of 16.2 hours,
+	specify:
+
+		LST_MIN = DEFAULT; LST_MAX = 16.2
+
+	To select all scans observered between 15.7 and 16.2 hours, inclusive,
+	specify:
+
+		LST_MIN = 15.7; LST_MAX = 16.2

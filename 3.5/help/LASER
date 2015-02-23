@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LASER:  (PSEUDO) Sends the designated text files to the'
+PRINT 'printer.  Syntax: LASER filenames'
+PRINT ' '

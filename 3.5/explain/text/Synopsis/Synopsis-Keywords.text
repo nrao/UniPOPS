@@ -1,0 +1,472 @@
+#if CKBK
+#def SCT A-3.
+#def DSH ---
+A-3 Keyword Adverbs for Arrays, Matrices and Cubes
+--------------------------------------------------
+
+#else
+#def SCT
+#def DSH
+#end
+SCT1 Keyword Adverbs -- Arrays
+DSH---------------------------
+
+Features that are only available at Green Bank or Tucson, or function
+differently at the two sites, have this indicated by (GB) or (TUC)
+respectively.
+
+ANTGAIN:  (TUC) Antenna gain.
+
+APPEFF:   (TUC) Antenna aperture efficiency.
+
+AZ:       	Azimuth (deg).
+
+BACKEND:  	Back-end type -- 8 character string.
+
+BADCHV:   (TUC) Bad channel value (K).
+
+BASEOFF:  (TUC) Baseline offset (K).
+
+BEAMEFF:  (TUC) Antenna Beam efficiency.
+
+BFWHM:    (TUC) Beam half-width at half maximum (arcsec).
+
+BMORENT:  (TUC) Beam orientation (degrees).
+
+BMTHROW:  (TUC) Beam throw (arcsec).
+
+BW:  		Bandwidth (MHz).
+
+CFFORM:   (GB)  Center frequency formula -- 24 character string.
+
+CL11TYPE: (TUC) The type of Class 11 - 8 Characters string.  Recognized
+		strings are "PROTO12M" and "ORIG    " or "      ".
+
+COORDCD:  	Coordinate system code -- 8 character string.
+
+CYCLLEN:  	Length of cycle (secs).
+
+CYCLLENF: (TUC) PROTO12M - The time in seconds to complete one fast
+		cycle.
+
+DATALEN:  	Length of data in bytes.
+
+DELTAX: 	Delta for x-axis at reference point 
+		in km/s (LINE), or deg (CONDAR).
+
+DELTAXR:  	Map delta (arcsec) or rate in x (arcsec/sec).
+
+DELTAYR:  	Map delta (arcsec) or rate in y (arcsec/sec).
+
+DESORG:  	Coordinates of center of descriptive coordinate
+	        system -- 3 angles in deg.
+
+DEWPT:    (GB)  Dew point (deg C).
+
+DRMS:  		Actual RMS noise level (same units as data).
+
+EFFINT:         Effective Integration time (sec).
+
+EL:  		Elevation (deg).
+
+EPOCDEC:  	Epoch Declination (deg).
+
+EPOCH:  	Epoch (yrs).
+
+EPOCRA:  	Epoch Right Ascension (deg).
+
+ETAFSS:   (TUC) ETAFSS efficiency.
+
+ETAL:     (TUC) ETAL efficiency.
+
+FIRSTIF:  (TUC) First IF (MHz).
+
+FOCUSH:   (TUC) East-west lateral focus (mm).
+
+FOCUSR:  	Radial focus (mm).
+
+FOCUSV:   (TUC) North-south lateral focus (mm).
+
+FOFFREF1: (TUC) The value of the frequency switching reference 1 offset
+		(MHz).
+
+FOFFREF2: (TUC) The value of the frequency switching reference 2 offset
+		(MHz).
+
+FOFFSIG:  (TUC) The value of the frequency switching signal offset
+		(MHz).
+
+FRAME:    (TUC) Map x-y reference frame code -- 8 character string.
+
+FREQRES:  	Frequency resolution in MHz (LINE), or K/count or
+		K/Volt (CONDAR).
+
+FRONTEND: (TUC) Front end type -- 8 character string.
+
+FSCAN:  	Scan number of first scan accumulated.
+
+GAINS:    (TUC) Gains scan number.
+
+GALLAT:  	Galactic Latitude (deg).
+
+GALLONG:  	Galactic Longitude (deg).
+
+HARMONIC: (TUC) Harmonic.
+
+HEADLEN:  	Length of header in bytes.
+
+HUMIDITY: (TUC) Relative humidity.
+
+ILI:  		Integrated line intensity (same units as data).
+
+INDX:  		Indicated x coordinate (deg).
+
+INDY:  		Indicated y coordinate (deg).
+
+INTTIME:  	Total integration (duration) time (sec).
+
+L1:  	  (GB)  Frequency of local oscillator no. 1 (MHz).
+
+L1F1:  	  (GB)  Offset frequency no. 1 of l.o. no. 1 (MHz).
+
+L1F2:     (GB)  Offset frequency no. 2 of l.o. no. 1 (MHz).
+
+L2:       (GB)  Frequency of local oscillator no. 2 (MHz).
+
+L2F1:     (GB)  Offset frequency no. 1 of l.o. no. 2 (MHz).
+
+L2F2:  	  (GB)  Offset frequency no. 2 of l.o. no. 2 (MHz).
+
+LA:  	  (GB)  IF frequency for receiver A (MHz).
+
+LAMP:  		Line amplitude (same units as data).
+
+LB:  	  (GB)  IF frequency for receiver B (MHz).
+
+LC:  	  (GB)  IF frequency for receiver C (MHz).
+
+LD:  	  (GB)  IF frequency for receiver D (MHz).
+
+LEVCORR:  (GB)  Level correction for 300-ft telescope (Volts).
+
+LOFACT:   (TUC) LO factor.
+
+LOIF:     (TUC) LO IF.
+
+LSCAN:  	Scan number of last scan accumulated.
+
+LST:  		Apparent Local Sidereal Time (hrs).
+
+LWID:  		Line width (same units as the data).
+
+MBEAM: 	  (TUC) Negative beam -- 2 values (arcsec).
+
+MMH2O:    (TUC) MM of water vapor.
+
+NOINT:  	Number of data points.
+
+NOPHASE:  	Number of phases per cycle.
+
+NOPHASEF: (TUC) PROTO12M - The number of fast phases per cycle.
+
+NOSWVARF: (TUC) PROTO12M - The number of fast switching variables.
+
+NOPTS:    (TUC) Number of grid points in map.
+
+NORCHAN:  	Number of receiver channels.
+
+NORECORD: (GB)  Total number of individual records available.
+	  (TUC) Total number of individual OTF spectra available.
+
+NOSTAC:  	Number of scans stacked.
+
+NOSWVAR:  	Number of switching variables.
+
+NOXPTS:   (TUC) Number of x coordinate points in map.
+
+NOYPTS:   (TUC) Number of y coordinate points in map.
+
+NUMCYC:   (TUC) PROTO12M - The number of slow cycles per scan.
+
+NUMCYCF:  (TUC) PROTO12M - The number of fast cycles per scan.
+
+OBJECT:  	Source name -- 16 character string.
+
+OBSERVER:  	Observer's name -- 16 character string.
+
+OBSFREQ:  	Observed (sky) frequency (MHz).
+
+OBSID:  	Observer's ID -- 8 character string.
+
+OBSMODE:  	Observation mode -- 8 character string.
+
+OBSTOL:   (TUC) Observing tolerance (arcsec).
+
+OFFSCAN:  	Off scan number.
+
+OPENPAR:  (TUC) Unused strings -- 10 x 8 character strings.
+
+ORIENT:  	Receiver/Secondary orientation (deg).
+
+PBEAM:    (TUC) Plus beam -- 2 values (arcsec).
+
+PHASEID:  (GB)  The phase number for this individual record.
+
+PHASTB:   (TUC) Phase table.
+
+PHASTBnn: (TUC) PROTO12M - Phase table - 32 Characters where each
+		character is the HEX representation of 4 bits of phase
+		information.  nn = 01, 02 ... (NOSWVAR + NOSWVARF).
+		The slow phases are first, then the fast phases.
+
+POLARIZ:  (TUC) Polarization -- 8 character string.
+
+PRECIS:  	Data precision -- 8 character string.
+
+PRESSURE: (GB)  Atmospheric pressure (cm-Hg).
+
+PROJID:  	Project ID -- 8 character string.
+
+PTCON:  	Pointing constants -- 4 values for TUC (arcsec), 
+ 	        3 for GB (arcmin).
+
+PTFUDGE:  (GB)  Pointing fudge for 300-ft (arcmin).
+
+PT_MODEL: (TUC) The pointing model - 8 characters.
+
+RAZOFF:   (TUC) Reference Azimuth offset (arcsec).
+
+RECORDID: (GB)  The record number for this individual record.
+	  (TUC) The number of this individual OTF spectra.
+
+REFPT:  	Data reference point number.
+
+REFRAC:   (TUC) Index of refraction.
+
+RELOFF:   (TUC) Reference Elevation offset (arcsec).
+
+RESTFREQ:  	Rest Frequency (MHz).
+
+RHO:  	  (GB)  Feed offset (rotation; in deg).
+
+RTSYS:  	System temperature on reference (K).
+
+RVSYS:  	Systemic vel. w.r.t. specified ref. frame (km/s).
+
+RX_INFO:  (TUC) Receiver information (8 characters).
+
+SAMPRAT:  	Length of sample (sec).
+
+SAMPTIMF: (TUC) Length of fast phase sample (sec).
+
+SAVENUM:  	Save bin no. from which scan has been retrieved.
+
+SCAN:  		Scan number.
+
+SCANANG:  (TUC) Map scanning angle (deg).
+
+SIDEBAND: (TUC) Sideband.
+
+SPN:  		Starting point (channel) number.
+
+SROFF:    (TUC) RA/DEC offsets -- 4 values (arcsec).
+
+STSYS:  	System temperature on source (K).
+
+SYNFREQ:  (TUC) Synthesizer frequency (MHz).
+
+TAMB:  		Ambient temperature (deg C).
+
+TAUH2O:  	H2O opacity.
+
+TAUO2:    (TUC) O2 opacity.
+
+TCAL:  		Calibration source temperature (K).
+
+TELESCOP:  	Name of telescope -- 8 character string.
+
+TH2O:     (TUC) H2O temperature (K).
+
+THETA:    (GB)  Feed offset (lateral; in deg).
+
+TO2:      (TUC) O2 temperature (K).
+
+TRMS:  		Theoretical RMS (K).
+
+TRX:  	  (TUC) Receiver Temperature (K).
+
+TSOURCE:  (TUC) Temperature of source (K).
+
+TYPECAL:  	Calibration type -- 8 character string.
+
+UT:  		Universal time (hrs).
+
+UTDATE:  	UT date -- format YYYY.MMDD
+
+UXPNT:  	User's x-axis pointing correction (arcsec).
+
+UYPNT:  	User's y-axis pointing correction (arcsec).
+
+VARDES:   (TUC) Variable descriptor.
+
+VARDESnn: (TUC) PROTO12M - A descriptor of the  switching variable (8
+		characters).  nn = 01, 02, ...  (NOSWVAR + NOSWVARF)
+		Slow phases are first, then the fast phases.
+
+VARVAL:   (TUC) Variable Value.
+
+VARVALnn: (TUC) The value of a single switch state.  Units depend on
+		VARDESnn.  nn = 01, 02, ... (NOSWVAR + NOSWVARF) Slow
+		phases are first, then the fast   phases.
+
+VELDEF:  	Velocity reference frame and Doppler convention --
+	        8 character string.
+
+VELOCTY: 	Observed velocity with respect to specified
+	        reference frame (km/s).
+
+WL:       (TUC) Size for a FOCALIZE (mm).
+
+X0:  		X-axis value at reference point in km/s (LINE), 
+		or deg (CONDAR).
+
+XCELL0:   (TUC) Map zero grid position in x coordinate.
+
+XPOINT:   (TUC) Total x-axis pointing correction (arcsec).
+
+XREF:     (TUC) Commanded reference x coordinate (deg).
+
+XSOURCE:  	Commanded source x coordinate (deg).
+
+XZERO:    (TUC) Map x coordinate at location 0  (deg).
+
+YCELL0:   (TUC) Map zero grid position in y coordinate.
+
+YPOINT:   (TUC) Total y-axis pointing correction (arcsec).
+
+YREF:     (TUC) Commanded reference y coordinate (deg).
+
+YSOURCE:  	Commanded source y coordinate (deg).
+
+YZERO:    (TUC) Map y coordinate at location 0 (deg).
+#if CKBK
+
+#else
+
+
+#end
+SCT2 Keyword Adverbs -- Matrices
+DSH-----------------------------
+
+MBUNIT:	    Units of the data in the matrix (8 characters).
+
+MCOMMENT:   A user-supplied comment for the matrix (54 characters).
+
+MDATE:	    A date associated with the matrix (8 characters).
+
+MDELT1:	    The step-size between x-axis cells in the Matrix.
+
+MDELT2:	    The step-size between y-axis cells in the Matrix.
+
+MEQUINOX:   The equinox of the coordinate system of the Matrix.
+
+MNAXIS1:    The number of x-axis cells in the Matrix.
+
+MNAXIS2:    The number of y-axis cells in the Matrix.
+
+MOBJECT:    The name associated with the image in the Matrix
+	    (16 characters).
+
+MORIGIN:    Character string describing place of origin of the data in
+	    the Matrix (8 characters).
+
+MPIX1:      The x-axis reference cell in the Matrix which has the
+	    specified reference value.
+
+MPIX2:      The y-axis reference cell in the Matrix which has the
+	    specified reference value.
+
+MRVAL1:	    The x-axis value at the x-axis reference cell in the Matrix.
+
+MRVAL2:	    The y-axis value at the y-axis reference cell in the Matrix.
+
+MTYPE1:     Character string describing the units or type of the x-axis
+	    for the Matrix (8 characters).
+
+MTYPE2:     Character string describing the units or type of the y-axis
+	    for the Matrix (8 characters).
+
+MUNDEF:     Value of undefined points in the Matrix.
+#if CKBK
+
+#else
+
+
+#end
+SCT3 Keyword Adverbs -- Cubes 
+DSH--------------------------
+
+CBUNIT:	    Units of the data in the cube (8 characters).
+
+CCOMMENT:   A user-supplied comment for the cube (54 characters).
+
+CDATE:	    A date associated with the cube (8 characters).
+
+CDELT1:	    The step-size between x-axis cells in the Cube.
+
+CDELT2:	    The step-size between y-axis cells in the Cube.
+
+CDELT3:	    The step-size between z-axis cells in the Cube.
+
+CEQUINOX:   The equinox of the coordinate system of the Cube.
+
+CNAXIS1:    The number of x-axis cells in the Cube.
+
+CNAXIS2:    The number of y-axis cells in the Cube.
+
+CNAXIS3:    The number of z-axis cells in the Cube.
+
+COBJECT:    The name associated with the image in the Cube
+	    (16 characters).
+
+CORIGIN:    Character string describing place of origin of the data in
+	    the Cube (8 characters).
+
+CPIX1:      The x-axis reference cell in the Cube which has the
+	    specified reference value.
+
+CPIX2:      The y-axis reference cell in the Cube which has the
+	    specified reference value.
+
+CPIX3:      The z-axis reference cell in the Cube which has the
+	    specified reference value.
+
+CRVAL1:	    The x-axis value at the x-axis reference cell in the Cube.
+
+CRVAL2:	    The y-axis value at the y-axis reference cell in the Cube.
+
+CRVAL3:	    The y-axis value at the z-axis reference cell in the Cube.
+
+CTMAX:	    The maximum data value in the original (unscaled) Cube.
+
+CTMIN:	    The minimum data value in the original (unscaled) Cube.
+
+CTSCALE:    Scale factor by which to multiply numbers in the FITS Cube
+	    to return them to original scale.
+
+CTYPE1:     Character string describing the units or type of the x-axis
+	    for the Cube (8 characters).
+
+CTYPE2:     Character string describing the units or type of the y-axis
+	    for the Cube (8 characters).
+
+CTYPE3:     Character string describing the units or type of the z-axis
+	    for the Cube (8 characters).
+
+CTZERO:     Value subtracted from the original numbers in the Cube
+	    before they were divided by CTSCALE.
+
+CUNDEF:     Value of undefined points in the Cube.
+#if CKBK
+
+#end

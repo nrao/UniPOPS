@@ -1,0 +1,92 @@
+	(REGULAR VERB)
+
+	There are two kinds of loop constructs in UniPOPS.  The
+	FOR-TO-END and FOR-TO-BY-END constructs are for definite loops
+	while the WHILE construct if for indefinite loops.  A definite
+	loop is one which will occur a predetermined number of times
+	while the number of times an indefinite loop will be executed
+	cannot be determined beforehand.
+
+	If included within a procedure (i.e., while in compile mode),
+	the FOR construct may extend across many lines and, along with
+	conditional statements, can be nested to what ever level is
+	necessary.  But if you want to use the construct while in
+	execute mode, the FOR constructs cannot extend beyond a single
+	command line though you can nest constructs.
+
+	The format for  multi-line and single-line FOR loop statements
+	can look like one of the following :
+
+	.	FOR index = <exp1> TO <exp2>
+	 	   statement 1
+		    statement 2
+		    ...
+		    statement n
+		    END
+
+	.	FOR index = <exp1> TO <exp2>; statements 1 -> n; END
+
+	.	FOR index = <exp1> TO <exp2> BY <exp3>
+		    statement 1
+		    statement 2
+		    ...
+		    statement n
+		    END
+
+	.	FOR index = <exp1> TO <exp2> BY <exp3>; statements 1 -> n; END
+
+	where index is the name of an existing scalar adverb or element
+	of an array adverb, <exp1> and <exp2> must be valid arithmetic
+	expressions.  <exp1> and <exp2> are the lower and upper range
+	of the loop index.  The statements 1 through n are always
+	executed once.  Note the use of semi-colons (;) to delineate
+	the various sub-statements.
+
+	If you omit the optional 'BY <exp3>', then:
+
+	   1 is added to index and, if the index is less than or equal
+	   to <exp2> then statements 1 through n are executed again.
+	   This continues until the loop index exceeds the value of
+	   <exp2>.  The loop is executed int(<exp2>-<exp1>)+1 times.
+
+	If you include the optional 'BY <exp3>', then:
+
+	    If <exp3> is greater than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is less than or equal to <exp2> then statements 1
+		through n are executed again.  This continues until the
+		loop index exceeds the value of <exp2>.
+
+	    If <exp3> is less than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is greater than or equal to <exp2> then the
+		statements 1 through n are executed again.  This
+		continues until the loop index is less than <exp2>.
+
+	    The loop is executed 1+int(<exp2>-<exp1>/<exp3>) times.
+	    The user SHOULD NOT change the value of the loop index
+	    within the loop but can use its value whenever desired.
+	    The value of the loop index after the loop has been
+	    exhausted will be <exp1>+<exp3>*{int(<exp2>-<exp1>/<exp3>)+1}.
+
+	EXAMPLES:
+
+	.  FOR construction on one line:
+
+		FOR EG_I=2 TO EG_N; PRINT SQRT(EG_N); END
+
+	.  Multi-line FOR construction nested in a PROCEDURE:
+
+		PROCEDURE EG2
+		GLOBAL SCALAR EG2_N, EG2_M, EG2_I, EG2_J, SUM
+		READ EG2_N, EG2_M
+		SUM = 0
+		FOR EG2_I=1 TO EG2_N
+		   FOR EG2_J=1 TO EG2_M
+		      SUM = SUM + EG2_J
+		      END
+		   END
+		FINISH
+

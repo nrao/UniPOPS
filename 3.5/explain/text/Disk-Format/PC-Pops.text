@@ -1,0 +1,96 @@
+#if RFRNC
+PC-Pops Format
+--------------
+
+#end
+	For PC-Pops, data is stored in two files:  a binary file
+	containing the data and an index (or table) file containing
+	information on the contents of the binary file.  The binary
+	file should be named DATA and the index file should be named
+	TABLE.  Note that the PC-Pops program can only accept up to
+	1024 scans.
+
+
+	PC-Pops: Binary File Format
+	---------------------------
+	The PC-Pops binary file is identical in structure to that in
+	the IEEE Keep format except for the binary representation.  The
+	binary of a PC differs from that used on most UNIX machines
+	(IEEE binary) only in the ordering of the bytes within a
+	word.   The byte reordering is described with the following
+	table:
+
+#if RFRNC
+		   Table 2.7.13	: PC vs. IEEE Binary
+#else
+		   	  PC vs. IEEE Binary
+#end
+       ------------------------------------------------------------
+		             IEEE			 PC
+       ------------------------------------------------------------
+	Integer*2	      1:2 			 2:1  	
+  
+	Real*4              1:2:3:4		       4:3:2:1
+
+	Real*8          1:2:3:4:5:6:7:8            8:7:6:5:4:3:2:1
+
+	Characters                   No differences
+        ---------------------------------------------------------
+
+	See the description of the IEEE Keep format for more details as
+	to the internal structure of the binary file.
+
+
+	PC-Pops: Index File Format
+	--------------------------
+	The index file is a direct-access ASCII file.  Each record in
+	the file describes one scan in the binary file and is 79 bytes
+	long.  At the end of the file, a blank record signals the end
+	of the file.  The file does not contain any carriage returns,
+	line feeds, etc.  Thus, if the binary file contains 20 scans,
+	the index file contains 79*(20+1) or 1659 bytes.
+
+	The index file is produced by the ieee2pcpops.exe utility using
+	the output of the ieeesummary.exe utility (see the appropriate
+	documentation)  The structure of each record in the file looks
+	like the following:
+
+#if RFRNC
+
+		Table 2.7.14 : PC-Pops Index File Structure
+#else
+			PC-Pops Index File Structure
+#end
+	-------------------------------------------------------------
+	Word Size   Description
+	-------------------------------------------------------------
+	character*4   record_number (I4 format)
+	character*9   scan_number (I9 format)
+	character*8   off_scan_number (I8 format)
+	character*12  source_name (A12 format)
+	character*6   observers_number (I6 format)
+	character*11  ra_1950 (I5,1X,I2,1X,I2 format)
+	character*10  dec_1950	(I4,1X,I2,1X,I2 format)
+	character*10  EST_date  (I4,'/',I2,'/',I2 format)
+	character*9   LST  (I3,':',I2,':',I2)
+	-------------------------------------------------------------
+
+	
+	An example of the entries in a index file is:
+
+1       8683      0  HARTLEY-GOOD   999   20 27 03 -09 38 45  10/16/85 22:07:53
+2       8684      0  HARTLEY-GOOD   999   20 27 01 -09 38 32  10/16/85 22:13:08
+3       8685      0  HARTLEY-GOOD   999   20 26 59 -09 38 17  10/16/85 22:18:22
+
+
+
+	The first column indicates the record in the binary file that
+	is to be described.  The second column is the number of the
+	scan in that record of the binary file.  The third is the
+	off-scan number, the fourth is source name, fifth is user's id,
+	sixth through eleventh is the 1950 right ascension and
+	declinations.  The EST date and LST occupy the remaining
+	columns.
+#if RFRNC
+
+#end

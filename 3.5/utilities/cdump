@@ -1,0 +1,14 @@
+#!  /bin/csh
+#
+#   @(#)cdump.sh	5.2 08/02/94
+#
+# Determines whether to call cdump or cdump.rmt
+#
+if (`hostname` == "fahd") then
+   ${popsdir}utilities/cdump.exe $argv
+   exit($status)
+else
+   ${popsdir}utilities/cdump.rmt.exe $argv
+   exit($status)
+endif
+#

@@ -1,0 +1,32 @@
+#! /bin/csh -f
+# @(#)ls.exe.sh	5.1 06/22/94 
+# Lists contents of a directory
+#
+if ($#argv < 1) then
+  unset noglob
+  echo -n 'Enter names of desired files (UNIX wild cards accepted): '
+  set filename = $<
+else
+  set noglob
+  set filename = ($argv)
+endif
+# Use supplied filenanme or ask for one.
+#
+ls -l $filename >! /tmp/ls.$$
+if (! -z /tmp/ls.$$) then
+    if ($?WINDOW_PARENT || $?DISPLAY) then
+     if ($?WINDOW_PARENT) then
+         exec cmdtool -WL "DIR"  -Wl "DIR" \
+	    -WI ${popsdir}sunbin/ls.icon ${popsdir}sunbin/prcdir.exe \
+	    /tmp/ls.$$ &
+     else
+	 exec xterm -j -sb -wf -sl 1000 -title "DIR" -n "DIR"  \
+		-e ${popsdir}sunbin/prcdir.exe /tmp/ls.$$ &
+     endif
+    else
+      exec prcdir.exe /tmp/ls.$$
+    endif
+endif
+
+
+

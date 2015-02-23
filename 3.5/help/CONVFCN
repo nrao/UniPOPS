@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CONVFCN:  Takes the convolution of the data in Array 0 and'
+PRINT 'Array 1 and places the results into Array 0.'
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'LOGOFF:  Turns off the command logging facility.'
+PRINT ' '

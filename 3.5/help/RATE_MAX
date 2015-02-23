@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'RATE_MAX:  (ADVERB) Highest slew rate ("/s) for SELECT.'
+PRINT ' '

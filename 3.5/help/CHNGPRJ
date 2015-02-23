@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CHNGPRJ:  (PSEUDO) Changes the project code for access to'
+PRINT 'the online data file.  Syntax: CHNGPRJ new_project'
+PRINT ' '

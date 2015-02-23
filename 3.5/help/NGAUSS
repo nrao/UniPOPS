@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'NGAUSS:  (ADVERB) Number of Gaussians to fit.'
+PRINT ' '

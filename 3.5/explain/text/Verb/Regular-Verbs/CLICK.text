@@ -1,0 +1,90 @@
+	(REGULAR VERB)
+
+	Syntax: CLICK
+
+	A single-click cursor verb.
+
+	The cursor functions MCUR, CCUR, FCUR, TCUR, XCUR, YCUR, and
+	VCUR all return a single value indicating something about the
+	location where you have clicked the mouse button.  In the past, 
+	two or more calls to two or more of these routines (and two or
+	more clicks of the mouse button, during which time the cursor 
+	might be moved) were required to get two or more values using
+	the cursor.
+
+	CLICK sets seven adverbs with a single button click that 
+	correspond to what the seven cursor functions would have returned 
+	with that click.  The seven adverbs have the form *CLICK, where *, 
+	the first letter of each adverb, is the same as the corresponding 
+	cursor function.  For example, after a CLICK, XCLICK and YCLICK 
+	would have the value that would have been returned by an XCUR 
+	followed by a YCUR.
+
+	If CLICK is unable to assign a value to one of the CLICK
+	adverbs, a value of Infinity is assigned to that adverb.  For 
+	example, MCLICK can only have a value if the plot you click on 
+	is a matrix plot and was the last plot you generated; FCLICK for 
+	a SHOW display would be assigned a value of Infinity if the scan 
+	header does not contain frequency information; XCLICK and YCLICK 
+	should always have legitimate values; etc.
+
+	All cursor verbs and functions can deal with multiple plots (of 
+	potentially different types) on the graphics screen at the same 
+	time.  This multi-plot capability has the following caveats:
+		(1) You can only retrieve information from the last
+		    64 plots on the graphics screen (there is no
+		    limit to the number of plots that you can
+		    send to the graphics screen.
+		(2) For overlapped plots, the cursor routines will
+		    return the values for the FIRST drawn plot.
+		(3) MCLICK will only be set if the cursor points to
+		    a matrix plot AND if it is the last plot
+		    that you have drawn to the screen.
+
+	No adverbs are used by CLICK.
+
+	Adverbs set by CLICK:
+
+		MCLICK		For 2-D plot, the z-value at the 
+				crosshair location, see MCUR.
+		CCLICK		For SHOW plot, the channel number,
+				for PLOT plot, the x-axis value,
+				for 2-d plot, the x-cell number,
+				at the location of the crosshair.
+				See CCUR.
+		FCLICK		For SHOW plot, the frequency relative
+				to the band center in MHz (LINE)
+				or time relative to beginning of
+				scan in sec. (CONDAR),
+				for 2-d plot, y-axis value
+				at location of crosshair.
+				See FCUR.
+		TCLICK		For SHOW and PLOT plot, y-axis value
+				for 2-d plot, y-cell number
+				at location of crosshair.
+				See TCUR.
+		XCLICK		x-pixel number (screen coordinates) at
+				the location of the crosshair.
+				See XCUR.
+		YCLICK		y-pixel number (screen coordinates) at
+				the location of the crosshair.
+				See YCUR.
+		VCLICK		For SHOW, velocity in km/s (LINE), or
+				position relative to scan start 
+				in degrees (CONDAR),
+				for 2-d plot, x-axis value
+				at the location of the crosshair.
+				See VCUR.
+
+	EXAMPLE:
+
+	You want to place a vertical string as a label on the screen
+	at a place you indicate with a single mouse click:
+
+	CLICK				<- cursor appears; move to where 
+					   you want the label to start and 
+					   click once
+	PLACE(XCLICK, YCLICK)		<- Moves the drawing pen to the 
+					   location of your 'click'
+	VCHAR("This is a label",TRUE) 	<- Plot the label to the screen
+

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'INFO:  (POINTER) Indicates current selection criteria for'
+PRINT 'SELECT.'
+PRINT ' '

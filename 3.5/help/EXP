@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EXP:  (FUNCTION) Returns the value of e raised to the'
+PRINT 'specified power.'
+PRINT ' '

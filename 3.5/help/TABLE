@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'TABLE:  Prints out the data values (and x0axis values) for '
+PRINT 'the data in Array 0.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+PRINT ' ' 

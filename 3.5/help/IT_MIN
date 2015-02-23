@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'IT_MIN:  (ADVERB) Lowest integration time (seconds) for'
+PRINT 'SELECT.'
+PRINT ' '

@@ -1,0 +1,46 @@
+      	(PSEUDO VERB)
+
+	CORE prints the amount of memory available for procedure and
+	adverb definition and the amount currently in use.  
+
+	If memory is ever exceeded, you will get the "BLEW CORE" error
+	message -- the error message appears worse than what has
+	really happened, you have mearly run out of space for new
+	procedures and adverbs.  After exceeding memory, you can regain 
+	some of your memory space by either:
+
+		compressing your memory space -- see COMPRESS;
+		scratching unneeded adverbs or procedures (and then
+		    COMPRESSing) -- SCRATCH; 
+		re-thinking the problem you are trying to
+		    tackle.
+
+	CORE can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by CORE.
+
+	EXAMPLE:
+
+	You type
+
+		CORE
+
+	and the program will produce something like the following:
+
+	        SPACE USED/AVAILABLE FOR:
+	     PROGRAMS   VARIABLES     SOURCE
+	   4889/32766  1509/32766    11/32766
+	  (   15%          5%          0%)
+
+	The first number under each type of memory is the amount of
+	memory currently used.  The second number under each topic is
+	the size of that type of memory.  The units of the first number
+	of each topic is the number of 2-byte integers.  It is 
+	difficult to estimate the size required for a procedure.
+	If you are concerned about memory space, you should batch in
+	a procedure and note its effect on core usage.
+
+	The last line shows the percentage of space used for each type
+	of memory.
+

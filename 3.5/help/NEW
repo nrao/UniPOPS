@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NEW:  (POINTER) Indicates you want to open a new file with'
+PRINT 'FOPEN'
+PRINT ' '

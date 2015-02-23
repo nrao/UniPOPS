@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RESHOW:  Plots the data for the data in Array 0 over any'
+PRINT 'existing plots.'
+PRINT ' '

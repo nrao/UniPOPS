@@ -1,0 +1,21 @@
+	(SCALAR ADVERB)
+
+	NGAUSS specifies the number of Gaussians to be fit or
+	evaluated.  The user may specify a value of  NGAUSS between 1
+	and 24.  If GAUSS is to be called next,  NGAUSS values of
+	CENTER and HWIDTH should be specified.  If GMODEL, GPARTS, or
+	RESIDUAL is to be called next,  NGAUSS values of CENTER, HWIDTH
+	and HEIGHT, should be specified.
+
+	NGAUSS is used by :  GAUSS     GDISPLAY    GMODEL     GPARTS
+			     RESIDUAL
+
+	No verbs change NGAUSS.
+
+	The initial value of NGAUSS is 1.
+
+	EXAMPLE :
+
+	To fit or model three Gaussians, specify :
+
+		NGAUSS = 3

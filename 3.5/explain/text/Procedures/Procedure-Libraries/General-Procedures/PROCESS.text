@@ -1,0 +1,39 @@
+	PROCESS is the procedure that processes the individual scans
+	for PRCSTK.  It should be modified if you would like to
+	process scans differently (or do no processing).  At the
+	UniPOPS prompt, simply type "EDIT process.prc" and you will
+	get a copy of the standard version of PROCESS in your own 
+	directory.  You can then edit this copy and batch it in and
+	PRCSTK will then use your version of PROCESS.
+
+	This documentation describes the standard version.
+
+	Syntax: PROCESS
+
+	Any personal modifications without changing PRCSTK must be
+	made to preserve the above syntax.
+
+	Processes fits and removes a 0th order baseline using
+	NFIT=0; BASELINE which works on whatever data is in Array (0).
+
+	Any baseline fitting ranges, nregion, etc, should be set
+	prior to any use of PROCESS (see the documentation for BASELINE
+	for more information).
+
+	It is always a good idea to verify that PROCESS does what you
+	expect it to do on a representative scan before using 
+	PRCSTK to PROCESS all the scans in the ASTACK array.
+
+	File name: process.prc
+
+	This procedure is included in maps.plib
+
+	Example:
+
+	You are all set to use PRCSTK.  You've modified PROCESS to
+	do what you want it do but you need to verify that it works
+	on a representative scan in the ASTACK array before you
+	PROCESS all of them:
+
+		> GET ASTACK(1)
+		> PROCESS; PAGE; SHOW

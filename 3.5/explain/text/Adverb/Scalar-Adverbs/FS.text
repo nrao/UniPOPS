@@ -1,0 +1,38 @@
+L------------------------- Spectral Line --------------------------------
+L-	(SCALAR ADVERB)
+L-
+L-	FS and FR are TUCSON ONLY ADVERBS.  They define the shift (in
+L-	MHz) between the signal and reference spectra for frequency-
+L-	switched data. FS is the frequency for the Signal data,  and
+L-	FR is the frequency for the Reference channel (both in MHz).
+L-	The user must specify the value of FS and FR before using RAP.
+L-
+L-	FS and FR are used by : RAP
+L-
+L-	No verbs change FS or FR.
+L-
+L-	The initial value of FS and FR are 0.
+L-
+L-	The 12-m Class 9 header words FOFFSIG, FOFFREF1, and FOFFREF2
+L-      for data taken after the summer of 1993 contain the the
+L-	signal and two reference frequency offsets which can be
+L-	used to set FS and FR.
+L-
+L-	EXAMPLES :  
+L-
+L-      You know that your 12-m data was taken with a 5 MHz difference
+L-	between signal and reference frequencies with the signal
+L-	frequency 2.5 MHz above center and the signal 2.5 MHz below
+L-	center so you specify:
+L-
+L-			FS = +2.5; FR = -2.5
+L-
+L-	before using RAP.
+L-
+L-	You know that the header word FOFFSIG contains FS and 
+L-	the header word FOFFREF1 contains FR for the data currently
+L-	in Array (0), to use RAP on this data you type:
+L-
+L-		FS = H0(FOFFSIG); FR = H0(FOFFREF1); RAP
+L-	
+L------------------------- Spectral Line --------------------------------

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'SUM:  Adds data in Array (0) to that in internal ACCUM'
+PRINT 'array using user-defined weight factors.'
+PRINT ' '
+PRINT 'WEIGHT=',WEIGHT
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' ' 

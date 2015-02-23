@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'PT_MODEL:  (HEADER-TUC) The pointing model - 8 characters.'
+PRINT ' '

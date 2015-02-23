@@ -1,0 +1,74 @@
+#if CKBK
+A-11 "Syntax" Special Symbols
+-----------------------------
+
+#end
+! : / & 
+? * ^ % : Command/History substitution
+
+( )     : Delimits array, verb, procedure, or function parameters
+
+,       : Separate array, function, verb, or procedure parameters.
+
+;       : Used to separate commands on a single line.
+
+@       : Used within an array-math construct to signify all the
+          elements of the array to which the @ is appended.
+
+#       : If the first character in a command line, the rest of the
+          command line is ignored and treated as a comment.
+
+\       : Allows input command to be continued on more than one line
+          -- must be last character on each line to be continued.
+
+'       : Used to delineate the start and end of strings. 
+
+"       : Used to delineate the start and end of strings.
+
+{ }     : Begins and end an array-math construct.
+
+.       : Decimal point within a number. Example: 1.245 .
+
+E or e  : Used as in Fortran and C to designate a power of ten
+          when typing in a number.  Example:  1.34e33.
+
+<tab>   : Tab key used to indent line; an ignored character.
+
+<space> : Used to separate verbs or parameters in procedure,
+	  function, or VERB call.  Sometimes equivalent to a
+	  semi-colon, and other times a comma.
+
+<CR>    : When not preceded by a backslash (\), tells UniPOPS to
+	  interpret the line just entered and, if no syntactical
+	  problems exist, to then execute the commands.
+
+<Ctrl-C>: Tells UniPOPS to abandon what it is processing and
+	  allow user to type in a new command.
+
+<Ctrl-U>: When typing in a line, <Ctrl-U> will erase the line;
+	  useful if typed line has errors that the user has caught
+	  before typing a <CR>.
+
+<Ctrl-D>: Temporarily stops text scrolling on text screen.
+
+<Ctrl-S>: Stops the scrolling of text on the text screen.
+
+<Ctrl-Q>: Starts scrolling of text on text screen after it
+	  has been stopped via a <Ctrl-S>.
+
+<Ctrl-R>: Redisplays the line that is currently being typed.
+
+<Ctrl-G>: Rings the computer's bell.  Useful in PRINT
+	  statements; for example:  PRINT '<Ctrl-G>'
+
+<Ctrl-Z>: Puts program to sleep temporarily and brings user back to
+	  system prompt to execute any UNIX command.  UNIX commands,
+	  jobs and fg, will list all sleeping jobs and wake up sleeping
+	  jobs, respectively.
+
+Other control characters and keyboard PF keys have special meaning
+depending upon the operating system and terminal type in use.  See
+system manager for advice on appropriate documentation.
+#if CKBK
+
+#end

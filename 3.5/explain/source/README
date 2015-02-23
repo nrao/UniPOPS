@@ -1,0 +1,828 @@
+@(#)README	5.1 06/22/94
+
+	User and Programmers Documentation for EXPLAIN facility
+	-------------------------------------------------------
+
+	The new explain facility has numerous improvements over the old
+system in the way of maintenance.  The following describes the programs
+you may use to implement changes to the explain library, query the
+contents of the library, etc.  Also included are notes for the
+programmer who will need to deal with the system.
+
+----------------------------------------------------------------------
+
+1.  Overview
+    --------
+
+	The explain facility is similar to a graph data structure.
+An example would be what airlines use to figure out what flights go
+from a place of origin to a destination.  
+
+	In our usage, the nodes in the graph are explain topics and you
+can create a path between any two nodes (topics) -- the paths are
+directional (i.e., just because you can get from A to B doesn't mean
+you can get from B back to A).  We have two types of paths: hard and
+soft -- basically, they differ only in how the programs use the path
+(i.e., a hard and soft path are identical except for a flag being set
+for a hard path).  You should use hard paths to indicate that one node
+is a subtopic of another.  Soft paths are for when one node is related
+to another but should not be considered subordinate.
+
+	In comparison to the old explain utility, the nodes in the new
+explain graph correspond to, in the old system, the names of the
+directories containing the explain files.  The paths in the graph
+correspond to, in the old system, the subdirectories and symbolic-links
+to other directories.  Hard paths should be thought of as
+subdirectories and soft paths as symbolic-links.
+
+ 
+----------------------------------------------------------------------
+
+2.  User programs.
+    --------------
+
+	There are currently seven programs that you may need to use.
+
+a) initexplain
+
+	Initexplain initilaizes the explain information file.  You will
+	be asked for the name of the information file.  If the file
+	already exists, its contents are overwritten with the new.
+
+b) mkexp
+
+	Mkexp is the main program you will use to enter information
+	into the explain information data base.  At the start of the
+	program you will be asked for the name of the information
+	file.  You will then be asked for a command, which must be one
+	of the following:
+
+	MV topic_name           : Move to topic 
+	CT topic_name file_name : Create topic 
+	DT topic_name           : Delete topic
+	RT old_name new_name    : Rename topic
+	RF topic new_filename   : Rename filename for topic
+	TO destination          : Create path from current topic
+	TO* destination         : Create HARD path from current topic
+	FROM origin             : Create path to current topic
+	FROM* origin            : Create HARD path to current topic
+	CP origin destination   : Create path 
+	CP* origin destination  : Create HARD path 
+	DPTO destination        : Delete path from current topic
+	DPFROM origin           : Delete path to current topic
+	DP origin destination   : Delete path 
+	LDOWN                   : List paths from current topic
+	LUP                     : List paths to current topic
+	LT                      : List all topics 
+	LA                      : List all topics and paths
+	DSP                     : Display file for current topic
+	AV                      : Available space
+	RST                     : Restart -- ignore all changes
+	SAVE                    : Save changes
+	EXIT                    : Save changes and exit
+	QUIT                    : Quit without saving changes
+	H or Help               : Prints this table
+
+        Mkexp assumes that there is an explain topic by the name of
+	'.'.  You should have no problem if it doesn't exist in the
+	library. 
+
+	Before entering any command, the program will provide you with
+	the name of the current topic and its associated file.
+
+	Here is an in-depth explanation of each of these commands:
+
+	MV topic_name  -- Moves to the given topic name in the graph
+		and makes it the current topic; topic_name must already
+		exist.  Uses Min-Match and is case insensitive.
+
+	CT topic_name filename -- Creates the specified topic whose
+		explain documentation will be found in the specified
+		file.  The topic and file names MUST be exactly as you
+		desire it -- No Min-Match; case sensitive.  Topic must
+		not already exist.  Filename can be the same as for
+		other topics (e.g., in the case two topics are to have
+		the same documentation).   Program warns, but proceeds
+		anyway, user if the file doesn't already exist.a
+
+	DT topic_name  - Deletes the specified topic and all paths
+		leading away or towards the topic.  Uses Min-Match and
+		is case insensitive.  Topic must already exist.
+		Program will ask you if you really want to delete the
+		topic before it proceeds.
+
+	RT old_name new_name -- Rename a topic from the specified old
+		name to the specified new name.  RT, for the old name,
+		uses Min-Match and is case insensitive.  However, the
+		new name must be exactly as you desire it (No
+		Min-Match; case sensitive).  The new topic must not
+		already exist but the old must exist.
+
+	RF topic new_filename -- Rename the filename for the specified
+		topic.  RF, for the topic name, uses Min-Match and is
+		case insensitive.  However, the file name must be
+		exactly as you desire it (No Min-Match; case
+		sensitive).  The topic must already exist; program
+		warns the user, but proceeds anyway, if the specified
+		file doesn't already exist.
+
+	TO destination -- Create soft path from current topic to the
+		specified destination.  The destination must already
+		exist but the path must not already exist.  Uses
+		Min-Match and is case insensitive.
+
+	TO* destination -- Create HARD path from current topic to the
+		specified destination.  The destination must already
+		exist but the path must not already exist.  Uses
+		Min-Match and is case insensitive.
+
+	FROM origin -- Create soft path to current topic from the
+		specified origin topic.  The origin must already exist
+		but the path must not already exist.  Uses Min-Match
+		and is case insensitive.
+
+	FROM* origin -- Create HARD path to current topic from the
+		specified origin topic.  The origin must already exist
+		but the path must not already exist.  Uses Min-Match
+		and is case insensitive.
+
+	CP origin destination  -- Create a soft path from the specified
+		topic of origin to a specified topic of destination.
+		Both must already exist but the path must not already
+		exist. Uses Min-Match and is case insensitive.
+
+	CP* origin destination  -- Create a HARD path from the
+		specified topic of origin to a specified topic of
+		destination.  Both must already exist but the path must
+		not already exist. Uses Min-Match and is case
+		insensitive.
+
+	DPTO destination -- Delete the path from the current topic
+		to the specified destination topic.  Topic and path
+		must already exist.   Uses Min-Match and is case
+		insensitive.  Program will ask you if you really want
+		to delete the path before it proceeds.
+
+	DPFROM origin -- Delete the path from the specified origin
+		topic to the current topic.  Topic and path must
+		already exist.   Uses Min-Match and is case
+		insensitive.  Program will ask you if you really want
+		to delete the path before it proceeds.
+
+	DP origin destination -- Delete the path from the specified
+		origin topic to the destination topic.  Topics and path
+		must already exist.   Uses Min-Match and is case
+		insensitive.  Program will ask you if you really want
+		to delete the path before it proceeds.
+
+	LDOWN -- Lists all paths pointing away from the current topic
+		with HARD paths indicated with an asterisk (*).
+
+	LUP -- Lists all paths pointing to the current topic with HARD
+		paths indicated with an asterisk (*).
+
+	LT -- Lists all topics 
+
+	LA -- Lists all topics and paths with HARD paths indicated
+		with an asterisk (*).
+
+	DSP -- Lists the contents of the associated file for the
+		current topic.  The file must already exist and be
+		readable by you.
+
+	AV -- Reports on the amount of available space in the graph
+		 structure.
+
+	RST -- Restarts the program -- ignores all changes either since
+		the start of the program or since the last SAVE or
+		RST.  Program will ask if you really want to do this.
+
+	SAVE -- Save all changes you have made to the information file
+		but does not exit the program.  Program will ask if you
+		really want to do this.
+
+	EXIT --  Saves the changes and exits the program.  Program will
+		ask if you really want to do this.
+
+	QUIT -- Quits the program without saving any changes.  Program
+		will ask if you really want to do this.
+
+	H or HELP -- Lists the above table.
+
+
+c)  explain
+
+	The explain program is what you will use to peruse the
+explain library.  The syntax for usage is:
+
+	explain info_file [topic]
+
+where info_file is the name of the information file created by initexplain
+and modified by mkexp.  The topic is an optional parameter that specifies
+the first topic the user want to look at.
+
+d)  manpages
+
+	To print out a hard copy of sections of the explain library, you
+can use manpages.  The syntax for usage is:
+
+	manpages info_file topic pp_def [pagesize]
+
+where info_file is the name of the information file created by
+initexplain and modified by mkexp.  Topic specifies the name of the
+topic which is to have its documentation printed along with all the
+topics which are adjacent neighbors from the first topic across hard
+paths.  That is, if topic A has paths leading away from it to B, C, D,
+E, and F, but only D and E are hard paths, then the documentation for
+A, D, and E will be printed and not B, C, or F.  pp_def is the 'type'
+of manual you want to print (XPLN, CKBK, RFRNC, etc. for Explain,
+cookbook, or reference)
+
+	Manpages uses standard output which it assumes is 'pagesize' in
+length.  If you do not specify a page size, a value of 60 will be assumed.
+
+e)  manonepage
+
+	To print out a hard copy of a particular topic in the explain
+library, you can use manpages.  The syntax for usage is:
+
+	manonepage info_file topic pp_def  [pagesize]
+
+where info_file is the name of the information file created by
+initexplain and modified by mkexp.  Topic specifies the name of the
+topic which is to have its documentation printed.  pp_def is the 'type'
+of manual you want to print (XPLN, CKBK, RFRNC, etc. for Explain,
+cookbook, or reference)
+
+	Manonepage uses standard output which it assumes is 'pagesize'
+in length.  If you do not specify a page size, a value of 60 will be
+assumed.
+
+f)  explainmap
+
+	To print out the links from each topic, starting with the root
+explain file, ".".  This follows the hard links and displays for each
+followed link all of the links (soft and hard).  Hard links under each
+link are indicated by an asterisk.  The file associated with each hard
+link is displayed.  Orphaned hard links (i.e. those NOT encountered by
+following the links from the root explain file) are then followed when
+all of the primary links have been followed.  The link statistics
+(number of hard and soft links that point to a given node) are
+displayed at the end.   The syntax for usage is:
+
+	explainmap info_file
+
+where info_file is the name of the information file.  The display
+format could certainly be improved (its currently not alphabetical and
+a varying indentation could be used to indicate the dependencies).
+This is most useful for getting a good overview of the nodes and links
+and for finding "lost" nodes that should be reconnected or removed.
+
+g) filecheck
+
+	The check on the validity of the filenames in the linked list.
+The syntax for usage is:
+
+	filecheck info_file
+
+where info_file is the name of the information file.  This simple program
+steps through the main linked list in the indicated info_file and
+attempts to access each indicated file.  File names that can not be
+accessed are printed, along with the corresponding node name, to 
+stdout.
+
+----------------------------------------------------------------------
+
+3.  Usage.
+    ------
+	The steps involved in setting up and using the explain library
+follow the following steps.
+
+	a. Typically, one first creates an empty explain information
+	file with initexplain.
+
+	b. Then, one adds nodes and paths to the file with mkexp.
+
+	c. Each node has a file name associated with it.  You should
+	create a file by that name and you should add the documentation
+	about the topic in the file.  This step can precede any of
+	the above steps.
+
+	d.  You can then use explain and manpages to use the 
+	library.
+
+	e.  To alter the library, you should use mkexp to alter the
+	nodes and paths in the explain graph and create/delete/rename/
+	move the files associated with the altered nodes.
+
+----------------------------------------------------------------------
+
+4.  Programmer's notes.
+    -------------------
+
+	Programmers notes consist of a 'model' of the system, limitations
+of the system, and a walk-through of the source code.
+
+a.  Model of the system.
+    --------------------
+
+	The explain graph is kept in memory as a set of two linked lists.
+The first consists of four arrays (NODES, NEXT, ADJ, and FILENAMES) and
+the second contains two arrays (DEST and LINKS), and a set of pointers
+(START, AVAILN, and AVAILE)
+
+First linked-list:
+
+	NODES(i) contains the string representing the i-th topics name.
+	NEXT(i) contains the location of the next entry in the first
+		linked-list.  A NULL value indicates the end of the
+		linked-list.
+	ADJ(i) contains the location in DEST where the first path
+		from NODES(i) goes to.  If ADJ(i) = NULL, then
+		no path leads lead away from NODES(i).
+	FILENAMES(i) contains the string representing the name of the
+		file associated with NODES(i).
+	AVAILN = scalar variable which contains the location of the
+		first available slot in the first linked-list.
+	START = scalar variable which contains the location of the
+		first used slot in both linked-lists.
+
+Second linked-list:
+
+	DEST(j) contains the location in NODES of the destination for
+		the current path.  If the path is a HARD path then
+		DEST(j) is negative.
+	NEXT(j) contains the location of the next entry in the second
+		linked-list.  A NULL value indicates the end of the
+		linked-list.
+	AVAILE = scalar variable which contains the location of the
+		first available slot in the second linked-list.
+
+	Initial values of NEXT and LINK are such that deleting node and
+paths will automatically perform garbage collection.  That is, the
+linked-lists are always compressed.  You can start at, for example the
+PTR = AVAILN location in NEXT and the value of PTR = NEXT(PTR) will
+point you at the next available location in NEXT, and so on until you
+come across a PTR = NULL.
+
+	As an example, here is what these arrays mighty look like if we
+had topics (nodes) by the names of A, B, C, D, and E; paths leading 
+from A to B, A to C, A to D, B to C, D to E, and E to C.  Also, path
+A to D is a HARD path.
+
+		NODE	NEXT	ADJ		DEST	  LINK
+		___________________		________________
+	    1             3      0		 2 or C     7
+	    2     C       9      0		 0	    5 <-  AVAILE
+	    3             8      0		 7 or B    10
+START ->    4	  A       7      3		-9 or D     0 
+AVAILN ->   5             1      0		 0          8
+	    6	  E       0     11		 2 or C     0
+	    7     B	  2	 6		 6 or E     0
+	    8            10      0		 0          9
+	    9     D       6	 1		 0	   12
+	   10             0      0		 2 or C	    4
+	   11					 2 or C	    0
+	   12					 0	    0
+
+Note that no paths lead away from C, no paths go to A.  Note that
+if you start at AVAILN in NEXT, you will go through all the empty
+locations in the first linked list.  The same applies to AVAILE
+for the second linked-list.  
+	    
+(See:  Lipshutz, S., "Theory and Problems of Data Structures" for a
+fuller description of the method used.)
+
+----------------------------------------------------------------------
+
+b.  Limitations.
+    ------------
+
+	There are certain limitations on the explain system.  These
+limitations (and the source module responsible) are:
+
+	i) Total number of nodes (topics) cannot exceed 1024 (explain.inc
+		and listnodes).
+
+	ii) Total number of paths cannot exceed 8092 (explain.inc).
+
+	iii) Number of paths from any one topic cannot exceed 1024
+		(listedges, listedges2, and manpages.f).
+
+	iv) Explain files cannot be more than about 1020 lines long
+		nor may they be wider than 80 characters (manpages.f).
+
+	v) Reserved topic names: HELP and DONE  (explain.f)
+
+	vi) Topic names must be 32 characters or less (explain.inc,
+		findminmatch, listnodes, listedges, listedges2,
+		manpages.f, explain.f)
+
+	vii) Filenames must be 128 characters or less (explain.inc,
+		mkexp.f)
+
+	viii) Information file name must be 64 characters or less
+		(manpages.f, explain.f, initexplain)
+
+	ix) All internal strings must be 64 characters or shorter
+		 (heapsort, mkexp)
+
+	x) Input strings must be 192 characters or less for mkexp and
+		initexplain.f; 64 characters for explain.f and manpages.f.
+
+	xi) An explain session cannot go through more than 32767
+		topics.
+
+	xii) IO devices 11 is used by manpages.f; 10 is used by all
+		programs (readinfo and writeinfo). 12 and 11 are used
+		by explain.
+
+	xiii) The listing of paths and topic names by mkexp, manpages,
+		and explain will be only the first 17 characters
+		of their names (writelist, manpages).
+		
+----------------------------------------------------------------------
+
+b.  Source Code.
+    ------------
+
+	The source code is managed by a Makefile.  All the source code
+is in standard F77 and resides in a library of routines (explainlib.f),
+in seven main programs (explain.f,  manpages.f, initexplain.f, manonepage.f,
+mkexp.f, explainmap.f, and filecheck.f), in two include files (explain.inc, 
+and explainmap.inc), and in an object-code library (explainlib.a; generated 
+from explainlib.f).
+
+explain.inc:  The definition of the explain array structures and the
+	definition of the common blocks which hold the structure.
+
+explainmap.inc: The stacks, arrays and the common block used in 
+	explainmap.f.
+
+initexplain.f: Main program for initexplain.  Uses explain.inc and
+	the explainlib.a library.
+
+mkexp.f:  Main program for mkexp.  Uses explain.inc and
+	the explainlib.a library.
+
+manpages.f:  Main program for mkexp.  Uses explain.inc and
+	the explainlib.a library.
+
+manonepage.f:  Main program for manonepage.  Uses explain.inc and
+	the explainlib.a library.
+
+explain.f:  Main program for explain.  Uses explain.inc and
+	the explainlib.a library.
+
+explainmap.f: Main program and subroutines for explainlib.  Uses 
+	explainmap.inc (which includes explain.inc) and the 
+	explainlib.a library.
+
+filecheck.f: Main program for filecheck.  Uses explain.inc and
+	the explainlib.a library.
+
+explainlib.f:  Contains the subroutines/functions needed by the above
+	four programs.  
+
+------------------------------
+
+      integer function available(link, avail)
+
+      Returns the number of available locations in the linked-list LINK
+      using the available pointer AVAIL.
+
+      LINK = I*4 = Linked list that is to be searched
+      AVAIL = I*4 = First location in the link to start the search
+
+------------------------------
+
+      integer*4 function findchar(info, link, start, item)
+
+      Returns the location of the first node containing ITEM or
+      returns NULL if ITEM doesn't exist.
+
+      INFO = C(*) = character array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      ITEM = C(*) = character string to look for
+ 
+------------------------------
+
+      integer*4 function findcharmx(info, link, start, item)
+ 
+      Returns the location of the first node containing ITEM or
+      returns NULL if ITEM doesn't exist.  Only compares the
+      the first few characters of INFO to ITEM.
+ 
+      INFO = C(*) = character array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      ITEM = C(*) = character string to look for
+ 
+------------------------------
+
+      integer*4 function findminmatch(info, link, start, item, iodevice)
+ 
+      Returns the location of the first node containing ITEM or
+      returns NULL if ITEM doesn't exist.  Uses Min/Match.
+ 
+      INFO = C(*) = character array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      ITEM = C(*) = character string to look for
+      IODEVICE = (I*2) Output device number
+ 
+------------------------------
+
+      integer*4 function findi4(info, link, start, item)
+ 
+      Returns the location of the first node containing ITEM or
+      return NULL if ITEM doesn't exist.
+ 
+      INFO = I*4 = array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      ITEM = I*4 = value to look for
+ 
+------------------------------
+
+      integer*4 function findedge(a, b)
+ 
+      Finds the node edge (A->B) in the graph; returns the location in the
+      DEST linked-list of the edge or NULL if edge is not found.
+ 
+      A = C*(*) = character string for staring node
+      B = C*(*) = character string for ending node
+ 
+------------------------------
+
+      logical function deletechar(info, link, start, avail, item)
+ 
+      Returns TRUE if ITEM is in the INFO linked-list and was successfully
+      deleted.
+ 
+      INFO = C(*) = character array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      AVAIL = I*4 = pointer to first available (free) location in LINK/INFO
+      ITEM = C(*) = character string to look for
+ 
+------------------------------
+
+      logical function deletei4(info, link, start, avail, item)
+ 
+      Returns TRUE if ITEM is in the INFO linked-list and was successfully
+      deleted.
+ 
+      INFO = I*4 = array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      AVAIL = I*4 = pointer to first available (free) location in LINK/INFO
+      ITEM = I*4 = value to look for
+ 
+------------------------------
+
+      subroutine writelist(info, nloc, startup, iodevice)
+ 
+      Writes out the names in the INFO array; NLOC names will be listed.
+ 
+      INFO = C(*) = character array containing items to be listed; only
+ 	the first 18 chars of INFO will be printed.
+      NLOC = maximum number of items to print out.
+      STARTUP = C*(*) = character string which is to precede output
+      IODEVICE = (I*2) = output device number
+ 
+      WARNING:  INFO is altered (sorted) by this routine
+ 
+------------------------------
+
+      subroutine readinfo(iofile)
+ 
+      Reads information from IOFILE into internal linked-list arrays.
+ 
+      IOFILE = C*(*) = Character string containing name of file
+ 
+------------------------------
+
+      subroutine writeinfo(iofile)
+ 
+      Writes information from linked-list arrays into IOFILE.
+ 
+      IOFILE = C*(*) = Character string containing name of file
+ 
+------------------------------
+
+      logical function insnodechar(new)
+ 
+      Inserts the node NEW in the graph; returns TRUE if successful.
+ 
+      NEW = C*(*) = character string for new node
+ 
+------------------------------
+
+      logical function insedge(a, b)
+ 
+      Creates the node edge (A->B) in the graph; returns TRUE if successful
+ 
+      A = C*(*) = character string for staring node
+      B = C*(*) = character string for ending node
+ 
+------------------------------
+
+      logical function delnode(old)
+ 
+      Deletes the node OLD in the graph; returns TRUE if successful
+ 
+      OLD = C*(*) = character string for old node
+ 
+------------------------------
+
+      logical function deledge(a, b)
+ 
+      Deletes the node edge (A->B) in the graph; returns TRUE if successful
+ 
+      A = C*(*) = character string for staring node
+      B = C*(*) = character string for ending node
+ 
+------------------------------
+
+      subroutine listnodes(info, link, start, startup, iodevice)
+ 
+      Lists all nodes in linked-list starting at START.  Precedes output
+      with string STARTUP.
+ 
+      INFO = C(*) = character array containing items in linked-list.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      STARTUP = C*(*) = character string which is to precede output
+      IODEVICE = (I*2) Output device number
+ 
+------------------------------
+
+      subroutine listnodes2(wanted, device)    
+
+      Lists all nodes in linked-list starting at START that point to
+      destination WANTED.  
+
+      WANTED = Desired item 
+      DEVICE = (I*2) Output device number
+ 
+------------------------------
+
+      subroutine listedges(names, info, link, start, startup, iodevice)
+ 
+      Lists all nodes in linked-list starting at START.  Precedes output
+      with string STARTUP.
+ 
+      NAMES = C(*) = character array containing items in linked-list.
+      INFO = I*4 = array containing locations in NAMES where INFO is
+ 		described.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      STARTUP = C*(*) = character string which is to precede output
+      IODEVICE = (I*2) Output device number
+ 
+------------------------------
+
+      subroutine listedges2(names, info, link, start, startup, iodevice)
+ 
+      Lists all nodes in linked-list starting at START.  Precedes output
+      with string STARTUP.  HARD edges are indicated by a '*'
+ 
+      NAMES = C(*) = character array containing items in linked-list.
+      INFO = I*4 = array containing locations in NAMES where INFO is
+ 		described.
+      LINK = I*4 = array containing links.
+      START = I*4 = starting location in LINK and INFO
+      STARTUP = C*(*) = character string which is to precede output
+      IODEVICE = (I*2) Output device number
+ 
+------------------------------
+
+      subroutine listall(iodevice)
+ 
+      Lists all nodes in linked-list starting at START.
+ 
+      IODEVICE = (I*2) Output device number
+
+------------------------------
+
+      subroutine pushchar(stack, top, maxstck, item)
+ 
+      Pushes ITEM onto the STACK; checks for overflow.
+ 
+      STACK = C*(*) = Stack array
+      TOP = I*4 = Ponter to top of stack
+      MAXSTCK = I*4 = max size of stack
+      ITEM = C*(*) = item to be placed on stack
+ 
+------------------------------
+
+      subroutine push(stack, top, maxstck, item)
+ 
+      Pushes ITEM onto the STACK; checks for overflow.
+ 
+      STACK = I*4 = Stack array
+      TOP = I*4 = Ponter to top of stack
+      MAXSTCK = I*4 = max size of stack
+      ITEM = I*4 = item to be placed on stack
+ 
+------------------------------
+
+      subroutine pop(stack, top, item)
+ 
+      Pops ITEM from the STACK; checks for underflow.
+ 
+      STACK = I*4 = Stack array
+      TOP = I*4 = Ponter to top of stack
+      ITEM = I*4 = item to be placed on stack
+ 
+------------------------------
+
+      character*64 function uppercase(lc)
+ 
+      Converts any lower case characters in string lc to upper case.
+      Maximum of 64 chars converted.
+ 
+      LC = C*(*) = input character strings.
+ 
+------------------------------
+
+      subroutine rmblnk(stringin, stringout)
+ 
+      Removes all extra blanks from stringin and places output into
+      stringout.
+ 
+      STRINGIN/STRINGOUT = C*(*) = input/output strings
+ 
+------------------------------
+
+      subroutine heapsort(a, n)
+ 
+      Sorts the A list, which has N locations.
+ 
+      A = C*(*) = Character array to be sorted
+      N = I*4 = number of cells in A
+ 
+----------------------------------------------------------
+
+      subroutine insheap(tree, n, item)
+ 
+      Adds ITEM to the heap with N elements stored in TREE.
+ 
+      TREE = C(*) = Character array which will contain the HEAP
+      N = Number of items in heap
+      ITEM = the item to add to the heap
+      
+-----------------------------------------------------------
+ 
+      subroutine delheap(tree, n, item)
+ 
+      A heap is contained in the TREE array with N elements.  Assigns to
+      ITEM the root of the tree and then reheaps the remaining elements.
+ 
+      TREE = C(*) = Character array containing HEAP
+      N = Number of items in heap
+      ITEM = Returns the root of the heap
+ 
+-----------------------------------------------------------
+
+     logical function preproc(string, topic, reset)
+
+     Takes a series of strings and preprocesses them; PREPROC will
+     be true if the STRING should be considered something dealing with
+     TOPIC.
+ 
+     string = char*(*) = input string
+     topic = char*(*) = topic to preprocess for
+     reset = logical = if TRUE, preproc will reset itself to its initial
+		conditions and will set RESET to false.
+
+     Currently, preprocess lines that look like:
+
+     #if topic1 topic2 topic3 ...
+		If TOPIC matches any of the topic1, topic2, etc., then
+		everything between the #if and #end will be accepted.
+		If TOPIC doesn't match any of the topic1, ... then
+		everything between the #if and #end will be ignored.
+		You can't embed #if or #ifnot statements inside other
+			#if or #ifnot statements
+     #ifnot topic1 topic2 topic3 ...
+		If TOPIC doesn't match any of the topic1, ... then
+		everything between the #if and #end will be accepted.
+		If TOPIC matches any of the topic1, topic2, etc., then
+		everything between the #if and #end will be ignored.
+		You can't embed #if or #ifnot statements inside other
+			#if or #ifnot statements
+     #else
+		Reverses the sense of the last #if or #ifnot
+     #end
+		Singles the end of an #if or #ifnot statement
+     #def name anything
+		Will substitute 'anything' for 'name' anywhere it appears
+		in the document.  Up to 100 #def's are supported per document;
+		'name' and 'anything' can't be more than 80 characters long each.
+     #anything else
+		Comment lines.
+
+

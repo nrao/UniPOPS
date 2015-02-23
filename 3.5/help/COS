@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COS:  (FUNCTION) Returns the cosine of the given parameter'
+print '(in radians).'
+PRINT ' '

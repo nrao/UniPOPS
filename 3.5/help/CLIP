@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CLIP:  Clips the data in Array 0 such that they will be'
+PRINT 'within the range specified by CLIPMIN and CLIPMAX.'
+PRINT ' '
+PRINT 'CLIPMIN,CLIPMAX=',CLIPMIN,CLIPMAX
+PRINT ' ' 

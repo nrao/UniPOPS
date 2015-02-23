@@ -1,0 +1,16 @@
+	(REGULAR VERB)
+
+	Syntax:	  MREAD(filename)
+
+	MREAD reads a two-dimensional FITS image file with the
+	specified name into Matrix (0).  The name of the file can be
+	supplied either as a literal constant or as a string adverb.
+
+	No adverbs are used or set by MREAD..
+
+	EXAMPLE:
+
+	You want to read into Matrix (0) the contents of the FITS
+	two-dimensional image file named 'Blah'.  Type:
+
+		MREAD('Blah')

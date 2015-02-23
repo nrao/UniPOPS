@@ -1,0 +1,26 @@
+	(REGULAR VERB)
+
+        Syntax:    PAUSE (seconds)  
+
+	PAUSE makes the program suspend operations for the specified
+	number of seconds.  Used, for example, to build in a delay in
+	loops for data displays.
+
+	No adverbs are used or set by PAUSE.
+
+	EXAMPLE:
+
+	The following procedure will display a range of scans pausing
+	five seconds between displays.
+
+		PROCEDURE DISP (DISP_X,DISP_Y)
+		SCALAR DISP_I
+		FOR DISP_I = DISP_X TO DISP_Y
+		GET DISP_I PAGE SHOW
+		PAUSE 5
+		END
+		FINISH
+
+	Now invoke the procedure DISP (10100,10110) for scans 10100
+	through 10110.
+

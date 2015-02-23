@@ -1,0 +1,28 @@
+	(SCALAR ADVERB)
+
+	ASHIFT is the number of channels by which data may be shifted
+	by SHIFT.  The amount of the shift need not be an integer
+	number of channels, in which case, SHIFT will use a cubic-spline
+	interpolation.  A value less than 0 indicates a shift left and
+	a value greater than 0 a shift right.  ASHIFT cannot exceed
+	the number of data channels in Array (0).
+
+	ASHIFT is most commonly set using FSHIFT or VSHIFT.
+
+	ASHIFT is used by :  SHIFT
+
+	ASHIFT is set by : FSHIFT 	VSHIFT
+
+	The initial value of ASHIFT is 0.
+
+	The user may set the value of ASHIFT as required.  ASHIFT may
+	also be set by using the verbs FSHIFT and VSHIFT.
+
+	EXAMPLE :
+
+	Scans 1000 and 1001 taken at two different LO settings which
+	amounted to a 17 channel shift.  To average the scans with
+	frequencies matching, type something like the following :
+
+	        GET 1000; ACCUM
+		GET 1001; ASHIFT = 17 ; SHIFT ACCUM; AVE

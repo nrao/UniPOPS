@@ -1,0 +1,58 @@
+	The cvt.tele-recs utility is used to convert data from a
+	Green Bank telescope archive tape into a special SDD
+	individual records file.
+
+	The archive tape should be mounted before using this utility.
+	Also, you should have a copy of the tape log handy.
+
+	The availability and functionality of this utility is
+	hardware (and therefore site) dependent.  If you have any
+	difficulty you should consult the local staff.
+
+	The SDD individual records file can be accessed in UniPOPS
+	using the GETIR verb.  You can make the file available for
+	use by that verb with the CHNGFILE verb.
+
+
+	To use this utility, type:
+
+		cvt.tele-recs
+
+	At the Unix prompt or from within UniPOPS by using the
+	SYSTEM command.
+
+	The utility will prompt you with questions concerning the
+	tape drive name, starting and stopping records to be read
+	from the archive tape, the output file name, the output
+	size of the SDD-records file, etc.   Its behavior is
+	similar to that of cvt.tape-disk.
+
+	cvt.tele-recs can either create a new output SDD file or
+	append to an existing individual records SDD file.
+
+	To using the output file withing UniPOPS, type:
+
+		> FILES
+
+	and a listing of your attached files will be printed.  Records
+	files are type 5 or RSCANS as listed by FILES.   To attach
+	a records file by the name of blah, type:
+
+		> CHNGFILE CHANGE RSCANS blah
+
+	You can also SUBTRACT (or disattach) a records file.  You
+	can not CREATE a records file using CHNGFILE.
+
+	A records file is a read-only file.  Only cvt.tele-recs can
+	create or append to an SDD individual records file.
+
+	The verbs TELL, SUMMARY, and SELECT can be used on the records
+	file.  For example:
+
+		> TELL RSCANS
+		> SUMMARY RSCANS
+		> SELECT RSCANS
+
+
+	See the GETIR verb for the syntax on extracting individual
+	records and averages from this file.

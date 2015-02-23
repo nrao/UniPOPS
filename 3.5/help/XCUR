@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'XCUR:  (FUNCTION) Returns the x-axis pixel number at the'
+PRINT 'location of the crosshair.'
+PRINT ' '

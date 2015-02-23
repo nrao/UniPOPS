@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CTSCALE:  (HEADER-CUBE) Scale factor by which to multiply'
+PRINT 'numbers in the FITS Cube to return them to original scale.'
+PRINT ' '

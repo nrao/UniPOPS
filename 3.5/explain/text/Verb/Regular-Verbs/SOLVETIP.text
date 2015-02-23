@@ -1,0 +1,258 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-      SOLVETIP uses the antenna temperature values measured at a
+C-      number of elevations to compute atmospheric absorption
+C-	coefficients at the zenith.  The resulting values are printed on
+C-	the text screen.  
+C-
+C-	The algorithm used differs if the scan was taken with the
+C-	140-ft or 12-meter telescopes.
+C-
+C-
+C-   .  Green Bank version
+C-	------------------
+C-
+C-	Green Bank tipping scans are made traditionally at six
+C-	elevations whose values are such that the number of atmospheres
+C-	[= 1 / sin(elevation) ] at which the atmosphere is measured
+C-	follow the pattern of:  2, 3, 4, 5, 6, 7 atmospheres.
+C-
+C-	SOLVETIP fits the following for Trcvr, the receiver
+C-	temperature, and tau, the zenith opacity :
+C-
+C-		D0(i) = Trcvr + Tatmos * { 1 - exp[-tau*X(i)] }
+C-
+C-	where X(i) is the number of atmospheres at which D0(i), the
+C-	data in Array (0), is measured and Tatmos = the ambient
+C-	temperature, as stored in the scan's header, in K.
+C-
+C-	The algorithm reports the values and one-sigma errors it finds
+C-	for tau and Trcvr and assigns the results of the fit to adverbs
+C-	TAU0 and TRCVR.
+C-
+C-	The contents of Array (0) are not altered by the Green Bank
+C-	version of SOLVETIP.
+C-
+C-	No adverbs are used by the Green Bank version of SOLVETIP.
+C-
+C-	ADVERBS SET:
+C-
+C-	    TRCVR       Results of the fit for the receiver
+C-	    		temperature.
+C-
+C-	    TAU0        Results of the fit for the zenith opacity.
+C-
+C-
+C-   .	Tucson version
+C-	--------------
+C-
+C-	Tucson tipping scans are made traditionally at twelve
+C-	elevations whose values are such that the number of atmospheres
+C-	[= 1 / sin(elevation) ] at which the atmosphere is measured
+C-	follow the pattern of:  2.6, 2.3, 2.0, 1.7, 1.4, 1.1, 1.1, 1.4,
+C-	1.7, 2.0, 2.3, and 2.6 atmospheres.
+C-
+C-	You can request one of three different fits by setting the adverb
+C-	TYPETIP to a value of 1, 2, or 3.
+C-
+C-	  TYPETIP = 1
+C-	  -----------
+C-	  SOLVETIP takes the value of the ambient temperature as stored
+C-	  in the scan's header and calculates:
+C-
+C-	     Tspill = temperature of the warm spill-over = FTSBR * ambient
+C-	        Tatmos =  temperature of the atmosphere = FTM * ambient
+C- 
+C-	  where FTSBR and FTM are adverbs whose values represent your
+C-	  best guesses to the conversion factors from ambient
+C-	  temperatures to that of the spill-over and atmosphere,
+C-	  respectively.
+C-
+C-	  The user must also supply a value for ETA, the rear-spill-over
+C-	  efficiency.
+C-
+C-	  If you know the receiver temperature, set its value to the
+C-	  adverb TRCVR.  If TRCVR is less than or equal to 0,  the fitting
+C-	  algorithm will assume that the receiver temperature is 0.9187
+C-	  times the system temperature.
+C-
+C-	  The algorithm fits to the data in Array (0) the following
+C-	  equation for the zenith opacity tau and will report its
+C-	  value, along with a one-sigma error.
+C-				       
+C-		        	   [ D0(i) - TRCVR - (1 - ETA) * Tspill ]   
+C-	  X(i) * tau =  exp { 1 -  ----------------------------------------  }
+C-		                   	     [ETA * Tatmos] 
+C-
+C-	  where X(i) is the number of atmospheres at which D0(i), the
+C-	  data in Array (0), is measured.
+C-
+C-	  The contents of Array (0) are replaced by the values of
+C-
+C-	    D0(i) = TRCVR + ETA*Tatmos*{1 - exp[-tau*X(i)]} + (1-ETA)*Tspill
+C-
+C-	  ADVERBS USED:
+C-
+C-	    ETA         Warm spill-over efficiency; default value = 0.95
+C-
+C-	    FTM         Ratio of atmospheric and ambient temperatures;
+C-	    		default value = 0.95
+C-
+C-	    FTSBR       Ratio of warm spill-over and ambient
+C-			temperatures; default value = 0.95
+C-
+C-	    TRCVR       Receiver temperature; default value = 0, which
+C-			indicates SOLVETIP is to use 0.9187 * system
+C-			temperature.
+C-
+C-	  No adverbs are set by version 1 of SOLVETIP.
+C-
+C-
+C-	  TYPETIP = 2
+C-	  -----------
+C-	  SOLVETIP, for TYPETIP = 2, assumes that the data in Array (0)
+C-	  represent
+C-	   
+C-		D0(i) = log [ Tvane - Tsys(i) ] 
+C-
+C-	  where Tvane = the temperature of the chopper vane, 
+C-	  and Tsys are the measured system temperatures at the
+C-	  above listed airmasses.
+C-
+C-	  The algorithm fits to the data in Array (0) the following
+C-	  equation for the zenith opacity tau and A0.  The value of
+C-	  tau, along with a one-sigma error, are reported.
+C-
+C-			D0(i) = A0 + X(i) * tau
+C-
+C-	  where X(i) is the number of atmospheres at which D0(i), the
+C-	  data in Array (0), is measured.  The value of A0 is never
+C-	  reported to the user.
+C-
+C-	  The contents of Array (0) are replaced by the values of
+C-
+C-	    		D0(i) = A0 + X(i) * tau
+C-
+C-	  No adverbs are used or set by version 2 of SOLVETIP.
+C-
+C-
+C-	  TYPETIP = 3
+C-	  -----------
+C-	  SOLVETIP takes the value of the ambient temperature as stored
+C-	  in the scan's header and calculates:
+C-
+C-	     temperature of the warm spill-over = FTSBR * ambient
+C-	        temperature of the atmosphere = FTM * ambient
+C- 
+C-	  where FTSBR and FTM are adverbs whose values represent your
+C-	  best guesses to the conversion factors from ambient
+C-	  temperatures to that of the spill-over and atmosphere,
+C-	  respectively.
+C-
+C-	  You must also give a guess for ETA, the warm spill-over
+C-	  efficiency.  If you want SOLVETIP to refine the value of ETA
+C-	  (e.g., because you really don't know its value), set the
+C-	  adverb ETAFREE to a value of TRUE (+1).  If you think you
+C-	  know the value for ETA, then set ETAFREE to FALSE (-1) and
+C-	  the value for ETA will be assumed to be a constant by
+C-	  SOLVETIP.
+C-
+C-	  You must also supply a value to the adverb TVANE that represents
+C-	  your best guess of the chopper-wheel temperature in C.
+C-
+C-	  SOLVETIP, for TYPETIP = 3, must have an initial guess for the
+C-	  opacity which you supply as the value to the adverb TAU0.  If
+C-	  you don't have any idea what value to give TAU0, assign TAU0
+C-	  a value of zero and SOLVETIP will find an approximation to
+C-	  TAU0 to use as an initial guess.
+C-
+C-	  If TAU0 is less than or equal to zero, then the initial value
+C-	  for tau is obtained from fitting the following equation for
+C-	  tau and A0:
+C-
+C-			log [ D0(i) ] = A0 + X(i)*tau
+C-
+C-	  where X(i) is the number of atmospheres at which D0(i), the
+C-	  data in Array (0), is measured.  The value of A0 is never
+C-	  told to the user or used by the rest of the algorithm.
+C-
+C-	  Once an initial guess to tau is available, either one you
+C-	  supplied through adverb TAU0 or by the above fit, SOLVETIP
+C-	  then performs a non-linear fit.  If ETAFREE is TRUE, then
+C-	  the following is fitted for both tau and ETA else, only
+C-	  tau is fitted for.
+C-
+C-	     D0(i) = Tchopper - ETA*Tatmos*{1 - exp[-tau*X(i)]} 
+C-
+C-		- {1 - ETA}*Tspill - {ETA * T_background * exp[-tau*X(i)]}
+C-
+C-	  where 
+C-
+C-		Tchopper = Planck( TVANE+273.16 )
+C-		T_background = Planck( 2.7 K )
+C-		Tatmos = Planck[ FTM*(ambient + 273.16) ]
+C-		Tspill = Planck[ FTSBR*(ambient + 273.16) ]
+C-		X(i) = number of atmospheres at which D0(i), the
+C-	  		data in Array (0), is measured
+C-		Planck(T) = conversion from K to effective radiation
+C-		        temperature
+C-
+C-			           h * freq / k
+C-			  =  -------------------------------
+C-			     exp [ h * freq / (k * T) ] - 1
+C-
+C-		where freq = the observing frequency as found in the
+C-		scan's header, and h and k = Planck's and Boltzman's
+C-		constant, respectively.
+C-
+C-	  The initial value for tau and the results of the non-linear
+C-	  fit (tau and ETA) are reported along with their one-sigma
+C-	  errors.
+C-
+C-	  The contents of Array (0) are replaced by the values of
+C-
+C-	    D0(i) = Tchopper - ETA*Tatmos*{1 - exp[-tau*X(i)]} - 
+C-
+C-		{1 - ETA}*Tspill - {ETA * T_background * exp[-tau*X(i)]}
+C-
+C-
+C-	  ADVERBS USED:
+C-
+C-	    ETA         Warm spill-over efficiency; default value = 0.95
+C-
+C-	    ETAFREE	Whether the non-linear fit will also try to fit
+C-			ETA.
+C-
+C-	    FTM         Ratio of atmospheric and ambient temperatures;
+C-	    		default value = 0.95
+C-
+C-	    FTSBR       Ratio of warm spill-over and ambient
+C-			temperatures; default value = 0.95
+C-
+C-	    TAU0	Initial guess for tau in the non-linear fit; default
+C-			value is 0, which means that version 3 of SOLVETIP
+C-			will find its own guess for tau.
+C-
+C-	    TVANE       Chopper vane temperature; default value = -1.
+C-
+C-
+C-	  ADVERBS SET:
+C-
+C-	    ETA         If ETAFREE = TRUE, ETA will be revised to the fitted value
+C-			found by the non-linear fit.
+C-
+C-
+C-	EXAMPLE:
+C-
+C-	If scan 1234.02 is an antenna tipping taken with the
+C-	140-ft telescope, type the following to reduce the data in 
+C-	the scan:
+C-
+C-		GET 1234.02; SOLVETIP
+C-
+C-	and the results of the fit will be displayed on your CRT.
+C-
+C------------------------- Continuum ------------------------------------
+

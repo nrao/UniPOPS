@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'DELETE:  Deletes the specified scan number from the ASTACK'
+PRINT 'array.  Syntax: DELETE scan_number'
+PRINT ' '
+PRINT 'ACOUNT=',ACOUNT
+PRINT ' ' 

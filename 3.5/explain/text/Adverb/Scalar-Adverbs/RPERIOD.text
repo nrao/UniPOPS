@@ -1,0 +1,30 @@
+	(SCALAR ADVERB)
+
+	RPERIOD contains the user's first guess as to the wavelength of
+	a sinusoidal baseline (in number of channels) that one wishes
+	to fit to the data in Array (0).  The value for this
+	wavelength is refined by RIPPLE or RSHAPE if the value of
+	RFIXPER is less than zero.  If RFIXPER is greater than zero,
+	the value of RPERIOD will not be changed by RIPPLE or RSHAPE.
+
+	The form of the sinusoid is (at channel i):
+
+	RAMPLTDE = cos((i - RPHASE)*2pi/RPERIOD)
+
+
+	RPERIOD is used by : RIPPLE, RMODEL, RSHAPE, and RSHOW.
+
+	RPERIOD may be set by : RIPPLE and RSHAPE.
+
+	The initial value of RPERIOD is 0.
+
+	The user must pick a positive value for RPERIOD before using
+	one of the above verbs.
+
+	EXAMPLE :
+
+	You want to remove a sinusoidal baseline, so you guess its
+	wavelength and specify :
+
+		RPERIOD = 23
+		RIPPLE

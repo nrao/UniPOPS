@@ -1,0 +1,29 @@
+        (PSEUDO VERB)
+
+	Syntax:    WHATIS name
+
+	WHATIS is a help facility that will tell you what is the type
+	of symbol of the name you supply.  That is, if you didn't know
+	whether HEIGHT was an adverb, verb, procedure, etc, then you
+	could type:
+
+		WHATIS HEIGHT
+
+	and UniPOPS will tell you that it is an array adverb.  WHATIS
+	will also tell you if the supplied name is NOT an available
+	symbol.
+
+	WHATIS can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by WHATIS.
+
+
+	EXAMPLE: 
+
+		 WHATIS HEADER
+
+		 WHATIS WHATIS
+
+		 WHATIS GARBAGE
+

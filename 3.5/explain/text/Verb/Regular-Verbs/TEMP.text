@@ -1,0 +1,58 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-       
+L-   .  Green Bank version
+L-	------------------
+L-
+L-	TEMP calculates a temperature spectrum using:
+L-
+L-		     ( (ON - OFF) / OFF) * TSYS
+L-
+L-	where:
+L-
+L-		ON  = Total-power on scan stored in Array (0)
+L-		OFF = Total-power off scan stored in Array (1)
+L-		TSYS = System Temperature of the  Total-power on scan
+L-
+L-	and puts the result in the Array (0).  TEMP is used to combine
+L-	the bandpasses obtained by total power observing methods into a
+L-	temperature spectrum.
+L-
+L-	For Spectral Processor data the same basic equation is used
+L-	except that reference system temperature is used instead of
+L-	the signal system temperature and channel 1 is skipped.
+L-
+L-	No adverbs are used or set by TEMP.
+L-
+L-
+L-   .  Tucson version
+L-	--------------
+L-
+L-	TEMP calculates a temperature spectrum using:
+L-
+L-		((ON - OFF) / OFF ) * GAINS 
+L-
+L-	where:
+L-
+L-		ON  = Total-power on scan stored in Array (0)
+L-		OFF = Total-power off scan stored in Array (1)
+L-		GAINS = Gains scan stored in Array (2).
+L-
+L-	and puts the result in the Array (0).  TEMP is used to combine
+L-	the bandpasses obtained by total power observing methods into a
+L-	temperature spectrum.
+L-
+L-	No adverbs are used or set by TEMP.
+L-
+L-
+L-	EXAMPLE:   (Green Bank Version)
+L-
+L-      You have a total-power on scan in Array (0) and a total-power
+L-	off scan in Array (1), specify;
+L-
+L-		TEMP
+L-
+L-	and you will get a temperature spectrum in Array (0). 
+L-
+L------------------------- Spectral Line --------------------------------

@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FLAG:  Draws vertical line on the display at a specified'
+PRINT 'lower x-axis value of all types of displays. ' 
+print 'Syntax: FLAG(x_value)'
+PRINT ' '

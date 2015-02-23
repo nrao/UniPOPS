@@ -1,0 +1,19 @@
+Class 6 :  Map Parameters                     
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Map Scanning Angle                            | SCANANG  |  R*8   | Degrees
+X Position at Map Reference Position Zero     | XZERO    |  R*8   | Degrees
+Y Position at Map Reference Position Zero     | YZERO    |  R*8   | Degrees
+Delta X or X Rate                             | DELTAXR  |  R*8   | (arcsec or
+Delta Y or Y Rate                             | DELTAYR  |  R*8   | arcsec/sec)
+Number of Grid Points                         | NOPTS    |  R*8   |
+Number of X Grid Points                       | NOXPTS   |  R*8   |
+Number of Y Grid Points                       | NOYPTS   |  R*8   |
+Starting X Grid Cell Number                   | XCELL0   |  R*8   |
+Starting Y Grid Cell Number                   | YCELL0   |  R*8   |
+XY Reference Frame Code                       | FRAME    |  C*8   |
+#if RFRNC CKBK
+
+
+#end

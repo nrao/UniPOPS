@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DRMS:  (HEADER-TUC) Actual RMS noise level (same units as'
+print 'data).'
+PRINT ' '

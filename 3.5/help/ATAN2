@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'ATAN2:  (FUNCTION) Returns the arc tangent (in radians) of'
+PRINT 'the first given parameter divided by the second.'
+PRINT 'Syntax: ATAN2(A,B) is equivalent to arctan(A/B).'
+PRINT ' '

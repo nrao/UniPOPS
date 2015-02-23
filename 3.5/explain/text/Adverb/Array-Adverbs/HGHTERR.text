@@ -1,0 +1,19 @@
+	(ARRAY ADVERB of 24 elements)
+
+	HGHTERR is an array containing the one sigma errors in the
+	fitted heights of up to 24 Gaussians.  The values of HGHTERR
+	are determined by GAUSS.  The units of HGHTERR are identical
+	to the units of the y-axis.
+
+	HGHTERR is not used by any verb.
+
+	HGHTERR is set by :  GAUSS
+
+	The initial values of HGHTERR(N) are 0.
+
+	EXAMPLE:
+
+	You have fitted a single Gaussian to your data and now want to
+	print out the fitted height and its error:
+
+		PRINT HEIGHT(1), "+/-", HGHTERR(1)

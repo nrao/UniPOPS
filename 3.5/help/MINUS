@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'MINUS:  Subtracts the data in Array 1 from that in Array 0'
+PRINT 'and places the results in Array 0.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

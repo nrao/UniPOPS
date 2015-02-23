@@ -1,0 +1,54 @@
+	(REGULAR VERB)
+
+	Syntax:	CHARSIZE(num_points)
+
+	CHARSIZE changes the character sizes used by PLOT, CONTOUR,
+	LABEL, CHAR, etc. (i.e., for any character strings drawn to the
+	graphics screen) as well as the length of tick-marks and
+	line-type features.  The units of character size are points.
+	The default size is 11 points.  You cannot specify a character
+	size larger than 44 or less than or equal to 0.  For many printers 
+        and types of graphics screen, you may not get exactly the character
+	size you desired due to limitations of those devices.
+
+	num_points does NOT need to be an integer.
+
+	To return the character size to its default value, use the pointer
+	adverb DEFAULT as the argument.
+
+	If your graphics display is a non-window display (e.g. a 
+	tektronix emulator) changing the character size will significantly
+	slow down the display.  When CHARSIZE has its default value,
+	non-window displays use their native character set.  When
+	CHARSIZE has a non-default value, each character is always
+	drawn from a list of vectors.  Since the primary use for
+	a non-window display is when you are forced to use a slow
+	data line (i.e. a phone line), you will almost certainly
+	choose to use the default character set when using a
+	non-windows graphics display.
+
+	The character size is also affected by calls to RSTPAGE and
+	SETPAGE.
+
+	No adverbs are used by CHARSIZE.
+
+	ADVERBS SET:
+
+	STATUS(7) :  Present character size (in points) as determined by
+		     the last call to CHARSIZE, RSTPAGE, or SETPAGE.
+
+		     Values represent exactly what was the parameter to
+		     the call to CHARSIZE.
+
+	EXAMPLE:
+
+	You want smaller characters on your display so specify:
+
+		CHARSIZE(8)
+
+	Now you want to get back to the default size; type:
+
+		CHARSIZE(DEFAULT)
+
+
+

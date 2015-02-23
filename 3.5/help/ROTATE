@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ROTATE:  Offers various possibilities for rotating and'
+PRINT 'flipping Matrix (0).  Syntax:  ROTATE(xchngxy, flipx, flipy)'
+PRINT ' '

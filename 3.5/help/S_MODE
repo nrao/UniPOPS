@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'S_MODE:  (STRING-4) Mode of observing for SELECT.'
+PRINT ' '

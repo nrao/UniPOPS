@@ -1,0 +1,12 @@
+	Function verbs can be used in mathematical expressions both in
+	execute and compile mode and act like the functions found in
+	Fortran and C in that they return a value.  The return value
+	can be assigned to an adverb or can be printed.  For example:
+
+		PRINT SIN(34)
+		X=2+RAND
+		XTITLE=CONCAT(YTITLE,'Hello') 
+
+	where SIN, RAND, and CONCAT are functions, X is a scalar
+	adverb, and XTITLE and YTITLE are string adverbs.
+

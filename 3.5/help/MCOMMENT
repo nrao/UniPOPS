@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MCOMMENT:  (HEADER-MATRIX) A user-supplied comment for the'
+PRINT 'matrix (54 characters).'
+PRINT ' '

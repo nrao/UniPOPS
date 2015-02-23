@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MH3:  (INTERNAL-ARRAY) Returns value of given header '
+PRINT 'parameter in Matrix(3).'
+PRINT ' '

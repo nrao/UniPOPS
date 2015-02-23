@@ -1,0 +1,26 @@
+	BEEP is a procedure that will produce an audible beep.  It is
+	useful whenever you want to get the user's attention such as
+	when an error is detected.
+
+	File name: beep.prc
+
+	No adverbs are used or set by BEEP.
+
+	EXAMPLE:
+
+	You write a PROCEDURE that accepts input from the keyboard but
+	you think that the user may be sleeping and you need to get his
+	or her attention, just include a BEEP before the READ
+	statement.
+
+
+		proc readin
+		   .
+		   .
+		   .
+		print 'Enter x coordinate:'; beep; read x_coord
+		   .
+		   .
+		finish
+
+ 

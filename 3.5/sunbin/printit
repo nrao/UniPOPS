@@ -1,0 +1,60 @@
+#!/bin/csh -f
+#
+#    @(#)printit.sh	5.1 06/22/94
+#
+#	unipops printer selection : chooses which script to use
+#  Usage: printit printer printtype filename[s]
+#     where printer is the name of a printer appearing in the printers file
+#     printtype is the printer type needed to print filename
+#     filename[s] is[are] the name[s] of the file[s] to be printed
+#     
+#   If printtype doesn't match the string found in printers for the
+#   indicated printer, the files are NOT printed and an error is issued.
+#
+if ($#argv < 3) then
+   echo "Usage: printit printer printtype filename[s]"
+   exit(1)
+endif
+set printer=$1
+set inprinttype=$2
+eval `awk -f ${popsdir}sunbin/print.awk printer=$printer ${popsdir}sunbin/printers`
+if ($?printtype == 0 && printer != "none") then
+   echo "printit: printer $printer not found\!"
+   exit(1)
+else if ($?printtype == 0 && printer == "none") then
+#		use nogprint and a default printer, whatever it is
+   set printcmd="lpr"
+   nogprint $argv[3-]
+   exit(0)
+endif
+endif
+if ("$printtype" != "$inprinttype" && "$inprinttype" != "text") then
+   echo "printit: invalid printer type, $inprinttype, for printer ${printer}\!"
+   exit(1)
+endif
+if ("$printcmd" == "") then
+   echo "printit: missing print command for printer ${printer}\!"
+   exit(1)
+endif
+switch ($inprinttype)
+   case text:
+      print.exe "$printcmd" "$textfilter" $argv[3-]
+      breaksw
+   case postscript:
+      postprint "$printcmd" $argv[3-]
+      breaksw
+   case qms:
+      qmsprint "$printcmd" $argv[3-]
+      breaksw
+   case hpgl:
+      hpprint "$printcmd" $argv[3-]
+      breaksw
+   case quic:
+      quicprint "$printcmd" $argv[3-]
+      breaksw
+   default:
+      echo "Unrecognized printer type: $printtype"
+      exit(1)
+      breaksw
+endsw
+exit(0)

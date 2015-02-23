@@ -1,0 +1,199 @@
+The 'cube.exe' utility in UniPops allows one to create a three
+dimensional FITS image file (cube) from out of a collection of
+spectral-line scans stored in one or more SDD files.  The FITS file can
+be then read into IRAF, AIPS, etc. or can be sliced and displayed
+within UniPops (See SLICE and READCUBE documentation).  It is a
+standard FITS image file and uses none of the FITS extensions.
+
+Please read this documentation carefully before using 'cube.exe.
+
+1.  To use the utility, you must first finish all single spectra
+analysis (such as baseline fitting, smoothing, etc.).  As you process
+each scan, you should store it away in an SDD file such as your 'keep'
+or 'save' file.  The file need not contain all the scans you want to
+end up putting in the FITS cube.  For example, you may want to store
+all yesterday's processed data in one file, today's in another, and
+tomorrow's in a third.
+
+2. Once a SDD file is ready, you can then run the cube-producing
+utility by typing either from within UniPops:
+
+	 SYSTEM cube.exe
+
+or, at the UNIX level:
+
+	cube.exe
+
+3. The utility will ask you for parameters describing what you want the
+cube file to look like.  For the most part, the questions the program
+asks are self-explanatory.  The questions are:
+
+	a.  Whether or not you want to list debugging output.  With
+	    this option off, the program produces a minimum of messages
+	    while, with it on, you will get lots of messages.
+	b.  Name of the SDD input file (the file created in step 1).
+	c.  Name of the FITS cube (output) file.
+
+4.  If the cube file already exist, then this step is not performed and
+step 5 begins.  If the cube file doesn't exist, then the program needs
+to generate the header part of the FITS file; it asks the user the
+following questions:
+
+	d.  A name which identifies the object or data to be
+	    stored in the cube.
+	e.  The date you want to record in the header of the FITS
+	    file.
+	f.  The name of the place, telescope, or computer you want
+	    recorded in the header as a record of the FITS file's place
+	    of origin.
+	g.  The units of the data in the SDD file (K, Jy, etc.).
+	h.  The coordinate system that the data were taken in or the
+	    system you want the FITS file to be in.
+	i.  Whether the positions of the observations were corrected
+	    for the cos(dec), cos(gal_lat), etc. affect (i.e., was
+	    COS(V) on?). (See NOTE below.)
+
+To assist you in giving answers to the next set of questions, the
+program generates a summary of certain parameters for the first
+observation in the SDD input file.  You can use the information or your
+own observing notes to generate answers to the following questions:
+
+	j.  The coordinates and velocity which is to occupy one of the
+	    corners of the FITS cube file.  For example, the lowest RA,
+	    DEC, and velocity you want to store in the cube.
+	k.  The step size (sampling interval) of the pixels in the FITS
+	    cube along the three axes.  For example, the RA and DEC
+	    separation between observations and the channel width in
+	    km/sec.
+	l.  The tolerances in positions and velocities around the
+	    center of each pixel in the FITS cube outside of which data
+	    is to be ignored.  For example, if you specify an error of
+	    10 arc-min in x and the position of an observation exceeds
+	    10 arc-min in x from the center of a pixel, then that
+	    observation will be ignored.  Specifying large tolerances
+	    ensures that all the data that could be stored in the FITS
+	    cube will be stored in the cube.
+	m.  The number of pixels in the x, y, and velocity directions.
+	    There is a maximum of 47 million pixels in a cube.  If nx,
+	    ny, and nv represent the number of pixels you enter, then
+	    nx*ny*nv cannot exceed 47 x 10^6.  Also, make sure you have
+	    enough disk space for the file; the size of the FITS cube
+	    file will be about:
+
+		      2*nx*ny*nv + 2880 bytes
+
+	n.  If you have specified COS(V) corrections, then you should
+	    next supply the center (reference) coordinate used in the
+	    correction. If you have not specified COS(V) corrections,
+	    this question is not asked.
+
+	o.  You can also add three comment lines to the FITS cube file
+	    for any further documentation you want.
+
+|-------------------------------------------------------------------
+| NOTE: If you specified that COS(V) is in effect, then the x and y
+| coordinates that you enter in questions j, k, l, and n correspond to
+| what they would have been if you were observing at the equator of the
+| observing coordinate system.
+| 
+| For example, if you observed a rectangular region in galactic
+| coordinates at a galactic latitude of 60 degrees, centered at 180.00
+| degrees in galactic longitude with 10 arc-min spacing in longitude with
+| the COS(V) correction in affect, then the delta longitude between your
+| observations would have been 10*arc-min/Cos(60) or 20 arc-min.  If you
+| went out 5 steps on each side of this position, then the lowest
+| longitude you observed would be 180.00 - 5*20 arc-min or 178.3333
+| degrees.
+| 
+| However, when you specify the lowest longitude in the cube (question
+| j), you SHOULD specify 180.00 - 5*10arc-min or 179.1666 and NOT
+| 178.3333.  Likewise, you SHOULD specify a delta longitude (question k)
+| of 10 arc-min and NOT 20.  These same considerations apply to the
+| tolerances you enter for galactic longitude (question l).  Also, the
+| reference position (question n) you SHOULD specify is 180.00 degrees.
+| Note that the COS(V) affect doesn't alter the numbers you would enter
+| for the latitude and velocity directions.
+|--------------------------------------------------------------------
+
+The program then writes out a blank data section of the FITS cube file
+and the header to the FITS cube file (using your specified
+parameters).  The program then skips to step 6 below.
+
+5.  If the FITS cube file already exists, the program will try to read
+the header to the FITS file and will check the header for errors.
+There are no guarantees if you use a cube file produced by a program
+other than the UniPops 'cube.exe' utility.
+
+6. Once the program has produced or read in the header of the FITS cube
+you will be asked for a range of scan numbers and feed numbers which
+are to be processed from the SDD file.  Specifying zeros indicates
+either all scans or all feeds.
+
+7.  The program then begins reading in every scan in the SDD file.  If
+the observed positions and velocities fall within the cube and within
+the tolerances specified in the FITS header, then the data values are
+scaled to 16 bit integers and stored in the FITS cube.   The program
+does not interpolate between data points, but finds the nearest pixel
+(if within tolerances) into which a data value will go.  If two data
+points fall within the same pixel of the FITS cube, the second data
+point will overwrite the first (you will not be given any warning that
+this has taken place.)
+
+8.  The program terminates if any problems occur along the way or when
+the end of the input SDD file is encountered.
+
+9.  To add more data to the existing FITS cube file, or to overwrite
+data already in the cube, start from step 1 above with another SDD data
+file as input to the 'cube.exe' utility.  You will not be asked the
+series of questions listed in step 4 since the header already exists in
+the FITS cube file.
+
+The following is an example of the FITS header produced and readable by
+the CUBE utility in UniPops.
+
+SIMPLE  =                    T /      Spectral line data cube....               
+BITPIX  =                   16 /      Processed via UniPops CUBE utility        
+NAXIS   =                    3 /                                                
+NAXIS1  =                  257 /                                                
+NAXIS2  =                   43 /                                                
+NAXIS3  =                   48 /                                                
+CTYPE1  = 'VELO    '           /                                                
+CRVAL1  =     -1.308829062E+05 /                                                
+CDELT1  =      1.030570068E+03 /                                                
+CRPIX1  =      1.000000000E+00 /                                                
+COMMENT E1     5.152850342E+02 / Parameter needed for CUBE.  Error in velocity  
+CTYPE2  = 'GLAT-GLS'           /                                                
+CRVAL2  =     -6.000000000E+00 /                                                
+CDELT2  =      1.666666567E-01 /                                                
+CRPIX2  =      1.000000000E+00 /                                                
+COMMENT E2     8.333332837E-02 / Parameter needed for CUBE.  Error in H position
+CTYPE3  = 'GLON-GLS'           /                                                
+CRVAL3  =      2.120700073E+02 /                                                
+CDELT3  =      1.666666567E-01 /                                                
+CRPIX3  =      1.000000000E+00 /                                                
+COMMENT E3     8.333332837E-02 / Parameter needed for CUBE.  Error in V position
+COMMENT A '        '           / Better description of coordinate system        
+OBJECT  = 'MADCLOUD'           /                                                
+ORIGIN  = 'NRAO-GB '           /                                                
+DATE    = '10/ 9/89'           /                                                
+BLANK   =               -32768 /                                                
+BSCALE  =      1.525925472E-03 /                                                
+BZERO   =      4.500000000E+01 /                                                
+BUNIT   = 'K       '           /                                                
+DATAMIN =     -5.000000000E+00 /                                                
+DATAMAX =      9.500000000E+01 /                                                
+COMMENT 1 HI in the direction of Maddalena's Cloud                              
+COMMENT 2 August and October, 1989                                              
+COMMENT 3                                                                       
+COMMENT 4                                                                       
+END                                                                             
+
+The following references were consulted in generating the CUBE utility
+
+Wells, D. C., Greisen, E. W., and Harten, R. H., "FITS: A Flexible
+	Image Transport System," Astron. Astrophys. Suppl. Ser. 44,
+	(1981) 363.
+Greisen, E. W., "Non-Linear Coordinate Systems in AIPS," AIPS Memo No.
+	27, (1983).
+Greisen, E. W., "Additional Non-Linear Coordinates," AIPS Memo No. 46,
+	(1983).

@@ -1,0 +1,23 @@
+	(PSEUDO VERB)
+
+	Syntax:    TYPE filenames
+		   TYPE
+
+	TYPE lists the contents of text files on disk.
+
+	TYPE will prompt for the names of the files to be listed or they
+	can be included as an argument to TYPE.
+
+	TYPE can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by TYPE.
+
+	EXAMPLE:
+
+	You want to see a procedure that is contained in the external
+	file named xx.prc, so specify:
+
+		TYPE xx.prc
+
+	and the contents of the file will be listed.

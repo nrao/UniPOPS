@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'FNAME:  (FUNCTION) Returns a string containing the file'
+PRINT 'name corresponding to the file number given as the'
+PRINT 'argument.'
+print 'Syntax: print FNAME(fnumber)'
+print ' '

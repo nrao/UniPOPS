@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	MDBASE performs a non-linear baseline removal on the contents
+	of Array (0) in which the value at each position is reduced by
+	the median intensity over the set of MDBOX points centered on
+	that position.  The result is a high pass filter since the
+	median value depends weekly on the prescence of infrequent
+	spikes in the data.  Array (0) is overwritten with the
+	results.
+
+	ADVERBS USED:
+
+	  MDBOX         The total number of points whose intensities
+			are sorted to find a median value.  MDBOX must
+			be odd and should be larger than the width of
+			any feature you are interested in.  Initial
+			value is 11.
+
+	No adverbs are set by MDBASE.
+
+	EXAMPLE:
+
+	Suppose that you have a scan with two narrow emission features
+	which are each 5 channels wide and an extended (~30 channel
+	wide) feature.  If you were interested in only the narrow
+	features, you could type the following:
+
+		MDBOX = 20; MDBASE
+

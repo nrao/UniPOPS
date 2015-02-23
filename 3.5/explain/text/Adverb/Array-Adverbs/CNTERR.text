@@ -1,0 +1,19 @@
+	(ARRAY ADVERB of 24 elements)
+
+	CNTERR is an array containing the one sigma errors in the
+	fitted centers of up to 24 Gaussians.  The values of CNTERR
+	are determined by GAUSS.  The units of CNTERR are channel
+	numbers.
+
+	CNTERR is not used by any verb.
+
+	CNTERR is set by :  GAUSS
+
+	The initial values of CNTERR(N) are 0.
+
+	EXAMPLE:
+
+	You have fitted a single Gaussian to your data and now want to
+	print out the fitted center and its error:
+
+		PRINT CENTER(1), "+/-", CNTERR(1)

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CTYPE1:  (HEADER-CUBE) Character string describing the'
+PRINT 'units or type of the x-axis for the Cube (8 characters).'
+PRINT ' '

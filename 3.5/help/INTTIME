@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'INTTIME:  (HEADER) Total integration (duration) time (sec).'
+PRINT ' '

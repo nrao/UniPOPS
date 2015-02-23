@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MH0:  (INTERNAL-ARRAY) Returns/sets value of given header '
+PRINT 'parameter in Matrix(0).'
+PRINT ' '

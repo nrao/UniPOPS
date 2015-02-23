@@ -1,0 +1,31 @@
+	(ARRAY ADVERB of 2 elements)
+
+L------------------------- Spectral Line --------------------------------
+L-	SIZE  is the two-element array into which  MOMENT puts its
+L-	results for the integrated intensity (0th moment)  and the
+L-	temperature-weighted centroid  (1st moment).
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	SIZE  is the two-element array into which  MOMENT puts its
+C-	results for the integrated intensity (0th moment)  and the
+C-	temperature-weighted centroid  (1st moment).  
+C------------------------- Continuum ------------------------------------
+
+	The units of SIZE(1) will be those of the y-axis times those of
+	the LOWER x-axis.  The units of SIZE(2) will be those of the
+	lower x-axis.  You can specify the lower x-axis with the
+	CC, CF, CV, VC, VV, VF, FV, FF, FC, and SAXIS verbs.
+
+        SIZE  is not used by any verb.
+
+	SIZE is set by : MOMENT
+
+	The initial values of SIZE(N) are 0. 
+
+	EXAMPLE : 
+
+	You have just used MOMENT and wish to see the result.
+	Specify:
+
+		PRINT SIZE

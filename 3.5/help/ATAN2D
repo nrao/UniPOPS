@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'ATAN2D:  (PROC-LIBRARY) Returns the arc tangent (in'
+PRINT 'degrees) of the first given parameter divided by the'
+PRINT 'second.  Syntax: ATAN2D(A,B) is equivalent to arctan(A/B).'
+PRINT ' '

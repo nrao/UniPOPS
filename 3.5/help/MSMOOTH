@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MSMOOTH:  Provides two-dimensional smoothing of the data in'
+PRINT 'Matrix (0).  Syntax:  MSMOOTH(fctr, type)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

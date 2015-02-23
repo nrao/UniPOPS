@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'BASELINE: Removes polynomial baseline from Array 0 and '
+PRINT 'stores the results back into 0.'
+PRINT ' '
+PRINT 'BDROP, EDROP, NFIT=',bdrop,edrop,nfit
+PRINT 'BBASE, EBASE=',bbase,ebase
+PRINT 'BPARM='; print bparm
+PRINT 'NREGION='; print nregion
+PRINT ' '

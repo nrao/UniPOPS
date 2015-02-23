@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RSTPAGE:  Resets the plotting region of the graphics screen'
+PRINT 'to their default values.'
+PRINT ' '

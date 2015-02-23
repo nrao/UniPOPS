@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FULLON:  Will stop the scrolling of the text screen after'
+PRINT 'the screen is full of output.'
+PRINT ' '

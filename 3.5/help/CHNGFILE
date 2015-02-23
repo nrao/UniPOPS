@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CHNGFILE:  (PSEUDO) Changes the files which the program can'
+PRINT 'access.  '
+print 'Syntax: CHNGFILE action file_num file_name'
+print '        CHNGFILE (and you will be prompted for answers.)'
+PRINT ' '

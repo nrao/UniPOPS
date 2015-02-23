@@ -1,0 +1,8 @@
+#! /bin/csh -f
+# @(#)quicprint.sh	5.1 06/22/94
+# Script for printing in QUIC format to QMS printer
+#
+if ($#argv < 2) exit(1)
+if (-z $2) exit(0)
+#
+echo "cat ${popsdir}sunbin/quicstart $2 ${popsdir}sunbin/quicterm | $1" | /bin/csh -f

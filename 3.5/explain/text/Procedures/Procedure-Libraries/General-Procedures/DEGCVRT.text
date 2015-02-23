@@ -1,0 +1,35 @@
+	DDTODDMMSS converts an angle in the form DD.dddd (decimal
+	degrees) to an angle in the form DDMMSS.s (degrees, minutes,
+	seconds stored in a scalar value) and returns the result for
+	use by other verbs and procedures.
+
+	Syntax: DDTODDMMSS(din)
+
+	Example: You want to see what the value of 45.8072 is in the
+	DDMMSS.s format:
+
+		PRINT DDTODDMMSS(45.8072)
+
+	which will print the following on your terminal
+
+		454825.9  
+
+	or 45 degrees, 48 minutes, and 25.9 seconds of arc.
+
+
+	DDMMSSTODD converts an angle in the form DDMMSS.s (degrees,
+	minutes, seconds stored in a scalar value) to the form DD.dddd
+	(decimal degrees) and returns the result for use by other verbs
+	and procedures.
+
+	Syntax: DDMMSSTODD(din)
+
+		PRINT DDMMSSTODD(454825.9)
+
+	will print the following on your terminal
+
+		45.80720
+
+
+	File name: degcvt.prc
+

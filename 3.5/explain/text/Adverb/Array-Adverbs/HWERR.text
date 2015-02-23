@@ -1,0 +1,18 @@
+	(ARRAY ADVERB of 24 elements)
+
+	HWERR is an array containing the one sigma errors in the fitted
+	widths of up to 24 Gaussians.  The values of HWERR are
+	determined by GAUSS.  The units of HWERR are channel numbers.
+
+	HWERR is not used by any verb.
+
+	HWERR is set by :  GAUSS
+
+	The initial values of HWERR(N) are 0.
+
+	EXAMPLE:
+
+	You have fitted a single Gaussian to your data and now want to
+	print out the fitted width and its error:
+
+		PRINT HWIDTH(1), "+/-", HWERR(1)

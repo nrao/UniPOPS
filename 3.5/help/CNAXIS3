@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CNAXIS3:  (HEADER-CUBE) The number of z-axis cells in the'
+PRINT 'Cube.'
+PRINT ' '

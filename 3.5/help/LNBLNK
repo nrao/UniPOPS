@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'LNBLNK:  (FUNCTION) Returns the position of the last'
+PRINT 'non-blank character in the given character string'
+PRINT 'argument.'
+PRINT ' '

@@ -1,0 +1,28 @@
+Class 11:  Phase Block -- CL11TYPE = "ORIG    " or unset -- Original
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Variable Value		                      | VARVAL   |  R*8
+Variable Descriptor                           | VARDES   |  C*8
+Phase Table                                   | PHASTB   |  C*8
+
+
+Class 11:  Phase Block -- CL11TYPE = "PROTO12M" -- 12-m Prototype
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Number of Fast Switching Variables            | NOSWVARF |  R*8   | 
+Number of Slow Cycles per Scan                | NUMCYC   |  R*8   |
+Number of Fast Cycles per Scan                | NUMCYCF  |  R*8   |
+Number of Fast Phases per Cycle               | NOPHASEF |  R*8   |
+Length of Fast Cycle                          | CYCLENF  |  R*8   | Seconds
+Length of Fast Phase Sample                   | SAMPTIMF |  R*8   | Seconds
+Variable Value nn                             | VARVALnn |  R*8   |
+Variable Descriptor nn                        | VARDESnn |  C*8   |
+Phase Table nn                                | PHASTBnn |  C*32  |
+(the last 3 repeat (NOSWVAR + NOSWVARF) times)
+(nn is currently limited to 01 through 10)
+#if RFRNC CKBK
+
+
+#end

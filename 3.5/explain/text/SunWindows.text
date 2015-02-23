@@ -1,0 +1,434 @@
+#if CKBK
+#def SCT C-
+#def DSH ---
+Appendix C : Sun Windows (SunView and OpenLook/X)
+-------------------------------------------------
+#else
+#def SCT 
+#def DSH 
+#end
+#
+
+Normally, after logging into your account on a Sun workstation, a
+windowing system starts up.  There are numerous window managers to
+choose from and each does things a different way.  In most cases, the
+window manager will be one of two systems provided by Sun -- SunView
+(no longer supported by Sun) or OpenLook (an X-Window manager).  Since
+it is impossible to describe all window managers, we will concentrate
+on the two that Sun provides.  UniPOPS will work with either SunView or
+any X-Window manager like OpenLook, or twm.  Sun provides some
+excellent beginners' manuals describing how to get started with the
+window systems, and we strongly urge you to read these. Nevertheless,
+here we also give the basics of what you need to know about SunView or
+OpenLook in order to take advantage of UniPOPS on the Sun workstation.
+
+NOTE: Below we describe one of an almost infinite number of ways in
+which SunView or OpenLook can be set up.  Many of the key strokes
+described can be reduced considerably.  We provide documentation for
+the basic SunView and OpenLook setup and for the most general set of
+circumstances.  The system and account you are using may vary from that
+described.
+
+
+SCT1  OpenLook
+DSH-----------
+
+The OpenLook window manager is also known as 'olwm' or Open Window.
+
+SCT1.1  OpenLook Start Up 
+DSH----------------------
+
+If OpenLook doesn't start up automatically, or if you have exited
+windows and need to get back in, then issue the following UNIX command,
+
+	openwin
+
+The windows facility should then start up.  We provide all new UniPOPS
+users with a default windows setup but the sophisticated user may wish
+to modify their OpenLook setup files in the user's home directory to
+customize their window arrangements.
+
+Normally, we provide a console window (for error reporting, and of
+which you should make only limited use), a set of cmdtool windows (for
+executing UniPOPS or any other system, or UNIX, commands), a clock, and
+a mailtool window (for sending and reading electronic mail).
+
+
+SCT1.2  The OpenLook Mouse and Keyboard
+DSH------------------------------------
+
+The mouse usually rests on a special gridded pad and has three
+buttons.  You should orient the "tail" of the mouse so that it is
+pointing away from you.  The buttons are known as left, center, and
+right.  If you experience strange behavior while moving the mouse, try
+turning the metal pad by 90 degrees.  The mouse can be located to
+either the left or right of the keyboard.
+
+Most keyboards contain separate sets of function keys to the left,
+right, and above the central alpha-numeric keys.  These functions keys
+can be used to perform various actions within programs and within
+SunView.  UniPOPS makes very limited use of these keys, but other
+programs, especially editors, use them heavily.  Since UniPOPS runs
+under OpenLook, many OpenLook functions can be performed while in
+UniPOPS, making command entry and editing very easy.  For those who are
+left-handed, the roles of the left and right function keys can be
+reversed (see the system administrator, or the Sun documentation, for
+details.)
+
+
+SCT1.3  Exiting OpenLook
+DSH---------------------
+
+To exit from OpenLook (for example, in preparation to logging out), you
+should,
+
+  a) Exit from the analysis program, if in it, by typing,
+
+	exit
+
+     at the UniPOPS `>' prompt.
+
+  b) Move the cursor (via the mouse) to a non-window (background)
+     area.  Click  the right-hand button on the mouse and a menu will
+     appear.  Move the cursor down the menu to the `Exit...' choice.
+     Click the left button while pointing at 'Exit...' and a new window
+     with instructions will appear on the screen.  You can then either
+     click with the 'left' on 'Exit' or 'Cancel' in the new window.  If
+     you click left on `Exit', the screen will clear and return to the
+     `console' screen.  (Once at the `console' screen, you can start up
+     OpenLook again by typing,
+
+	openwin
+
+     at the UNIX `%' prompt.)
+
+  c) Unless you want to do something further with the computer, you
+     should log out of the system by typing one of the following,
+
+	bye 	<Ctrl-D> 	logout 		exit 
+
+     (try these commands in the order given).
+
+
+SCT1.4  Opening, Closing, and Entering Commands in Windows
+DSH-------------------------------------------------------
+
+When a window is closed, it is represented by an small icon somewhere
+on the screen.  It can be opened by first moving the cursor (via the
+mouse) on top of the icon, and then quickly clicking the left mouse
+button twice.
+
+Each variety of window has its own special layout. The cmdtool you will
+be using to run UniPOPS consists of a border (which may be colored on a
+colored screen), a small box with a down-facing arrow in the upper-left
+corner of the window, little 'L' shaped high-lighted corners, a scroll
+bar, short horizontal lines at the top and bottom of the scroll bar, a
+slide bar within the scroll bar, up/down arrows just above and below
+the slide bar, a large central area for entering commands.
+
+You can type commands within the window by first moving the mouse until
+the cursor lies within the inner border of the window. To execute
+commands in another window, you must first move the cursor into that
+window.
+
+To close a window, move the cursor until it lies in the little
+down-arrow box in the upper-left corner of the window you want to
+close.  Click the left mouse button while pointing to the small box and
+the window will close down to an icon.
+
+
+SCT1.5  Moving, Resizing, etc. Windows
+DSH-----------------------------------
+
+Windows can be moved by:
+
+     Moving the cursor to the outer border of the window which you wish
+     to move. While holding down the left mouse button, move the mouse
+     and drag the window to where you want to locate it.
+
+Windows can be resized by:
+
+     Moving the cursor to the corner of the window which you wish to
+     resize.  You should see little 'L' shape highlighted corners on
+     every window.  When you have correctly positioned the mouse on the
+     corner of the window, the cursor should turn into a 'bullseye'.
+     While holding down the left mouse button, move the mouse to
+     increase or decrease the size of the window.
+
+Other functions can be performed on the window by:
+
+     Moving the cursor until it lies in the little down-arrow box in
+     the upper-left corner of the window.  Click on the right mouse
+     button and a menu should appear.  Move the mouse down to the item
+     you want to choose and when the arrow is pointing at the desired
+     option, click the left mouse button.  Sometimes instructions will
+     appear that will inform you how to proceed but, at other times,
+     the desired action is immediately executed.
+
+     (NOTE: QUIT destroys a window forever, CLOSE performs the
+#if CKBK
+     same functions as clicking the left button did in Section C-2.4.)
+#else
+     same functions as clicking the left button did in Section 2.4, above.)
+#end
+
+SCT1.6  Scrolling a Window
+DSH-----------------------
+
+The cmdtool you will be using for UniPOPS can be scrolled to show the
+previous commands that you have typed, plus any previous UniPOPS
+output. There is a limit to how far you can scroll back which is
+dependent upon how the system is set up. The slide bar in the scroll
+bar indicates where in the `larger', virtual window you currently are.
+Here are a few ways to scroll forwards and back through the window.
+
+  .  To get to the first or last line in the window, on the right-hand
+     keyboard press the HOME (or R7) key, or END (or R13) key,
+     respectively.  Or, at the top or bottom of the scroll bar, click
+     the left mouse button on the small horizontal bars to perform the
+     same operation.
+
+  .  To look at any section of the window, move the cursor onto the
+     exact center of the slide bar at the left edge of the window.  While
+     holding down the left mouse button, move the mouse up or down to
+     center the desired part of the window.  The contents of the window
+     will flash by as you move the mouse.
+
+  .  To scroll line-by-line, move the cursor to either of the up/down
+     boxes on the slide bar.  Clicking the left mouse button on one of
+     the arrows will move you up or down the window, one line at a
+     time.  Holding the mouse down will quickly move you up or down the
+     window line by line.
+
+  .  To scroll by a screenful of text, position the mouse either above
+     or below the slide bar in the scroll bar.  Click the left mouse
+     button and the screen will move up or down one page of text at
+     a time.  Holding down the mouse button will quickly move you
+     up or down the window one page at a time.
+
+SCT1.7  Transferring Text from One Place to Another
+DSH------------------------------------------------
+
+Text can be transferred from one window to another, or from one part of
+a window to another part of the same window. This is useful for
+reissuing and editing commands which you have typed previously.
+
+  a) Move the cursor to the window that contains the text you want to
+     copy. You may need to scroll a window backwards to locate it.
+     Move the cursor directly before, or on, the first character you
+     wish to copy. Click the left mouse button. Move the cursor to the
+     last character you want to copy and click the middle button. You
+     should now have the whole text highlighted. If not, use the left
+     and middle buttons again to re-highlight the text.
+
+     If you highlight beyond the last character on a line, you will
+     also pick up any <CR><LF> (i.e., carriage return plus line-feed
+     characters) that may exist there. If you don't want the <CR><LF>,
+     re-highlight the text.
+
+  b) Press the COPY (or L6) key on the left-hand keyboard and the
+     string will be put into memory. If a previous string is in memory,
+     this will be overwritten by the new COPY.
+
+  c) Move the mouse to the window into which you want to insert the
+     text. You may need to scroll the window to get to the section
+     where you want to paste the text (usually, you will need to press
+     the END [R13] key on the right-hand keyboard).  Press the PASTE
+     (or L8) key on the left-hand keyboard and the contents of the
+     memory will be inserted wherever the prompt is located. If you are
+     in a cmdtool and the text string contains a <CR><LF>, then UNIX or
+     the program you are running will attempt to interpret the text
+     string. If the text doesn't contain a <CR><LF>, you can add new
+     characters to the text, edit those already there, add other text
+     strings from elsewhere, etc. When done, you should then type a
+     <CR> to have UNIX, or the program, interpret the text. Either
+     UNIX, or the program you are running, will interpret the text as
+     if you had typed it yourself.
+
+SCT2  SunView
+DSH----------
+
+SCT2.1  SunView Start Up 
+DSH---------------------
+
+If SunView doesn't start up automatically, or if you have exited
+windows and need to get back in, then issue the following UNIX command,
+
+	sunview
+
+The windows facility should then start up. If you prefer `inverse'
+video (white characters on a dark background), use,
+
+	sunview -i
+
+We provide all new UniPOPS users with a default windows setup but the
+sophisticated user may wish to modify their SunView setup files (called
+.sunview and .defaults, located in the user's home directory) to
+customize their window arrangements.
+
+Normally, we provide a console window (for error reporting, and of
+which you should make only limited use), a set of Command-Tool windows
+(for executing UniPOPS or any other system, or UNIX, commands), a
+clock, and a MailTool window (for sending and reading electronic
+mail).
+
+SCT2.2  The SunView Mouse and Keyboard
+DSH-----------------------------------
+
+The Sunview mouse and keyboard has many of the same functionalities as
+the OpenLook mouse and keyboard (see above for details).
+
+SCT2.3  Exiting SunView
+DSH--------------------
+
+To exit from SunView (for example, in preparation to logging out), you
+should,
+
+  a) Exit from the analysis program, if in it, by typing,
+
+	exit
+
+     at the UniPOPS `>' prompt.
+
+  b) Move the cursor (via the mouse) to a non-window area, the gray
+     background region.  Hold down the right-hand button on the mouse
+     and a pull-down menu will appear.  Move the cursor down the menu
+     until you highlight `Exit SunView'.  Click the right button and
+     instructions will appear on the screen. Clicking the left button
+     will confirm the `Exit SunView' command and the screen will clear
+     and return to the `console' screen.  (Once at the `console'
+     screen, you can start up SunView again by typing either,
+
+	sunview
+
+     or
+
+	sunview -i
+
+     at the UNIX `%' prompt.)
+
+  c) Unless you want to do something further with the computer, you
+     should log out of the system by typing one of the following,
+
+	bye 	<Ctrl-D> 	logout 		exit 
+
+     (try these commands in the order given).
+
+SCT2.4  Opening, Closing, and Entering Commands in Windows
+DSH-------------------------------------------------------
+
+When a window is closed, it is represented by an small icon somewhere
+on the screen.  It can be opened by first moving the cursor (via the
+mouse) on top of the icon, and then clicking the left mouse button.
+
+Each variety of window has its own special layout. The Command-Tool
+(cmdtool) you will be using to run UniPOPS consists of a border (which
+may be colored on a colored screen), a scroll bar on the left, a
+`bubble' within the scroll bar, up/down arrows just above and below the
+scroll bar, and a central area for entering commands.
+
+You can type commands within the window by first moving the mouse until
+the cursor lies within the inner border of the window. To execute
+commands in another window, you must first move the cursor into that
+window.
+
+To close a window, move the cursor until it lies on the outer border of
+that window. On the border, the cursor should turn from an arrow into a
+circle. Then click the left-hand mouse button and the window should
+close down to an icon.
+
+SCT2.5  Moving, Resizing, etc. Windows
+DSH-----------------------------------
+
+Windows can be moved, resized, etc. by,
+
+  a) Moving the cursor to the outer border of the window which you wish
+     to resite. The cursor should turn into a circle.
+
+  b) Click the right-hand mouse button and a pull-down menu will
+     appear. Move the mouse to highlight the feature you wish to
+     execute, and click right again.
+
+     (NOTE: QUIT destroys a window forever, CLOSE and OPEN perform the
+#if CKBK
+     same functions as clicking the left button did in Section C-1.4.)
+#else
+     same functions as clicking the left button did in Section 1.4, above.)
+#end
+
+  c) In some cases, instructions will appear on the screen which will
+     tell you how to proceed.
+
+SCT2.6  Scrolling a Window
+DSH-----------------------
+
+The cmdtool you will be using for UniPOPS can be scrolled to show the
+previous commands that you have typed, plus any previous UniPOPS
+output. There is a limit to how far you can scroll back which is
+dependent upon how the system is set up. The `bubble' in the scroll bar
+indicates where in the `larger', virtual window you currently are. Here
+are a few ways to scroll forwards and back through the window.
+
+  .  To get to the first or last line in the window, on the right-hand
+     keyboard press the HOME (or R7) key, or END (or R13) key,
+     respectively.
+
+  .  To look at any section of the window, move the cursor into the
+     slide bar at the left edge of the window. The cursor will turn
+     into a stubby, right-pointing arrow. Pressing the middle mouse
+     button will scroll the text to that section of the `larger' window
+     which is proportional to where the cursor is pointing in the
+     scroll bar. That is, if the arrow is pointing close to the top of
+     the scroll bar, you will be moved close to the top of the window.
+     If the cursor is towards the bottom, you will be moved to near the
+     bottom of the window.
+
+  .  To scroll line-by-line, move the cursor to either of the up/down
+     boxes at the left of the window. The cursor will turn into a
+     diamond. Clicking the left mouse button will move you down the
+     window, one line at a time. Clicking the right button moves you up
+     one line. Clicking the middle button moves you down one
+     screen-full, while, if you hold down the Shift key and click the
+     middle button, you will be moved up one screenful. Holding these
+     buttons down will move you quickly through the windows in the
+     appropriate directions.
+
+SCT2.7  Transferring Text from One Place to Another
+DSH------------------------------------------------
+
+Text can be transferred from one window to another, or from one part of
+a window to another part of the same window. This is useful for
+reissuing and editing commands which you have typed previously.
+
+  a) Move the cursor to the window that contains the text you want to
+     copy. You may need to scroll a window backwards to locate it.
+     Move the cursor directly before, or on, the first character you
+     wish to copy. Click the left mouse button and that character will
+     be highlighted. Move the cursor to the last character you want to
+     copy and click the middle button. You should now have the whole
+     text highlighted. If not, use the left and middle buttons again to
+     re-highlight the text.
+
+     If you highlight beyond the last character on a line, you will
+     also pick up any <CR><LF> (i.e., carriage return plus line-feed
+     characters) that may exist there. If you don't want the <CR><LF>,
+     re-highlight the text.
+
+  b) Press the COPY (or L6) key on the left-hand keyboard and the
+     string will be put into memory. If a previous string is in memory,
+     this will be overwritten by the new COPY.
+
+  c) Move the mouse to the window into which you want to insert the
+     text. You may need to scroll the window to get to the section
+     where you want to paste the text (usually, you will need to press
+     the END [R13] key on the right-hand keyboard).  Press the PASTE
+     (or L8) key on the left-hand keyboard and the contents of the
+     memory will be inserted wherever the prompt is located. If you are
+     in a cmdtool and the text string contains a <CR><LF>, then UNIX or
+     the program you are running will attempt to interpret the text
+     string. If the text doesn't contain a <CR><LF>, you can add new
+     characters to the text, edit those already there, add other text
+     strings from elsewhere, etc. When done, you should then type a
+     <CR> to have UNIX, or the program, interpret the text. Either
+     UNIX, or the program you are running, will interpret the text as
+     if you had typed it yourself.

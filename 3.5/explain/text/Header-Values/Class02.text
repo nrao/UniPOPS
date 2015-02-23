@@ -1,0 +1,21 @@
+Class 2 :  Pointing Parameters                
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Total Az/RA Pointing Correction               | XPOINT   |  R*8   | arcsec
+Total El/Dec Pointing Correction              | YPOINT   |  R*8   | arcsec
+User Az/RA Pointing Correction                | UXPNT    |  R*8   | arcsec
+User El/Dec Pointing Correction               | UYPNT    |  R*8   | arcsec
+Pointing Constants(1)                         | PTCON    |  R*8   | arcmin
+Pointing Constants(2)                         | PTCON+1  |  R*8   | arcmin
+Pointing Constants(3)                         | PTCON+2  |  R*8   | arcmin
+Pointing Constants(4)                         | PTCON+3  |  R*8   | arcmin
+Receiver Box or Secondary Orientation         | ORIENT   |  R*8   | Degrees
+Radial Focus                                  | FOCUSR   |  R*8   | mm
+North-South Focus                             | FOCUSV   |  R*8   | mm
+East-West Focus                               | FOCUSH   |  R*8   | mm
+Pointing Model                                | PT_MODEL |  C*8   |
+#if RFRNC CKBK
+
+
+#end

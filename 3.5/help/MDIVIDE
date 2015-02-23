@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MDIVIDE:  Divides the data in Matrix 0 by that in Matrix 1'
+PRINT 'and stores the results in Matrix 0.  The shape of each'
+PRINT 'matrix must be the same.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

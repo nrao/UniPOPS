@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MOBJECT:  (HEADER-MATRIX) The name associated with the'
+PRINT 'image in the Matrix (8 characters).'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MD0:  (INTERNAL-ARRAY) Returns/sets value of given data '
+PRINT 'point in Matrix (0).  Syntax:  MD0(x1,x2)'
+PRINT ' '

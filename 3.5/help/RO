@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RO:  (POINTER) Indicates you want to open the file with'
+PRINT 'FOPEN with read only privelages.'
+PRINT ' '

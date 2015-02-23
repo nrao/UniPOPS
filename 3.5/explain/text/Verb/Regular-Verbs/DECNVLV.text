@@ -1,0 +1,17 @@
+	(REGULAR VERB)
+
+	DECNVLV deconvolves the contents of the data in Array (1) from
+	the data in Array (0).  The data in Array (0) is replaced by
+	the results.  The number of data points in both arrays must be
+	the same.
+
+	No adverbs are used or set by DECNVLV.
+
+	EXAMPLE:
+
+	You have two data arrays you want to deconvolve, one of which
+	is in Array (0) and the other in Array(1), so you type:
+
+		DECNVLV
+
+

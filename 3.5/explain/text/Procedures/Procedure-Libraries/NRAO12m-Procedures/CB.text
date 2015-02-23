@@ -1,0 +1,13 @@
+	CB is similar to C1 and C2.  It averages together the data for 
+	subscan numbers .01 and .03 (for filter bank data) or
+	.11 and .12 for hybrid spectrometer data.
+
+	Any non-integer fraction of the scan numbers is ignored.  There
+	is no check for duplicate scan numbers.
+
+	The type of data (filter bank or hybrid spectrometer) is
+	set by FBDATA or HCDATA respectively.
+
+	File name: cb.prc
+
+	This procedure is include in LSETUP.12meter

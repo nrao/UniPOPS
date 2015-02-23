@@ -1,0 +1,19 @@
+set bell=3
+set editmessagewindow
+set flash=5
+set moveinputfocus
+set printmail='pr -f | lpr -Plp'
+set trash=mail.trash
+set askcc
+set hold
+set metoo
+set showto
+set crt=20
+set nodot
+set page
+set PAGER="more -d"
+set prompt="Mail>"
+set quiet
+set screen=20
+set SHELL="/bin/csh"
+set toplines=15

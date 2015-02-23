@@ -1,0 +1,28 @@
+	The checkfile.exe utility will list out the contents of an SDD
+	file by looking at the file's index.  To use the utility,
+	type:
+
+		checkfile.exe <filename>
+
+	where <filename> is the name of the data file you want to look
+	at.
+
+	The utility programs can be run from within UniPOPS using the
+	SYSTEM command or it can be executed outside of UniPOPS at the
+	Unix prompt.
+
+	The output of the program is ~ 130 characters wide so you may
+	want to expand your window horizontally, if you are sitting at
+	a workstation.  The output can be redirected into a file, for
+	example, or redirected to a printer.  To redirect the output to
+	a file, try something like the following:
+
+		checkfile.exe My-File > file-contents
+
+	where My-File is the data file and file-contents is the name of
+	the file which will contain the output of checkfile.exe.
+
+	The output is self-explanatory.
+
+
+

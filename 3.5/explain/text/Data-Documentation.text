@@ -1,0 +1,47 @@
+	Various verbs are provided for giving the user documentation
+	about the data which is being processed.
+
+One-Dimensional Data
+--------------------
+
+     .  The following verbs providing the user with information about 
+	1-dimensional array headers:
+
+	DOC		H0-H9		HEADER		THUMB
+	TITLE						
+
+     .  To change array header values, use:
+
+	H0-H9
+
+     .  The following provide information about array data values:
+
+	D0-D9           TABLE
+
+     .  To change array data values, use:
+
+	D0-D9
+
+Multi-Dimensional Data
+----------------------
+
+     .  The following verbs provide the user with information about 
+	matrix and cube headers:
+
+	CH0		CHEADER		MH0-MH3		MHEADER		
+
+     .  To change matrix header values, use:
+
+	MH0-MH3
+
+     .  Cube header values can not be changed from within UniPOPS.
+
+     .  The following provide information about matrix and cube data:
+
+	CD0		MD0-MD3		MTABLE		
+
+     .  To change matrix data values, one uses:  
+
+	MD0-MD3
+
+

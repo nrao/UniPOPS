@@ -1,0 +1,64 @@
+        (PSEUDO VERB)
+
+	Syntax:    POPSEDIT procedure-name line-number
+
+	POPSEDIT is used to edit an already defined procedure.  The
+	POPSEDIT verb puts UniPOPS into compile mode (indicated by a
+	change to the ':' prompt) so that you can edit an
+	already-compiled procedure.  ENDEDIT indicates that you are
+	done editing the procedure and it returns UniPOPS to execute
+	mode, which is indicated by the return of the caret (>)
+	prompt (or your personal prompt if you have set the PROMPT
+	adverb).
+
+	POPSEDIT requires two arguments:
+
+	    procedure-name   The name of the PROCEDURE to be edited.
+	    line-number      The number of the line in the PROCEDURE
+			     which is to be edited or inserted.
+
+	All POPSEDIT sessions must be concluded with an ENDEDIT.  You
+	cannot edit the first or last line of a procedure nor can you
+	add executable lines among adverb declarations in the
+	procedures nor can you add declaration of adverbs among
+	executable lines.
+
+	We strongly recommend that you do not use POPSEDIT to change 
+	a PROCEDURE but that you use EDIT followed by a BATCH.
+
+	POPSEDIT can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by POPSEDIT.
+
+	EXAMPLE:
+
+	.   To remove line 3 from PROCEDURE BLAH;
+
+		POPSEDIT BLAH 3
+		ENDEDIT
+
+	.   To add 2 lines between lines 5 and 6 in PROCEDURE YYY;
+ 
+		POPSEDIT YYY 5.5
+		PRINT 'TEST 1'
+		PRINT 'TEST 2'
+		ENDEDIT
+
+	.   To replace line 3 and add 1 line between new line 3 and old
+	    line 4 in PROCEDURE GGG;
+
+		POPSEDIT GGG 3
+		PRINT 'NEW LINE 3'
+		PRINT 'EXTRA LINE'
+		ENDEDIT
+
+	 .   To replace line 4 in PROCEDURE XXX;
+
+		POPSEDIT XXX 4
+		PRINT 'NEW LINE 4'
+		ENDEDIT
+	
+	Note that the line numbering may change after each use of
+	POPSEDIT.
+

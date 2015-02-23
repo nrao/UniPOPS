@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'RFIXPHA:  (ADVERB) If > 0, RIPPLE and RSHAPE will use and'
+PRINT 'hold fixed the input value for RPHASE, if = 0 (default'
+PRINT 'value), RIPPLE and RSHAPE will ignore the value of RPHASE'
+PRINT 'and attempt to guess an initial value for RPHASE,'
+PRINT 'if < 0, RIPPLE and RSHAPE will use the value of RPHASE as'
+PRINT 'the initial value.'
+PRINT ' '

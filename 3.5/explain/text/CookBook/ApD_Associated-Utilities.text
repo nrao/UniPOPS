@@ -1,0 +1,815 @@
+#if CKBK
+#def SCT D-
+#def DSH --
+Appendix D : Associated Utilities
+--------------------------------- 
+#else
+#def SCT 
+#def DSH 
+#end
+
+UniPOPS provides various utility programs which deal with converting
+data from one format to another, diagnosing problems with data files,
+merging and expanding data files, and for quick reduction of pointing 
+and calibration data.
+
+Each of the utility programs can be run from within UniPOPS using the
+SYSTEM command (see Section 12.2), or they can be executed outside of
+UniPOPS at the UNIX prompt.
+
+
+SCT1 Converting a Disk File into Another Disk File
+DSH-----------------------------------------------
+
+The cvt.disk-disk utility converts a data file on disk into a different
+data file on disk. The acceptable input formats are:
+
+	PCPops
+	IEEE Keep,
+	140-ft telescope (archive) format
+	Modcomp Keep
+	Green Bank Ascii
+	Green Bank On-line
+	SDD. 
+
+The output formats can be 
+
+	PCPops
+	IEEE Keep
+	Modcomp Keep
+	Green Bank Ascii
+	SDD.
+
+See the end of the this section for information on converting an old
+12-m data format (pdfl and pkfl files) into SDD format using pdfl2sdd.
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command,
+
+	>SYSTEM cvt.disk-disk
+
+or can be executed outside of UniPOPS at the UNIX prompt by typing,
+
+	%cvt.disk-disk
+
+
+When you start cvt.disk-disk, you will be asked for the input and
+output formats as well as input and output file names.  The input and
+output formats need not be different.  The input file must exist and be
+readable by you.  If the output file exists, you will be asked whether
+the old file is to be overwritten or whether the converted data will be
+appended to the end of the file.
+
+If you are converting Green Bank on-line data, you will be asked for a
+project code and a scan number range.
+
+If you are NOT converting Green Bank on-line data you will be asked
+what records in the input file are to be converted.  Enter the
+suggested default values if you want the whole file, else, you will
+need to know what records are to be converted.  If you don't know what
+record numbers you need to convert, then you can try the
+ieeesummary.exe or checkfile.exe utilities to get a summary listing of
+the contents of some types of files.
+
+The instructions provided by the program are sufficiently clear that
+you should have few problems with this utility.
+
+The cvt.disk-disk utility is not capable of converting the old 12-m data 
+format (pdfl and pkfl files) into SDD format.  The pdfl2sdd utility should 
+be used for this.  
+
+This utility program can be run from within UniPOPS using the SYSTEM 
+command,
+
+	> SYSTEM pdfl2sdd pdfl_file_name sdd_file_name
+
+or at the UNIX prompt,
+
+	% pdfl2sdd pdfl_file_name sdd_file_name
+
+This utility will read the indicated pdfl file, pdfl_file_name, and
+convert that into the indicated sdd file, sdd_file_name.
+	
+The pdfl2sdd utility reports on the number of input pdfl scans as
+well as the number of output SDD scans.  If the initial guess that the
+program makes as to the required size of the output sdd file, the 
+program will use the expandsdd utility to make the output file large
+enough to hold all of the converted data.
+	
+
+SCT2 Converting a Disk File into a File on Tape 
+DSH--------------------------------------------
+
+The cvt.disk-tape utility converts data files on disk into a data file
+on tape.  The acceptable input formats are:
+
+	PCPops
+	IEEE Keep
+	140-ft telescope (archive) format
+	Modcomp Keep
+	Green Bank Ascii
+	Green Bank On-line 
+	SDD
+
+The output formats can be:
+
+	PCPops
+	IEEE Keep
+	Modcomp Keep
+	Green Bank Ascii
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command,
+
+	>SYSTEM cvt.disk-tape
+
+or can be executed outside of UniPOPS at the UNIX prompt by typing,
+
+	%cvt.disk-tape
+
+One should mount the tape before executing the utility.  The kinds of
+tapes produced depends upon the available hardware and not the
+software.
+
+When you start cvt.disk-tape, you will be asked for the input and
+output formats as well as input file name and tape drive number
+(usually noted on the tape drive).  The input and output formats need
+not be different.  The input file must exist and be readable by you.
+You will be asked how many files to skip on the output tape and whether
+to overwrite the next file or append to the end of it.
+
+If you are converting Green Bank on-line data, you will be asked for a
+project code and a scan number range.
+
+If you are NOT converting Green Bank on-line data you will be asked
+what records in the input file are to be converted.  Enter the
+suggested default values if you want the whole file, else, you will
+need to know what records are to be converted.  If you don't know what
+record numbers you need to convert, then you can try the
+ieeesummary.exe or checkfile.exe utilities to get a summary listing of
+the contents of some types of files.
+
+The instructions provided by the program are sufficiently clear that
+you should have few problems with this utilit
+
+
+SCT3 Converting a File on Tape into a Disk File
+DSH--------------------------------------------
+
+The cvt.tape-disk utility converts data files on tape into a data file
+on disk.  The acceptable input formats are:
+
+	PCPops
+	IEEE Keep
+	140-ft telescope (archive) format
+	Modcomp Keep
+	Green Bank Ascii
+	SDD
+
+The output formats can be:
+
+	PCPops
+	IEEE Keep
+	Modcomp Keep
+	Green Bank Ascii
+	SDD
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command,
+
+	>SYSTEM cvt.tape-disk
+
+ or can be executed outside of UniPOPS at the UNIX prompt by typing,
+
+	%cvt.tape-disk
+
+One should mount the tape before executing the utility.  The kinds of
+tapes read depends upon the available hardware and not the software
+
+When you start cvt.tape-disk, you will be asked for the input and
+output formats as well as input tape drive number (usually posted on
+the drive itself) and output file names.  The input and output formats
+need not be different.  If the output file exists, you will be asked
+whether the old file is to be overwritten or whether the converted data
+will be appended to the end of the file.
+
+You will also be asked what records on the input tape are to be
+converted.  Enter the suggested default values if you want the whole
+file.  Else, you will need to know what records are to be converted.
+
+The instructions provided by the program are sufficiently clear that
+you should have few problems with this utility.
+
+One special tape to disk conversion utility is cvt.tele-recs.  This
+utility is used to convert a 140-ft telescope archive tape into an
+SDD individual records file.  This file could then be attached as
+an RSCANS file using the CHNGFILE utility.  The individual records data
+could then be examined with the GETIR verb and edited to produce
+an improved average for each scan with appropriate procedures.  You
+should consult the 140-ft staff for advice on this utility as well
+as on editing individual records data.
+
+
+SCT4 Converting an IEEE Keep File into PCPops Format
+DSH-------------------------------------------------
+
+The ieee2pcpops.exe utility provides an easy way to convert IEEE Keep
+disk files into disk files suitable for use by PC-Pops.
+
+All of the following steps can be run from within UniPOPS using the
+SYSTEM command,
+
+	>SYSTEM ieee2pcpops.exe
+
+or they can be executed outside of UniPOPS at the UNIX prompt by
+typing,
+
+	%ieee2pcpops.exe
+
+
+If your data is not in IEEE Keep format, then you should use the
+cvt.disk-disk or cvt.tape-disk (see sections SCT1 and SCT3 above)
+utilities first.  Once you have an IEEE Keep file, you should run
+ieeesummary.exe (see section SCT9 below) on the file to produce a index
+(or table) file. Type something like the following,
+
+	%ieeesummary.exe <Data-File>  >!   <Table-File>
+
+where <Data-File> and <Table-File> are the name of the IEEE Keep data
+file, and Table-File is the name of the table (index) file you need to
+create. Pick whatever names seem logical to you.
+
+After having both an IEEE and index file, you can then run
+ieee2pcpops.exe. The program will ask you for the names of the input
+data and index files. It will also ask you for the number of scans that
+can fit on the type of floppy to which you are planning to copy the
+data. For example, a double-sided, double-density, 5 1/4 inch floppy
+can hold 65 scans.
+
+The program will then go through the data and index files and produce
+files by the names of DATA001, DATA002, DATA00n, TABLE001, TABLE002,
+TABLE003, etc. If files by these names already exist, the program will
+immediately bomb.
+
+Each pair of files contain, at most, the number of scans you picked
+when you ran the ieee2pcpops utility. You should then copy the DATA001
+and TABLE001 file to one floppy, the DATA002, TABLE002 to another, etc.
+until all the files are copied.
+
+Finally, you should clean house by removing all unnecessary files
+(using the UNIX rm command).
+
+
+SCT5 Listing the Contents of an SDD file
+DSH-------------------------------------
+
+The checkfile.exe utility will list out the contents of an SDD file by
+looking at the file's index.
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command,
+
+	>SYSTEM checkfile.exe <filename>	
+
+where <filename> is the name of the data file you want to look at, or
+can be executed outside of UniPOPS at the UNIX prompt by typing,
+
+	%checkfile.exe <filename> 
+
+The output of the program is ~ 130 characters wide so you may want to
+expand your window horizontally if you are sitting at a workstation.
+The output can be redirected into a file or to a printer. To redirect
+the output to a file, try something like the following,
+
+	%checkfile.exe <My-File>  >  <file-contents>
+
+where <My-File> is the data file, and <file-contents> is the name of
+the file which will contain the output of checkfile.exe.
+
+The output is self-explanatory.
+
+
+SCT6 Reconstructing the Index Part of an SDD File
+DSH----------------------------------------------
+
+The makeindex.exe utility will examine the data section of an SDD file
+and reconstruct the index part of the file. This may be necessary if
+that part of the file has become corrupted for any reason.
+
+To use the utility, type,
+
+	%makeindex.exe <file-name>
+
+where <file-name> is the name of the data file.
+
+Besides correcting the index, the program will also generate a listing
+similar to that which checkfile.exe produces so that you will know what
+has happened to the index.
+
+The output of the program is ~ 130 characters wide so you may want to
+expand you window horizontally, if you are using a workstation.  The
+output can be redirected into a file or to a printer. To redirect the
+output to a file, try something like the following,
+
+	%makeindex.exe <My-File>  >  <file-contents>
+
+where <My-File> is the data file and <file-contents> is the name of the
+file which will contain the output of checkfile.exe.
+
+The output is self-explanatory.
+
+There is a related utility, makerecindex.exe, that is used to reconstruct
+the index of an individual records SDD file.  Its syntax and justification
+are identical to that for makeindex.exe.
+
+Most users will use makeindex.exe and possibly makerecindex.exe (for 
+Green Bank data) to reconstruct the index of an SDD file.  Since this
+index will be in the current (new as of version 3.3) format, older versions
+of UniPOPS will be unable to read these files.  Two utilities, 
+makeoldindex.exe and makeoldrecindex.exe can be used if you need to
+have the index in the older format (subsequent uses of makeindex.exe or
+makerecindex.exe will restore the index to the current format).  The syntax
+and output of these two utilities is identical to the other utilities
+described above.
+
+SCT7 Generating an Empty Copy of an SDD File or an Empty Memory File
+DSH-----------------------------------------------------------------
+
+The makefile.exe utility generates an empty copy of an SDD or
+memory file.
+
+To use makefile.exe to create an SDD file, type:
+
+	%makefile.exe  <name>  <max-scans>
+
+where name is the name of the file to be created and max-scans is the
+maximum number of scans that file is to hold.  If you eliminate the
+max-scans parameter, makefile.exe will use a default of 1024 scans.
+
+To use makefile.exe to create a memory file, type either:
+
+	%makefile.exe LMEMORY
+
+for a line version of the memory file or:
+
+	%makefile.exe CMEMORY
+
+for a continuum (Condar) version of the memory file or:
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command or can be executed outside of UniPOPS at the UNIX prompt.
+
+
+SCT8 Expanding and Merging SDD Files
+DSH---------------------------------
+
+The index of an SDD file is capable of holding a fixed number of scans.
+If the file gets full, or you simply want to use a save-bin number larger
+than the limit for your current `save' file, then you need to expand the
+index so that it can hold the number of scans that you require.  The
+expandsdd utility does this task.  To use it, type:
+
+	% expandsdd sdd_file_name size
+
+at a Unix prompt or
+
+	> SYSTEM expandsdd sdd_file_name size
+
+from with UniPOPS.  The file that will be expanded is "sdd_file_name" and
+you should give the number for "size" that indicates how many scans
+you want sdd_file_name to be able to hold.  For example, if you have
+a file MyFile.data that is full at 1024 scans but that you would like to
+put up to 1500 scans then you would type the following to expand the
+index of MyFile.data so that it is able to hold that many scans:
+
+	% expandsdd MyFile.data 1500
+
+You should note that this changes the original file (i.e. MyFile.data
+will be overwritten by the new expanded MyFile.data).  You may wish to
+make a copy of your data file before using expandsdd to protect yourself
+and your data from any unforseen problems during the expansion.
+
+A related utility is mergesdd.  This utility allows you to merge two SDD
+files to make a new SDD file.  The original two SDD files are unchanged
+by this utility.  To use this utility at a Unix prompt, type:
+	
+	% mergesdd sdd_file_1 sdd_file_2 merged_sdd_file
+
+or from within UniPOPS, type:
+
+	> SYSTEm mergesdd sdd_file_1 sdd_file_2 merged_sdd_file
+
+and the new file, merged_sdd_file will contain all of the scans found
+in the two input sdd files.  You should consult the documentation on
+mergesdd for a discussion on potential problems if both input files
+were used as `save' files and how mergesdd resolves these problems.
+
+SCT9 Listing the Contents of an IEEE Keep File
+DSH-------------------------------------------
+
+The ieeesummary.exe utility is for generating a summary listing of the
+contents of an IEEE Keep file.  Running this utility is a necessary
+step before running ieee2pcpops.exe.  The syntax for using this utility
+is:
+
+	% ieeesummary.exe <file-name>
+
+where <file-name> is the name of the file you want summarized.
+
+This utility program can be run from within UniPOPS using the SYSTEM
+command or can be executed outside of UniPOPS at the UNIX prompt.
+
+The output can be redirected into a file or to a printer. To redirect
+the output to a file, try something like the following,
+
+	% ieeesummary.exe <My-File>  >  <file-contents>
+
+where <My-File> is the data file, and <file-contents> is the name of
+the file which will contain the output of ieeesummary.exe.
+
+The output is self-explanatory.
+
+
+SCT10 Importing and Exporting FITS-format Tapes and Files
+DSH------------------------------------------------------
+
+UniPOPS can create and read two types of FITS files. Three-dimensional
+(cube) FITS image files are detailed below (see SCT11).  The SD-FITS
+format is relevant to storing and transporting individual observations
+(scans).  The format is useful if you want to resurrect the individual
+scan aspect of your observations, anticipating that you may want to
+feed the observations back into UniPOPS or another analysis system that
+understands how to read SD-FITS format files.
+
+The following three commands read or write FITS format files,
+
+   uni2fits  -  creates SD-FITS file from UniPOPS file.
+   fits2uni  -  creates UniPOPS file from SD-FITS file.
+   readfits  -  lists SD-FITS headers or gives a scan summary.
+
+They are user-friendly front-ends to the programs,
+
+   u2f -- creates an SD-FITS file from a UniPOPS file using standard
+		input and standard output.
+   f2u -- creates a UniPOPS file from an SD-FITS file using standard
+		input and standard output.
+
+The format that f2u and u2f read or write respectively is based on the
+binary tables extensions to FITS.  At a meeting in Green Bank in
+October 1989, representatives from many international observatories
+with single-dish telescopes agreed upon a single-dish FITS format
+(SD-FITS) which we have implemented for UniPOPS.  The binary tables 
+extension to FITS became an official part of the FITS standard in
+June of 1994.  One observatory that we are aware of (IRAM) has produced 
+a SD-FITS reader.  A copy of a document describing the FITS standard 
+including binary tables is available.  We are in the process of writing a
+description of the UniPOPS implementation of SD-FITS.
+
+Probably, you will never have to use f2u and u2f directly, and instead
+you should use uni2fits, fits2uni, or readfits.
+
+All of these programs can be used either while running UniPOPS or
+outside of UniPOPS.  If you are in UniPOPS, call the required program
+via the command SYSTEM, for example by typing,
+
+	>SYSTEM uni2fits
+
+while , outside UniPOPS, at the UNIX prompt, type,
+
+	%uni2fits
+
+
+When you type uni2fits, fits2uni, or readfits, you are asked a series
+of questions, most of which are self-explanatory.  For example, you
+must give the name of the UniPOPS data file (typically LDATA, LSAVE, or
+LKEEP) to be used for input (uni2fits) or output (fits2uni).  When
+running "uni2fits", you may select a range of scan numbers to be
+included.  You can also select only line data or continuum data from
+the input file.
+
+If you are reading or writing tape, you must enter a device name for
+the tape drive.  Device names, listed in the following table, depend on
+which workstation and what type of tape you are using.  If your
+workstation is not in this list, see if the local tape drive is
+labeled, or seek the help of the local system manager.
+
+#ifdef CKBK
+
+#end
+                       Tape Drive Device Name 
+-----------------------------------------------------------------------
+location  workstation    9-track   9-track   exabyte   QUIC cartridge
+                        1600 BPI  6250 BPI  
+--------  ------------  --------  --------   --------  -------------
+140-ft     Nath          rst9      rst17       rst0         NA
+Jy Lab     Regulus       rst9      rst17       rst2         NA
+Jy Lab     Yed           NA        NA          rst0         NA
+Charlottesville		  U	     U          U            U
+Tucson			  U	     U          U            U
+12-m			  U	     U          U            U
+-----------------------------------------------------------------------
+NA = Not Available;   U = Unknown
+
+As mentioned above, the scripts uni2fits, fits2uni, and readfits are
+user-friendly front-ends to the u2f and f2u programs.  Basically,
+uni2fits, readfits, and fits2uni asks you a set of questions and pass
+the answers to u2f or f2u.  The u2f and f2u programs do the real work
+in converting the files -- see the reference manual for more details
+about using f2u and u2f.
+
+SCT11 Three-Dimensional (Cube) FITS Images
+DSH---------------------------------------
+
+The CUBE utility in UniPOPS allows you to create a three-dimensional
+FITS image file out of a collection of spectral line scans stored in
+one or more SDD files. The FITS file can be then read into IRAF, AIPS,
+etc.  It is a standard FITS image file and uses none of the FITS
+extensions.
+
+Read this documentation carefully before using the CUBE utility.
+
+1.  To use the utility, you must first finish all single spectra
+analysis (such as baseline fitting, smoothing, etc.).  As you process
+each scan, you should store it away in an SDD file such as your `keep'
+or `save' file.  The file need not contain all the scans you want to
+end up putting in the FITS cube.  For example, you may want to store
+all yesterday's processed data in one file, today's in another, and
+tomorrow's in a third.
+
+2. Once a SDD file is ready, you can then run the cube-producing
+utility by typing either from within UniPOPS:
+
+
+	>SYSTEM cube.exe
+
+or, at the UNIX prompt,
+
+	%cube.exe
+
+3. The utility will ask you for parameters describing what you want the
+cube file to look like.  For the most part, the questions the program
+asks are self-explanatory.  For many users, the standard procedure
+CUBEINPUT (found in the file cubeinput.prc) can be used to generate
+appropriate answers for input to cube.exe from data in the `save' file.
+Users should consult the documentation on that procedure for more
+information.  The questions asked by cube.exe are:
+
+	a.  Whether or not you want to list debugging output.  With
+		this option off, the program produces a minimum of
+		messages while, with it on, you will get lots of
+		messages.
+	b.  Name of the SDD input file (the file created in step 1).
+	c.  Name of the FITS cube (output) file.
+
+4.  If the cube file already exist, then this step is not performed and
+step 5 begins.  If the cube file doesn't exist, then the program needs
+to generate the header part of the FITS file; it asks the user the
+following questions:
+
+	d.  A name which identifies the object or data to be
+		stored in the cube.
+	e.  The date you want to record in the header of the FITS file. 
+	f.  The name of the place, telescope, or computer you want
+		recorded in the header as a record of the FITS file's
+		place of origin.
+	g. The units of the data in the SDD file (K, Jy, etc.).
+	h.  The coordinate system that the data were taken in or the
+		system you want the FITS file to be in.
+	i.  Whether the positions of the observations were corrected
+		for the cos(dec), cos(gal_lat), etc. affect (i.e., was
+		COS(V) on?). (See NOTE below.)
+
+To assist you in giving answers to the next set of questions, the
+program generates a summary of certain parameters for the first
+observation in the SDD input file.  You can use the information or your
+own observing notes to generate answers to the following questions:
+
+	j.  The coordinates and velocity which is to occupy one of the
+		corners of the FITS cube file.  For example, the lowest
+		RA, DEC, and velocity you want to store in the cube.
+	k.  The step size (sampling interval) of the pixels in the FITS
+		cube along the three axes.  For example, the RA and DEC
+		separation between observations and the channel width
+		in km/sec.  
+	l.  The tolerances in positions and velocities around the
+		center of each pixel in the FITS cube outside of which
+		data is to be ignored.  For example, if you specify an
+		error of 10 arc-min in x and the position of an
+		observation exceeds 10 arc-min in x from the center of a
+		pixel, then that observation will be ignored.
+		Specifying large tolerances ensures that all the data
+		that could be stored in the FITS cube will be stored in
+		the cube.
+	m.  The number of pixels in the x, y, and velocity directions.
+		There is a maximum of 47 million pixels in a cube.  If
+		nx, ny, and nv represent the number of pixels you
+		enter, then  nx*ny*nv cannot exceed 47 x 10^6.  Also,
+		make sure you have enough disk space for the file; the
+		size of the FITS cube file will be about:
+
+		      2*nx*ny*nv + 2880 bytes
+
+	n.  If you have specified COS(V) corrections, then you should
+		next supply the center (reference) coordinate used in
+		the correction. If you have not specified COS(V)
+		corrections, this question is not asked.  
+
+	o.  You can also add three comment lines to the FITS cube file
+		for any further documentation you want.
+
+|-------------------------------------------------------------------
+| NOTE: If you specified that COS(V) is in effect, then the x and y
+| coordinates that you enter in questions j, k, l, and n correspond to
+| what they would have been if you were observing at the equator of the
+| observing coordinate system.
+| 
+| For example, if you observed a rectangular region in galactic
+| coordinates at a galactic latitude of 60 degrees, centered at 180.00
+| degrees in galactic longitude with 10 arc-min spacing in longitude with
+| the COS(V) correction in affect, then the delta longitude between your
+| observations would have been 10*arc-min/Cos(60) or 20 arc-min.  If you
+| went out 5 steps on each side of this position, then the lowest
+| longitude you observed would be 180.00 - 5*20 arc-min or 178.3333
+| degrees.
+| 
+| However, when you specify the lowest longitude in the cube (question
+| j), you SHOULD specify 180.00 - 5*10arc-min or 179.1666 and NOT
+| 178.3333.  Likewise, you SHOULD specify a delta longitude (question k)
+| of 10 arc-min and NOT 20.  These same considerations apply to the
+| tolerances you enter for galactic longitude (question l).  Also, the
+| reference position (question n) you SHOULD specify is 180.00 degrees.
+| Note that the COS(V) affect doesn't alter the numbers you would enter
+| for the latitude and velocity directions.
+|--------------------------------------------------------------------
+
+The program then writes out a blank data section of the FITS cube file
+and the header to the FITS cube file (using your specified
+parameters).  The program then skips to step 6 below.
+
+5.  If the FITS cube file already exists, the program will try to read
+the header to the FITS file and will check the header for errors.
+There are no guarantees if you use a cube file produced by a program
+other than the UniPOPS `cube.exe' utility.
+
+6. Once the program has produced or read in the header of the FITS cube
+you will be asked for a range of scan numbers and feed numbers which
+are to be processed from the SDD file.  Specifying zeros indicates
+either all scans or all feeds.
+
+7.  The program then begins reading in every scan in the SDD file.  If
+the observed positions and velocities fall within the cube and within
+the tolerances specified in the FITS header, then the data values are
+scaled to 16 bit integers and stored in the FITS cube.   The program
+does not interpolate between data points, but finds the nearest pixel
+(if within tolerances) into which a data value will go.  If two data
+points fall within the same pixel of the FITS cube, the second data
+point will overwrite the first (you will not be given any warning that
+this has taken place.)
+
+8.  The program terminates if any problems occur along the way or when
+the end of the input SDD file is encountered.
+
+9.  To add more data to the existing FITS cube file, or to overwrite
+data already in the cube, start from step 1 above with another SDD data
+file as input to the `cube.exe' utility.  You will not be asked the
+series of questions listed in step 4 since the header already exists in
+the FITS cube file.
+
+----------------------------------------------------------------------
+
+The following references were consulted in generating the CUBE utility,
+
+Wells, D. C., Greisen, E. W., and Harten, R. H., "FITS: A Flexible
+	Image Transport System," Astron. Astrophys. Suppl. Ser. 44,
+	(1981) 363.
+
+Greisen, E. W., "Non-Linear Coordinate Systems in AIPS," AIPS Memo No.
+	27, (1983).
+
+Greisen, E. W., "Additional Non-Linear Coordinates," AIPS Memo No. 46,
+	(1983).
+
+-----------------------------------------------------------------------
+
+The following is an example of the FITS header produced and readable by
+the CUBE utility in UniPOPS.
+
+SIMPLE  =                    T /      Spectral line data cube....
+BITPIX  =                   16 /      Processed via UniPOPS CUBE utility
+NAXIS   =                    3 /
+NAXIS1  =                  512 /
+NAXIS2  =                   44 /
+NAXIS3  =                    5 /
+CTYPE1  = 'VELO    '           /
+CRVAL1  =     -2.628200000E+05 /
+CDELT1  =      1.030570068E+03 /
+CRPIX1  =      1.000000000E+00 /
+COMMENT E1     5.152850342E+02 / Parameter needed for CUBE.  Error in velocity  
+CTYPE2  = 'RA---GLS'           /
+CRVAL2  =      9.849995422E+01 /
+CDELT2  =     -3.333333433E-01 /
+CRPIX2  =      2.234574890E+01 /
+COMMENT E2     1.666666716E-01 / Parameter needed for CUBE.  Error in H position
+CTYPE3  = 'DEC--GLS'           /
+CRVAL3  =      0.000000000E+00 /
+CDELT3  =      3.333333433E-01 /
+CRPIX3  =      4.400123978E+01 /
+COMMENT E3     1.666666716E-01 / Parameter needed for CUBE.  Error in V position
+COMMENT A '1950RADC'           / Better description of coordinate system 
+OBJECT  = 'S FIL S '           /
+ORIGIN  = 'NRAO 43M'           /
+DATE    = ' 1/12/93'           /
+BLANK   =               -32768 /
+BSCALE  =      1.386260963E-03 /
+BZERO   =      2.963103485E+01 /
+BUNIT   = 'K       '           /
+DATAMIN =     -1.579257965E+00 /
+DATAMAX =      7.505464935E+01 /
+EQUINOX =      1.950000000E+03 /
+COMMENT 1 You can choose what goes here.
+COMMENT 2 You could also put something here.
+COMMENT 3 You get up to three comment lines.
+END                                                                 
+
+
+SCT12 Rapid Reduction of Pointing and Calibration Observations
+DSH-----------------------------------------------------------
+
+UniPOPS has a few utilities that will go through the on-line data file
+and reduce pointing and calibration observations quickly. These
+utilities are telescope and site dependent and may not exist at all
+sites.
+
+For 140-ft telescope data, the following utilities are available,
+
+	pointing: Reduces continuum pointing measurements made with the
+		  POINT or PEAK observing procedures.
+
+	vsst.systemp: Reduces system temperature measurements made in
+		      the continuum with the VSST observing procedure.
+
+	vsst.sourcetemp: Reduces source temperature measurements made
+			 in the continuum with the VSST observing
+			 procedure.
+
+a) pointing
+
+   The `pointing' utility goes through the on-line data file looking
+   for pointing data.  When it finds one, it will reduce the data so as
+   to come up with pointing corrections.
+
+   This utility program can be run from within UniPOPS using the SYSTEM
+   command or from outside of UniPOPS at the UNIX prompt. To run the
+   program from the UNIX prompt, type either,
+
+		pointing
+
+   or
+
+		pointing 1
+
+   For most users, the first way of running `pointing' will be
+   sufficient.  The output from `pointing'  will go to a file by the
+   name of point.log.  If a file by that name already exists, it will
+   be overwritten by the new file.
+
+   If you use the last way of running `pointing', then two other files
+   are either created or overwritten -- they are named point.cal and
+   point.pnt.  The last two files are meant to be used by the
+   system-scientist for the telescope to diagnose problems with the
+   telescope, for use in calibration, or for updating the pointing
+   curve of the telescope.  The point.log file, on the other hand, is
+   meant for the general observer and is self explanatory.
+
+   When you run the program, you will be asked for your project code, a
+   scan number range (0.0 will give you all the scans for the specified
+   project), the feed number of the desired data, as well as whether to
+   use a Gaussian least squares method or a convolution method of
+   reducing the data.  If you choose convolution, then you will be
+   asked for the FWHM beam size of the Gaussian to be convolved with
+   the data.
+
+
+b) vsst.sourcetemp and vsst.systemp
+
+   The vsst.systemp and vsst.sourcetemp utilities goes through the
+   on-line data file looking for calibration data (i.e., data taken
+   with VSST).  When it finds one, it will reduce the data so as to
+   come up with calibration information.  vlbfo.exe reduces all source
+   temperature measurements and vlbcl.exe reduces all system
+   temperature measurements.
+
+   The utility programs can be run from within UniPOPS using the SYSTEM
+   command or they can be executed outside of UniPOPS at the Unix
+   prompt.
+
+   The output from vsst.sourcetemp will go to a file by the name of
+   sourcetemp.  If a file by that name already exists, it will be
+   overwritten by the new file.  The output from vsst.systemp will go
+   to a file by the name of systemp.  If a file by that name already
+   exists, it will be overwritten by the new file.  These files are
+   pretty explanatory.
+
+   When you run the programs, you will be asked for your project code,
+   a scan number range (0.0 will give you all the scans for the
+   specified project), as well as the feed number of the desired data.

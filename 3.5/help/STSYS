@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'STSYS:  (HEADER) System temperature on source (K).'
+PRINT ' '

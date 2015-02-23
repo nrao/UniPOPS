@@ -1,0 +1,289 @@
+	(REGULAR VERB)
+
+	Syntax: SELECT pointer
+
+	SELECT appends scan or save-bin numbers of scans in various
+	data files to the ASTACK internal array if the scan's
+	parameters match a set of selection criteria.  This power is
+	extremely useful if one wishes to process a number of scans
+	scattered throughout the data file.
+
+	The permitted pointers of SELECT are as follows:
+
+	      SELECT DSCANS - selects the scans by scan number from the
+			     off-line data file.
+
+	      SELECT INFO - summarizes the current selection criteria,
+			    what adverbs need to be changed (and their
+			    units).
+
+	      SELECT OFFDATA - selects the scans by scan number from the
+			     off-line data file.
+
+	      SELECT ONDATA- selects the scans by scan number from the 
+			     on-line data file.
+
+	      SELECT SSCANS- selects the scans by location from the 'save'
+			     file (NSAVE number).
+
+              SELECT KSCANS- selects the scans by scan number from the 'keep'
+                             file.
+
+              SELECT RSCANS- selects the scans by scan number from the 
+			     on-line and off-line individual records file
+			     (Green Bank data only).
+
+	Selecting from ONDATA, KSCANS and RSCANS results in scan 
+        numbers being appended to the internal array ASTACK.  Selecting
+        from DSCANS or OFFDATA results in negative scan numbers being 
+	appended to the internal array ASTACK.  Since a scan is retrieved 
+	from the SAVE file by specifying the location (save-bin) in the 
+	file (RECALL), SELECT SSCANS appends the locations rather than the 
+	scan numbers of the selected scans to ASTACK.
+
+	To change a selection criteria, you must alter the value of the
+	adverb which corresponds to that criteria.  To revert to a
+	default selection for a criteria, reset the value of the adverb
+	back to its default value.
+
+	The following criteria can be SELECTed upon:
+
+	------------------------------------------------------------------
+	Description		    SELECT Adverb(s)    Comments     
+	------------------------------------------------------------------
+	Source Name     		S_OBJECT    	16 Character string             
+	Observing Mode 			S_MODE  	4 Character string              
+	Scan Number - Integer Part     	SCAN_MIN
+					SCAN_MAX           
+	Feed Number - Fractional Part   FEED_MIN
+					FEED_MAX  
+	Commanded Source X Position     X_MIN		In degrees
+					X_MAX 		In degrees       
+	Commanded Source Y Position     Y_MIN		In degrees
+					Y_MAX		In degrees        
+	LST     			LST_MIN		In hours
+					LST_MAX		In hours    
+	Universal Time Date     	UT_MIN		Format: YYYY.MMDD
+					UT_MAX		Format: YYYY.MMDD 
+     
+L------------------------- Spectral Line --------------------------------    
+L-	Rest Frequency     		F_MIN		In MHz
+L-					F_MAX 		In MHz       
+L-	Frequency Resolution		BW_MIN		In MHz
+L-					BW_MAX 		In MHz     
+L------------------------------------------------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	Sample Rate     		IT_MIN		In seconds
+C-					IT_MAX  	In seconds    
+C-	Slew Rate			RATE_MIN	In degrees/sec
+C-					RATE_MAX 	In degrees/sec 
+C------------------------------------------------------------------------
+
+
+
+	.  S_OBJECT
+	   --------
+	   Initially a blank character string signifying that all
+	   object names will be selected.  If the string has a non-blank
+	   values, the string must match the object for that scan to be
+	   selected (i.e. no wild cards are allowed).  S_OBJECT is
+	   compared with the OBJECT header string.
+
+	.  S_MODE
+	   ------
+	   Initially a blank character string signifying that all
+	   observing modes will be selected.  If the string has a
+	   non-blank values, the string must match the observing  mode
+	   for that scan to be selected (i.e. no wild cards are
+	   allowed).  S_MODE is compared with the last 4 characters of
+	   the OBSMODE header string.   The first 4 characters of
+	   OBSMODE (LINE or CONT) are compared with the program (condar
+	   or line) and only those observing types matching the program
+	   type are selected (this feature can not be disabled).  Valid
+	   modes are listed under the Keywords
+
+	.  Other Selection Adverbs
+	   -----------------------
+	   The remaining pairs of adverbs that SELECT uses determine
+	   the range that the related header value must have to satisfy
+	   the selection criteria.  A value of DEFAULT, as indicated by
+	   SELECT INFO, means that there is no selection limit at that
+	   end of the range.  For example, if SCAN_MIN = 500 and
+	   SCAN_MAX = DEFAULT, all scans having scan numbers greater
+	   than or equal to 500 will be selected.  If X_MIN is DEFAULT
+	   and X_MAX is 43.254 then all scans having header SOURCEX
+	   values less than or equal to 43.254 will be selected.  If
+	   both range adverbs in a pair are set to DEFAULT then scans
+	   having any value for the related header parameter will be
+	   selected.
+
+	.  Sorting Entries and the S_SORT Adverb
+	   -------------------------------------
+	   In most cases, it is sufficient for SELECT to add selected
+	   scans to the internal ASTACK array in the order they appear
+	   in the file.  However, it may be desirable on occasion to
+	   sort the additions to ASTACK.  The adverb S_SORT controls
+	   this behavior.  If S_SORT >= 1 then additions will be sorted
+	   in ascending order, if S_SORT <= -1 then additions will be
+	   sorted in descending order and if S_SORT is 0 then no
+	   sorting will be done.
+
+	.  ACOUNT
+	   ------
+	   The value of the adverb ACOUNT indicates what is the last
+	   used element of the internal ASTACK array.  SELECT adds to
+	   ASTACK beginning at ACOUNT + 1.
+
+
+	EXAMPLE:
+
+	If you are running line and type:
+
+		SELECT INFO
+
+	something like the following will be produced:
+
+      SELECT INFO : Status of adverbs used by SELECT verb.
+
+        Object : All Objects (S_OBJECT)
+        Mode   : All modes (S_MODE)
+        Program: LINE
+
+              Field             From            To                Adverbs
+
+        Scan Number            DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+        Subscan Number         DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+        Source X Position      DEFAULT        DEFAULT      X_MIN, X_MAX
+        Source Y Position      DEFAULT        DEFAULT      Y_MIN, Y_MAX
+        (decimal degrees)
+        LST (hours)            DEFAULT        DEFAULT      LST_MIN, LST_MAX
+        Univ. Time Date        DEFAULT        DEFAULT      UT_MIN, UT_MAX
+        (years)
+        Rest Freq. (MHz)       DEFAULT        DEFAULT      F_MIN, F_MAX
+        Bandwidth (MHz)        DEFAULT        DEFAULT      BW_MIN, BW_MAX
+
+        Additions to ASTACK will begin at location    1 (ACOUNT + 1)
+        Additions will not be sorted (S_SORT)
+
+
+
+	In the above example, the internal array ASTACK is
+	empty since ACOUNT is apparently 0; all default selection
+	criteria are in affect as well.
+
+	You now want to SELECT from the on-line data file all scans
+	with an object name of "W43", with scan numbers less than 2790,
+	so you type:
+
+		S_OBJECT = "W43"
+		SCAN_MIN = DEFAULT; SCAN_MAX = 2790
+		SELECT ONDATA
+
+	And the program will print out something like :
+
+	 	Select: choosing scans from online data.
+	 	Select:   32 scans were added to ASTACK
+
+	which tells you how many scans fit this criteria and have been
+	added to the internal array ASTACK.  Now, if you type:
+
+		TELL STACK
+
+	you will get a listing of the 32 scans found by SELECT. 
+
+	Now, you want to add to ASTACK all scans taken toward 'W3',
+	regardless of scan number but which have been taken at a
+	frequency of 720 MHz or higher.  You also want to review all of
+	the selection criteria.  So, type:
+
+		S_OBJECT = "W3"
+		SCAN_MIN = DEFAULT; SCAN_MAX = DEFAULT
+		F_MIN = 720; F_MAX = DEFAULT
+		SELECT INFO
+
+	and the following will be produced by the program
+
+      SELECT INFO : Status of adverbs used by SELECT verb.
+
+        Object : "W3              " (S_OBJECT)
+	Mode   : All modes (S_MODE)
+	Program: LINE
+
+              Field             From            To                Adverbs
+
+	Scan Number            DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+	Subscan Number         DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+	Source X Position      DEFAULT        DEFAULT      X_MIN, X_MAX
+	Source Y Position      DEFAULT        DEFAULT      Y_MIN, Y_MAX
+	(decimal degrees)
+	LST (hours)            DEFAULT        DEFAULT      LST_MIN, LST_MAX
+	Univ. Time Date        DEFAULT        DEFAULT      UT_MIN, UT_MAX
+	(years)
+	Rest Freq. (MHz)     720.0000         DEFAULT      F_MIN, F_MAX
+	Bandwidth (MHz)        DEFAULT        DEFAULT      BW_MIN, BW_MAX
+
+	Additions to ASTACK will begin at location   33 (ACOUNT + 1)
+	Additions will not be sorted (S_SORT)
+
+	You can now SELECT from the off-line data file all scans which
+	satisfy the above criteria by typing:
+
+		SELECT OFFDATA
+
+	and SELECT will report on the scans it has found and will add
+	them to ASTACK.
+
+
+	You want to revert to all the default selection criteria, and want to
+	check that you have done so.  Specify :
+
+		EMPTY
+		S_OBJECT = " "
+		SCAN_MIN = DEFAULT
+		SCAN_MAX = DEFAULT
+		F_MIN = DEFAULT
+		SELECT INFO
+
+	and the following will be produced by the program
+
+      SELECT INFO : Status of adverbs used by SELECT verb.
+
+	Object : All Objects (S_OBJECT)
+	Mode   : All modes (S_MODE)
+	Program: LINE
+
+              Field             From            To                Adverbs
+
+	Scan Number            DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+	Subscan Number         DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+	Source X Position      DEFAULT        DEFAULT      X_MIN, X_MAX
+	Source Y Position      DEFAULT        DEFAULT      Y_MIN, Y_MAX
+	(decimal degrees)
+	LST (hours)            DEFAULT        DEFAULT      LST_MIN, LST_MAX
+	Univ. Time Date        DEFAULT        DEFAULT      UT_MIN, UT_MAX
+	(years)
+	Rest Freq. (MHz)       DEFAULT        DEFAULT      F_MIN, F_MAX
+	Bandwidth (MHz)        DEFAULT        DEFAULT      BW_MIN, BW_MAX
+
+	Additions to ASTACK will begin at location    1 (ACOUNT + 1)
+	Additions will not be sorted (S_SORT)
+
+
+	You now want all your 'ORIONA' scans in the 'save' data file
+	which were observed with a 0.5 MHz channel width.  Type:
+
+		S_OBJECT = "ORIONA"
+		BW_MIN = 0.5; BW_MAX = 0.5
+		SELECT SSCANS
+
+	and SELECT will report on the scans it has found and will add
+	them to ASTACK.  Now, typing:
+
+		TELL STACK
+
+	will produce a listing of 'save-bin' numbers, not scan numbers,
+	which contain scans that fulfill these criteria.  You can now
+	assign adverb NSAVE any value from the used portion of ASTACK
+	and then use RECALL to access the data.
+

@@ -1,0 +1,31 @@
+	(REGULAR VERB)
+
+	Syntax:	  SETCLUT(table_num, num_levels)
+
+	SETCLUT facilitates the setting up of a Color-Look-Up-Table
+	for RASTER displays.  You have a choice of 6 color tables
+	to choose from.  These tables and there respective codes
+	are:
+
+		1 - Gray scale (white to black)
+		2 - Gray scale (black to white)
+		3 - Blue through Green to Red
+		4 - Red through Green to Blue
+		5 - Blue through Purple to Brown
+		6 - Brown through Purple to Blue
+
+	The number of levels must be greater than or equal to 1 and
+	less than or equal to 32.
+
+	ADVERBS SET:
+
+	CLUT(3x32)       Color-Look-Up-Table for color or gray-scale
+			 levels.  
+ 
+
+	EXAMPLE:
+
+	You are about to do a RASTER display and want a Red-Blue
+	color table with 10 levels, so you specify:
+
+		SETCLUT(4,10)

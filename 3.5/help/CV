@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'CV:  (LINE) Sets the lower x-axis to channel number and'
+PRINT 'the upper to velocity for SHOW.'
+PRINT ' '
+PRINT 'CV:  (CONTINUUM) Sets the lower x-axis to channel number and'
+PRINT 'the upper to position for SHOW.'
+PRINT ' '

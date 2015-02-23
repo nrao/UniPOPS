@@ -1,0 +1,20 @@
+	(REGULAR VERB)
+
+	HISTOGRAM sets the plotting mode for the SHOW to histogram
+	mode.  For PLOT displays, HISTOGRAM is identical with POINTS.
+
+	No adverbs are used by HISTOGRAM.
+
+	ADVERB SET:
+	
+	STATUS(3)    Type of SHOW or PLOT plot as determined by the
+		     last LINE, HISTOGRAM, or POINTS command. 
+ 
+		     Values:  0 = line; 1 = histogram; 2 = points
+
+	EXAMPLE:
+
+	Your last display was in line mode.  In order to redisplay the
+	data in histogram mode, specify;
+
+			HISTOGRAM PAGE SHOW

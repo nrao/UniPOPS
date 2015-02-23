@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FOPEN:  (FUNCTION) Opens the specified ASCII file using the'
+PRINT 'specified properties.  Returns the unit number for the'
+PRINT 'opened file.  Syntax:  unit=FOPEN(name,props)'
+PRINT ' '

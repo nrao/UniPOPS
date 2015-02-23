@@ -1,0 +1,386 @@
+17. Specific Continuum Features
+-------------------------------
+
+Most operations needed for continuum analysis have counterparts in
+spectral-line data reduction. Typical of these would be the fitting of
+baselines and Gaussians, general graphical display, data scaling, and
+the stacking of scans. As such, these have been discussed already in
+the appropriate chapters of this Cookbook. However, a number of UniPOPS
+verbs exist which are continuum-specific. Many of these can be used
+only with data acquired by either, or both of, the 140-ft or 12-m
+telescopes, and thus lack the global generality of many other UniPOPS
+verbs. In describing these verbs and their functions below, we will
+always point out to which telescope's data they are relevant.  Many of
+these verbs are really most often invoked from a procedure.  This is
+especially true for user of the 12-meter.
+
+17.1 Atmospheric Tipping Scans
+------------------------------
+
+Total-power atmospheric tipping scans are a popular way of estimating
+the opacity of the atmosphere at higher frequencies. Antenna
+temperatures are measured at a number of air masses (where, air mass =
+sec(zenith angle)), and the results used to compute the zenith opacity,
+and often the receiver noise temperature. The UniPOPS sky-tip reduction
+verb SOLVETIP prints the derived values on the screen.
+
+The tipping methods and the algorithms used by SOLVETIP for data from
+the 140-ft and 12-m telescopes differ, and the verb applies the
+appropriate algorithm to sky-tip data from either telescope. Further,
+for sky-tips taken with the 12-m telescope, a choice of different
+algorithms is available, and these are selected by the value of the
+adverb TYPETIP which should be set as follows,
+
+	TYPETIP = 1 This gives a linear least-squares solution to the
+		    "tipping equation". It assumes that the temperature
+		    scale is well calibrated, and the receiver,
+		    atmospheric and `warm-spillover' temperatures, plus
+		    the `warm-spillover' efficiency, are well known.
+		    (This method is known as TPTIP at the 12-m.)
+
+		    The user must set the UniPOPS adverbs FTM (the
+		    ratio of the temperatures of the atmosphere and the
+		    ambient; default = 0.95), FTSBR (the ratio of the
+		    temperatures of the `warm spillover' and ambient;
+		    default = 0.95), ETA (the `warm-spillover'
+		    efficiency; default = 0.95), and TRCVR (the
+		    receiver temperature).
+
+	TYPETIP = 2 This assumes that the scan in Array (0) contains, 
+
+			 log( T(vane) - T(sky))
+
+		    This quantity should be entered into Array (0),
+		    perhaps by a procedure, before calling SOLVETIP.
+		    (This method is known as SPTIP at the 12-m.)
+
+	TYPETIP = 3 This gives a non-linear least-squares solution. Be
+		    warned that the temperature scale MUST be
+		    accurately calibrated.  The user must set the
+		    UniPOPS adverbs FTM (see TYPETIP = 1), FTSBR (see
+		    TYPETIP = 1), TVANE (the chopper vane temperature),
+		    and TAU0 (an initial guess for the zenith
+		    opacity).  Further, if the UniPOPS adverb ETAFREE =
+		    0, then the adverb ETA, (see TYPETIP = 1), is held
+		    fixed during the fit. In this case ETA has to be
+		    preset to its best-estimated value, or left at its
+		    default of 0.84.  If ETAFREE = 1, ETA is a free
+		    parameter of the fit.  If TAU0 is set to 0,
+		    SOLVETIP will estimate a first approximation for
+		    the zenith opacity making a preliminary solution as
+		    for TYPETIP = 2. (The method is known as STIP at
+		    the 12-m.)
+
+For Green Bank data, no adverbs need be set. The results are stored in
+the adverbs TRCVR (the receiver temperature), and TAU0 (the zenith
+opacity).
+
+As an example, suppose scan 1234 contains tipping data taken with the
+two-channel 90-GHz receiver on the 12-m telescope. To see the two
+independent estimates of zenith opacity for the two channels, you might
+type,
+
+	>TYPETIP =  1 
+ 	>ETA = 0.9; FTM = 0.95; FTSBR = 1.0; TRCVR = 100.0
+	>GET 1234.01; SOLVETIP
+	>GET 1234.02; SOLVETIP
+
+17.2 The Digital BackEnd (DBE) at the 12-m Telescope
+----------------------------------------------------
+
+At the 12-m telescope on Kitt Peak, continuum observations are made
+through a four-phase digital backend (DBE). The four switch phases of
+the DBE are defined to be,
+
+	P1 = SIGNAL    + CALIBRATION
+	P2 = REFERENCE + CALIBRATION
+	P3 = SIGNAL
+	P4 = REFERENCE
+
+The raw data which these represent can then be converted into the
+following quantities,
+
+	SWITCHED POWER (SP) 	 = (P1 - P2 + P3 - P4) / 2
+	TOTAL POWER (TP)    	 = (P1 + P2 + P3 + P4) / 4
+	CALIBRATION SIGNAL (CAL) = (P1 + P2 - P3 - P4) / 2
+	ZERO LEVEL (ZERO)  	 = (P1 - P2 - P3 + P4)
+
+A series of special verbs exist in UniPOPS for manipulating and
+calibrating 12-m telescope continuum data taken through the DBE. All
+these verbs operate on the scan currently in Array (0).
+
+WARNING : Note well, that if any of the following five verbs have been
+used on a scan of raw DBE data, neither it, nor any of the other four,
+should be invoked again until AFTER a new scan of raw DBE data (or the
+same one) has been put in Array (0), say with GET. Ignoring this
+warning will result in nonsense !
+
+17.2.1 FIXDBE
+-------------
+
+This verb is the most basic of the DBE verbs, and derives SP, TP, CAL
+and ZERO from the basic DBE phases of the scan in Array (0), leaving
+the solutions in Array (0), which does not change its size. After using
+FIXDBE, the SP values for the scan occupy the first quarter of Array
+(0), the TP values the second quarter, the CAL values the third, and
+the ZERO values the final quarter. Where the header contains a value
+for the zenith opacity, the SP, TP and ZERO values are corrected for
+atmospheric absorption, i.e. multiplied by exp(tau * cosec(elev)).  The
+values of all quantities are in counts, and the UniPOPS adverb CALVAL
+is left containing the mean value of CAL for the scan.
+
+Suppose you wished to have a first look at either SP, TP, CAL or ZERO
+for the data in some 12-m DBE scans, then you might use the following
+procedure,
+
+	>PROC DBE_DATA(SCAN_NO, DATA_MODE)
+	:SCALAR I_IND, I_PT, I_OFF
+	:GET SCAN_NO
+	:I_PT = H0(NOINT) / 4
+	:I_OFF = (DATA_MODE - 1) * I_PT
+	:FIXDBE
+	:FOR I_IND = 1 TO I_PT
+	:	D0(I_IND) = D0(I_IND + I_OFF)
+	:END
+	:H0(NOINT) = I_PT
+	:PAGE SHOW
+	:RETURN
+	:FINISH
+
+For DATA_MODE, you would enter 1 for SP, 2 for TP, 3 for CAL, and 4 for
+ZERO. On completion, the selected quantity will be displayed
+graphically, and available in Array (0) for any other operation.
+
+17.2.2 SWITCHED
+---------------
+
+This verb derives the switched-power signal, SP, from the DBE basic
+phases in Array (0). The result is left in Array (0), but there are
+only one quarter the number of points that were in the original scan.
+The resulting SP record will be corrected for atmospheric absorption,
+provided the header contains a value for zenith opacity. If a noise
+calibration signal is present, the final record is expressed in K,
+using the mean calibration height, and the value of the noise tube
+temperature held in the header (parameter TCAL).  If there is no
+on-line calibration, SWITCHED tries to put the signal into K using the
+value of the control-program parameter DSF (header parameter RESTFREQ)
+set at observing time (see the "12-m User's Manual"). If a noise
+calibration is present, SWITCHED sets the header parameter STSYS to the
+system temperature in K, and the adverb CALVAL to the mean value of CAL
+for the scan. In the absence of a noise calibration, CALVAL is set to
+DSF.
+
+Suppose that you have made beam-switched observations with the 12-m
+telescope and the DBE, and wish to look at your results for scan 1234.
+Then type,
+
+	>GET 1234
+	>SWITCHED PAGE SHOW
+
+17.2.3 TOTALPWR
+---------------
+
+This verb derives the total-power signal, TP, from the DBE basic phases
+in Array (0). The result is left in Array (0), but there are only one
+quarter the number of points that were in the original scan. The
+resulting TP record will be corrected for atmospheric absorption,
+provided the header contains a value for zenith opacity. If a noise
+calibration signal is present, the final record is expressed in K,
+using the mean calibration height and the value of the noise tube
+temperature held in the header (parameter TCAL).  If there is no
+on-line calibration, TOTALPWR tries to put the signal into K using the
+value of the control program parameter DSF (header parameter RESTFREQ)
+set at observing time (see the "12-m User's Manual"). If a noise
+calibration is present, TOTALPWR sets the header parameter STSYS to the
+system temperature in K, and the adverb CALVAL to the mean value of CAL
+for the scan. In the absence of a noise calibration, CALVAL is set to
+DSF
+
+Suppose that you have made total-power observations with the 12-m
+telescope and the DBE, and wish to look at your results for scan 1236.
+Then type,
+
+	>GET 1236
+	>TOTALPWR PAGE SHOW
+
+17.2.4 CALDBE
+-------------
+
+This verb derives the calibration height, CAL, from the DBE basic
+phases in Array (0). The result is left in Array (0), but there are
+only one quarter the number of points that were in the original scan.
+The resultant values are noise tube deflections in counts.  The adverb
+CALVAL is set to the mean value of the noise tube deflections for the
+scan. The calibration factor (in K/counts), the noise tube temperature,
+and the mean noise tube deflection are printed on the screen (using the
+value of the noise tube temperature held in the header parameter
+TCAL).
+
+Suppose that you have made switched-power observations with the 12-m
+telescope and the DBE, and wish to look at the noise tube height for
+scan 1234. Then type,
+
+	>GET 1234
+	>CALDBE PAGE SHOW
+
+17.2.5 ZERO 
+-----------
+
+This verb derives the zero-level, ZERO, from the DBE basic phases in
+Array (0). The result is left in Array (0), but there are only one
+quarter the number of points that were in the original scan.  The
+resulting ZERO record will be scaled for atmospheric absorption,
+provided the header contains a value for zenith opacity.  The final
+results are expressed in `scaled counts'. The rms of the zero level is
+placed in the UniPOPS adverb VRMS, and printed on the screen.
+
+Suppose you wish to look at the zero level for 12-m telescope DBE scan
+1234. Then type,
+
+	>GET 1234
+	>ZERO PAGE SHOW
+
+17.3 Continuum On-Off Data
+--------------------------
+
+A number of UniPOPS verbs exist that aid users to reduce continuum
+On-Off data taken with the NRAO telescopes. For the 140-ft, as for the
+now-defunct 300-ft telescope, On-Off scans consist of many cycles of
+"Off-On" pairs, terminated by the pattern "Off - Noise Source Cal -
+Off".  At the 12-m telescope, On-Off scans consist of sequences of
+"Off-On-On-Off" cycles.
+
+17.3.1 AVG and AVGD
+-------------------
+
+The verb AVG will produce the source deflection and standard deviation
+for an On-Off scan made with the Green-Bank 140-ft or 300-ft
+telescopes, or the Kitt Peak 12-m telescope, where the scan is held in
+Array (0). AVG will handle data from an analog (standard) backend
+directly, or data from the 12-m digital backend (DBE) after prior
+processing by SWITCHED or TOTALPWR (see Sections 17.2.2 and 17.2.3).
+For Green Bank On-Offs, the mean deflection and rms are printed on the
+screen scaled into K. For 12-m On-Offs, the mean deflection and rms are
+printed scaled into K and Jy (first order), and the signal-to-noise
+ratio for the deflection is also given.  AVG places the values of the
+mean source deflection and its rms into the header parameters, TSOURCE
+and TRMS respectively.
+
+The verb AVGD is a subset of AVG for 12-m On-Off data. Again, prior
+processing with SWITCHED or TOTALPWR is obligatory. With AVGD, nothing
+is printed on the screen, but the values of the mean deflection and the
+rms are placed into the header parameters, TSOURCE and TRMS
+respectively, while the header parameter OFFSCAN is zeroed.
+
+Suppose that you have a 12-m scan numbered 1234 which holds
+switched-power, On-Off data taken through the 12-m DBE. To print on the
+screen the mean source deflection, its rms, and the signal-to-noise
+ratio, type,
+
+	>GET 1234
+	>SWITCHED AVG
+
+17.3.2 Evaluating and Editing On-Off Data
+-----------------------------------------
+
+Sometimes you will wish to edit out from a scan one or more On-Off
+cycles which have been corrupted by equipment trouble, interference,
+atmospheric fluctuations, etc. To help evaluate your scan graphically,
+first display it with SHOW (see Chapter 6). You can then mark the "On
+samples" of the On-Off cycles using the verb ONS.  A call to ONS will
+plot a plus (+) symbol on top of each "On". Thus, to help you evaluate
+12-m DBE scan number 1236 which contains total-power, On-Off data,
+type,
+
+	>GET 1236
+	>TOTALPWR
+	>PAGE SHOW ONS
+
+To give you a more quantitative idea of the data values within the
+scan, the verb TEMPS will list the source deflection for each On-Off
+cycle within the scan.  Thus, to list the source deflection for each
+On-Off cycle of the scan that you have just plotted and marked with
+ONS, type,
+
+	>TEMPS
+
+If you decide on the evidence of the above operations, that some On-Off
+cycles within the scan have been corrupted and should be excised, the
+verb SEDITS is used to deleted  designated cycles. SEDITS takes two
+arguments, these being the sequential numbers within the scan of the
+first and last consecutive On-Off cycles that you wish to be deleted.
+If a number of non-contiguous On-Off cycles need to be deleted, SEDITS
+can be called more than once. SEDITS physically deletes the rejected
+cycles, and the remaining scan contains less data, as is easily seen by
+displaying the edited entity with SHOW. After deleting the relevant
+cycles, SEDIT recomputes the source deflection and its rms, placing
+these values in the header parameters, TSOURCE and TRMS respectively.
+
+Suppose you have decided to excise On-Off cycles 3, 7, 8 and 9 from the
+above scan, type,
+
+	>SEDITS(3,3)
+	>SEDITS(7,9)
+	>PAGE SHOW
+
+17.4 Five-Point Maps from the 12-m Telescope
+--------------------------------------------
+
+At the 12-m telescope, five-point maps are used to estimate telescope
+pointing, and to obtain accurate flux density estimates for the
+stronger sources. For details of the technique, see the "12-m User's
+Manual". Each position measured in a five-point map has a separate scan
+number (in the order North, South, Center, East and West). 
+
+For five-point data reduction, call the verb PDOC, after placing the
+deflections for the five points in elements 1 to 5 of a "synthetic
+scan" in Array (0). These should be entered in Array (0) in the order
+of measurement, with the associated rms's having the same order in
+elements 6 to 10. For clarity, this "synthetic scan" should contain the
+scan number of the central scan within the header parameter SCAN. PDOC
+will complete the analysis of the results, and present the following,
+
+     i) The source deflections at each of the five positions, plus their
+	standard errors, in diagrammatic form.
+
+    ii) The azimuth and elevation offsets from the nominal pointing,
+	and the peak heights of one-dimensional fitted Gaussians
+	(corrected for the orthogonal offsets) for "beam-size
+	constrained" and "free" Gaussian fits, Fitted Gaussian
+	half-power widths are also given for the free fit. The fitted
+	peak positions are plotted on the five-point map.
+
+   iii) The corrected azimuth and elevation pointing offsets that
+	should be used for further observations in that part of the
+	sky.
+
+Suppose that at the 12-m telescope you have made a five-point
+map through the DBE in switched-power mode, the central scan of which
+is numbered 3582. To obtain the results for this observation you could
+use the following procedure,
+
+	>PROCEDURE FIVE_PT(CENT_SCAN)
+	:SCALAR I_IND, I_OBS
+	:I_OBS = 1
+	:FOR I_IND = (CENT_SCAN  - 2) TO (CENT_SCAN + 2)
+	:	GET I_IND
+	:	SWITCHED
+	:	IF (I_OBS = 1)THEN
+	:		COPY(0,1)
+	:		H1(SCAN) = H1(SCAN) + 2
+	:		H1(NOINT) = 10
+	:	END
+	:	AVGD
+	:	D1(I_OBS) = H0(TSOURCE)
+	:	D1(I_OBS + 5) = H0(TRMS)
+	:	I_OBS = I_OBS + 1
+	:END
+	:COPY(1,0)
+	:PDOC
+	:RETURN
+	:FINISH
+
+To then analyze the five-point map for the second receiver, type,
+
+	>FIVE_PT(3582.02)
+

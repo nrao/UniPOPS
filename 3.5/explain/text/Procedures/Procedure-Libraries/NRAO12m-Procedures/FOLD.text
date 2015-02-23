@@ -1,0 +1,20 @@
+	FOLD sets FS and FR before calling RAP and then displays the
+	result of the RAP.
+
+	RAP requires that FS and FR be set.  Prior to the 1993-1994
+	observing season, these two values had to be remembered by
+	the observer and entered correctly.  These values are now
+	in the data header (as FOFFSIG and FOFFREF1).  FOLD gets these
+	values from the header and calls RAP.
+
+	It is therefore not necessary to set FS and FR for current
+	12-m data before using RAP.
+
+	Any previously set values of FS and FR will be replaced by
+	the values found in the header.
+
+	The data must already be present in Array (0).
+
+	File name: fold.prc
+
+	This procedure is included in LSETUP.12meter

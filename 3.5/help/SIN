@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SIN: (FUNCTION) Returns the sine of the given parameter (in'
+PRINT 'radians).'
+PRINT ' '

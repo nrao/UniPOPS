@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CMARK:  (ARRAY-12) Channels at which SHOW draws vertical'
+PRINT 'line.  X-axis values at which PLOT draws vertical lines.'
+PRINT 'X-cell numbers at which LABEL draws vertical lines.'
+PRINT ' '

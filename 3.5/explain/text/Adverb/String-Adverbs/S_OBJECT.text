@@ -1,0 +1,29 @@
+	(STRING ADVERB of length 16 characters)
+
+	S_OBJECT specifies the name of the object to SELECTed.
+
+	The match must be exact (i.e. no wild cards); however, case is
+	ignored.
+
+	If S_OBJECT is all spaces, all objects will be selected.
+
+	S_OBJECT is used by : SELECT
+
+	No verbs change S_OBJECT.
+
+	The initial value of S_OBJECT is blanks.
+
+	EXAMPLE :
+
+	To select all observations of "ORIONA", specify:
+
+		S_OBJECT = "ORIONA"
+
+	or 	
+
+		S_OBJECT = "oriona"
+	
+
+	To select all scans regardless of the object, specify:
+
+		S_OBJECT = " "

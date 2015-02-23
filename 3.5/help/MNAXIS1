@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MNAXIS1:  (HEADER-MATRIX) The number of x-axis cells in the'
+PRINT 'Matrix.'
+PRINT ' '

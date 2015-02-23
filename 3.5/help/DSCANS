@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'DSCANS:  (POINTER) Indicates online and offline data files'
+PRINT 'for TELL, SELECT, SUMMARY, and CHNGFILE and Z_CHNGFIL'
+PRINT '(offline data files only).'
+PRINT ' '

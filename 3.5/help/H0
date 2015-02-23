@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'H0:  (INTERNAL-ARRAY) Returns/sets the value of the  '
+PRINT 'specified header parameter in Array 0.'
+PRINT ' '

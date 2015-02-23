@@ -1,0 +1,215 @@
+	(REGULAR VERB)        
+		
+	RIPPLE is used to fit and remove a sinusoidal baseline from 
+	the data in Array (0).  You have control over which
+	parameters of the sinusoid are to be held fixed or fitted
+	for by RIPPLE.  The interval of the fit is also controlled.
+        The sine curve is then evaluated over all channels, independent
+	of the interval of the fit, and subtracted from Array (0).  
+	Array (0) will then contain the original data minus the fitted 
+	sinusoid.
+
+	Specifying the interval for the fit:
+        ------------------------------------
+	You can specify the range of channel numbers to use for the fit
+	with one of two methods:
+
+	[1]  Assign values to BDROP and EDROP to indicate the number of
+	     channels you wish to EXCLUDE from the fit at each end of
+	     of the data (default values are 0).  Assign values to
+	     BBASE and EBASE to indicate how many channels are to be
+	     INCLUDED in the interval of the fit at each end of the data, 
+   	     after excluding those indicated by BDROP and EDROP (default
+	     values for BBASE and EBASE are 50).
+
+	[2]  Assign values to adverb array NREGION(32) so as to define 
+	     a set of fitting regions.  Each pair of values of
+	     NREGION specifies a region to INCLUDE in the fit.
+
+	NREGION will supersede BBASE, EBASE, BDROP and EDROP, unless 
+	NREGION(1)=0.
+             
+	The regions used to compute the fit should not contain a known
+	or suspected spectral feature.  You should remove an
+	appropriately-windowed linear or polynomial baseline from the
+	data before executing RIPPLE.
+
+	Fitting equation:
+        -----------------
+
+	RIPPLE fits the following equation (at each channel, i):
+
+	RAMPLTDE * cos ((i - RPHASE)*2pi/RPERIOD)
+
+        The units of RPHASE and RPERIOD are channels.
+
+	Initial guesses:
+        ----------------
+	You MUST specify an initial guess for RPERIOD.
+
+	The RIPPLE verb can determine initial guesses for RAMPLTDE 
+	and RPHASE if you choose that behavior (see the next
+	section).
+
+        Specifying what to fit and what to keep constant:
+ 	-------------------------------------------------
+	You specify which of the 3 parameters in the fitting
+	equation you want the program to fit or keep constant by
+	giving >0, 0, or <0 values to the adverbs RFIXAMP, RFIXPHA,
+	and RFIXPER.  A value greater than zero indicates that the
+	corresponding parameter is to be held fixed to its initial
+	value during fitting.  A value equal to zero indicates that
+	RIPPLE should attempt to guess for itself what an appropriate
+	initial value is for the corresponding parameter.  A value less
+	than zero indicates that the algorithm should use the current
+	value of the corresponding parameter as the initial value 
+	in the fit.  The following describes this behavior for these 
+	adverbs along with their default value.
+
+	----------------------------------------------------------------
+	Adverb	Value	Usage
+	----------------------------------------------------------------
+	RFIXAMP	 >0 	The amplitude is held fixed to the value in
+			RAMPLTDE.
+
+		  0	[default] The algorithm will try to find a guess 
+			for the initial value of RAMPLTDE.
+
+		 <0	Use the value of RAMPLTDE as the initial guess.
+			RAMPLTDE may be varied by the algorithm.
+
+	RFIXPHA	 >0	The phase is held fixed to the value in RPHASE.
+
+		  0	[default] The algorithm will try to find a guess 
+			for the initial value of RPHASE.
+
+		 <0	Use the value of RPHASE as the initial guess.
+			RPHASE may be varied by the algorithm.
+
+	RFIXPER	 >0	The period is held fixed to the value in RPERIOD.
+
+		  0	Not allowed.
+
+		 <0	[default] Uses the value of RPERIOD as the 
+			initial guess.  RPERIOD may be varied by the 
+			algorithm.
+
+
+	All three of the above adverbs can not be > 0 at the same time.
+	
+
+	Fitting algorithm:
+        ------------------
+        You must supply an initial value for RPERIOD.  When values for
+	either RAMPLTDE or RPHASE are not supplied, a linear 
+	least-squares fit is used to get the initial guesses.
+	RIPPLE then uses the Levenberg-Marquardt method of
+	non-linear least-square fitting in most cases.  This is
+	an iterative algorithm that should converge rather rapidly.
+	The number of iterations that RIPPLE will perform in this
+	step is controlled by the adverb NITER whose default value
+	is 8.  If the fit fails, and you are sure you have provided
+	good initial guesses to the fitting parameters, you may need
+	more iterations -- set NITER to a larger number and try
+	RIPPLE again.  In most cases, however, the fit will fail (the
+	number of iterations will exceed NITER without the solution
+	converging) because of poorly set initial values for the
+	parameters.
+
+	Examples and explanations of both the non-linear and linear
+	least squares algorithms used by RIPPLE can be found in:
+
+	Bevington, Philip R. 1969, "Data Reduction and Error Analysis
+		for the Physical Sciences" (New York: McGraw-Hill),
+		Chapters 8, 9, and 11.
+
+	Press, William H., et al, Numerical Recipes: The Art of
+		Scientific Computing" (New York: Cambridge University
+		Press), Chapter 14.
+
+
+	Errors in fitted values:
+	------------------------
+	In addition to providing best-fit values for RPERIOD, RAMPLTDE,
+	and RPHASE, RIPPLE also stores the best estimates of the
+	standard deviations of the fitted values in adverbs
+	RPERERR, RAMPERR, and RPHAERR.  If the values of RPERIOD,
+	RAMPLTDE, or RPHASE are held constant by RIPPLE then the
+	standard deviation stored in these error adverbs will be zero
+	for those quantities.
+
+
+	ADVERBS USED:
+
+          BDROP         # channels to be ignored at beginning of data.
+          EDROP         # channels to be ignored at end of data.
+			Initial values of BDROP and EDROP are 0.
+			These values are only used if NREGION(1)=0.
+
+	  NREGION(32)   Specifies region(s) of the scan to be used
+			to compute the fit.  Initial values are 0.
+
+	  BBASE         # channels at each end of data (excluding
+	  EBASE         those dropped) which will be used to
+			compute the fit if NREGION(1)=0.  Initial 
+			values of BBASE and EBASE are 50.  These
+			values are only used if NREGION(1)=0.
+
+	  RPERIOD       The wavelength (in channels) of the sinusoid.
+			An initial non-zero value must be supplied.
+	  RAMPLTDE	The amplitude of the sinusoid.  The default 
+			value is 0.
+	  RPHASE	The phase (in channels) of the sinusoid.
+			The default value is 0.
+
+	  NITER		# of iterations RIPPLE will use to obtain a 
+			fit.  Default value is 8.
+
+	  RFIXPER	If > 0, RIPPLE will not change RPERIOD.
+			If < 0, RIPPLE will attempt to fit RPERIOD.
+			RFIXPER can not be 0.  Default value is -1.
+	  RFIXAMP	If > 0, RIPPLE will not change RAMPLTDE.
+			If < 0, RIPPLE will use the value of
+			   RAMPLTDE as an initial guess.
+                        If = 0, RIPPLE will attempt to guess an
+			   initial value for RAMPLTDE.
+			Default value is 0.
+	  RFIXPHA	If > 0, RIPPLE will not change PHASE.
+			If < 0, RIPPLE will use the value of
+			   RPHASE as an initial guess.
+                        If = 0, RIPPLE will attempt to guess an
+			   initial value for RPHASE.
+			Default value is 0.
+			
+
+	ADVERBS that RIPPLE may set:
+	----------------------------
+
+	  RAMPLTDE	Fitted amplitude.
+	  RPERIOD	Period in channels.
+ 	  RPHASE	Phase in channels.
+
+	  RAMPERR	One sigma error in fitted amplitude.
+	  RPERERR	One sigma error in fitted period (channels).
+	  RPHAERR	One sigma error in fitted phase (channels).
+
+	EXAMPLE:
+        --------
+
+	A sinusoidal ripple exists on the data you are trying to reduce.
+	The period of the curve is from channel 100 to channel 162.  
+	You want to let RIPPLE guess appropriate initial values for 
+	amplitude and phase.  Also, you want to use 65 channels from
+	each end, after excluding the first 25 channels on each end.
+	To remove the sinusoidal baseline, specify:
+
+			GET 7238 PAGE SHOW
+			BDROP=25; EDROP=25; BBASE=65; EBASE=65
+			DCBASE
+			RPERIOD=62;RFIXPER=-1,RFIXAMP=0,RFIXPHA=0
+			RIPPLE PAGE SHOW
+	
+	Note: the values for the RFIX parameters in the above example are
+	the default values, if you have not changed these values since
+	you started the program, you do not need to reset them in this
+	example.

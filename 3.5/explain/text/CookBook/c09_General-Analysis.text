@@ -1,0 +1,828 @@
+
+9. General Analysis
+-------------------
+
+Many commands exist in UniPOPS to assist you with operations you may
+require in the reduction of your observational data. Most of these will
+be described below. However, you should refer to Chapter 7 for a
+description of the UniPOPS facilities for fitting Gaussians and
+baselines,  and Chapter 8 for a description of the smoothing of data,
+plus the verbs for convolution and cross-correlation,
+
+9.1 Obtaining Information on a Scan
+-----------------------------------
+
+While you should have some information on your observations from the
+telescope log sheets, and (we trust) from your own observing notes,
+UniPOPS provides a number of facilities to augment this, aid the human
+memory and even update the header parameters of a scan, or its data.  A
+number of verbs print standard information about the scan on the
+screen, while others allow you to check the more esoteric parameters
+associated with these data. You should be aware that a number of these
+verbs behave differently depending upon whether the data was taken at
+Tucson or Green Bank.
+
+9.2 Summarizing the Parameters of a Scan
+----------------------------------------
+
+i) The simplest, and most terse, of the informational verbs is TITLE.
+   TITLE provides a single line of information on the screen for the
+   scan in Array (0). This line contains,
+
+	Tucson Version : Scan number, LST, source name, rest frequency,
+			 filter-bank and sideband number.
+
+	Green Bank Version : Scan number, LST, source name, rest
+			     frequency and channel separation (in MHz).
+
+   To invoke this verb, type,
+
+	>TITLE
+
+
+ii) Rather more information is obtained with the verb DOC, which prints
+    its output in columns, and is useful for producing a table which
+    lists the parameters for a number of scans. It has a single adverb,
+    PFLAG, which if set to FALSE (-1), the initial setting, will print
+    a first line of column headings. Often, this is only required on
+    the first call to DOC, when producing a table for many scans. Each
+    call to DOC sets PFLAG to TRUE (+1), inhibiting the printing of
+    further column headings. This implies that it is always safest to
+    reset, PFAG = FALSE before the first invocation of DOC in making a
+    table.
+
+    To make a table for many scans with DOC, either a FOR-loop (see
+    Section 13.5), or the stack (see Chapter 11) are useful. For
+    example, to list parameters for scans 1000 through 1020, type,
+
+	>SCALAR SCAN_I
+	>PFLAG = FALSE
+	>FOR SCAN_I = 1000 TO 1020; GET SCAN_I; DOC; END
+
+    If, instead, you want to produce this list for scans 602, 604, 606,
+    and 1000 through 1020, it is easiest to use the stack by typing,
+
+	>SCALAR SCAN_I
+ 	>EMPTY
+	>ADDSTACK(602, 606, 2)
+	>ADDSTACK(1000, 1020, 1)
+	>PFLAG = FALSE
+	>FOR SCAN_I = 1 TO ACOUNT; GET ASTACK(SCAN_I); DOC; END
+
+    DOC will list scan number, observing date (YY.MMDD), LST, RA, Dec,
+    scan duration (sec), system temperature (Tsys), rest frequency and
+    source name.
+
+
+iii) The fullest information on the parameters of a scan are provided
+     by the verb HEADER, which will provide full details of the scan in
+     Array (0), using a number of printed lines.  To invoke this verb,
+     type,
+
+	>HEADER
+
+
+iv) One final informational verb which takes parameters from the scan
+    header is THUMB. This lists positional details of the scan in Array
+    (0).  The information it lists is different depending on whether
+    the data are from Tucson or Green Bank.
+
+	Tucson Version : THUMB prints the main and reference azimuth,
+			 elevation, RA and Dec offsets.
+
+	Green Bank Version : THUMB prints two lines describing the 
+			     pointing corrections. The first line
+			     contains the PVLS (the box installation
+			     corrections :  P1, P2 and P3), while the
+			     second line gives the LPC's (the Local
+			     Pointing Corrections :  RLPC and DLPC).
+
+    To invoke THUMB, type,
+
+	>THUMB
+
+
+9.3 Interrogating and Updating the Scan Header
+----------------------------------------------
+
+Currently, approximately one hundred and forty header parameters can be
+interrogated, and even updated, using the facilities of UniPOPS. This
+is achieved via keyword adverbs (listed via EXPLAIN SYNOPSIS and in
+APPENDIX A.4). The keyword adverbs are atypical and cannot be changed
+by assignment statements.  They serve purely as pointers to scan header
+elements, and are used as arguments for the internal-array verbs H0 -
+H9.  Some header parameters are normal reals, others are strings, while
+yet others are arrays of reals or strings. Some keyword adverbs apply
+only for Green Bank headers, some only for Tucson headers, and some for
+both. The use of the verbs H0 - H9 for the various keyword adverbs is
+as follows,
+
+i) To interrogate the header using the various keyword adverbs, use the
+   verb PRINT (see Chapter 14.5), or its alias ?, with the appropriate
+   calls to the internal-array verbs Hn as attributes. The internal-array
+   verb Hn, where n is the number of the UniPOPS Array in which the
+   scan is held, takes the appropriate keyword adverb as argument. For
+   example, if there is a scan in Array (4) and you wish to find what
+   the ambient temperature (keyword adverb TAMB) was at the time of the
+   observation, type,
+
+	>PRINT H4(TAMB)
+ 
+   or	>? H4(TAMB)
+
+
+   To set an updated value in a header parameter, again use the verbs
+   Hn, with the appropriate keyword adverb as argument, and make it the
+   left-hand side of an assignment statement, with the new value as the
+   right hand side.  For example, if you want to update the value of
+   the ambient temperature to 5 deg C in the header of the scan of the
+   above example, then type,
+
+	>H4(TAMB) = 5.
+
+   Further examples might be,
+
+	>SCALAR GAL_LAT, T_AMBIENT
+	>GAL_LAT = H0(GALLAT)
+	>T_AMBIENT = 28 
+	>H4(TAMB) = T_AMBIENT	
+	>H8(TAMB) = H0(TAMB)
+
+ii) To interrogate a header parameter which is an array of reals, again
+    use the internal-array verb Hn, where n is the number of the
+    relevant UniPOPS Array, with the appropriate keyword adverb plus an
+    increment of (m - 1) as argument, to print the m-th array element.
+    For example, should you wish to find the center of the descriptive
+    coordinate system (keyword adverb DESORG pointing at a 3-element
+    real array) in which the observation was made for a scan in Array
+    (6), type,
+
+	>PRINT H6(DESORG), H6(DESORG + 1), H6(DESORG + 2)
+ 
+
+    Similarly, to reset the third element of this array to 32 deg for
+    the header of the scan in Array (6), type,
+
+	>H6(DESORG + 2) = 32.
+
+
+iii) To interrogate a simple string in a header, using the keyword
+     adverb which points to the relevant string, again use the
+     internal-array verb Hn, with the appropriate keyword adverb as
+     argument. Suppose you wish to find the observer's name (keyword
+     adverb OBSERVER) from the header of the scan in Array (0), type,
+
+	>PRINT H0(OBSERVER)
+
+     To reset a string in the header of a scan, use the verb Hn, with
+     the keyword adverb pointing at the string as argument, as the
+     left-hand side of an assignment statement, and the replacement
+     value as the right-hand side. For example, if you wish to reset
+     the observer's name in the header of the scan held in Array (0),
+     type,
+
+	>H0(OBSERVER) = "Bloggs"
+
+   Note that in this statement, Hn can take a character literal, a
+   string adverb, or a string function verb as its second argument. For
+   example,
+
+	>YTITLE = H0(BACKEND)
+	>XTITLE = 'GBT'; H0(TELESCOP) = XTITLE
+	>H4(TELESCOP) = H0(TELESCOP)
+
+You should be aware that it is possible to change the header values so
+that they are no longer consistent with other header values.  For example,
+the frequency information (observed frequency, OBSFREQ, rest frequency, 
+FREQRES, and frequency resolution, FREQRES) are related to the the
+velocity information (the velocity at the reference pixel, VELOCITY,
+the Doppler correction for the earth's motion, RVSYS, and the velocity 
+definition, VELDEF) as well as the x-axis descriptive information (the 
+reference channel, REFPT, the value at the reference channel, X0, and the 
+increment between channels, DELTAX).  UniPOPS always attempts to derive 
+velocities from the frequency information and the value of the reference 
+channel, REFPT plus the Doppler correction, RVSYS.  It is therefor possible 
+to affect the displayed and calculated values for velocity without
+actually changing the values for VELOCITY, X0, and DELTAX stored in the
+header.  While this may not be an immediate problem, months or years from
+now when you attempt to interpret this data, possibly without the
+help of UniPOPS, you may not know which information to believe.  The
+responsibility for keeping the information in the header self-consistent is 
+entirely the user's.  UniPOPS will allow you to change any header value 
+independent of any other header value.
+
+
+9.4 Listing the Data in a Scan
+------------------------------
+
+The data values of all, or part, of the scan held in Array (0) are
+listed simply by using the verb TABLE. TABLE will list a header giving
+the scan number and channel separation. This is followed by the actual
+table of data, giving x-axis values (in units of the lower x-axis) and
+antenna temperature for each point. These are printed with three
+entries per line. The section of the data array to be listed can be
+controlled by the adverbs BDROP and EDROP, which specify the number of
+points to be ignored at each end of the scan.
+
+For example, suppose the scan in Array (0) contains 512 data elements,
+to list all of these, type,
+
+	>BDROP = 0 ; EDROP = 0
+	>TABLE
+
+If it were required to list only elements 100 to 200, type,
+
+ 	>BDROP = 99; EDROP = 312
+	>TABLE
+
+More flexibly, the internal-array verbs D0 - D9 can be used, with the
+verb PRINT, to list the data in a format of the user's choice. The verb
+Dn(m) will return the data value in the m-th channel in Array (n).
+Thus, to print elements 100 to 200 of the spectrum held in Array (2),
+in a `four-to-a-line' format, type,
+
+    	>FOR I = 100 TO 195 BY 4; ? D2(I) D2(I+1) D2(I+2) D2(I+3);\
+	 END; ? D2(200) 
+
+	(Note the use of the back-slash to continue the command line.)
+
+
+
+
+9.5 Replacing Data Values
+-------------------------
+
+If you want to modify, or `paint in', data values, for example to
+replace interference spikes using the algorithm of your choice, or to
+create a `dummy' scan, then the internal-array verbs D0 - D9 can again
+be used. The relevant Dn(m) for the m-th point of the scan held in
+Array (n) should be placed as the left-hand side of an assignment
+statement, with the required new value as the right-hand side.  Suppose
+you wish to set an interfered 100-th channel of the spectrum in Array
+(1) to the mean of the adjacent channels, type,
+
+	>D1(100) = 0.5 * (D1(101) + D1(99))
+
+Alternatively, if you wish to modify the data in Array (0) by dividing
+each value by the square root of the equivalent point in Array (2),
+type,
+
+     >SCALAR P_I
+     >FOR P_I = 1 TO H0(NOINT); D0(P_I) = D0(P_I)/SQRT(D2(P_I)); END
+     > # or {D0@ = D0@/SQRT(D2@)}    (see Section 14.4)
+
+You can also give any element of a data array an undefined value.  Most
+verbs will know how to ignore or use a data point that is undefined.
+An undefined data value is one that is equal to IEEE Inf (infinity).
+You can set a data value to be undefined by setting it equal to the
+special adverb, DEFAULT.  For example, to give channel 42 an undefined
+value, you type:
+
+	> D0(42) = DEFAULT
+
+
+9.6 Scaling or Adding a Constant to the Data
+--------------------------------------------
+
+The verb SCALE allows you to multiply the data in Array (0) by a
+constant factor, while the verb BIAS will add a constant value to each
+data point in Array (0). These verbs share a common adverb, FACT.
+
+The verb SCALE multiplies the data in Array (0) by the numerical value
+held in the adverb FACT. Suppose you wish to multiply the current scan
+in Array (0) by 3.2, type,
+
+	>FACT = 3.2
+	>SCALE
+
+The verb BIAS adds the value held in the adverb FACT to each element of
+data held in Array (0). Thus, if you want to display scans 1600 and
+1610 on the same plot, with the second of these displaced vertically
+for clarity, you might type,
+
+	>GET 1600 ; PAGE SHOW
+	>GET 1610
+	>FACT = 3.
+	>BIAS RESHOW
+
+9.7 Simple Math Manipulation of Scans
+-------------------------------------
+
+Sometimes, you may wish to perform simple math manipulations between
+two scans; for example, the necessary differencing of ON and OFF
+total-power scans.  To achieve this, we have provided five verbs PLUS,
+MINUS, DIFF, MULTIPLY, and DIVIDE. The verb DIFF and MINUS are
+identical (for compatibility with older versions of the program) will
+subtract the scan in Array (1) from that in Array (0), placing the
+result in Array (0). Suppose that scans 700 and 702 are an ON-OFF pair.
+To difference them, type,
+
+    either	>GET1 702 ; GET 700
+		>DIFF
+
+    or		>OFF 702; ON 700
+		>DIFF
+
+    or		>GET 702 ; COPY(0,1) GET 700
+		>DIFF
+
+All three of these solutions will have the same effect.
+
+To divide the data in Array (0) by those in Array (1), placing the
+result in Array (0), the verb DIVIDE should be used. Suppose it is
+wished to calibrate (in K) the differenced data obtained in the last
+example (see above) by dividing this differenced data by the OFF scan
+(already present in Array (1)), and multiplying by the system
+temperature. Then continue the above example by typing,
+
+	>DIVIDE
+	>FACT = H1(STSYS) ; SCALE
+
+The verbs MULTIPLY and PLUS act in an obvious way on the contents of
+Arrays (0) and (1).  Again, the results overwrite the contents of Array
+(0).
+
+All of these array math verbs use the value of the DEFMODE adverb to
+determine how they treat undefined data values.  An undefined data
+value is one that is equal to IEEE Inf (infinity).
+  
+If DEFMODE is FALSE, the result of an array math verb will be
+undefined (IEEE Inf) at any location where either of the values in
+Array (0) or Array(1) are undefined.
+
+If DEFMODE is TRUE, the result of an array math verb will be
+undefined at any location where both of the values in Array (0) or
+Array(1) are undefined and it will use the defined value only
+in channels where only one of the values in Array (0) or Array (1)
+are undefined.  See the documentation on the specific verb for
+details about the behavior when DEFMODE is TRUE.
+
+The default value for DEFMODE is FALSE.  This is likely to be the
+behavior that most users want.
+
+In practice, a special verb TEMP exists especially for producing
+temperature-normalized differenced data in Array (0) for an ON-OFF
+pair. TEMP performs slightly different operations depending on whether
+the observations are from Green Bank or Tucson.
+
+	Green Bank Version : TEMP computes,
+
+		((ON - OFF) / OFF) * TSYS
+
+		Where,    ON = Total-power ON scan held in Array (0),
+			 OFF = Total-power OFF scan in Array (1),
+			TSYS = System temperature of the ON scan.
+
+		This is the same operation as was performed by the
+		combination of the previous two examples. Using TEMP to
+		achieve this operation, type,
+
+			>GET1 702 ; GET 700
+			>TEMP
+
+	Tucson Version : TEMP computes,
+
+		((ON - OFF) / OFF) * GAINS
+
+		Where,     ON = ON scan in Array (0),
+			  OFF = OFF scan in Array (1), 
+			GAINS = GAINS array in Array (2).
+
+
+9.8 Reversing a Scan
+--------------------
+
+The scan held in Array (0) can be reversed, end-to-end, using the verb
+INVERT. Of course, a second application of INVERT will return Array (0)
+to its original state. Suppose it is required to flip scan 700
+end-to-end and display it, type,
+
+	>GET 700
+	>INVERT PAGE SHOW
+
+
+
+9.9 Taking a Fourier Transform
+------------------------------
+
+The verb FFT performs a fast Fourier Transform (FFT) of the data held
+in Array (0), placing the real part of the result in Array (0), and 
+the imaginary part in Array (1).
+
+The inverse Fourier Transform of a complex data set stored with its
+real part in Array (0), and its imaginary part in Array (1), is
+performed by invoking the verb IFFT. IFFT places the real part of the
+result in Array (0), and the imaginary part in Array (1).
+
+Both FFT and IFFT use the adverbs BDROP and EDROP, ignoring these
+numbers of channels at each end of the spectrum.
+
+Suppose that you want to take the Fourier Transform of scan 700,
+display both real and imaginary parts of the result, and then take the
+inverse transform to restore the `status quo'. Type,
+
+	>GET 700; PAGE SHOW
+	>FFT PAGE SHOW
+	>MOVE(0,2) COPY(1,0) PAGE SHOW
+	>MOVE(2,0) IFFT
+	>PAGE SHOW
+
+Once the Fourier Transform or the inverse Fourier Transform has been
+obtained via FFT or IFFT, it is possible to compute the power in each
+channel, (the power spectrum of the original data), using the verb
+POWSPEC. POWSPEC takes the sum of the the squares of the real part in
+Array (0) and the imaginary part in Array (1) to give the power
+spectrum, placing the result in Array (0). POWSPEC also ignores BDROP
+and EDROP channels at each end of the spectrum.  
+
+You may also want to indicate to POWSPEC how undefined data values are to 
+be treated by setting the DEFMODE adverb to be either FALSE (the default 
+value) or (TRUE).  An undefined data value is a one which is equal to the 
+IEEE Inf (infinity) value.  If DEFMODE is FALSE, POWSPEC will place an 
+undefined value at any channel where either of the values in the two input 
+arrays are undefined.  If DEFMODE is TRUE, POWSPEC will put an undefined 
+value at any channel where both of the values in the two input arrays are 
+undefined and will place the valid value in a channel if only one of the 
+two input values at that channel are valid.  Most users will leave DEFMODE 
+at its default setting of FALSE.
+
+For example, to display the power spectrum of scan 700, then type,
+
+	>GET 700 ; BDROP = 0 ; EDROP = 0
+	>FFT POWSPEC
+	>PAGE SHOW
+
+
+9.10 Dealing with Bad and Interfered Channels
+---------------------------------------------
+
+At all telescopes, scans are affected by interference, instrumental
+effects, etc. It is usually required to minimize these effects, and
+possibly make an "inspired guess" as to what the corrupted data should
+have contained. Three somewhat-different approaches to this problem are
+available in UniPOPS. In addition, you can always "paint in" data
+values, as described in Chapter 9.5.
+
+The simplest remedy for spikes in the data is to use the verb CLIP.
+CLIP locates all data values in Array (0) that are above or below the
+contents of the adverbs CLIPMAX and CLIPMIN respectively, and replaces
+them with CLIPMAX or CLIPMIN, as appropriate.  CLIP makes no attempt to
+guess the likely value of the corrupted point, but its use will permit
+the automatic scaling facility in SHOW to do full justice to the
+data.  CLIP can also be used to truncate an intense spectral feature,
+allowing automatic scaling in SHOW to highlight weaker lines or
+low-level structure in the spectrum.
+
+Suppose that a large interference spike (say 100 K in height) dominates
+the line under observation (2 K). Then, to produce a reasonable display
+from SHOW to bring out the astronomical content of the spectrum, type,
+
+	>CLIPMIN = -1. ; CLIPMAX = 2.5
+	>CLIP PAGE SHOW
+
+
+A more sophisticated treatment of corrupted data can be achieved using
+the combination of the verbs SPIKE and REPLACE. SPIKE searches Array
+(0) for data whose ABSOLUTE intensity values are greater than the
+adverb CUTOFF. Up to 12 such channels can be accommodated and their
+channel numbers will be both printed in the text window, and set into
+the array adverb BADPT, for use with the verb REPLACE (see below). Note
+that this verb leaves zeros in all elements of BADPT not required for
+`bad' channels.  The adverbs BDROP and EDROP define the number of
+channels that SPIKE ignores at the beginning and end of the scan.
+
+The verb REPLACE should be invoked when you are sure that BADPT
+contains only the channels that you want replaced. (If you do not like
+what SPIKE has done, you can always set, or modify, the array BADPT
+yourself using, for example, a BADPT = .... , or BADPT(n) = ....
+assignment statement.) REPLACE replaces the data of the channels held
+in BADPT by "best guess" values derived from parabolic interpolation
+over adjacent channels. The adverbs BDROP and EDROP define the number
+of channels that are ignored at the beginning and end of the scan, even
+if an entry in BADPT falls within one of those regions.
+
+Suppose that you are considering the same scan with the 100 K spike,
+and the 2 K spectral line. To replace the spike with a "best-guess"
+value, type,
+
+	>BDROP = 0 ; EDROP = 0
+	>CUTOFF = 2.5 ; SPIKE
+	>REPLACE PAGE SHOW
+
+As a further example, suppose you found that channel 25 of your spectra
+was always bad. You could easily replace this on regular basis by first
+typing,
+
+	>BADPT = DEFAULT
+	>BADPT(1) = 25
+
+and then after GETting each spectrum, typing,
+
+	>REPLACE
+
+Finally, one can simply choose to make the data undefined at that
+channel by setting it equal to the special adverb, DEFAULT.  For array
+data, an undefined value is any value equal to IEEE Inf (infinity).
+Verbs are able to deal sensibly with such data (generally by ignoring it)
+although some verbs will insist that all data values be defined
+(valid).  The behavior of the array math verbs (Section 9.7), 
+POWSPEC (9.9), RAP (9.12), SUM and ACCUM (Chapter 10) as well as the
+matrix math verbs (16.6.2.3) with respect to undefined values can be
+altered by setting the adverb DEFMODE.  For example, if the value
+in channel 72 is bad, and you want to set this value to be undefined, 
+you type:
+
+	>D0(72) = DEFAULT
+
+
+9.11 The Integrated Properties of a Feature
+-------------------------------------------
+
+The verb MOMENT computes the zeroth and first moment for chosen regions
+of the scan in Array (0), storing the result in the two-element array
+adverb SIZE. The adverbs BMOMENT and EMOMENT contain the first and last
+channels of the region of interest. After MOMENT has been invoked, SIZE
+contains,
+
+	SIZE(1) = zeroth moment, i.e. the area under the curve in units
+			of the y-axis times that of the lower x-axis.
+	SIZE(2) = first moment, i.e. the intensity-weighted x-value in
+			units of the lower x-axis.
+
+(REMEMBER : For the results of MOMENT to be meaningful, the spectrum
+must have had its baseline optimized before invoking the verb.)
+
+Suppose you wish to obtain the first two moments for the narrow
+spectral line at channel 135 for the already-baselined spectrum in
+Array (0), and to draw a vertical line on the plot at the position of
+the line center. Then type,
+
+	>BMOMENT = 125 ; EMOMENT = 145
+	>SAXIS(VELHEAD,CHANNEL) MOMENT
+	>PRINT SIZE
+	>FLAG(SIZE(2))
+
+9.11.1 Deriving Parameters for a Galaxy Spectrum
+------------------------------------------------
+
+(Acknowledgement : The code and documentation for GMEASURE, described
+here, are adapted from the Galpac package in the ANALYZ program.)
+
+The verb GMEASURE allows you to compute a flux integral (in units of
+the y-axis times that of the lower x-axis), a center and a width (both
+in units of the lower x-axis) for the spectrum of a spiral galaxy in
+Array (0). GMEASURE takes a single argument, consisting of an integer
+of up to five digits which act as codes for the types of operation you
+require GMEASURE to perform (see below).  The 5-element array adverb
+GMFRAC contains input values as detailed below, while the 6 x 5-element
+array adverb GOUT holds the results.
+
+
+Before using GMEASURE, make sure that,
+
+    1) The scan you are applying it to has had a baseline removed.
+
+    2) You have used the verb RMS to get a value of the rms of the data
+       off the spectral line. The rms value is placed into the adverb
+       VRMS (see Section 7.6).
+
+    3) You have set the adverbs BMOMENT and EMOMENT to the first and
+       last channels of the region of interest. Alternatively, if you
+       set,
+
+	   BMOMENT = EMOMENT = a channel within the spectral feature,
+
+       then the program will search for, and use, the channel numbers
+       of the first negative data values to the left and right of the
+       channel number you supplied in BMOMENT.
+
+
+GMEASURE has five different operation modes for computing the flux
+integral, velocity, and width, as follows,
+
+----------------------------------------------------------------------
+| Code No. |			Operation Mode 			     |
+|----------|---------------------------------------------------------|
+|    1     | At a fraction f of the MEAN flux over the region of     |
+| 	   | interest defined by BMOMENT and EMOMENT.		     |
+|----------|---------------------------------------------------------|
+|    2     | At a fraction f of the PEAK flux over the region of     |
+|          | interest defined by BMOMENT and EMOMENT.		     |
+|----------|---------------------------------------------------------|
+|    3     | At a fraction f of each of the two `HORNS', searched    |
+|	   | from BMOMENT and EMOMENT towards the center of the      |
+|	   | feature.     					     |
+|----------|---------------------------------------------------------|
+|    4     | At a fraction f of each of the two `HORNS', searched    |
+|	   | from BMOMENT and EMOMENT in, and from the center of the |
+|	   | feature out and the average of the two reported. A      |
+|          | polynomial is fitted between fractions f1 and f2 (see   |
+|	   | below) of the two horns, and the coefficients used to   |
+|          | determine the  velocity uncertainty.		     |
+|----------|---------------------------------------------------------|
+|    5     | At a fraction f of each of the two `HORNS', searched    |
+|	   | using an interpolating polynomial between fractions f1  |
+|          | and f2 (see below) of each horn. The velocity           |
+|	   | uncertainty is estimated from the covariance matrix of  |
+|          | the fitted polynomial coefficients.		     |
+----------------------------------------------------------------------
+
+The argument you supply to GMEASURE permits it to make up to 5
+simultaneous estimates of the velocity and width.  The flux integral
+will be the same for each estimate (since it is the integral between
+BMOMENT and EMOMENT). The digits of the argument which you supply
+identify the code number for the required mode of operation (from the
+above table) for each estimate.  Associated with each digit in the
+argument, you should set the values of the corresponding element of
+array GMFRAC, as follows,
+
+	 a) If the i-th digit of the argument = 1 to 3, GMFRAC(i) = f. 
+
+	 b) If the i-th digit of the argument = 4 or 5, GMFRAC(i)
+	    contains a value given by,
+
+		GMFRAC(i) = f1 + 0.1 * f2 + 0.01 * f
+
+For example, if you invoked GMEASURE as follows,
+
+	>GMFRAC = 0.5, 0.2, 0.5, 0.825, 0.915
+	>GMEASURE(12345)
+
+GMEASURE would display the flux integrals, centers and widths, computed
+for,
+
+	i) 50 % of the mean (Mode 1, GMFRAC(1)).
+       ii) 20 % of the peak (Mode 2, GMFRAC(2)).
+      iii) 50 % of the two peaks (Mode 3, GMFRAC(3)).
+       iv) 50 % of the two peaks, with the error estimated from a
+           polynomial fit between 20 and 80 % of the two peaks. 
+	   (Mode 4, GMFRAC(4) = 80 % + 0.1 * 20 % +0.01 * 50 %).
+	v) 50 % of the two peaks searched by fitting a polynomial
+	   between 10 and 90 % of the two peaks, with the error
+	   estimated from the fitted polynomial.
+	   (Mode 5, GMFRAC(5) = 90 % + 0.1 * 10 % + 0.01 * 50 %).
+
+      Note : The difference between the modes 4 and 5 is that mode 4
+      locates the 50 % point by linear interpolation between channels
+      bracketing the 50 % height, while mode 5 uses the polynomial to
+      locate the 50 % point.  Mode 5 is intended for use on high
+      S/N-ratio data.
+
+
+For modes 4 and 5, the following algorithm determines the peaks in the
+profile between BMOMENT and EMOMENT.
+
+	a) All peaks in this range are identified. A peak is defined
+	   as a channel with more flux than a  number of channels
+	   selected by GMEASURE (between 3 and 7) on either side of
+	   it.
+
+	b) For only one peak, the profile is treated as double-horned
+ 	   with coinciding horns.
+
+	c) For only two peaks, the profile is treated as double-horned.
+
+	d) For more than two peaks, the two outermost peaks are treated
+	   as the horns UNLESS,
+
+	e) One of the inner peaks has more than twice the flux of the
+	   nearest outer peak. That inner peak is then treated as the
+	   horn. If more than one inner peak meets this criterion, then
+	   the outermost is taken as the horn.
+
+The array adverb GOUT, which contains the results for the (up to) five
+estimates (i = 1 to 5) in its 30 currently-used elements, is organized
+as follows,
+
+	GOUT(i, 1) = Mode number for i-th estimate.
+	GOUT(i, 2) = center for the i-th estimate.
+	GOUT(i, 3) = Width for the i-th estimate.
+	GOUT(i, 4) = center error (modes 4 & 5 only) for the i-th
+		        estimate.  
+	GOUT(i, 5) = The value in GMFRAC(i) for the i-th estimate.
+	GOUT(6, 1) = Peak flux value within region of interest.
+	GOUT(6, 2) = The flux integral.
+	GOUT(6, 3) = RMS value as found initially in adverb VRMS.
+	GOUT(6, 4) = BMOMENT
+	GOUT(6, 5) = EMOMENT
+
+Note : The reported center error is the estimated error in the average
+center of the profile, the error in the width is sqrt(2) larger.
+
+
+9.12 Processing Frequency-Switched Data
+---------------------------------------
+
+If you wish to combine the left half of a frequency-switched scan in
+Array (0) with the right half, then use the verb RAP.  On completion,
+RAP places the result in Array (0), and sets the adverb OSHIFT equal
+to  the number of channels between Signal and Reference frequencies.
+(At present, RAP only works correctly if the frequency shift is an
+integral number of channels.)
+
+Be careful when using RAP, as its operation is rather different for
+Green Bank and Tucson data.
+
+     Green Bank Data : RAP will compute the number of channels to 
+		       "shift and combine" from the frequencies stored
+		       in the scan header. Thus to perform the
+		       combination, just type,
+
+				>RAP
+
+     Tucson Data : Here, one must set the two adverbs, FS (Frequency 
+		   offset in MHz for the Signal data) and FR (Frequency
+		   offset in MHz for the Reference data) before
+		   invoking RAP.  As of Fall 1993, these two values
+		   are available from the header.  There are three
+		   frequency offsets stored in the header:
+		   FOFFSIG, FOFFREF1, and FOFFREF2.  Usually you will
+		   want to set FS to the value of the FOFFSIG header
+		   word and FR to the value of the FOFFREF1 header
+		   word.
+
+				> FS = H0(FOFFSIG)
+				> FR = H0(FOFFREF1)
+				> RAP
+	
+
+NOTE : Following the application of RAP, the user must decide which
+half of the spectrum is the signal half, and drop the other half via
+the adverbs BDROP and EDROP before displaying the data. If OSHIFT is 
+> 0, then you should set BDROP to at least the value of OSHIFT. If
+OSHIFT is < 0, then you should set EDROP to at least the absolute value
+of OSHIFT.
+
+The adverb DEFMODE indicates how RAP treats undefined data values.
+An undefined data value is one equal to IEEE Inf (Infinity).
+
+If DEFMODE is FALSE, RAP will place an undefined data value at
+any location where either the signal or reference values are
+undefined (i.e. if channel 100 is undefined, as above, then
+the channel in the result that depends on channel 100 will also be 
+undefined if DEFMODE is FALSE).
+
+If DEFMODE is TRUE, RAP will place an undefined data value at
+any location where both the signal and reference values are
+undefined.  However, if only one value is undefined, then
+the result will be as if the undefined value were zero (i.e.
+if channel 100 is the only undefined value, then that value will
+be treated as if it were 0).
+
+Most users will leave DEFMODE set to it's default value of FALSE.
+
+
+9.13 Converting To and From Channel Numbers
+-------------------------------------------
+
+Two UniPOPS function verbs, CHANTOX and XTOCHAN, allow you to convert
+from the units of your lower x-axis into channel number, or vice versa.
+The units of the quantity that will be converted to or from channel
+number is defined by the most recently-set units for the lower x-axis,
+decided by a call to any of the verbs SAXIS, CC, CF, CV, FC, FF, FV,
+VC, VF or VV (see Section 6.2).  CHANTOX takes a single argument
+representing a channel number, while XTOCHAN's single argument
+represents the value to convert into channel number.  For example, if
+you wish to know which channel is at a radial velocity of +34.5 km/sec,
+and which channel is at a frequency of +1.25 MHz relative to the center
+of the bandpass, type,
+
+	>SAXIS(VELHEAD,CHANNEL); PRINT XTOCHAN(34.5)
+	>SAXIS(FREQOFF,CHANNEL); PRINT XTOCHAN(1.25)
+
+and the channel numbers will be printed. Alternatively, if you wish to
+know the velocity and frequency of channel 123, type,
+
+	>SAXIS(VELHEAD,CHANNEL); PRINT CHANTOX(123)
+	>SAXIS(FREQOFF,CHANNEL); PRINT CHANTOX(123)
+
+and again the answers will be printed.
+
+	
+9.14  Equatorial-Galactic Coordinate Conversion
+-----------------------------------------------
+
+Two UniPOPS verbs allow you to print the results of equatorial-galactic
+coordinate conversion on the text screen.  To convert equatorial
+coordinates (epoch 1950) into galactic coordinates, the verb EQTOGAL is
+invoked. This takes two arguments, these being the RA(1950), Dec(1950)
+of interest, entered as shown below.
+
+Suppose that you wish to convert the equatorial position of the
+peculiar star SS433 (RA50 = 19 09 21.3, Dec50 = +04 53 53.1) into
+galactic coordinates, then type,
+
+
+	>EQTOGAL(190921.3, 45353.1)
+
+
+To convert a position in galactic coordinates into equatorial
+coordinates (epoch 1950), use the verb GALTOEQ, which takes the
+galactic coordinates (l,b), entered as shown below, as its two
+arguments.
+
+Suppose that you wish to see the equatorial position of SS433 (l =
+39.694, b = -2.245), type,
+
+	>GALTOEQ(39.694, -2.245)
+

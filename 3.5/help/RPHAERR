@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RPHAERR:  (ADVERB) The error in the fitted sinusoidal'
+PRINT 'baseline phase in number of channels.'
+PRINT ' '

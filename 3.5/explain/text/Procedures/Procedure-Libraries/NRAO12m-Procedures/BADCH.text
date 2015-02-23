@@ -1,0 +1,32 @@
+	BADCH allows you to use the cursor to identify bad channels
+	in the data.  BADCH then uses REPLACE to replace the identified
+	bad channels and display the result.  The bad channels are
+	then displayed on the input terminal in a form that the
+	12-meter control system understands (i.e. incorporates the
+	offsets appropriate for the filter banks if necessary).
+
+	This works correctly for 2-up as well as single spectra.
+
+	NOTE: If using BADCH on a 2-up display (two spectra displayed
+	side by side), the data must still be in Array (3) and 
+	Array (4), with the data from Array (3) being displayed on the
+	left side of the screen.  This is the normal mode for
+	all 12-meter procedures which display spectra in this manner.
+
+	NOTE: The REPLACEd data is left in Array (0) (for single
+	display spectra) or copies to Array(3) and Array(4) for
+	2-up display spectra.  This REPLACEd data is NOT copied to
+	disk.  If you wish to save this fixed data, you need to do
+	so independently of BADCH.
+
+	Syntax: BADCH
+
+	File name: badch.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Adverbs Set or Used:
+
+	See the documentation on CLICK, REPLACE, and CBOTH.
+	(all of the above verbs and procedures are used by BADCH, each
+	one may use or set several adverbs).

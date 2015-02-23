@@ -1,0 +1,23 @@
+	(SCALAR ADVERB)
+
+	RAMPERR, RPHAERR, and RPERERR are the one sigma errors in
+	the fitted values as determined by RIPPLE or RSHAPE.
+	The corresponding sinusoid parameters are RAMPLTDE,
+	RPHASE, and RPERIOD, respectively.  The units of the
+	errors are the same as the corresponding sinusoid parameter.
+	The value of RAMPERR, RPHAERR, and RPERERR will not be changed
+	if the corresponding sinusoid parameter is held fixed during
+	the fit.
+
+	RAMPERR, RPHAERR, and RPERERR are set by: RIPPLE and RSHAPE.
+
+	RAMPERR, RPHAERR, and RPERERR are not used by any verb.
+
+	The initial values of RAMPERR, RPHAERR, and RPERERR are 0.
+
+	EXAMPLE:
+
+	You have fitted a sinusoid to your data and now want to
+	print out the fitted period and its one sigma error:
+
+		PRINT RPERIOD, "+/-", RPERERR

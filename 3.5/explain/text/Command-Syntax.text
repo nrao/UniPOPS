@@ -1,0 +1,627 @@
+	UniPOPS uses a modified version of the POPS ("People-Oriented
+	Parsing Service") interactive interpretor that has been in use
+	at NRAO since the early 1970's.  It is the interpretor used in
+	AIPS, for telescope control at the 140-ft telescope, and in
+	older versions of the spectral-line and continuum analysis
+	programs in Green Bank, Charlottesville, and Tucson.
+
+	The command syntax for UniPOPS is typical of many command
+	interpretors.  The following documents the various rules for
+	how you should enter UniPOPS commands.
+
+
+Command Prompts
+---------------
+
+	Once you have started the program and answered some start-up
+	questions, (see the UniPOPS Cookbook for details), you will be
+	given a '>' prompt which indicates that UniPOPS is in execute
+	mode and is awaiting your first command line (the execute prompt
+	is the current value of the PROMPT string adverb, which you can
+	set at any time, for the remainder of this documentation, the
+	'>' string will be used to indicate the current value of the
+	PROMPT adverb).  During the course of your UniPOPS session, the 
+	command mode may change between execute, compile, and input mode 
+	(see the Command-Modes documentation for details).
+
+	The prompt character reflects what the mode of the program is:
+
+#if RFRNC
+			Table 2.2.1 : Prompt Characters
+#else
+				Prompt Characters
+#end
+	-------------------------------------------------------------------
+	Prompt		Mode:		Description:
+	-------------------------------------------------------------------
+	  >		Execute		For immediate execution of commands
+	  :		Compile		For creating or editing procedures
+	  #		Input		For entering values
+	-------------------------------------------------------------------
+
+	The input mode can only take constants as inputs and is not
+	described here (see Command-Modes for details).  Execute and
+	compile modes use the same rules as far as to how you should
+	enter command lines.  These rules are described here.
+
+
+Command Lines and Input Lines
+-----------------------------
+
+	A command line is made up of one or more input lines where an
+	input line is anything that you type into the program and that
+	is terminated by a carriage return.  All empty input lines
+	(i.e., lines containing only zero or more blanks and a carriage
+	return) are ignored.
+
+	The command line can hold up to 160 characters.  If you desire,
+	you can build a command line out of many input lines by placing
+	a back-slash (\) as the last character on an input line before
+	the carriage return.  After the carriage return, you can
+	continue entering the next part of the command line.  There is
+	no limit to the number of input lines you may enter to make up
+	a command line, although the total number of characters can
+	not exceed 160.
+
+	You complete a command line by typing a carriage return which
+	is not preceded by a back-slash.  UniPOPS will then process the
+	complete command line.  What UniPOPS does with the command
+	lines depends upon the contents of the command line and what
+	mode the program is in.
+
+	After the command line is processed, you will get another
+	prompt at which you can enter another command line.
+
+	If, while typing in an input line, you want to erase the last
+	few characters on the line, you can use the delete key (or, in
+	some cases the backspace key) to erase the characters so that
+	you can enter the corrections.
+
+	If you want to erase a complete input line, you can hold down
+	the control key and press the character 'u' (i.e., hit
+	Ctrl-U).
+
+	To erase the last word you typed, try Ctrl-W.
+
+	If you are typing in a command line made up of many input
+	lines, the only way to 'erase' the contents of a previous input
+	line is by typing a Ctrl-C and then retyping the complete
+	corrected command line again.
+
+
+Operators and Operands (Better Know as Verbs and Adverbs)
+---------------------------------------------------------
+
+	Before discussing what you may place on a command line, we must
+	introduce the concepts of UniPOPS operators and operands.  An
+	operand is something that either is acted upon by an operator
+	or which influences the action performed by an operand.  An
+	operator performs some action.  Operands within UniPOPS are
+	very similar to the variables and constants one uses in Fortran
+	or C programs.  Likewise, UniPOPS operators are equivalent to
+	Fortran or C functions, subroutines, or math and logical
+	operations.  There is one class of operator (Internal-Array
+	Verbs) that has many of the properties of an operand.
+
+	Operands (Constants and Adverbs)
+	--------------------------------
+	There are different types of operands within UniPOPS.  The
+	names we use in the Cookbook and Reference Manual for the
+	types of operands are given here:
+
+#if RFRNC
+		   Table 2.2.2 : Types of UniPOPS Operands
+#else
+		   	Types of UniPOPS Operands
+#end
+	-----------------------------------------------------------------
+	Operand	:		Description:
+	-----------------------------------------------------------------
+	Array Adverbs           Similar to a variable in Fortran or C
+				  that contains an array of 'REALs' or
+				  'floats', respectively.
+	Keyword Adverbs         Similar to 'PARAMETER' and 'constant'
+				  variables in Fortran-77 and C,
+				  respectively.
+	Internal-Array Verbs    Actually an operator whose usage is
+				  very similar to, but more restrictive
+				  than that of array adverbs.
+	Literal Constants       Similar to the character-strings
+				  constants used in Fortran-77 and C.
+	Pointer Adverbs         Similar to 'PARAMETER' and 'constant'
+				  variables in Fortran-77 and C,
+				  respectively.
+	Real-Value Constants    Similar to the floating-point constants
+				  used in Fortran or C.
+	Scalar Adverbs          Similar to the 'REAL' or 'float'
+				  variables in Fortran and C,
+				  respectively
+	String Adverbs          Similar to 'CHARACTER' and 'char'
+				  variables in Fortran-77 and C,
+				  respectively.
+	-----------------------------------------------------------------
+
+#if RFRNC
+	For a complete discussion of constants, and how to use them,
+	look at Chapter 14 in the Cookbook.  For a complete discussion
+	of adverbs, we direct you to either Chapter 3 of the Cookbook
+	or the starting sections in the Adverb part of the dictionary
+	in the Reference Manual.
+#else
+	For a complete discussion of constants, and how to use them,
+	look at the 'Math' documentation.  For a complete discussion of
+	adverbs, we direct you to the documentation under 'Adverb'.
+#end
+
+
+	Operators (Procedures, Verbs, and Aliases)
+	------------------------------------------
+	Likewise, there are different types of operators within
+	UniPOPS.  The names we use in the Cookbook and Reference
+	Manual for the types of operators are given here:
+
+#if RFRNC
+		   Table 2.2.3 : Types of UniPOPS Operators
+#else
+		   	Types of UniPOPS Operators
+#end
+	-----------------------------------------------------------------
+	Operator :		Description:
+	-----------------------------------------------------------------
+	Aliases			A user-defined alternate name for any
+				   existing verb or procedure.
+	Function Verbs          Similar to the math and string
+				  functions found in most computer
+				  languages.
+	Internal-Array Verbs    Similar in usage to, but more
+				  restrictive than, array adverbs
+				  described above.
+	Logical Operators       Almost identical to the logical
+				  operators (> ~= <= etc.) that are a
+				  part of almost all computer
+				  languages.
+	Math Operators          Almost identical to the math operators
+				  (* + - etc.) that are a part of
+				  almost all computer languages.
+	Procedures              Similar to Fortran subroutines and 
+				  functions; they are created and modifiable 
+				  by the user and contain a sequence of
+				  operators and operands which perform a
+				  task required by the user.  Can also
+				  be compared to shell scripts or
+				  macros found in most computer
+				  languages or operating systems.
+	Pseudo Verbs		A special class of verbs, similar to
+				  Fortran subroutines, but can only
+				  be used while in execute mode.
+	Regular Verbs		Similar to subroutines in Fortran that
+				  are supplied by the system and which
+				  the user cannot modify.
+	-----------------------------------------------------------------
+
+#if RFRNC
+	For a complete description of math and logical operators, see
+	Chapter 14 of the Cookbook.  Verbs and aliases are discussed in
+	the dictionary section of the Reference Manual and in Chapter 3
+	of the Cookbook.  Procedures are described in the
+	'Procedure-Writing' section of the Reference Manual and in
+	Chapter 13 of the Cookbook.
+#else
+	For a complete description of math and logical operators, see
+	the documentation on 'Math'.  Verbs and aliases are discussed
+	in the documentation under 'Verb'.  Procedures are described
+	under 'Procedure-Writing'. 
+#end
+
+	
+Contents of Command Line
+------------------------
+
+	A command line consists of one or more UniPOPS operators and
+	operands.  A command line cannot consist solely of operands.
+	If a command line is empty, the program does nothing and
+	reissues the current prompt so that you can enter commands.
+
+	If you place a '#' at the start of a command line, UniPOPS
+	assumes the line is a comment and it does not process the
+	line.
+
+	For the most part, you can type the names of operators and
+	operands in either upper or lower case.  Case is important when
+	you are entering a literal constant (e.g., 'Hello' is different
+	then 'HELLO') or when you are entering arguments to certain
+	UniPOPS operators.  These special operators are all pseudo
+	verbs and are:
+
+	BATCH		CHNGFILE 	DIR		DOCUMENT
+	EDIT	  	LASER		SYSHELP		SYSTEM
+	TYPE
+
+
+	Except when used in literal constants, a tab can be used
+	anywhere a space could be used.  Tabs may improve the
+	readability of input lines and procedures.  Tabs also take
+	less space in the internal procedure listing storage area.
+
+	Except when in compile mode (see Command-Modes), UniPOPS uses
+	minimum-match to examine the contents of a command line.
+	minimum-match allows you to type in only those characters in an
+	operator or operand's name which distinguishes it from
+	another.  For example, if UniPOPS had operators or operands
+	with the names of XMAXP, XMINP, and X, typing XMA or XMAX would
+	be equivalent to typing XMAXP; typing XMI or XMIN would be
+	equivalent to typing XMINP.  Typing XM, however, would leave an
+	ambiguity as to whether you meant XMAXP or XMINP and the
+	program would generate an error message and list all of the
+	symbols whose names started with an XM (i.e., XMINP and
+	XMAXP).  Typing an X, however, would not leave any ambiguities
+	since, in our example, the symbol X has the same number of
+	characters as those typed.
+
+	When in compile mode (see Command-Modes), UniPOPS turns off
+	minimum-match and you must type out the complete names of all
+	operators and operands.
+
+	More than one operator can appear on the same command line; you
+	use either a space, semi-colon (;), or tab to separate one
+	operator from the next.  Math or logical expressions should be
+	followed by a semi-colon if any operator follows the expression
+#if XPLN
+	(see Math).  When in doubt, it is always safe to add extra
+	semi-colons.
+#else
+	(see Chapter 14 of the Cookbook).  When in doubt, it is always
+	safe to add extra semi-colons.
+#end
+
+	For example, if PRINT is a UniPOPS verb; FFF and GGG are
+	procedures; =, +, -, /  are UniPOPS math operators; and A, B,
+	and C are UniPOPS scalar-adverbs, then the following would be
+	correct command lines:
+
+
+		# This is an example of a comment line.
+
+		FFF; GGG  <tab>	PRINT A, B, C
+		# Here FFF is to be executed; followed by GGG; PRINT will
+		# take A, B, and C as arguments (and will print out their
+		# values).  The semi-colon and tab are not necessary.
+
+		GGG Print a, 'Hello', 'BYE'; fff
+		# GGG is executed, Print is the same as PRINT (and will
+		# print out the value of A and the strings Hello and BYE).
+		# FFF is then executed.  The semi-colon IS needed here
+		# since the arguments to PRINT are expressions.  Note the
+		# use of mixed case for commands but the preservation
+		# of case in literal constants.
+
+		A = 2.34E-13 * B / C; FFF
+		# The assignment operator is taking A and the expression
+		# 2.43E-13*B/C as arguments and is assigning to A the value
+		# of the expression.  Then FFF is executed.  Since
+		# 2.43E-13*B/C is an expression, it must be followed by
+		# a semi-colon.
+
+		A=2; \
+		  <tab> GGG \
+		  <tab> FFF
+		# A is assigned the value of 2 and then GGG and FFF are
+		# executed.  Note use of continuation lines; tabs are not
+		# needed but the semi-colon is since '2' is an expression.
+
+	Examples of improper command lines would be:
+
+		FFFGGG
+		# No space between the FFF and GGG -- will try to 
+		# execute command FFFGGG, if it exits.
+
+		PRINT 'HELLO' FFF
+		# Should be a semi-colon before the FFF if FFF is an
+		# operator and not a operand.
+
+		GGG a=B/C print a
+		# B/C is an expression and must have a semi-colon after it
+		# and before the next operator (PRINT).
+
+		GGG #This is a bad comment -- should be only thing on line
+
+		GGG \
+		  <tab> # This is another bad comment
+
+		GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG \
+		  GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG \
+		  GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG \
+		  GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG FFF GGG 
+		# The command line contains more than 160 characters and
+		# will be ignored.
+
+
+Command Arguments
+-----------------
+
+	Many verbs, procedures, math operators, and logical operators
+	take arguments in much the same way calls to Fortran or C
+	functions and subroutines may take arguments.  Arguments are
+	passed in UniPOPS by location (as in Fortran) and not by value
+	(as in C).  The way math and logical operators use arguments is
+	different then the way verbs and procedures use them -- 
+#if XPLN
+	see Math for more information on how to use math and logical
+	operators.
+#end
+#if RFRNC
+	see Chapter 14 of the Cookbook for more information on how to
+	use math and logical operators.
+#end
+
+	If you supply a verb or procedure with too few arguments,
+	UniPOPS will issue an error message telling you so.  However,
+	if you supply too many arguments, or arguments of the wrong
+	type, UniPOPS may do unpredictable things.  You should make
+	sure that the number and types of arguments you supply are
+	correct.
+
+	Some procedures and verbs take real-valued variables (scalar,
+	pointer, or keyword adverbs, or elements of array-adverbs),
+	real constants or real-valued expressions as arguments.  Only a
+	handful of verbs, and NO procedures, take string adverbs,
+	literal constants, or string expressions as arguments.
+
+	Real Valued Arguments to Procedures and Verbs
+	---------------------------------------------
+	Arguments can be placed on the command line either before or
+	after the name of the verb or procedure that uses them.  Only
+	real-valued expressions, real constants, an element of an array
+	adverb, or scalar, pointer, or keyword adverbs may be used as
+	real-valued arguments.
+
+	Except for a handful of verbs (e.g. PRINT), all operators
+	that require more than one argument also require that all 
+	arguments appearing after the operand's name be enclosed within 
+	parenthesis and separated from each other by commas.
+	To prevent misinterpretation of the argument list, it is best
+	to place the list after the command's name. For example:
+
+			GET (34.01) NRSET(2)
+			ATAN2(1.23, B)
+			ADDSTACK (1, 2*C(23), 3)
+
+	where GET, NRSET, ATAN2, and ADDSTACK are UniPOPS verbs or
+	procedures and which take one, one, two, and three arguments,
+	respectively and where B and C are scalar and array adverbs,
+	respectively.  Note that the use of spaces in the examples was
+	not necessary but makes the command lines easier to read.
+
+	In some cases, you can get by without using the parenthesis and
+	commas but we suggest that you only eliminate them when the
+	command takes only one argument.  For example,
+
+			GET 34.01; NRSET 2
+
+	would be equivalent to the first example above.  Note that
+	although the semi-colon is not strictly needed here, we advise
+	that you use it whenever you eliminate the parenthesis and you
+	have multiple operands on the same command line.  Note that
+	the other two operands take more than one argument and when
+	these arguments appear after the operand, as above, they
+	must be enclosed within parenthesis.
+
+	The following are also legitimate ways of passing arguments but
+	we recommend that you avoid such constructs as there can be times
+	when the interpretor, or another human being, will misinterpret
+	what is meant.
+
+			34.01 GET 2 NRSET
+			1 C(23) 2 * 3 ADDSTACK
+			ADDSTACK 1 C(23) 3
+
+
+	String Arguments to Function and Regular Verbs
+	----------------------------------------------
+	The only regular verbs which can take string expressions,
+	string adverbs, or literal constants as arguments are:
+
+	CHAR		COMPARE		CONCAT		FOPEN
+	FPRINT		FREAD		INDEX 		LENGTH
+	LNBLNK		MREAD		MWRITE 		READCUBE
+	SREAD 		SPRINT		SUBSTR		Z_CHNGFIL
+	Z_SYSTEM  
+
+	In addition, the READ verb takes only adverbs as arguments
+	(that is, the the command line:  READ 'Bye' is not allowed.)
+
+	The PRINT verb can take adverbs, literal or real constants, or
+	expressions as arguments.
+
+	The usage of string arguments follow the same rules of
+	placement of arguments, use of parenthesis and commas, etc.
+	that are described in section above for real-valued arguments.
+	For example, if XSTRING, XTITLE, and YTITLE are string
+	adverbs, then
+
+		PRINT XSTRING, 'Goodbye'
+		READ XSTRING
+		XTITLE = SUBSTR( CONCAT('Hello',YTITLE), 4, 8)
+
+	are correct usages of string arguments.
+
+#if RFRNC
+
+#end
+	String Arguments to Pseudo-Verbs
+	--------------------------------
+	Some pseudo verbs take strings as arguments which MUST NOT be
+	enclosed in parenthesis or quotes.  There is no risk of confusion
+	in this case since pseudo verbs must be the only operand in
+	an input line.  These verbs are:
+
+	BATCH		CHNGFILE 	CHNGPRJ		DIR		
+	DOCUMENT	EDIT	  	EXPLAIN		HELP
+	IDENTIFY	LASER		SYSHELP		SYSTEM
+	TYPE		WHATIS
+
+	The whole content of the command line after the verb's name is
+	used as the argument to the verb.  For example:
+
+		DIR *.prc
+		CHNGFILE create 11 LPRINTOUT
+		EXPLAIN command-syntax
+		SYSTEM grep gghh blah | sed -e s/F/G/ >! blah2
+
+	That is, '*.prc' is the argument to DIR, 'create 11 LPRINTOUT'
+	to CHNGFILE, 'command-syntax' to EXPLAIN, and 
+	'grep gghh blah | sed -e s/F/G/ >! blah2' to SYSTEM.
+
+
+Names of Operators and Operands
+-------------------------------
+
+	Names of operators and operands must begin with a character
+	from the set {a-z A-Z) which can then be followed by from zero
+	to 9 characters from the set of {a-z A-Z 0-9 _}.  Case is
+	unimportant for names of operators and operands (i.e., AAA is
+	equivalent to aaa, Aaa, aAa, etc.)
+
+	Examples of proper operator and operand names:
+
+		A
+		B_C9
+		FGHHJ
+
+	Examples of improper operator and operand names:
+
+		9A		<- Cannot start with a numeral
+		B{C9}		<- Cannot use braces as a character in a name
+		N1234567890	<- More than 10 characters in name
+
+	Real constants start with any character out of the set 
+	{0-9 + -} and can include characters from the set 
+	{0-9 . E e + -}.  Literal constants must begin and end with
+	either the ' or " characters; they can contain any characters
+	found on a standard keyboard.
+
+	Examples of proper constants:
+
+		9
+		1.2345e-12
+		13e2
+		'Hello $#@^&**'
+		"Good Bye! {Fred}"
+
+	Examples of improper constants:
+
+		9a			<- Bad character in constant
+		1.2345d-12		<- Bad character in constant
+		Hello $#@^&**'		<- No opening quote
+		"Good Bye! {Fred}	<- No closing quote
+
+
+#if RFRNC
+
+#end
+Special Characters
+------------------
+
+	UniPOPS uses the following symbols and special characters:
+
+#if RFRNC
+			Table 2.2.4 : Special Symbols
+#else
+			     Special Symbols
+#end
+	--------------------------------------------------------------
+	Symbol:	  Use:
+	--------------------------------------------------------------
+	{ } @ 	  Array-Math 
+	!  	  History operator
+	#  	  Comments
+	<tab> 	  For indenting
+	'  " 	  For defining literal constants
+	. 	  For defining real constants
+	+         Addition and for the definition of real constants
+	-	  Subtraction and for the definition of real constants
+	=	  Assignment or comparison operator
+	\	  Command line continuation character
+	/ *	  Division and Multiplication operators
+	( )       For constructing expression, defining argument lists,
+		    and defining array subscripts.
+	;	  Expression/Command separator
+	< >       Less-than and Greater-than logical operators
+	& |	  Logical AND and OR
+	? 	  An alias for PRINT operator.
+	,	  For separating arguments and array indices.
+	<space>   Command separator
+	<CR>      Input line terminator
+	--------------------------------------------------------------
+
+#if XPLN
+	The * - / + - < > . = , ', " & | { } @ and some usages of ( and
+	) are described in the Math documentation.  The \ , <space>,
+	<tab>, # <CR> and some usages of ( and ) are described in this
+	document.  The ! and ? commands are discussed under HISTORY and
+	PRINT, respectively.
+#else
+	The * - / + - < > . = , ', " & | { } @ and some usages of ( and
+	) are described in Chapter 14 of the Cookbook.  The \ ,
+	<space>, <tab>, # <CR> and some usages of ( and ) are described
+	in this document.  The ! and ? commands are discussed under
+	HISTORY and PRINT in the Verb section of the dictionary.
+#end
+
+
+#if RFRNC
+
+#end
+Control Characters
+------------------
+
+	The following is a list of control character sequences that you
+	may want to employ during your UniPOPS session.  In reality,
+	they are part of the UNIX operating system and will work
+	outside of UniPOPS with most programs.  You should also look at
+	the documentation for the window system you are using which will 
+	provide numerous shortcuts in the way command-lines can be entered.
+
+	You issue a control character sequence whenever you hold down
+	the 'Control' key on the keyboard while pressing another key on
+	the keyboard.  This is usually designated as, for example,
+	<Ctrl-U>, which means hold down control and press the 'u' on
+	the keyboard.  The more common control character sequences, and
+	what they do, are:
+
+#if RFRNC
+			Table 2.2.5 : Control Sequences
+#else
+			       Control Sequences
+#end
+	------------------------------------------------------------------
+	Control Sequence  	What it does
+	------------------------------------------------------------------
+	<Ctrl-C>        Will terminate most programs.  For UniPOPS,
+			  will interrupt the processing of the current
+			  command line and will reissue the prompt so
+			  that you can enter another command line.
+	<Ctrl-G>        The 'Bell' character. 
+	<Ctrl-H>        Same as backspace.
+	<Ctrl-Q>        Starts up the scrolling of output after a
+			  <Ctrl-S> stopped it (XON).
+	<Ctrl-R>        Echo back the contents of the present command
+			  line -- useful if your input line becomes
+			  scrambled by the output from a program.
+	<Ctrl-S>        Stop the scrolling of output (XOFF).  Restart
+			  it with a <Ctrl-Q>.
+	<Ctrl-U>        Erase the current input line.
+	<Ctrl-W>        Erase the previous word you have just typed.
+	<Ctrl-Z>        Puts the currently executing program to 'sleep'
+			  and brings you back to the UNIX prompt.  You
+			  can then start another program, place the
+			  sleeping job in the background with the bg
+			  UNIX command, or 'awaken' the job and place
+			  it in the foreground again with the fg UNIX
+			  command.  See the UNIX documentation on fg
+			  and bg and jobs.
+	------------------------------------------------------------------
+
+	You probably will make some use of <Ctrl-C>, <Ctrl-S>,
+	<Ctrl-Q>, and <Ctrl-U>.  Read up on the UNIX commands 'fg',
+	'bg', and 'jobs' before you try <Ctrl-Z>.

@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CCUR:  (FUNCTION) Returns channel no. at location of'
+PRINT 'crosshair for SHOW.  Returns x-axis value at location of'
+PRINT 'crosshair for PLOT.  Returns x-cell no. at location of'
+PRINT 'crosshair for 2-d plot.'
+PRINT ' '

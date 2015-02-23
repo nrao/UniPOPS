@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'DIM:  (FUNCTION) Returns the positive difference of the'
+PRINT 'given two parameters.  Syntax: DIM(X1,X2) returns X1-X2'
+print 'if X1>X2; else 0.'
+PRINT ' '

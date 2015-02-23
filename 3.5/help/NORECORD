@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NORECORD:  (HEADER) The total number of individual records'
+PRINT 'associated with this data.'
+PRINT ' '

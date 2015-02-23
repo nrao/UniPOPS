@@ -1,0 +1,29 @@
+	(REGULAR VERB)      
+
+	RESHOW plots the contents of Array (0) using the same Y-scaling
+	used by the last SHOW.  RESHOW does not draw or label the
+	axis.  The style of the plot is determined by the last use of
+	one of the following:  RHIST, RLINE, and RPOINTS.
+
+	RESHOW is often used to plot a baseline or Gaussian model on
+	top of the data for which the model was generated.  RESHOW can
+	also be used to plot the reduced data on top of the original.
+
+	ADVERBS USED:
+
+
+  	  BDROP         # points to be ignored at beginning of data.
+          EDROP         # points to be ignored at end of data.
+			Initial values are 0.
+
+	No adverbs are set by RESHOW.
+
+	EXAMPLE:
+
+	After plotting scan 16370 using the HISTOGRAM mode of SHOW, you
+	wish to plot the Gaussian model on top of the data; specify:
+
+			RLINE GAUSS GMODEL RESHOW
+
+	to produce a display of the Gaussian and parameters on the
+	original display.

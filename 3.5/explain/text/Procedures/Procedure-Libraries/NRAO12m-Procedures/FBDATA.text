@@ -1,0 +1,41 @@
+	FBDATA and HCDATA indicate which type of spectral line
+	data should be used by default for various verbs and
+	by preference for several procedures.
+
+	FBDATA indicates that filter bank data should be used.
+
+	HCDATA indicates that hybrid spectrometer data should be used.
+
+	In addition, then change the prompt to indicate which type
+	of data is currently preferred.
+
+	The verb preference is used when there is no subscan
+	number present (in GET and GGET).  So that if you type
+	GET 624, the program knows what assumption to make about
+	the scan number (.01 for filter bank data, .11 for hybrid
+	spectrometer data).  This is only relevant for on-line
+	data.
+
+	For the NRAO 12-m procedure library, several procedures
+	need to know which type of data is preferred.  FBDATA and
+	HCDATA each set a global scalar adverb, SPECTYPE, which is
+	then examined by each procedure to determine its behavior.
+
+	The PROMPT adverb is set to:
+
+		"LineF>"	by FBDATA
+		"LineH>"	by HCDATA
+
+	File names:  fbdata.prc
+		     hcdata.prc
+
+	These procedures are included in LSETUP.12meter
+
+	Example:
+
+	You want to make sure you are using filter bank data in these
+	standard procedures, so you type:
+
+	FBDATA
+
+	And you see that your prompt becomes "LineF>"

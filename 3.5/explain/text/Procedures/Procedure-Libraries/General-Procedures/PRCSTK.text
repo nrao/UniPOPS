@@ -1,0 +1,96 @@
+	PRCSTK applies the PROCESS procedure to each spectrum indicated
+	by the scan numbers stored in the ASTACK array.  Scans 
+	located at the same position on the sky (within the specified
+	tolerances and using the XSOURCE and YSOURCE header values)
+	are ACCUMed (with no SHIFTing applied).  The processed and
+	ACCUMed scans are saved to the a save file.  Users have the option
+	of saving the current save file (either by writing over any
+	contents of the file or by appending to the file), creating a
+	new, empty save file (the current save file would need to be
+	re-attached using CHNGFILE after this procedure runs if you wish
+	to return to using it as the save file), or exiting from the
+	procedure if none of those options is acceptable.  The global 
+	adverb MAXNSAVE is set to the highest value of NSAVE used.  
+	The save file must either be empty or you must have set 
+	SPROTECT=FALSE to allow the data to be written over.  An
+	append will only work if MAXNSAVE is set to the last scan in
+	use before using PRCSTK.
+
+	Syntax: PRCSTK(x_tol, y_tol)
+
+	x_tol and y_tol are pointing tolerances -- any two scans located
+	within these distances from each other are considered to be taken
+	at the same location and will be averaged using ACCUM.  x_tol 
+	and y_tol are in arcseconds and cannot be zero.
+
+	This procedure is useful in preparing a SAVE file that is
+	appropriate for use by the other mapping procedures included in
+	maps.plib.
+
+	The data is fetched using GET and the values in the ASTACK array.
+
+	This procedure uses the SORTSTK procedure to sort the coordinates.
+	You should read the documentation for SORTSTK for more information
+	on what that procedure does.  The temporary file used by
+	SORTSTK is prcstk.temp.  This file is deleted upon successful
+	completion of PRCSTK.  It must not exist at the start of
+	PRCSTK.
+
+	This procedure uses PROCESS to process each scan.  You should 
+	read the documentation on what that procedure does.  If you wish
+	to alter how each scan is processed, you should edit a copy of 
+	PROCESS.  If you wish to add a SHIFT step to this process, you
+	should edit a copy of PRCSTK.  You should test out PROCESS on
+	a representative scan before processing the entire ASTACK array
+	to be certain that PROCESS does what you expect it to do.
+
+	File name: prcstk.prc
+
+	This procedure is included in maps.plib
+
+	Dave Burrows made significant contributions to this procedure.
+
+	Example:
+
+	You want to make a map having pixels 30x20 arcseconds in area.
+	You have already loaded the scan numbers of the data that will
+	make up this map in to the ASTACK array (e.g. by using SELECT).
+	You want to process each scan and average any scans at the
+	same mapping pixel and produce a new SAVE file to be used
+	by CUBEINPUT (to make a cube using cube.exe).  So you type:
+
+		> CHNGFILE CREATE SSCANS NewSave.SDD
+		># The next two steps verify that PROCESS does what
+	        ># I want it to do, any adverbs that PROCESS may
+		># use should be set prior to its use.
+		> GET ASTACK(1)
+		> PROCESS; PAGE; SHOW
+		> PRCSTK(30, 20)
+		> MAXNSAVE = 0
+		Current SAVE file contains 0 scans.
+		Select an option:
+			0: append new data to end of existing SAVE file
+			1: overwrite existing SAVE file with new data
+			2: create new SAVE file
+			3: exit routine
+		# 0
+
+	And the results of the procedure will be written to your
+	screen.  New positions are separated by "-------------".
+	On each line between the above string is printed the
+	scan number, x, and y positions.
+
+	NOTE: MAXNSAVE is reset to 0 since this is a new file.  
+	      Alternatively, you could have omitted the CHNGFILE step
+	      as well as the MAXNSAVE setup above and simply chose
+	      option 1.  You would have then been asked what the
+	      name of the new SAVE file should be.  The result would
+	      have been identical.
+
+	NOTE: The zero after the hash symbol, #, by itself above is
+	      the response that the user typed.
+
+	The results are saved to the save file you just created.
+	You could then run CUBEINPUT by typing:
+
+		> CUBEINPUT(30,20)

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'PHASTB01:  (HEADER-TUC) PROTO12M - Phase table - 32'
+PRINT 'Characters where each character is the HEX representation'
+PRINT 'of 4 bits of phase information.  nn = 01, 02 ... (NOSWVAR +'
+PRINT 'NOSWVARF).  The slow phases are first, then the fast'
+PRINT 'phases.'
+PRINT ' '

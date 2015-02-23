@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DEBUG:  Turns on or off the program debug mode.'
+print 'Syntax: DEBUG TRUE or DEBUG FALSE'
+PRINT ' '

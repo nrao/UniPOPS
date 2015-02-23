@@ -1,0 +1,24 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	TEMPS lists the source temperature for each individual pair of
+C-	On-Off samples in an On-Off scan for the data in Array (0).
+C-
+C-	No adverbs are used or set by TEMPS.
+C-
+C-	EXAMPLE:
+C-
+C-	You want to know the individual pair temperatures of scan 2838
+C-	so you type:
+C-
+C-		GET 2836; TEMPS
+C-
+C-	and you will get something like the following listed:
+C-
+C-		0.12345	   0.11987    0.12543
+C-
+C-	if the scan had three on-off pairs.
+C-
+C------------------------- Continuum ------------------------------------
+

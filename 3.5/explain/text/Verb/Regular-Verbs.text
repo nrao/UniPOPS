@@ -1,0 +1,5 @@
+	Regular verbs are the normal types of verbs.  They do not
+	return a value, cannot be used in mathematical expressions,
+	cannot appear to the right of an = or PRINT command.  Multiple
+	regular verbs can be typed on the same command line and they
+	can be used outside and within procedure definition.

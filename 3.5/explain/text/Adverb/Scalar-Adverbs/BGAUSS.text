@@ -1,0 +1,25 @@
+	(SCALAR ADVERB)
+
+	BGAUSS and EGAUSS are the explicit channel numbers where a
+	Gaussian fit is to begin and end.
+
+	BGAUSS and EGAUSS are used by : GAUSS
+
+	BGAUSS and EGAUSS are set by : PEAK
+
+	The initial values of BGAUSS and EGAUSS are 1 and 256,
+	respectively.
+
+	PEAK will set the values of BGAUSS and EGAUSS, or the user may
+	specify their values before using GAUSS.
+
+	The values of BGAUSS and EGAUSS will be superseded by those of
+	GREGION, if GREGION(1) > 0.  The value of EGAUSS must greater
+	than or equal to that of BGAUSS and both must be greater than
+	zero and less than the number of data channels in Array (0).
+
+	EXAMPLE :
+
+	You want to fit a Gaussian over a known region, specify :
+
+		BGAUSS = 50 ; EGAUSS = 105 ; GAUSS

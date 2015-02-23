@@ -1,0 +1,22 @@
+#if CKBK
+Appendix F : Error Messages
+---------------------------
+#end
+The error messages that UniPOPS produces come in three basic types:
+floating-point, numbered, and unnumbered. For these, 
+
+a) Floating-point messages will be displayed after the execution of any
+   UniPOPS command line if a floating point error occurred during the
+   execution of the command line.
+
+b) Numbered messages will be displayed during the execution of various
+   UniPOPS commands whenever an error condition is detected by the
+   program.  They are preceded by a number and error-type indicator and
+   will be those most frequently encountered.
+
+c) Unnumbered messages, in almost all cases, will be displayed during
+   the starting up or closing down of the program, whenever an error
+   condition is detected.  A few occur during UniPOPS execution.  They
+   do not have a qualifying number attached.
+
+

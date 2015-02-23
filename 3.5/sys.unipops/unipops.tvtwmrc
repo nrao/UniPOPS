@@ -1,0 +1,159 @@
+#   @(#)unipops.tvtwmrc	5.1 06/22/94
+#
+VirtualDesktop "3000x2000" 
+PannerGeometry "+830+5"
+ShowVirtualNames
+
+IconManagerGeometry "-0+0"
+
+ShowIconManager
+ForceIcons
+
+nograbserver
+decoratetransients
+RandomPlacement
+
+titlefont       "-*-helvetica-bold-o-normal--*-140-*-*-*-*-*-*"
+resizefont      "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+menufont        "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+iconfont        "-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
+iconmanagerfont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+iconregion 	"4800x320-0+200" north east 16 16
+buttonindent 0                  # button doesn't have to be smaller
+usepposition "non-zero"		# use program-specified size hints accepted
+autorelativeresize		# don't require resize to cross border to start
+restartpreviousstate		# reiconify iconified things on startup
+notitlefocus			# avoid keystrokes in wrong window cause of lag
+xorvalue 1			# tend to use visually distinct adjacent colors
+BorderWidth 4
+movedelta 3
+
+monochrome
+{
+    iconmanagerhighlight  "white"
+    bordercolor "black"
+}
+
+color
+{
+    defaultbackground "white"
+    defaultforeground "black"
+    titlebackground "CornflowerBlue" {"xterm1" "CornflowerBlue"}
+    titleforeground "white" {"xterm1" "black"}
+    bordercolor "gray30"
+    bordertileforeground "gray30"
+    bordertilebackground "gray30"
+    menubackground "white"
+    menuforeground "black"
+    menutitlebackground "white"
+    menutitleforeground "CornflowerBlue"
+    iconbackground "wheat"
+    iconforeground "CornflowerBlue"
+    iconmanagerbackground "wheat"
+    Iconmanagerforeground "black"
+    VirtualDesktopBackground "gray"
+}
+
+cursors
+{
+  Menu  "double_arrow"
+  Icon  "icon"
+  Frame "diamond_cross"
+}
+
+icons
+{
+	"xterm"		"terminal"
+	"xcalc"		"calculator"
+#       "emacs"         "/usr/local/lib/emacs/etc/emacs.icon"
+}
+
+
+function "move-or-lower" { f.move f.deltastop f.lower }
+function "move-or-raise" { f.move f.deltastop f.raise }
+function "move-or-iconify" { f.move f.deltastop f.iconify }
+
+#
+# set some useful bindings.  sort of uwm-ish, sort of simple-button-ish
+#
+button1 = : root : f.menu "mainMenu"
+Button2 = : root : f.menu "usefulPrograms"
+Button3 = : root : f.menu "hosts"
+
+Button1 = : icon : f.function "move-or-iconify"
+Button2 = : icon : f.function "move-or-iconify"
+Button3 = : icon : f.function "move-or-iconify"
+
+Button1 = : title : f.function "move-or-raise"
+Button2 = : title : f.function "move-or-raise"
+Button3 = : title : f.function "move-or-raise"
+
+Button1 = : frame : f.resize
+Button2 = : frame : f.resize
+Button3 = : frame : f.resize
+
+Button1 = : iconmgr : f.iconify
+Button2 = : iconmgr : f.iconify
+
+"L5"    =       : all   : f.raiselower
+"L7"    =       : all   : f.iconify
+
+#
+# the main menu provides operations which (in general) apply to the entire screen,
+# i.e., locking the screen, redrawing, restarting tvtwm, exiting tvtwm.  a few window-
+# specific operations are provided (move, resize, and kill) for windows which
+# don't have a title bar, but for which the operations may occasionally be needed.
+#
+# we expect this menu to popup when the left mouse button is pressed on the root window
+#
+
+menu "mainMenu"
+{
+"TVTWM main menu"		("navyblue":"white")     f.title
+"Lock screen"		("navyblue":"lightblue") !"xlock&"
+"Move a window" 	("navyblue":"lightblue") f.move
+"Redraw screen"		("navyblue":"lightblue") f.refresh
+"Kill a window" 	("navyblue":"lightblue") f.delete
+"Restart TVTWM"	        ("navyblue":"lightblue") f.restart
+"Info"                  ("navyblue":"lightblue") f.version
+"EXIT TVTWM"	        ("black":"red")		 f.quit
+}
+
+#
+# the middle mouse button, when pressed on the root window, pops up a menu of useful
+# programs.  we expect extensive customization here.
+#
+
+menu "usefulPrograms"
+{
+"Programs"		("navyblue":"white")     f.title
+"xterm"                 ("navyblue":"lightblue") !"xterm -sb -sl 900 -font 9x15bold &"
+"Console"               ("navyblue":"lightblue") !"xterm -C -sb -sl 900 -font 9x15bold -title Console &"
+"emacs"		        ("navyblue":"lightblue") !"emacs &"
+"textedit"		("navyblue":"lightblue") !"textedit &"
+"mailtool"              ("navyblue":"lightblue") !"mailtool -Wi &"
+"calculator"		("navyblue":"lightblue") !"xcalc -iconic &"
+"clock"                 ("navyblue":"lightblue") !"xclock -update 1 &"
+}
+
+#
+# add a button on the right side of the title bar that pops up a menu
+# of window-specific operations.
+#
+
+RightTitleButton  "menu10" = f.menu "windowOperations"
+
+menu "windowOperations"
+{
+# "Window Operations"	("navyblue":"lightblue")	f.title
+"Zoom"                  ("navyblue":"lightblue")	f.fullzoom
+"Iconify"		("navyblue":"lightblue")	f.iconify
+"Resize"		("navyblue":"lightblue")	f.resize
+"Move"			("navyblue":"lightblue")	f.move
+"Stick"       		("navyblue":"lightblue")        f.stick
+"Raise"			("navyblue":"lightblue")	f.raise
+"Lower"			("navyblue":"lightblue")	f.lower
+"Info"			("navyblue":"lightblue")	f.identify
+"Exit"			("navyblue":"lightblue")	f.delete
+"Kill"			("navyblue":"lightblue")	f.destroy
+}	

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CONTYPE:  (CONTINUUM-POINTER) Indicates 12-m continuum '
+PRINT '          data for CHNGONLINE and CHNGVER.'
+PRINT ' '

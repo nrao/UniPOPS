@@ -1,0 +1,39 @@
+L------------------------- Spectral Line --------------------------------
+L-	(SCALAR ADVERB)
+L-
+L-	BW_MAX and BW_MIN specify the range in frequency resolution
+L-	used by the SELECT verb.  The units are MHz and the values of
+L-	the adverbs only apply if the data are spectral-line scans.
+L-
+L-	Spectral-line scans will be SELECTed if they have a frequency
+L-	resolution within the range specified by BW_MIN through BW_MAX,
+L-	inclusive.
+L-
+L-	If BW_MAX is set to the DEFAULT value, there is no upper limit
+L-	to the range.  Similarly, if BW_MIN is set to the DEFAULT
+L-	value, there is no lower limit to the range.
+L-
+L-	BW_MIN and BW_MAX are used by : SELECT
+L-
+L-	No verbs change BW_MIN or BW_MAX.
+L-
+L-	Initial values of BW_MIN or BW_MAX are DEFAULT.
+L-
+L-	EXAMPLE :
+L-
+L-	To select all scans having a frequency resolution of less than
+L-	1 Mhz, specify:
+L-
+L-		BW_MAX = 1.0; BW_MIN = DEFAULT
+L-
+L-	To select all scans having a resolution greater than 0.5 MHz,
+L-	specify:
+L-
+L-		BW_MAX = DEFAULT; BW_MIN = 0.5
+L-
+L-	To select all scans with a resolution between 0.5 and 1.0 MHz,
+L-	specify:
+L-
+L-		BW_MAX = 1.0; BW_MIN = 0.5
+L-	
+L------------------------- Spectral Line --------------------------------

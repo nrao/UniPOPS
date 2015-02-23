@@ -1,0 +1,207 @@
+	The following describes all math, trigonometric, graphics,
+	header, file manipulation, and data functions.  A UniPOPS
+	function is similar to functions in Fortran or C in that it 
+	returns one value.  Some functions require 0, 1, or more
+	arguments (see attached note).
+
+
+Mathematical Functions
+----------------------
+
+	The following functions are available, can be used to construct
+	mathematical expressions, and closely resemble the functions
+	found in Fortran libraries.
+
+	ABS(x)    -  Returns the absolute value of a number.
+		     EXAMPLE:  Y = ABS(X)
+
+	DIM(x,y)  -  Returns the positive difference between two floating
+		     point numbers.  EXAMPLE:   X = DIM (Y1,Y2) sets X
+		     to the value of Y1-Y2 if Y1 > Y2 else sets X to 0.
+
+	EXP(x)    -  Returns the value of e raised to the given
+		     parameter.  EXAMPLE:  Y = EXP(3)
+
+	IFIX(x)   -  Truncates a number.  EXAMPLE:   IR = IFIX(Y1)
+	INT(x)	     IFIX and INT are synonymous.    IR = INT (Y1)
+
+	LOG(x)    -  Returns the natural (base e) logarithm of a
+		     number.  EXAMPLE:  Y=2*LOG(2)
+
+	LOG10(x)  -  Returns the common (base 10) logarithm of a
+		     number.  EXAMPLE:  Y=2*LOG10(2)
+
+	MAX(x,y)  -  Returns the largest number (two arguments ONLY)
+		     EXAMPLE:   X = MAX (Y1,Y2)
+
+	MIN(x,y)  -  Returns the smallest number (two arguments ONLY)
+		     EXAMPLE:   X = MIN (Y1,Y2)
+
+	MOD(x,y)  -  Returns the remainder after division of two
+		     numbers (the remainder of x/y). 
+		     EXAMPLE:   X = MOD (Y1,Y2)
+
+	NINT(x)   -  Returns the nearest integer to that of its
+		     argument.  EXAMPLE: Y = NINT(X)
+
+	RAND      -  Returns a random number.  EXAMPLE:  X=RAND
+		     (The values returned are uniformly distributed
+		     between -1. and 1.)
+
+	SIGN(x,y) -  Returns a number having the magnitude of the first
+		     argument and sign of the second argument.
+		     EXAMPLE:   X = SIGN (Y1,Y2)
+
+	SQRT(x)   -  Returns the square root of a number.
+		     EXAMPLE:  PRINT SQRT(X)
+
+
+Trigonometric Functions
+-----------------------
+
+	The following trigonometric functions are available, can be
+	used to create mathematical expressions, and are very similar
+	to the related Fortran routines.
+
+	ACOS(x)   -  Returns the angle in radians whose COSINE is the
+		     given parameter.  EXAMPLE:  PRINT ACOS (-1.)
+
+	ASIN(x)   -  Returns the angle in radians whose SIN is the
+		     given parameter. EXAMPLE:  PRINT ASIN (.707)
+
+	ATAN(x)   -  Returns angle (in radians; -PI/2 < angle < PI/2)
+		     whose TANGENT is the given parameter.  
+		     EXAMPLE:  PRINT ATAN (1.0)
+
+	ATAN2(x,y)-  Returns the angle (in radians; -PI < angle < PI)
+		     whose TANGENT is the ratio of two floating point
+		     numbers, with the quadrant given by the sign of
+		     the two numbers.  EXAMPLE:  X = ATAN2 (Y1,Y2)
+
+	COS(x)    -  Returns COSINE of the given angle (in radians).
+		     EXAMPLE:  PRINT COS (3.14159)
+
+	COSH(x)   -  Returns hyperbolic COSINE of given angle (in
+		     radians).  EXAMPLE:  PRINT COSH (3.14159)
+
+	SIN(x)    -  Returns the SINE of given angle (in radians).
+		     EXAMPLE:  PRINT SIN (3.14159)
+
+	SINH(x)   -  Returns hyperbolic SINE of given angle (in
+		     radians).  EXAMPLE:  PRINT SINH (3.14159)
+
+	TAN(x)    -  Returns the TANGENT of given angle (in radians).
+		     EXAMPLE:  PRINT TAN (1.57)
+
+	TANH(x)   -  Returns hyperbolic TANGENT of given angle (in
+		     radians).  EXAMPLE:  PRINT TANH (3.14159)
+
+
+File Manipulation Function
+--------------------------
+
+	The FOPEN function is available for manipulating text files --
+	see the FOPEN documentation for details.
+
+	The FNAME function returns a string containing the file name
+	corresponding to a file number previously returned through the
+	use of the FOPEN function or one of the standard files opened
+	using CHNGFILE -- see the FNAME documentation for details.
+
+Graphics Functions
+------------------
+
+	The following graphics functions are available -- see their own
+	documentation for details.
+
+	CCUR		FCUR		MCUR		TCUR
+	VCUR		XCUR		YCUR		
+
+String Functions
+----------------
+
+	The following functions are available for manipulating
+	character strings.  The INDEX, LENGTH, and LNBLNK functions
+	return a number and COMPARE returns either TRUE or FALSE.
+	CONCAT and SUBSTR return strings.
+
+	COMPARE(string1, string2)  -  Compares two strings and returns
+				      a TRUE if they are identical else
+				      returns FALSE.  EXAMPLE:
+				      PRINT COMPARE("hello",XTITLE)
+
+	CONCAT(string1, string2) - Returns the concatenation of the two
+				   strings.  EXAMPLE:  
+				   YTITLE = CONCAT('HELLO',XTITLE)
+
+	INDEX(string1,string2) - Returns the position of the first
+				 occurrence of string2 in string1 (or
+				 zero if string2 doesn't occur in
+				 string1).  EXAMPLE:  
+				 X = INDEX(XTITLE,'Hello')
+
+	LENGTH(string1) - Returns the number of characters in the given
+			  string argument.  EXAMPLE:  X = LNGTH(XTITLE)
+
+	LNBLNK(string1) - Returns the position of the last non-blank
+			  character in the given string argument.
+			  EXAMPLE:  X = LNBLNK(XTITLE) - 3
+
+	SUBSTR(string1, i1, i2) - Returns a sub-string of string1 from
+				  position i1 through i2, inclusive.
+				  EXAMPLE:  PRINT SUBSTR(XTITLE,4,8)
+
+
+Miscellaneous Functions
+-----------------------
+
+	The following functions do not fall into any of the above
+	categories -- see their own documentation for details about
+	these commands.
+
+	C2XPIX(x) - Returns the x-pixel value corresponding to the
+		    specified c-value (channel for SHOW, x-axis value
+		    for PLOT, x-cell number for 2-dim).
+
+	CHANTOX(x) - Returns the value of the current lower x-axis for
+		     the specified channel number.
+
+	DATE - Returns a 16 character string containing the current date.
+
+	T2YPIX(x) - Returns the y-pixel value corresponding to the 
+		    specified t-value (temperature for SHOW, y-axis
+		    value for PLOT, y-cell number for 2-dim).
+
+	TIME - Returns an 8 character string containing the current time.
+
+	XPIX2C(x) - Returns the c-value (channel for SHOW, x-axis value
+		    for PLOT, x-cell number for 2-dim) corresponding
+		    to the specified x-pixel value.
+
+	XTOCHAN(x) - Returns the channel number for the specified value
+		     of the current lower x-axis.
+
+	YPIX2T(x) - Returns the t-value (temperature for SHOW, y-axis
+		    value for PLOT, y-cell number for 2-dimensional
+		    displays) corresponding to the specified y-pixel 
+		    value.
+
+NOTES:
+
+.  The following functions require no arguments:
+
+	CCUR		DATE 		FCUR		MCUR		
+	RAND		TCUR		TIME		VCUR
+	XCUR		YCUR
+
+.  The following functions require two arguments:
+
+	ATAN2		COMPARE		CONCAT		DIM
+	FOPEN		INDEX		MAX		MIN
+	MOD		SIGN						
+
+.  The following functions require three arguments:
+
+	SUBSTR
+
+.  All other functions require one argument.

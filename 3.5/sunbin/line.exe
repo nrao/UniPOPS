@@ -1,0 +1,19 @@
+#!/bin/csh -f
+#
+#  @(#)line.exe.sh	5.1 06/22/94
+#
+set command = $0
+echo ""
+echo "Because of the differences in how each site handles on-line data"
+echo $command:t "is no longer the way to start up unipops."
+echo "Use the following commands: "
+echo ""
+echo "   gbline                 : for accessing Green Bank on-line data."
+echo "   tucline                : for accessing Tucson on-line data."
+echo "   cvline                 : for post-observation analysis."
+echo ""
+echo "Note: there is currently no remote access of Tucson on-line data."
+echo "Note: to access Green Bank data remotely, you must have permission"
+echo "      from the Green Bank staff.  Contact rmaddale@nrao.edu."
+echo ""
+exit(0)

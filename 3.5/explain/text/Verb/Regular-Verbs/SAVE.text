@@ -1,0 +1,43 @@
+  	(REGULAR VERB)     		
+	
+	Copies the scan in Array (0) into one of the many save-bin
+	areas in the 'save' file.  You first assign the value of the 
+	save-bin where you want the scan saved to the adverb NSAVE.
+
+	Both the scan and its header information are copied.  The data
+	can be recovered later using the verb RECALL.
+
+	ADVERBS USED:
+
+	   NSAVE     The number of the save-bin into which the scan
+		     in Array (0) is to be copied.  NSAVE may range from
+		     1 to an upper limit set by the size of the 'save'
+		     file..  The initial value is 0.
+
+	   SPROTECT  If TRUE, will prevent overwriting NSAVE area if
+		     data already exists in that bin.  The following
+		     message will appear on screen for the conditions:
+
+		     SPROTECT=TRUE   
+		    	Data exists at 'nsave #'.... can not overwrite!!
+		     SPROTECT=FALSE
+			Data exists at 'nsave #'.... Overwriting!!
+
+		     The initial value is TRUE.
+
+	No adverbs are set by SAVE.
+
+	EXAMPLE:
+
+	You are observing and the next observer needs to get on the
+	computer.  You have a partly reduced scans in Array (0) and
+	Array (2).  To save both of these until you can get back on the
+	computer, specify:
+
+		NSAVE = 65; SAVE               
+
+	saves Array (0) data in bin 65; and then
+
+		NSAVE = 66; COPY(2,0); SAVE    
+
+	copies Array (2) to Array (0) and saves the data in bin 66.

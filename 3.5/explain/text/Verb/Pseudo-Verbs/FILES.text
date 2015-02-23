@@ -1,0 +1,37 @@
+	(PSEUDO VERB)
+
+	FILES lists the names of the files which the program can
+	access.  The files can be changed with the CHNGFILE or
+	Z_CHNGFILE verbs.
+
+	FILES can be used only while in execute mode and must be the
+	only thing on the command line.
+
+	No adverbs are used or set by FILES.
+
+	EXAMPLE:
+
+	To list the current file names in use, specify:
+
+		FILES 
+
+	and something like the following will be produced:
+
+	Table of files
+	---------------------------------------------------------------
+	  | File type     | Filename                       | Accessed by
+	---------------------------------------------------------------
+	  |Data (online)  |Project: F110                   |GET, ON, OFF
+	 1|Data (offline) |Not Available                   |GET, ON, OFF
+	 2|Keep           |LKEEP                           |KEEP, KGET
+	 3|Save           |LSAVE                           |SAVE, RECALL
+         4|Gains          |LGAINS                          |GGET
+        11|Printer        |LPRINTOUT                       |PRINTER,CRT,OUTPUT
+        12|Command Logging|LCMDLOG                         |LOGON, LOGOFF
+	---------------------------------------------------------------
+	  Output will be appended to end of LPRINTOUT
+	  Output will be appended to end of LCMDLOG
+	--------------------------------------------------------------
+
+	Note: Only a maximum of 35 characters in the Filename can be
+	displayed by FILES.

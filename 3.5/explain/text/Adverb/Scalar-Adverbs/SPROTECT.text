@@ -1,0 +1,27 @@
+	(SCALAR ADVERB)
+
+	SPROTECT allows users to protect the 'save' file from data being
+	overwritten or to allow SAVE to overwrite data in the 'save' file.
+
+	If  SPROTECT  is set to TRUE (+1) then SAVE will not allow the
+	user to store a scan in the 'save' file if the value of NSAVE has
+	already been  used to store a previous scan. 
+
+	If SPROTECT is set to  FALSE  (-1),  then  the  contents of the  
+	NSAVE slot can be overwritten. 
+
+	SPROTECT is used by : SAVE
+
+	No verbs change SPROTECT.
+
+	The initial value of SPROTECT is TRUE (+1). 
+
+	EXAMPLE :
+
+	Your favorite number 34 is the SAVE bin in which you like to
+	store your updated result.  So to allow SAVE to overwrite the
+	earlier version of the scan in bin 34, you type :
+
+		NSAVE = 34
+		SPROTECT = FALSE
+		SAVE

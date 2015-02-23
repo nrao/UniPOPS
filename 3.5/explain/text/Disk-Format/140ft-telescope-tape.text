@@ -1,0 +1,373 @@
+#if RFRNC
+140-ft Telescope Tape
+---------------------
+
+#end
+	The 140-ft Telescope or archive tape contains both spectral
+	line and continuum observations.  The individual autocorrelator
+	dumps as well as all continuum data points are on the tape.
+	The physical tape layout begins with a short file that contains
+	an 80-character ASCII label.  The label gives the origin of the
+	tape as well as the tape's archive number.
+
+	The rest of the tape consists of a second file which contains
+	the scans.  Each autocorrelator dump within a scan makes up a
+	record on the tape with length 9600 bytes.  Usually a number of
+	spectral line records must be averaged together to form a
+	scan.
+
+	Each continuum scan may be spread out among many continuum
+	records on the tape, each record having 4800 bytes.  The number
+	of records taken up by the continuum scan depend upon the
+	number of data points as well as the number of feeds used in
+	the data taking.  The number of tape records for a continuum
+	scan can be derived from the equation:  Number of records =
+	number_of_pts / int[2016 / (4 + number_feeds)] where
+	number_feeds is 2, 4, 6, 8, 10, 12, 14, or 16.
+
+	For example, if you have taken a 10 minute spectral-line scan
+	with 1 minute autocorrelator dumps; followed by an 8 feed
+	continuum observation of 600 data points; then a 4 feed, 40
+	point continuum observation; and then a 2 minute spectral-line
+	scan with 40 second autocorrelator dumps; the tape would
+	contain:
+
+	Ten 9600-byte records for the first spectral-line scan;
+	Four 4800-byte records for the first continuum scan;
+	One 4800-byte record for the second continuum scan;
+	Three 9600-byte records for the last spectral-line scan.
+
+	The binary representation of both header and data are that of
+	the Modcomp and is described under "Modcomp-Binary".  Note that
+	the Modcomp uses 16-bit integers and either 4- or 6-byte reals.
+	Characters strings are in ASCII.
+
+
+	140-ft Telescope Tape: Continuum Records
+	----------------------------------------
+	Each continuum records contains its own header information (768
+	bytes) followed by 4032 bytes of positions and data values for
+	up to 16 feeds.  The layout of the header is described by the
+	following structure:
+
+#if RFRNC
+
+	Table 2.7.4 : 140-ft Telescope Tape: Continuum Records
+#else
+		140-ft Telescope Tape: Continuum Records
+#end
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+	Real*4		Scan Number			0
+	Real*4 		UNUSED				4
+	Character*12 	Source Name 			8
+	Integer*2	Observer's Number		20
+	Character*20	Observer's Name 		22
+	Real*6		Julian Date (-2400000) Days 	42
+	Integer*2	Solar Day of Year		48
+	Integer*2	Month				50
+	Integer*2	Day				52
+	Integer*2	Year				54
+	Real*4		LST (Radians)			56
+	Real*4		EST (Radians)			60
+	Integer*2	Telescope			64
+	Integer*2	Observing Program (3,4,or 8) 	66
+	Integer*2	Scan type code			68
+	Integer*2	Mode				70
+	Integer*2	First channel			72
+	Integer*2	Number of channels		74
+	Integer*2	Samples/record			76
+	Integer*2	Start				78
+	Integer*2	Stop				80
+	Integer*2	UNUSED (8)			82
+	Integer*2	Position Code			98
+	Integer*2	Scan Direction (H-V)		100
+	Integer*2	Subscan Number			102
+	Integer*2	UNUSED				104
+	Integer*2	Total Subscans			106
+	Integer*2	UNUSED (2)			108
+	Real*4		Sample Rate (Seconds)		112
+	Real*4		Wavelength (cm.)		116
+	Integer*2	UNUSED (2) 			120  
+	Real*4		Epoch of Obs. (Years )		124
+	Real*4		H Coord. Rate (Rad/min)		128
+	Real*4		V Coord. Rate (Rad/min)		132
+	Real*4		RA Indicated (Radians)		136
+	Real*4		DEC Indicated (Radians)		140
+	Real*4		Focus (mm)			144
+	Real*4		Orientation (Radians)		148
+	Real*4		Zenith Distance	(Radians)	152
+	Real*4		Descrip. Origin (3) (Radians)	156
+	Real*4		RA Pt. Corr. (Sec. of time)	168
+	Real*4		DEC Pt. Corr. (arcsec)		172
+	Real*4		PVLS (3) (arc-min)		176
+	Real*4		Commanded H Position (Radians)	188
+	Real*4		Commanded V Position (Radians)	192
+#if RFRNC
+	-------------------------------------------------------
+
+	Table 2.7.4 : 140-ft Telescope Tape: Continuum Records (Cont.)
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+#end
+	Integer*2	140' Local Temp.*128  (deg C)	196
+	Integer*2	UNUSED				198
+	Real*4 		Zenith Opacity			200
+	Integer*2	Dew Point*128  (deg C)		204
+	Integer*2	Interf. Temp.*128 (deg C)	206
+	Integer*2	Barometric Press.*128  (cm-Hg)	208
+	Integer*2	UNUSED				210
+	Real*4		Epoch RA (Radians)		212
+	Real*4		Epoch DEC (Radians)		216
+	Real*4		Apparent RA (Radians)		220
+	Real*4		Apparent DEC (Radians)		224
+	Real*4		Galactic l (Radians)		228
+	Real*4		Galactic b (radians)		232
+	Real*4		Azimuth	 (Radians)		236
+	Real*4		Elevation (Radians)		240
+	Real*4		Horiz. Descriptive (Radians)	244
+	Real*4		Vert. Descriptive (Radians)	248
+	Real*4		RHO (8)	(Radians)		252
+	Real*4		THETA (8) (Radians)		284
+	Real*4		Noise Tube (8)  (deg K)		316
+	Real*4		Scale Factor (4) (K/Count)	348
+	Real*4 		System Temps (4) (deg K)	364
+	Real*4		Bandwidth (4) (MHz)		380
+	Character*6	User PROJECT Code 		396
+	Integer*2	Dig. Rcvr. Header Words(48)	402
+	Real*6		L1 (MHz)			498
+	Real*6		L1F1 (MHz)			504
+	Real*6		L1F2 (MHz)			510
+	Real*6          Center Freq. (2) (MHz)		516
+	Real*6          Rest Freq. (2) (MHz)		528
+ 	Real*4		LA (MHz)			540
+ 	Real*4		LB (MHz)			544
+	Character*18	C-F Formula (2)			548
+	Integer*2	UNUSED (8)			584
+	Integer*2	DCR words (48)			600
+	Integer*2	UNUSED (36)			696
+	-------------------------------------------------------
+	Notes:
+
+	(1) Observing program equals 8 for DCR scans, 4 for On-Off A/D
+	measurements, and 3 for normal A/D measurements.
+
+	(2) Scan-type code equals 0 for a "no-cal" scan or DCR scan, 1
+	for a "pulsed cal" scan, 2 for a "cal" scan, and 3 for an
+	On-Off scan.
+
+	(3) Position codes are 1 for HA, DEC; 2 for EPOCH RA, DEC; 3
+	for Apparent RA, DEC; 4 for galactic coordinates; 5 for AZ, EL;
+	and 6 for Descriptive H and V.
+
+	(4) Scan direction equals 0 for no rates; +1 for +H rates, -1
+	for -H rates, +2 for +V rates, -2 for -V rates.
+
+
+	Following this header are data sub-blocks.  The size of a
+	sub-block is 8 + number_of_feeds*2 bytes.  The first 8 bytes of
+	every sub-block is the horizontal and vertical positions for
+	each sub-block (in radians, in two real*4 words).  Following
+	the positions are number_of_feeds integer*2 words which are the
+	data values (in counts).  Thus, if the number of feeds is 2, 4,
+	6, 8, 10, 12, 14, or 16, the sub-blocks look something like the
+	following:
+
+#if RFRNC
+
+	Table 2.7.5 : 140-ft Telescope Tape: Continuum Data Sub-Blocks
+#else
+	     140-ft Telescope Tape: Continuum Data Sub-Blocks
+#end
+	-------------------------------------------------------------
+	Word Size   	Description
+	-------------------------------------------------------------
+	Real*4		Observed H Coordinate (radians)
+	Real*4		Observed V Coordinate (radians)
+        Integer*2 	Data Values (number_of_feeds)
+	-------------------------------------------------------------
+
+	For 2 feeds, each sub-block is 12 bytes long, for 4 it is 16,
+	for 6 it is 20, for 8 it is 24, for 10 it is 28, for 12 it is
+	32, for 14 it is 36, and for 16 it is 40.  The first sub-block
+	is located at byte 768 in the continuum record.  Up to 336
+	sub-blocks can exist in a continuum record for 2 feeds, 252 for
+	4 feeds, 201 for 6 feeds, 168 for 8, 144 for 10, 126 for 12,
+	112 for 14, and 100 for 16.  If more than this number of
+	sub-blocks is needed, a new continuum record is started with
+	the same identical format as described above.
+
+	140-ft Telescope Tape: Spectral-Line Records
+	--------------------------------------------
+	Each spectral-line record contains its own header information
+	(1408 bytes) followed by 8192 byes of signal and reference data
+	values for up to four different backends.  The structure of a
+	spectral-line record looks like the following:
+
+
+#if RFRNC
+	Table 2.7.6 : 140-ft Telescope Tape: Spectral-Line Records
+#else
+	    140-ft Telescope Tape: Spectral-Line Records
+#end
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+	Real*4		Scan Number			0
+	Real*4 		Off-scan number			4
+	Character*12 	Source Name 			8
+	Integer*2	Observer's Number		20
+	Character*20	Observer's Name 		22
+	Real*6		Julian Date (-2400000) Days 	42
+	Integer*2	Solar Day of Year		48
+	Integer*2	Month				50
+	Integer*2	Day				52
+	Integer*2	Year				54
+	Real*4		LST (Radians)			56
+	Real*4		EST (Radians)			60
+	Integer*2	Telescope			64
+	Integer*2	Observing Program (1 or 2) 	66
+	Integer*2	Scan type code			68
+	Integer*2	Mode				70
+	Integer*2	Initial Receiver		72
+	Integer*2	Last Receiver			74
+	Integer*2	Receiver Increment		76
+	Integer*2	Start (4)			78
+#if RFRNC
+	-------------------------------------------------------
+
+	Table 2.7.6 : 140-ft Telescope Tape: Spectral-Line Records (Cont.)
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+#end
+	Integer*2	Stop (4)			86
+	Integer*2	Velocity Definition		94
+	Integer*2	Velocity Reference		96
+	Integer*2	Position Code			98
+	Integer*2	Scan Direction (H-V)		100
+	Integer*2	Unused				102
+ 	Real*4		Scan-Time (Sec)			104
+	Integer*2	UNUSED (2)			108
+	Real*4		Sample rate (sec)		112
+	Integer*2	UNUSED (4)			116
+	Real*4		Epoch of Obs. (Years )		124
+	Real*4		H Coord. Rate (Rad/min)		128
+	Real*4		V Coord. Rate (Rad/min)		132
+	Real*4		RA Indicated (Radians)		136
+	Real*4		DEC Indicated (Radians)		140
+	Real*4		Focus (mm)			144
+	Real*4		Orientation (Radians)		148
+	Real*4		Zenith Distance	(Radians)	152
+	Real*4		Descrip. Origin (3) (Radians)	156
+	Real*4		RA Pt. Corr. (Sec. of time)	168
+	Real*4		DEC Pt. Corr. (arcsec)		172
+	Real*4		PVLS (3) (arc-min)		176
+	Real*4		External Marker  (IMARK)	188
+ 	Integer*2	UNUSED (2)			192
+	Integer*2	140' Local Temp.*128  (deg C)	196
+	Integer*2	UNUSED				198
+	Real*4 		Zenith Opacity			200
+	Integer*2	Dew Point*128  (deg C)		204
+	Integer*2	Interf. Temp.*128 (deg C)	206
+	Integer*2	Barometric Press.*128  (cm-Hg)	208
+	Integer*2	UNUSED				210
+	Real*4		Apparent RA (4) (Radians)	212
+	Real*4		Apparent DEC (4) (Radians)	228
+ 	Real*4		1950 RA	(4)  (Radians)		244
+ 	Real*4		1950 DEC (4)  (Radians)		260
+	Real*4		Galactic l (4) (Radians)	276
+	Real*4		Galactic b (4) (Radians)	292
+	Real*4		Observed H (4) (Radians)	308
+	Real*4		Observed V (4) (Radians)	324
+	Real*4		RHO (4) (Radians)		340
+	Real*4		THETA (4) (Radians)		356
+	Real*4		Noise Tube (4) (Radians)	372
+	Real*4		Sig. System Temps (4) (deg K)	388
+	Real*4		Center Vel. (4) (Km/s)		404
+	Real*4		Delta Vel. (4) (Km/s) 		420
+	Real*4		RVSYS (4) (Km/s)		436
+	Real*4		Eff. Integration (4) (Sec)	452
+	Real*4		Bandwidth (4) (MHz)		468
+	Real*4		Theor. RMS (4) (deg. K)		484
+	Integer*2	UNUSED (2)			500
+	Real*6          Center Freq. (4) (MHz)		504
+	Real*6          Rest Freq. (4) (MHz)		528
+	Character*18	C-F Formula (4)			552
+	Real*6		L1 (MHz)			624
+	Real*6		L1F1 (MHz)			630
+	Real*6		L1F2 (MHz)			636
+#if RFRNC
+	-------------------------------------------------------
+
+	Table 2.7.6 : 140-ft Telescope Tape: Spectral-Line Records (Cont.)
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+#end
+	Real*6		L2 (MHz)			642
+	Real*6		L2F1 (MHz)			648
+	Real*6		L2F2 (MHz)			654
+ 	Real*4		LA (MHz)			660
+ 	Real*4		LB (MHz)			664
+ 	Real*4		LC (MHz)			668
+ 	Real*4		LD (MHz)			672
+	Integer*2	A/C Words (22)			676
+	Integer*2	Error Ind. Words (52)		720
+	Integer*2	Parameter Monitors (64)		824
+	Integer*2	Frequency Counters (80)		952
+	Integer*2	A/C WORDS 4105-4128 (24)	1112
+	Integer*2	A/C WORDS 4145-4168 (24)	1160
+	Integer*2	A/C WORDS 4185-4208 (24)	1208
+	Integer*2	A/C WORDS 4225-4248 (24)	1256
+	Integer*2	UNUSED				1304
+ 	Character*6	User Project Code		1306
+	Real*4		Ref. System Temps (4) (deg K)	1312
+	Real*4		Power Cntr.-Ref. NT off (4) 	1328 
+	Real*4		Power Cntr.-Ref. NT on (4) 	1344 
+	Real*4		Power Cntr.-Sig. NT off (4) 	1360 
+	Real*4		Power Cntr.-Sig. NT on (4) 	1376 
+	Real*4		Chan. Zero -Ref. NT off 	1392
+	Real*4		Chan. Zero -Ref. NT on	 	1396
+	Real*4		Chan. Zero -Sig. NT off 	1400
+	Real*4		Chan. Zero -Sig. NT on	 	1404
+	Real*4		Spectra-Signal (1024) 		1408
+	Real*4		Spectra-Reference (1024) 	5504
+	-------------------------------------------------------
+	Notes: 
+
+	(1) The reference spectra is only meaningful for Switched-Power
+	(Beam-switched or frequency-switched) scans and should be
+	ignored for Total-Power (position-switched) scans.
+
+	(2) Observing program equals 2 for Total-Power scans and 1 for
+	Switched-Power scans.
+
+	(3) Scan-type code equals 0 for a Total-Power OFF scan, 1 for a
+	Total-Power ON scan, and 2 for a Switched-Power scan.
+
+	(4) Velocity Reference equals 1 for Radio and 2 for Optical.
+
+	(5) Velocity Definition equals 4 for Geocentric, 3 for
+	Heliocentric, 2 for LSR, and 1 for none.
+
+	(6) Position codes are 1 for HA, DEC; 2 for EPOCH RA, DEC; 3
+	for Apparent RA, DEC; 4 for galactic coordinates; 5 for AZ, EL;
+	and 6 for Descriptive H and V.
+
+	(7) Scan direction equals 0 for no rates; +1 for +H rates,
+	-1 for -H rates, +2 for +V rates, -2 for -V rates.
+
+	(8) External marker is greater than or equal to 1 for "switched"
+	configuration, else it is an "unswitched" configuration.
+
+	Scans which take up more than one auto-correlator dump occupy
+	more than one spectral-line record, each record having a
+	complete copy of the header information.  These records are
+	averaged together using (effective integration time)**2 / Tsys
+	weighting.
+#if RFRNC
+
+#end

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'BMODEL:  Uses the polynomial baseline coefficients in BPARM'
+PRINT 'and stores a model of the fit into Array 0.'
+PRINT ' '
+PRINT 'BPARM='; print BPARM
+PRINT ' ' 
+

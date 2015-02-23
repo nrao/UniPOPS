@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EGAUSS:  (ADVERB) Channel number at which to end fitting'
+print 'Gaussians.'
+PRINT ' '

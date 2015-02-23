@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'PLUS:  Adds the data in Array 1 to that in Array 0'
+PRINT 'and places the results in Array 0.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

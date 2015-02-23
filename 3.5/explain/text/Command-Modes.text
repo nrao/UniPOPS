@@ -1,0 +1,236 @@
+	This documents the three types of command modes the interpretor
+	can be in.  The modes are:  Execute, Compile, and Input.  You
+	can always tell what mode the interpretor is in by the prompt
+	you are given by the program.
+
+#if RFRNC
+			Table 2.3.1 : Prompt Characters
+#else
+				Prompt Characters
+#end
+	-------------------------------------------------------------------
+	Prompt		Mode:		Description:
+	-------------------------------------------------------------------
+	 PROMPT		Execute		For immediate execution of commands
+	  :		Compile		For creating or editing procedures
+	  #		Input		For entering values
+	-------------------------------------------------------------------
+
+	The examples at the end of this section will help you
+	understand the various modes.  PROMPT in the above table refers
+	to the value of the PROMPT adverb.  Its default value is '>'.
+	In the rest of the documentation, this symbol, >, is used to
+	mean the current value of the PROMPT adverb (the execute mode
+	prompt).
+
+
+Execute Mode
+------------
+
+	When you first enter the program you will be in execute mode.
+	In execute mode, the value of the PROMPT string adverb is
+	used as the program's prompt.  The default of this adverb is ">".
+	You can change the value of this adverb, and hence the execute
+	mode prompt, at any time.  You do not have any control over
+	the prompts for the other two modes.  As you type in a command 
+	and terminate an input line with a carriage return (not preceded 
+	by the '\' continuation character), the interpretor parses the 
+	input line, checks for syntactical errors, and, if no errors are 
+	found, will try to compile and execute the commands in the input 
+	line.  The program is most often found in execute mode.
+
+	Certain operators, called pseudo verbs can only be used while
+	in execute mode.  All other operators (regular verbs, function
+	verbs, math and logical operators) and all operands (adverbs)
+	can be used in execute mode.
+
+
+Compile Mode
+------------
+
+	Compile mode has two sub modes -- Define and Edit -- and is
+	used to create and edit new user-defined operators called 
+	procedures.
+
+	You cannot use certain commands, called pseudo verbs, while
+	in compile mode.  All other commands (regular verbs, function
+	verbs, math and logical operators) and all operands (adverbs)
+	can be used in compile mode.  These commands are not actually
+	executed during compile mode, but are mearly parsed for later
+	execution when you used the procedure.
+
+	a.  Define Mode
+	---------------
+	To enter the define mode, you must type the 'PROCEDURE' or
+	'PROC' command while in execute mode.  Another way to enter the
+	define mode is if a file that you are "BATCH"ing contains a
+	'PROC' or 'PROCEDURE' command.  In both cases, the words PROC
+	or PROCEDURE must be the first command on an input line and
+	should be followed by the name you have chosen for the new
+	operator (followed by a list of optional dummy parameters).
+
+	("BATCH"ing a file means, for UniPOPS, having the program read
+	and execute commands from a text file on disk instead of
+	reading commands from the keyboard.  When UniPOPS is done
+	executing all the commands in the file, or an error occurs
+	while reading or executing commands in the file, UniPOPS will
+	then again look at the keyboard for input commands.  Using the
+	"BATCH" facility and disk files for defining procedures is
+	highly recommended and using the 'PROC' or 'PROCEDURE' command
+	from execute mode is not recommended.  See the BATCH and
+	Cookbook documentation for more information on BATCH.  In all
+	that follows, when we talk about an input line it may be either 
+	a line you type directly into UniPOPS or a line in a file that is 
+	being "BATCH"ed.)
+
+	When you enter the define mode, the prompt will turn into a
+	':'.  Now, when UniPOPS reads an input line containing UniPOPS
+	commands, the input line is parsed and compiled but is NOT
+	executed.  The compiled code constitutes the definition of the
+	procedure and is stored in the program's memory.  Procedures
+	may contain as many commands on as many input lines as the
+	program's memory will allow (see documentation on Memory).  To
+	finish the definition of a procedure and to exit define mode
+	and return to execute mode, the command FINISH must appear as
+	the last command in the procedure definition (it should appear
+	on its own input line -- see FINISH).
+
+	Once a procedure is defined and you are back in execute mode
+	(i.e., the prompt is the value of the PROMPT string adverb again,
+	a '>' by default), you may execute the series of commands in the 
+	procedure by just typing the name of the procedure (followed by 
+	any necessary arguments) on a input line. 
+
+	b.  Edit Mode
+	-------------
+	Edit mode is similar to define mode but now you are able to
+	alter the commands which make up the definition of an existing
+	procedure.  To enter this mode, use the POPSEDIT command
+	(see the POPSEDIT documentation for examples of command syntax
+	and use)  -- the prompt again will turn from a '>' to a ':' and
+	you can then overwrite or add commands to the procedure
+	definition.  To exit this mode and return to execute mode, an
+	ENDEDIT or FINISH command must be given (and should appear on
+	its own input line -- see ENDEDIT and FINISH).
+
+	We do not recommend using POPSEDIT to edit an existing
+	procedure.  Instead, we suggest that you edit the disk file
+	containing the original definition of the procedure and
+	re-"BATCH" the file so as to overwrite the original definition
+	of the procedure with the corrected version.  Procedures
+	altered using POPSEDIT only exist in their altered format
+	within the program.  Should the program die unexpectedly, or
+	the RECOVER file be lost, go out of date, or be accidentally
+	overwritten, that version of that procedure will be forever
+	lost.  Keeping an up to date version on disk which can be
+	'BATCH'ed in reduces the chance that you will loose the
+	procedure.  In addition, the file editors available under Unix
+	are much easier to use than POPSEDIT.
+
+	Once the corrected version of the procedure has been produced,
+	either with the POPSEDIT command or with the editing and
+	"BATCH"ing of a disk file, typing the name of the procedure
+	(and any optional arguments) will execute the commands in the
+	modified procedure.
+
+
+Input mode
+----------
+
+	Input mode is entered whenever you use the READ command either
+	from execute mode or when running a procedure that contains a
+	READ command.  The syntax for the READ command is READ <list>
+	where <list> is optional but usually contains the names of
+	variables (Adverbs) which are to be assigned values by the
+	READ.  Whenever a READ command is encountered, the prompt will
+	turn into a '#' and you must then type in values for the list
+	of adverbs.  When enough values have been entered, the READ
+	will be finished; if you issued the read from execute mode, you
+	will be back in execute mode; if you issued the READ from
+	within a procedure, the remainder of the procedure which had
+	the READ command will be executed.  (See the READ and Cookbook
+	documentation for more information about READ.)
+
+	You can only enter real and literal constants while in input
+	mode.
+
+Example
+-------
+
+	Here is an example of a UniPOPS session that uses all of the
+	above modes.  The UniPOPS session, with prompts, appears on the
+	left and a running commentary appears on the right.
+
+	> PRINT 'HELLO', SQRT(2)        You are in execute mode (i.e.,
+					'>' prompt) and have issued the
+					PRINT command.  UniPOPS then
+					executes these commands (i.e.,
+					prints out 'HELLO' and the
+					square root of 2).
+	HELLO		1.4142136
+
+	> READ BDROP                    You want to enter a value for
+					BDROP and you have decided to
+					use the READ command.  You now
+					are in input mode (i.e., '#'
+					prompt) and you then enter a
+					value for BDROP.
+
+	# 34.2e-5			The value you chose is 0.000342
+
+	> PROC EXMPLE                   You now want to create a
+					procedure by the name of
+					EXMPLE.   This command will put
+					you in compile (define) mode.
+
+	: PRINT BDROP*2			These commands constitute the 
+	: READ BDROP			procedure definition -- the commands 
+	: PRINT BDROP*3			are NOT executed at this time.  The 
+	: FINISH			FINISH terminates the definition and 
+					you will be put back into execute
+					mode.
+
+	> BDROP=5; EXMPLE               In execute mode, you can now
+					issue UniPOPS commands and they
+					will be executed.  Here, BDROP
+					is assigned a value of 5
+					(overwriting what the previous
+					READ did) and the EXMPLE
+					procedure is executed.  EXMPLE
+					prints out 2 times BDROP, asks
+					you to enter a new value for
+					BDROP (i.e., enters input mode
+					again), and prints out 3 times
+					BDROP.
+
+	10.0000				Two time BDROP is 10;  you enter
+	# 33				33 as the new value of BDROP;  
+	99.0000				three time BDROP is now 99.
+
+	> POPSEDIT EXMPLE 4             After the BDROP=5; EXMPLE
+					has finished executing, the
+					program is still in execute
+					mode.  You now want to change
+					line 4 (the 'PRINT BDROP*3'
+					line) in EXMPLE, so you must
+					enter the compile (edit) mode
+					with the POPSEDIT command.
+
+	: PRINT BDROP*4			You are now in compile (edit) mode.  
+					Line 4 in the procedure is 
+	: ENDEDIT			overwritten by 'PRINT BDROP*4' and 
+					you get back to execute mode by 
+					typing the ENDEDIT.
+
+	> EXMPLE                        Once in execute mode, you can
+					now run the edited procedure.
+
+	66.0000				BDROP is now 33 so two time BDROP 
+	# 10				is 66.  You now want BDROP to be
+	40.0000				equal to 10 and four time BDROP
+					is now 40.
+
+	>
+
+
+

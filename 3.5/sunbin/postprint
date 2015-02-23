@@ -1,0 +1,8 @@
+#! /bin/csh -f
+# @(#)postprint.sh	5.1 06/22/94
+# Script to print to a postscript printer
+#
+if ($#argv < 2) exit(1)
+if (-z $2) exit(0)
+#
+echo "cat ${popsdir}sunbin/poststart $2 ${popsdir}sunbin/postterm | $1" | /bin/csh -f

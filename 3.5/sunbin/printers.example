@@ -1,0 +1,44 @@
+# @(#)printers.example	5.2 11/30/98
+#  Lines having a "#" ANYWHERE in them are totally ignored
+#  Fields are separated by :
+#  There are 5 fields for each entry, the first 3 must have values.
+#
+#  The fields are:
+#   printer:printertype:print command:text filter:description
+#
+#  Rules:
+#     There should be NO white space in the first 2.
+#     The first 2 fields should be no longer than 16 characters
+#     Only the first entry for a given printer is used.
+#     printer names are currently limited to 16 characters.
+#     recognized printer types are: postscript, qms, quic, hpgl, and text.
+#        "text" is an indication that the printer is not capable of graphics
+#     The entry "none" is a special entry that should contain the commands
+#       necessary for sending text to a printer when the user indicates 
+#       no graphics commands should be used.
+#     The print command field should expect standard input.
+#       It is guaranteed to be the last command in a pipeline.
+#     The text filter is a filter that translates text into an appropriate
+#       format for printing on that printer.  It can be left blank.
+#       textfilter is used in a pipe and should act appropriately.
+#     The final field, description, is used during program startup if
+#       $popsprinter is not set, or if $popsprinter is not found in this file.
+#     $popsprinter must match the printer field exactly.
+#     There can be, at most, 100 valid entries in this file.
+#     print command and text filter must work in csh pipes
+#
+ps0:postscript:lpr -Pps0:lwf:Library printer
+ps1:postscript:lpr -Pps1:lwf:remote HP PS printer 1st floor
+ps2:postscript:lpr -Pps2:lwf:remote HP laserjet III, Rm. 215
+ps3:postscript:lpr -Pps3:lwf:Library printer
+PRINTER:postscript:lpr:lwf:Uses your PRINTER env variable
+capture:postscript:cat - > capture.file.$$:lwf:Capture postscript to capture.file.$$
+#  In this example, remote.printer is a shell script, see the
+#  installation guide for a complete example of remote printing.
+remote:postscript:remote.printer:lwf:Remote printing shell script
+#  If your spooling area is small, large print jobs may fail with the
+#  above examples, here is how that can be dealt with.
+ps3large:postcsript:cat - > /tmp/large.$$;lpr -Pps3 /tmp/large.$$;rm -f /tmp/large.$$:lwf:
+#  In other words, multiple commands can appear in the printcommand field
+#  as long as the field works appropriately (under csh) at the end of
+#  a pipeline.

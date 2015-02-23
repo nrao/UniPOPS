@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'READ:  Assigns values via the keyboard to the specified'
+PRINT 'variables.  Syntax: READ list'
+PRINT ' '

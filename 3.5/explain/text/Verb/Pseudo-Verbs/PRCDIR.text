@@ -1,0 +1,20 @@
+	(PSEUDO VERB)
+
+	PRCDIR lists all files in the current directory and in the
+	system procedure libraries which have the extension .prc.
+
+	PRCDIR can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by PRCDIR.
+
+	EXAMPLE:
+
+	You want a list of existing procedures on disk, so you type:
+
+		PRCDIR
+
+	and a table will be listed for you.  If you are using a
+	window system (X or SunView), a separate window will pop up
+	containing the listing. 
+

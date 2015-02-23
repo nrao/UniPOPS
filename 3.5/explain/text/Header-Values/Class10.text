@@ -1,0 +1,18 @@
+Class 10 :  Open Parameters (Data Reduction)  
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Open Parameter Values(1)                     | OPENPAR  |  C*8
+Open Parameter Values(2)                     | OPENPAR+1|  C*8
+Open Parameter Values(3)                     | OPENPAR+2|  C*8
+Open Parameter Values(4)                     | OPENPAR+3|  C*8
+Open Parameter Values(5)                     | OPENPAR+4|  C*8
+Open Parameter Values(6)                     | OPENPAR+5|  C*8
+Open Parameter Values(7)                     | OPENPAR+6|  C*8
+Open Parameter Values(8)                     | OPENPAR+7|  C*8
+Open Parameter Values(9)                     | OPENPAR+8|  C*8
+Open Parameter Values(10)                    | OPENPAR+9|  C*8
+#if RFRNC CKBK
+
+
+#end

@@ -1,0 +1,34 @@
+	(REGULAR VERB)
+	
+	Syntax:    ON  scan-number.rcvr-number
+	
+	ON copies a scan from the on-line or off-line disk files to
+	Array (0).  ON requires the desired scan number as its object.
+	It is equivalent to GET0 or GET.
+
+	ON is commonly used in conjunction with OFF to pair up on and
+	off scans so that they may be differenced using DIFF or to form
+	quotients using TEMP.
+
+	If scan-number > 0, then the on-line data file is searched
+	first, followed by the off-line data file if a scan with the
+	correct number hasn't been found.
+
+	If scan-number < 0, then the off-line data file is searched
+	first, followed by the on-line data file if a scan with the
+	correct number hasn't been found.
+
+	The rcvr-number specifies which back-end's data is to be
+	retrieved.  Back-end number 1 is specified as a .01, back-end
+	number 2 as .02, etc.  If rcvr-number is not specified, the
+	first back-end is retrieved.
+
+	No adverbs are used or set by ON.
+
+        EXAMPLE:
+	     
+	To difference scans 4588.02 and 4575.03 and display the result,
+	specify:
+	
+		OFF 4575.03; ON 4588.02; DIFF PAGE SHOW
+

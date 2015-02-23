@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CONCAT:  (FUNCTION) Returns the concatenation of TWO'
+PRINT 'strings.  Syntax: CONCAT(string1, string2)'
+PRINT ' '

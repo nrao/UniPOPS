@@ -1,0 +1,19 @@
+	(REGULAR VERB)
+
+	Performs an inverse fast Fourier transform of the  real data in
+	Array (0) and the imaginary data in Array (1), placing the real
+	and imaginary results back into Arrays (0) and (1),
+	respectively.
+
+	ADVERBS USED:
+
+	   BDROP        The number of channels at each end of the
+	   EDROP        spectrum which are ignored by the routine.
+			The initial values are 0.
+
+	EXAMPLE:
+
+	After an FFT, you want to recover the original data, so
+	specify:
+
+		IFFT

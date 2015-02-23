@@ -1,0 +1,86 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-	(TUCSON DATA ONLY)
+L-
+L-	Syntax:  GETOTF(scan-no.subscan-number, record-number)
+L-
+L-	GETOTF copies the data for an individual spectra in an 
+L-	on-the-fly (OTF) scan from the on-line data file to 
+L-	Array (0).  The 5 supplemental position and time values
+L-	appropriate for the individual spectra are appended to
+L-	the end of the spectra.
+L-
+L-	On-the-fly data at the 12-m is stored by placing all of
+L-	the individual spectra in sequence at the end of a standard
+L-	Single Dish Data (SDD) format header.  Five arrays of 
+L-	supplemental information are then placed at the end of
+L-	the sequence of spectra.  The result is a full OTF scan.
+L-	The five supplemental arrays are (in order at the time of
+L-	this writing): lst-offset, ra-offset, dec-offset, az-offset,
+L-	el-offset.  One value from each of these can be used to
+L-	correct the corresponding header values to arrive at the
+L-	values appropriate for each individual spectra (the "true"
+L-	value is simply the header value plus the offset value).
+L-
+L-	Because the storage scheme described above is NOT standard
+L-	SDD format, OTF data is currently only available from
+L-	the on-line data files.
+L-
+L-	The first argument, scan-no.subscan-number, is the same as
+L-	for the other verbs that retrieve data by scan number
+L-	(GET, KGET, GGET).
+L-
+L-	The second argument, record-number, has two uses.
+L-	The most common, when record-number is greater than zero, is
+L-	to extract the individual spectra at that position in the
+L-	full OTF scan (with the first individual spectra being
+L-	record-number 1).  The second use is to extract one of the
+L-	supplemental arrays.  If record-number is less than 0,
+L-	the corresponding supplemental array of the absolute value of
+L-	the record-number is retrieved (i.e. record-number=-1
+L-	retrieves the lst-offset array, -2 the ra-offset, -3 the
+L-	dec-offset, -4 the az-offset and -5 the el-offset).
+L-	This is most useful as a check on the OTF data.
+L-
+L-	The following header words are set by GETOTF:
+L-
+L-	NOINT - the number of channels in the spectral data
+L-		PLUS 5 (the number of supplemental values attached
+L-		to the end of the data).
+L-
+L-	NORECORD - the total number of individual spectra available
+L-		for that scan number (i.e. the maximum value that
+L-		you can use for record-number for that scan).
+L-
+L-	RECORDID - the record-number of this individual spectra 
+L-		(i.e. the value you used for record-number when you
+L-		fetched it).
+L-
+L-	No adverbs are used or set by GETOTF.
+L-
+L-
+L-	EXAMPLES:
+L-
+L-	You want to look at the data in scan 402.01, record 231:
+L-
+L-	GETOTF(402.01, 231); BDROP=0; EDROP=5; PAGE; SHOW
+L-
+L-	You want to get and process each record from scan 524.03:
+L-
+L-	SCALAR NUMREC, I
+L-	GETOTF(524.03, 1)	<- this allows you to use NORECORD
+L-	(you would do any pre-processing here and process the first scan)
+L-	NUMREC = H0(NORECORD)
+L-	FOR I = 2 TO NUMREC
+L-	   GETOTF(524.03, I)
+L-	   (process the individual spectra here)
+L-	END
+L-	(finish the processing here)
+L-
+L-	You want to look at the full el-offset array for scan 1252.02:
+L-
+L-	GETOTF(1252.02,-5); BDROP=0; EDROP=0; PAGE; SHOW
+L-
+L------------------------- Spectral Line --------------------------------

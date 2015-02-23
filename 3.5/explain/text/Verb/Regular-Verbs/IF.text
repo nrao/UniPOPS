@@ -1,0 +1,114 @@
+        (REGULAR VERB) 	
+
+	The IF-THEN-END and IF-THEN-ELSE-END constructions provide for
+	the conditional execution of a group of statements.  The IF
+	logical construction is a conditional device similar to the
+	IF-THEN-ELSE construction found in PL/I.
+
+	If included within a procedure (i.e., while in compile mode),
+	the construct may extend across many lines and, along with
+	loops, can be nested to what ever level is necessary.  But if
+	you want to use the construct while in execute mode, the IF
+	construct cannot extend beyond a single command line though
+	nesting is allowed.
+
+	The format for  multi-line and single-line IF conditional
+	statements can look like one of the following :
+
+	.  IF <exp> THEN
+		statement 1
+		statement 2
+		...
+		statement n
+	   END
+
+	.  IF <exp> THEN; statements 1 -> n; END
+
+
+	.  IF <exp> THEN
+		statement 1
+		statement 2
+		...
+		statement n
+	   ELSE
+		statement a
+		statement b
+		...
+		statement z
+	   END
+
+	.  IF  <exp> THEN; statements 1 -> n; ELSE; statements a -> z; END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If <exp> is true (+1), then all of the statements 1
+	through n are executed; if false (-1), all the statements 1
+	through n are skipped.  Note the use of semi-colons (;) to
+	delineate the various sub-statements.
+
+	If you omit the ELSE part of the conditional statement (the
+	first two formats above), then if <exp> is false (-1),
+	execution continues after the END.  If you include the ELSE
+	(the last two formats), then if <exp> is false, statements 1
+	through n are NOT executed but statements a through z are.
+
+	There is no ELSEIF or CASE statement in UniPOPS; these
+	constructs can be mimiced using nested IF statements.
+
+	EXAMPLE:
+
+	.  Multi-line IF-THEN-END construction (only can be found in
+	   procedures) :
+
+		IF X>1 THEN
+		   PRINT 'HELLO'
+		   X=X+1; Y=ATAN(X)
+		END
+
+	.  Single-line IF-THEN-END construction :
+
+		IF X>1 THEN; PRINT 'HELLO'; X=X+1; Y=ATAN(X); END
+
+	.  Multi-line IF-THEN-ELSE-END construction (only can be found
+	   in procedures) :
+
+		IF X>1 THEN
+		   PRINT 'HELLO'
+		   X=X+1; Y=ATAN(X)
+		ELSE
+		   PRINT 'GOODBYE'
+		   X=X-1; Y=TAN(X)
+		END
+
+	.  Single-line IF-THEN-ELSE-END construction :
+
+		IF X>1 THEN; PRINT 'HELLO'; ELSE; PRINT 'GOODBYE'; END
+
+	.  Two examples of nested IF structures, the second of which
+	   represents how to mimic a CASE of ELSEIF construction in
+	   UniPOPS :
+
+		IF X > 1 THEN
+		   IF Y = 3 & (X ~= P) THEN
+		      PRINT 'Hello'
+		   ELSE
+		      PRINT 'GoodBye'
+		      IF GH | HJ THEN; GH = ~ HJ; END
+		   END
+		END
+
+
+		IF XFLAG=1 THEN
+		   PRINT 'XFLAG=1'
+		ELSE 
+		   IF XFLAG=2 THEN
+			PRINT 'XFLAG=2'
+		   ELSE
+			IF XFLAG=3 THEN
+				PRINT 'XFLAG=3'
+			ELSE
+				PRINT 'XFLAG>3'
+			END
+		   END
+		END

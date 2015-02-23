@@ -1,0 +1,22 @@
+      	(REGULAR VERB)
+
+	FINISH is used to end the definition of a procedure.  The
+	PROCEDURE verb puts UniPOPS into compile mode (indicated by a
+	change to the ':' prompt).  FINISH indicates that you are done
+	defining the procedure and it returns UniPOPS to execute mode,
+	which is indicated by the return of the caret (>) prompt or
+	the value of the adverb PROMPT if it has been set.
+
+	FINISH can be used only in procedures and must be the only verb 
+	on the input line.  All procedures must have a FINISH as their last 
+	input line.
+
+	EXAMPLE:
+	
+		PROCEDURE EG
+		SCALAR X1, Y1
+		READ X1, Y1
+		IF X1<Y1; THEN PRINT X1
+			  ELSE PRINT Y1
+			  END
+		FINISH

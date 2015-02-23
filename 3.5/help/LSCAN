@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'LSCAN:  (HEADER) Scan number of last scan accumulated.'
+PRINT ' '

@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'HOLDY:  Fixes the present y-axis scaling for all future'
+PRINT 'SHOW commands -- defeated by the FREEY command.'
+PRINT ' '
+print 'YMIN=',ymin
+print ' '

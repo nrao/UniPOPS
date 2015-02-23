@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'SETLEV:  Easily sets linear or logarithmic contour levels'
+PRINT '(ADVERB array LEVS).'
+print 'Syntax: SETLEV(start, increment, number, type)'
+PRINT ' '
+PRINT 'LEVS='
+print LEVS
+PRINT ' ' 

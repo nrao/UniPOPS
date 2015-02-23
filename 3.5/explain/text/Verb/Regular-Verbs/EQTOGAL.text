@@ -1,0 +1,25 @@
+	(REGULAR VERB)
+
+	Syntax:    EQTOGAL (HHMMSS.S , SDDMMSS.S) 	
+
+	EQTOGAL will convert equatorial coordinates (epoch 1950.0) into
+	galactic coordinates and print the results.
+
+	The arguments should follow EQTOGAL and be enclosed in
+	parentheses.
+
+	No adverbs are used or set by EQTOGAL.
+
+	Be wary of RA's <0 or >24 hours or DEC's <-90 or >90 degrees.
+
+	EXAMPLE:
+
+	To convert the position of SS433, RA = 19 09 21.3, 
+	DEC = 04 53 53.1 from equatorial to galactic coordinates,
+	specify:
+
+		EQTOGAL (190921.3,45353.1)
+
+	The galactic coordinates are printed as:
+
+		39.6939 	-2.2447

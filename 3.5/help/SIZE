@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'SIZE:  (ARRAY-2) The results of MOMENT.  Units of SIZE(1)'
+PRINT 'and (2) are K km/s and km/s for a spectrum (LINE), or K deg'
+PRINT 'and deg for a scan (CONDAR), respectively.'
+PRINT ' '

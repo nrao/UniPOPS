@@ -1,0 +1,36 @@
+	(FUNCTION VERB)
+
+	DATE returns a 16-character string containing the current
+	system date.
+
+	DATE takes no arguments.
+
+	The form of the date within the string is:
+
+	"Day Mon DD YYYY "
+
+	Where "Day" is a 3 letter abbreviation of the day of the week.
+
+	"Mon" is a 3 letter abbreviation of the month.
+
+	DD is the day of the month.
+
+	YYYY is the year.
+
+	Examples:
+
+	. You want to print out the current date :
+
+	  > PRINT DATE
+
+	. You want to store the DATE in a string:
+
+	  > STRING*16 TODAY
+          > TODAY = DATE
+
+	  Note that since DATE is a 16 character string, TODAY must
+	  be at least 16 characters in order to hold the entire string.
+	  TODAY could be longer than 16 characters.  If TODAY is less
+	  than 16 characters, an error will result (error code 127,
+	  "Too many characters in right-hand string").
+

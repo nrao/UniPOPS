@@ -1,0 +1,60 @@
+	(ARRAY ADVERB of 3 by 32 elements)
+
+	CLUT is an array containing the color-look-up-table used by
+	RASTER for displaying two-dimensional data.  Up to 32 colors
+	may be specified although only those colors which have a
+	corresponding legitimate contour level in array LEVS will be
+	used.
+
+	CLUT is used by : LABEL      RASTER  
+			      
+	CLUT is set by : SETCLUT
+
+ 	The initial values of CLUT(M,N) are -16 (i.e. White).
+
+	You must specify the colors you want RASTER to use.  Use the 
+	same coding convention as used by the COLOR verb (see COLOR).  
+	Do not alter the values in CLUT between the time you perform a 
+	RASTER display and when you perform a LABEL.
+
+	The SETCLUT verb vastly simplifies the setting of a standard
+	color-look-up-table and is preferable to setting CLUT by hand.
+
+	EXAMPLE :
+
+	You want a color RASTER plot with contours at every half
+	degrees from 1 to 3, specify :
+
+		LEVS = 1, 1.5, 2, 2.5, 3, DEFAULT
+
+	The colors you want for these 5 levels can be specified by hand
+	with:
+
+		CLUT(1,1) = 0	
+		CLUT(2,1) = 4		1st level is a saturated RED
+		CLUT(3,1) = 6
+
+		CLUT(1,2) = 8
+		CLUT(2,2) = 4		2nd level is a saturated ORANGE
+		CLUT(3,2) = 6
+
+		CLUT(1,3) = 16
+		CLUT(2,3) = 4		3rd level is a saturated YELLOW
+		CLUT(3,3) = 6
+
+		CLUT(1,4) = 24
+		CLUT(2,4) = 4		4th level is a saturated GREEN
+		CLUT(3,4) = 6
+
+		CLUT(1,5) = 32
+		CLUT(2,5) = 4		5th level is a saturated BLUE
+		CLUT(3,5) = 6
+
+	Now you can evoke RASTER.
+
+	To set the look-up table back to its default values, type
+	either:
+
+		CLUT = -16
+	or
+		CLUT = DEFAULT

@@ -1,0 +1,34 @@
+	(REGULAR VERB) 
+
+	SPIKE searches for bad channels in Array (0), defined as
+	any channel whose absolute value exceeds the value of scalar
+	adverb CUTOFF.  SPIKE will find up to 12 bad channels and print
+	them on the CRT.  It will also assign to array adverb BADPT the
+	same channel numbers for later use by REPLACE.
+
+   	ADVERBS USED:
+
+            CUTOFF      Maximum value for determining bad channels.
+			Initial value is 9999.
+ 
+	    BDROP       The number of points at each end of each spectrum
+	    EDROP 	which will not be examined.
+			The initial values are 0.
+
+
+ 	ADVERBS SET:
+
+            BADPT(12)   Bad channels set by SPIKE.
+			Initial values are 0.
+
+	EXAMPLE:
+
+	You wish to find spikes in your data which exceed CUTOFF 
+	of 5.5, so you specify:
+
+		CUTOFF = 5.5; SPIKE
+
+	The verb REPLACE can now be used to replace up to 12 bad
+	channels (BADPT) by a parabolic interpolation over adjacent
+	channels.
+                        

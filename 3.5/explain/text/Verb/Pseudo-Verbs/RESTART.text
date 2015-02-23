@@ -1,0 +1,29 @@
+    	(PSEUDO VERB)
+
+	RESTART reinitializes the program memory and destroys your
+	current procedures and user-defined adverbs and sets all system
+	adverbs to their initial values.  The program will then restart
+	itself.
+
+	STORE, RESTORE, and RESTART are useful for control of the
+	program memory space.  RESTART is useful to get a fresh
+	environment in which to work and to return the system adverbs
+	to their initial values.
+
+	Care should be exercised to STORE your current adverbs and
+	procedures before using RESTART, or they will be lost.
+
+	RESTART can be used only in execute mode and must be the only
+	thing on the command line.
+
+	EXAMPLE:
+
+	To restart the program without exiting it, specify:
+
+		RESTART
+
+	but realize that once you have done this you will be in the
+	same state you were in when you started the program (i.e.,
+	there will be no procedures or user-defined adverbs).  You
+	should then re-"BATCH" in only those procedures you want to
+	use.

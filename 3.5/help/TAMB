@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'TAMB:  (HEADER) Ambient temperature (deg C).'
+PRINT ' '

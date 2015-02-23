@@ -1,0 +1,24 @@
+	(ARRAY ADVERB of 12 elements)
+
+	SMWGT is an array in which you can describe a weighting
+	function for smoothing data.   The first element reflects the
+	number of  points in the weighting function (not greater than
+	11) and the other elements represent the weighting function.
+
+	All elements of SMWGT must be greater than 0.  If you give
+	SMWGT(1) a value of n, then you must also give values to
+	SMWGT(2) through SMWGT(n+1).
+
+	SMWGT is used by : SMOOTH
+
+	No verbs change SMWGT.
+
+	The initial values of SMWGT(N) are 0.  
+
+	EXAMPLE :  
+
+	You want to smooth your data using a triangular smoothing
+	function, so you type :
+
+		SMWGT = 5,  .125,  .25,  .5,  .25,  .125
+		SMOOTH 

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LOG10:  (FUNCTION) Returns the common (base 10) logarithm'
+PRINT 'of the given parameter.'
+PRINT ' '

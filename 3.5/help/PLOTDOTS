@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'PLOTDOTS:  Plots dots or pluses at all defined (or'
+PRINT 'undefined) data values in Matrix (0).'
+print 'Syntax:  PLOTDOTS(type)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT 'MRATIO=',MRATIO
+PRINT ' ' 

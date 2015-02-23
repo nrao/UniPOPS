@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RX_INFO:  (HEADER-TUC) Receiver information (eg. "BAY_1") -'
+PRINT '8 characters.'
+PRINT ' '

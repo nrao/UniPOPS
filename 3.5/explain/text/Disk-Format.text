@@ -1,0 +1,187 @@
+	UniPOPS stores and retrieves data from disk files which are in
+	a format that is an implementation of the Single-Dish-Data
+	(SDD) format described by Betty Stobie and Lorrie Morgan in
+	their memo of October 21, 1986 and entitled "Single Dish FITS
+	Tape".  The SDD format was modified in September of 1993 to allow 
+	larger byte offsets to be recorded in the index.  Throughout this 
+	documentation, SDD refers to this modified SDD format.  There are
+	a conversion utilities to convert between the new and old SDD
+	formats.
+
+	At the moment, the following data formats can be converted into
+	SDD format:  SD-FITS, PC POPS, 140-ft Telescope Tapes
+	(archive), Modcomp KEEP, IEEE Keep, Green Bank ASCII, and
+	12-m PDFL formats.  In fact, almost all of these formats can 
+	be converted into any other format.  The following table illustrates 
+	what conversions are possible presently (if a format does not
+	appear in the "TO" row, then there is no way to convert to
+	that format from another format) :
+
+#if RFRNC
+		  Table 2.7.1 : Data Conversion Possibilities
+#else
+		  	Data Conversion Possibilities
+#end
+	__________________________________________________________
+	  \      |       |       |       |       |       |       
+	   \     | PC    | IEEE  | MOD-  | GB    | SDD   | SD-   
+	    \ TO | POPS  | KEEP  | COMP  | ASCII | (Uni- | FITS  
+	FROM \   |       |       | KEEP  |       | Pops) |            
+	      \  |       |       |       |       |       |       
+	=========|=======|=======|=======|=======|=======|========
+	140-ft   |       |       |       |       |       |       
+	Telescope|  Yes**|  Yes  |  Yes  |  Yes  |  Yes  |  Yes**
+	Tape     |       |       |       |       |  ***  |       
+	_________|_______|_______|_______|_______|_______|________
+	         |       |       |       |       |       |       
+	PC POPS  |       |  Yes**|  Yes**|  Yes**|  Yes**|  Yes**
+	         |       |       |       |       |       |       
+	_________|______ |_______|_______|_______|_______|________
+	         |       |       |       |       |       |       
+	IEEE     |  Yes**|       |  Yes  |  Yes  |  Yes  |  Yes**
+	KEEP     |       |       |       |       |       |       
+	_________|_______|_______|_______|_______|_______|________
+	         |       |       |       |       |       |       
+	MODCOMP  |  Yes**|  Yes  |       |  Yes  |  Yes  |  Yes**
+	KEEP     |       |       |       |       |       |       
+	_________|_______|_______|_______|_______|_______|________
+	Green    |       |       |       |       |       |       
+	Bank     |  Yes**|  Yes  |  Yes  |       |  Yes  |  Yes**
+	ASCII    |       |       |       |       |       |       
+	 ________|_______|_______|_______|_______|_______|________
+	         |       |       |       |       |       |       
+	SDD      |  Yes**|  Yes* |  Yes* |  Yes* |       |  Yes**
+	(UniPOPS)|       |       |       |       |       |       
+	_________|_______|_______|_______|_______|_______|________
+	         |       |       |       |       |       |       
+	SD-FITS  |  Yes**|  Yes**|  Yes**|  Yes* |  Yes  |       
+	         |       |       |       |       |       |       
+	_________|_______|_______|_______|_______|_______|________
+	PDFL     |       |       |       |       |       |       
+	(12-M)   |  No   |  No   |  No   |  No   |  Yes  |  Yes  
+	         |       |       |       |       |       |          
+	_________|_______|_______|_______|_______|_______|________
+
+	*  Due to limitations in the SD-FITS, SDD and other formats,
+	converting from SD-FITS or SDD to another format may not always
+	work.
+
+	** Some conversions are not direct -- the file must first be
+	converted to an intermediate format before it is converted to
+	its final format.
+
+	*** A 140' telescope tape can be converted into a standard SDD
+	file as well as an individual records SDD file.
+
+	The conversion between these formats is performed with the
+	cvt.tape-disk, cvt.disk-disk, cvt.disk-tape, cvt.tele-recs,
+	fits2uni, uni2fits, ieee2pcpops.exe, and pdfl2sdd utilities.  
+	Summaries of the contents of SDD, SD-FITS, and IEEE files can 
+	be produced by the checkfile.exe, readfits, and ieeesummary.exe 
+	utilities, respectively.  The following table describes what 
+	utilities to use to convert formats or to list the contents 
+	of files.
+
+#if RFRNC
+		Table 2.7.2 : Data Conversion Utilities
+#else
+			Data Conversion Utilities
+#end
+	----------------------------------------------------------
+	Utility:	 Purpose:	  Input:	Output:
+	----------------------------------------------------------
+	cvt.tape-disk	 Converts file	  PC-POPS	PC-POPS		
+			 on tape to 	  IEEE-KEEP	IEEE-KEEP
+			 file on disk 	  MODCOMP-KEEP 	MODCOMP-KEEP
+					  GB ASCII	GB ASCII
+					  SDD		SDD
+					  140-FT T.T.	
+	----------------------------------------------------------
+	cvt.disk-disk	 Converts file	  PC-POPS	PC-POPS		
+			 on disk to 	  IEEE-KEEP	IEEE-KEEP
+			 file on disk 	  MODCOMP-KEEP 	MODCOMP-KEEP
+					  GB ASCII	GB ASCII
+					  SDD		SDD
+					  140-FT T.T.	
+	----------------------------------------------------------
+	cvt.disk-tape	 Converts file	  PC-POPS	PC-POPS		
+			 on disk to 	  IEEE-KEEP	IEEE-KEEP
+			 file on tape 	  MODCOMP-KEEP 	MODCOMP-KEEP
+					  GB ASCII	GB ASCII
+					  SDD		SDD
+					  140-FT T.T.	
+        ----------------------------------------------------------
+	cvt.tele-recs	 Converts 140'	  140-FT T.T.	I.R. SDD
+			 telescope tape   
+			 into individual
+			 records SDD 
+        ----------------------------------------------------------
+	pdfl2sdd         Converts         PDFL          SDD
+	                 PDFL (12-m
+	                 data) to SDD
+	----------------------------------------------------------
+	fits2uni	 Converts SD-	  SD-FITS	SDD
+			 FITS to SDD	
+	----------------------------------------------------------
+	uni2fits	 Converts SDD	  SDD		SD-FITS
+			 to SD-FITS	
+	----------------------------------------------------------
+	ieee2pcpops	 Converts to	  PC-POPS	PC-POPS
+			 or from IEEE	  IEEE-KEEP	IEEE-KEEP
+			 and PC-POPS
+	===========================================================
+	checkfile.exe 	 Lists contents	  SDD
+			 of SDD file
+	----------------------------------------------------------
+	ieeesummary.exe	 Lists contents	  IEEE-KEEP
+			 of IEEE-KEEP
+	----------------------------------------------------------
+	readfits	 Lists contents	  SD-FITS
+			 of SD_FITS
+	----------------------------------------------------------
+#if RFRNC
+
+#end
+
+	There are several utilities that are useful for manipulating
+	SDD files.
+
+#if RFRNC
+		Table 2.7.3 : SDD File Utilities
+#else
+			SDD File Utilities
+#end
+
+
+	------------------------------------------------------------
+	Utility:	  Purpose:
+	------------------------------------------------------------
+	expandsdd	  Expand the index to accommodate more scans.
+			  Use this if the SDD file is full.
+	------------------------------------------------------------
+	mergesdd	  Merge two SDD files into one new SDD file.
+			  The input files are unchanged.
+	------------------------------------------------------------
+	makeindex.exe	  Remake the SDD index.  This is useful if
+			  you suspect that the SDD index is
+			  not accurate.  It can also be used to
+			  convert an old-format SDD index into a
+			  new format SDD index.
+	------------------------------------------------------------
+	makefile.exe	  Make a file of several types:
+			     LMEMORY or CMEMORY;
+			     or an empty SDD file
+	------------------------------------------------------------
+	makeoldindex.exe  Make an old-format SDD index.  This can
+			  be used to convert a new-format SDD
+			  index into an old-format index.
+	------------------------------------------------------------
+	makerecindex.exe  Remake the index of an individual records
+			  SDD file.
+	------------------------------------------------------------
+	makeoldrecindex   Make an old-format individual records SDD
+	  .exe		  file.
+	------------------------------------------------------------
+#if RFRNC
+
+#end

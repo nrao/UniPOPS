@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'YCUR:  (FUNCTION) Returns the y-axis pixel number at the'
+PRINT 'location of the crosshair.'
+PRINT ' '

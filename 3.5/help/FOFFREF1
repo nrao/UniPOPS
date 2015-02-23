@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FOFFREF1:  (HEADER-TUC)  The value of the frequency'
+PRINT 'switching reference 1 offset (MHz).'
+PRINT ' '

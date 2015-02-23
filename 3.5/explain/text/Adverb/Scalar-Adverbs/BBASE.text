@@ -1,0 +1,35 @@
+	(SCALAR ADVERB)
+
+	BBASE and  EBASE are the number of channels at each end of the
+	data in array 0 to be used in computing a baseline, after
+	taking into account the values of BDROP and EDROP.  BBASE is
+	the number of channels at the beginning of the data array the
+	the first BDROP channels; EBASE is the number of channels at 
+	the end of the array before the last EDROP channels.
+
+	BBASE and EBASE are used by :	BASELINE     BSHAPE     DCBASE
+					PCBASE       RIPPLE     RMS
+					RSHAPE
+
+	No verbs change BBASE or EBASE.
+
+	The initial values of BBASE and EBASE are 50.
+
+	The values of BBASE and EBASE will be superseded by those of
+	NREGION, if NREGION(1) > 0.  Both BBASE and EBASE should be
+	given values > 0 and BBASE+EBASE+BDROP+EDROP cannot exceed the
+	number of data channels in Array (0).
+
+	EXAMPLE :
+
+	If you want to use 2 particular regions to fit the baseline you
+	might specify :
+
+		BDROP = 15
+		BBASE = 50
+		EBASE = 40
+		EDROP = 20
+
+	before calling a baseline-fitting verb.  If the data consists of 
+	256 total channels, then these two baseline regions will 
+	include channels 16 through 65 and 197 through 236.

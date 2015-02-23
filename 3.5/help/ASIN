@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ASIN:  (FUNCTION) Returns the arc sine (in radians) of the'
+PRINT 'given parameter.'
+PRINT ' '

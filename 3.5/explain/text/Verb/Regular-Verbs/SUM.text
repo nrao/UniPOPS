@@ -1,0 +1,76 @@
+	(REGULAR VERB)
+
+	SUM is used to average data together with user-specified
+	weighting.
+
+	The first use of SUM after an AVE, SCLEAR, or a RESTART copies
+	the data (and header, if any) from Array (0) to the internal
+	ACCUM array.  The data values are multiplied by the weighting
+	factor.  Subsequent uses of SUM add the data values contained
+	in Array (0) to the internal array using the user specified
+	weighting value.
+
+L------------------------- Spectral Line --------------------------------
+L-	The integration time is incremented and the system temperature is
+L-	averaged with the specified weights, if the data is that from a
+L-	scan.   
+L------------------------- Spectral Line --------------------------------
+
+	A procedure using the ASTACK may facilitate the use of SUM.
+	After you have finished SUMing, you must use the verb AVE to
+	obtain the final results.
+
+	The value you assign to the scalar adverb WEIGHT is the
+	weighting factor used in accumulating the current contents of
+	Array (0).
+
+	AVE or SCLEAR should be used before beginning any accumulation
+	of scans.
+
+	ADVERBS USED:
+
+          DEFMODE : Indicates how undefined data values (IEEE Inf) should
+                    be treated.
+
+                    If DEFMODE is FALSE (-1), the result of each SUM
+                        will have an undefined value in the internal
+                        accum array at any location where EITHER of the
+                        values in the scan being SUMed or the current
+                        accum internal array have an undefined value.
+
+                    If DEFMODE is TRUE (+1), the result of each SUM
+                        will have an undefined value in the internal
+                        accum array at any location where BOTH of the
+                        values in the scan being SUMed and in the current
+                        accum internal array have an undefined value.
+                        If only one value is undefined at that location,
+                        SUM will use that value in the result.
+
+	            The initial value is FALSE.
+
+	  WEIGHT :  The weighting used in accumulating the
+		    current data. The initial value is 0.
+
+	ADVERBS SET:
+	   
+	  STATUS(8) :  Number of scans accumulated in internal accum
+		       array and determined by the ACCUM or SUM
+		       commands.
+
+	EXAMPLE:
+
+	To average scans, whose scan numbers are in the ASTACK internal
+	array, weighted inversely by an RMS, define the following
+	procedure:
+
+		PROCEDURE ADDS
+		SCALAR ADDS_I
+		SCLEAR
+		FOR ADDS_I = 1 TO ACOUNT
+		  GET ASTACK(ADDS_I); RMS; WEIGHT = 1./VRMS; SUM; END
+		AVE PAGE SHOW
+		FINISH
+
+	and now type:
+	
+		ADDS

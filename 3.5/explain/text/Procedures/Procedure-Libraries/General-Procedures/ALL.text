@@ -1,0 +1,30 @@
+	ALL or FREEX resets BDROP and EDROP to be 0.
+
+	This reverses the effects of XRANGE and allows all X
+	values to be used by a number of 1-D verbs.
+
+	NOTE: all.prc also includes the alias FREEX for ALL.
+	FREEX is used since ALL frees the X axis range in much the
+	same way that the FREEY verb resets the Y axis range.
+
+	Syntax:  ALL
+	   or    FREEX
+
+	File name: all.prc
+
+	This procedure is includes in LSETUP.12meter and CSETUP.12meter
+
+	No adverbs are used this procedure.
+
+	Adverbs set:	BDROP		EDROP
+
+	EXAMPLE:
+
+	You have restricted the X axis range using XRANGE and you now
+	want to reset BDROP and EDROP to be 0.
+
+	ALL
+
+	Alternatively, because FREEX is aliased to ALL, you could type:
+
+	FREEX

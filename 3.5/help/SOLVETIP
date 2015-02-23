@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'SOLVETIP:  (CONTINUUM) Reduces antenna tipping observation.'
+PRINT ' '
+print 'TRCVR,TVANE=',trcvr,tvane
+print 'TAU0,TYPETIP=',TAU0,TYPETIP
+print 'ETA,ETAFREE=',ETA,ETAFREE
+print 'FTM,FTSBR=',FTM,FTSBR

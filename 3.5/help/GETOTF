@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'GETOTF:  (VERB) Place the desired On-The-Fly spectral line'
+PRINT 'data record from the indicated scan and feed number into'
+PRINT 'Array (0).'
+PRINT 'This verb is only available for 12-m on-line data.'
+PRINT ''
+PRINT 'Syntax: GETOTF(scan_no.feed_no, record_no)'
+PRINT ' '

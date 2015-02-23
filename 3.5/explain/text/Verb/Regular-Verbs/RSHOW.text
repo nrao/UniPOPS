@@ -1,0 +1,34 @@
+	(REGULAR VERB)	
+
+	RSHOW displays the sinusoid indicated by the sinusoid adverbs,
+	RAMPLTDE, RPERIOD, RPHASE.  A SHOW display must have been
+	previously performed.  RSHOW does not destroy the data in any
+	of the arrays.
+
+ 	The functional form of the sinusoid at channel i is:
+
+	RAMPLTDE * cos((i-RPHASE)*2pi/RPERIOD)
+
+	ADVERBS USED:
+
+	  RAMPLTDE	The amplitude of the sinusoid.
+	  RPERIOD	The period in channels.
+	  RPHASE	The phase in channels.
+
+	  The values of these adverbs typically are the fitted values
+	found by RIPPLE or RSHAPE.
+
+
+	No adverbs are set by RSHOW.
+
+	EXAMPLE:
+
+	You have calculated a sinusoidal baseline from your data using
+	RSHAPE and now wish to see the baseline that could be removed.
+	Specify:
+
+		RSHOW		
+
+	and UniPOPS will draw the baseline model using the coefficients
+	stored in RPARM.  
+

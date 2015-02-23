@@ -1,0 +1,135 @@
+	(REGULAR VERB)
+
+	PDOC is used as part of a PROCEDURE to reduce a five-point
+	scan or sequence of scans.  The results are displayed on the
+	graphics screen and written to a log file.
+
+	PDOC works only for data taken with the 12-meter telescope.
+
+        The raw five-point scan or scans need to be processed into a
+	"synthetic scan" before PDOC can be used.  The preprocessing
+	needed depends on the type of observation, spectral line or
+	continuum.  This preprocessing is generally done in a PROCEDURE.
+	In all cases, the header information of the "synthetic scan"
+	should be from the Center pointing position.  The five positions
+	should correspond to North, South, Center, East and West.
+
+	The magnitude of the offset from the Center should be the same
+	for all 4 offset positions.  When the fitted positions are
+	converted to offsets, the value of the BFWHM header word is
+	assumed to correspond to the magnitude of each offset.
+	Note that currently, the 12-meter data header generally contains
+	half of the full width at half maximum at this location (i.e.
+	half the value suggested by the name of the header word).
+
+	No adverbs are set or used by PDOC
+
+	The environment variable POPSPOINTDAT should contain the name of
+	the PDOC log file.  If POPSPOINTDAT is not set, point.dat in the
+	current directory is assumed.
+
+	The procedure names indicated below may change.  Be sure to
+	check with the 12-meter staff for up-to-date names and locations
+	of 12-meter procedures.
+
+C------------------------- Continuum -----------------------------------
+C-
+C-	PDOC expects 10 values in the data array.  The first 5 data
+C-	values should correspond to the average values at each of the 5
+C-	positions in the five-point scan.  They must appear in the
+C-	following order: North, South, Center, East, West.  The other 5
+C-	data values should be the associated rms's in the same order.
+C-
+C-	PDOC fits 2 Gaussians using the 3 points along each coordinate
+C-	axis.  The first fit on each axis solves for the center, height
+C-	and width.  The second fit forces the Gaussian to have a full
+C-	width at half maximum equal to twice the BFWHM indicated in the
+C-	header (see the note above on the current use of BFWHM at the
+C-	12-meter).  Normally, the fitted FWHM will be close to the
+C-	assumed FWHM.
+C-
+C-	The rms's are NOT currently used by PDOC.  They should be.
+C-
+C-	The procedure FIVE, which is available at the 12-meter, is used
+C-	to reduce standard continuum five-point scans.
+C-
+C-	EXAMPLE:
+C-
+C-	You wish to reduce the five-point scan 1234 to determine new
+C-	total pointing corrections.
+C-
+C-	>FIVE(1234)
+C-
+C-	The graphics screen should display the results of PDOC.  The new
+C-	total pointing corrections which you should give to the operator
+C-	are indicated under the "CORRECTED OFFSET" field.  These offsets
+C-	correspond to the "FIT WITH NO RESTRICTIONS" result.  The units
+C-	are SMM:SS, where MM is arcminutes and SS is arcseconds and
+C-	S is + or -.
+C-
+C-	Other information found on the PDOC graphics screen includes:
+C-	basic scan information at the top, the commanded telescope
+C-	position and current pointing corrections, the subreflector
+C-	beam thrown, the data values and rms's at each position,
+C-	the fitted offsets (from the current position), peaks, and
+C-	FWHM beam widths.  In addition, two symbols are drawn indicating
+C-	the approximate best fit location of the pointing source from
+C-	each fit: "N" indicates the "FIT WITH NO RESTRICTIONS and "F"
+C-	indicates the "FIT WITH AZBW=ELBW=".
+C-
+C-----------------------------------------------------------------------
+L------------------------- Spectral Line -------------------------------
+L-
+L-	PDOC expects 10 values in the data array.  These should be 2
+L-	sets of 5 values with each set corresponding to North, South,
+L-	Center, East and West pointing positions, in that order.
+L-	Generally the first 5 values should correspond to integrated
+L-	intensities and the second set should correspond to peak
+L-	intensities although PDOC ultimately has no way to tell this and
+L-	will provide a fit to each set of five values.
+L-
+L-	For each set of 5 values, PDOC fits 2 Gaussian using the 3
+L-	points along each coordinate axis (for a total of 8 Gaussians).
+L-	The first fit on each axis solves for the center, height, and
+L-	width.  The second fit forces the Gaussian to have a full width
+L-	at half maximum equal to twice the BFWHM indicated in the header
+L-	(see the note above on the current use of BFWHM at the
+L-	12-meter). Normally, the fitted FWHM will be close to the
+L-	assumed FWHM.
+L-
+L-	The procedure LF (for Line FIVE), which is available at the
+L-	12-meter, is used to reduce a standard five point spectral line
+L-	map.
+L-
+L-	EXAMPLE:
+L-
+L-	You wish to reduce a five-point spectral line map where the scan
+L-	1234 is the scan number of the Center position to determine new
+L-	total pointing corrections.
+L-
+L-	>LF(1234)
+L-
+L-	(various questions will be asked concerning baseline and
+L-	integration regions.)
+L-
+L-	The graphics screen will eventually display the results of PDOC.
+L-	The new total pointing corrections which you should give the
+L-	operator are indicated after "CORRECTED MAIN OFFSETS".
+L-	These offsets correspond to the "NONRESTRICTED FIT" (i.e. the
+L-	fit where the width is allowed to vary).  The fit for each
+L-	set of 5 data values is indicated as well as the average of
+L-	these two fits.  The units are SMM:SS, where MM is arcminutes
+L-	and SS is arcseconds and S is + or -.
+L-
+L-	Other information found on the PDOC graphics screen includes:
+L-	basic scan information at the top, the commanded telescope
+L-	position and current pointing corrections, the data values
+L-	at each position (value from first set of 5 appears above
+L-	value from second set), the fitted offsets (from the current
+L-	position), peaks, and FWHM beam widths.  In addition, 4 symbols
+L-	are drawn indicating the approximate best fit location of the
+L-	pointing source from each fit (relative to the current pointing
+L-	offsets, the symbol for each fit is shown above the value for
+L-	that fit (A, B, C, and D).
+L-
+L-----------------------------------------------------------------------

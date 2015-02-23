@@ -1,0 +1,34 @@
+#! /bin/csh -f
+#
+#  @(#)infantcide.sh	5.3 09/10/97
+#
+# Practices Infantcide on the processes logged in $argv[1]
+#
+if ($#argv == 0) then
+   set com = $0
+   echo Usage:  $com:t  Infant_file
+   exit(0)
+endif
+#
+# ps differs between SunOS and Solaris
+# default is SunOS ps
+set PS = "/usr/bin/ps -g"
+# check for Solaris
+if (`isSolaris` == "YES") then
+   set PS = "/usr/bin/ps -ef"
+endif
+#
+set tmpfile = /tmp/prc.$$
+set proc1 = `cat $1`
+set procs = ($proc1)
+if ($#procs >= 1) then
+   echo "Attempting to kill child processes"
+   if (-e $tmpfile) rm $tmpfile
+   $PS > $tmpfile
+   foreach proc ($procs)
+	grep -s $proc $tmpfile
+	if ($status == 0) kill $proc 
+   end
+   rm $tmpfile
+endif
+#

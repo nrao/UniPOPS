@@ -1,0 +1,55 @@
+Class 9 :  Telescope Dependent Parameters -- Green Bank   
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+L1			                      | L1       |  R*8   | MHz
+L1F1			                      | L1F1     |  R*8   | MHz
+L1F2			                      | L1F2     |  R*8   | MHz
+L2			                      | L2       |  R*8   | MHz
+L2F1			                      | L2F1     |  R*8   | MHz
+L2F2			                      | L2F2     |  R*8   | MHz
+LA			                      | LA       |  R*8   | MHz
+LB			                      | LB       |  R*8   | MHz
+LC			                      | LC       |  R*8   | MHz
+LD			                      | LD       |  R*8   | MHz
+Level Correction                              | LEVCORR  |  R*8   | Volts
+Pointing Fudge(1)                             | PTFUDGE  |  R*8   | arcmin
+Pointing Fudge(2)                             | PTFUDGE+1|  R*8   | arcmin
+RHO                                           | RHO      |  R*8   | Degree
+THETA			                      | THETA    |  R*8   | Degree
+Center Frequency Formula                      | CFFORM   |  C*24  |
+
+
+Class 9 :  Telescope Dependent Parameters -- Tucson 12 M   
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Synthesizer Frequency			      | SYNFREQ  |  R*8   | MHz
+LO Factor		                      | LOFACT   |  R*8   |
+Harmonic		                      | HARMONIC |  R*8   |
+LOIF			                      | LOIF     |  R*8   | MHz
+First IF		                      | FIRSTIF  |  R*8   | MHz
+Reference Azimuth Offset                      | RAZOFF   |  R*8   | arcsec
+Reference Elevation Offset                    | RELOFF   |  R*8   | arcsec
+Beam Throw		                      | BMTHROW  |  R*8   | arcsec
+Beam Orientation	                      | BMORENT  |  R*8   | Degree
+Baseline Offset		                      | BASEOFF  |  R*8   | K 
+Observing Tolerance                           | OBSTOL   |  R*8   | arcsec
+Sideband	                              | SIDEBAND |  R*8   |
+Wavelength                                    | WL       |  R*8   | mm
+GAIN Scan Number                              | GAINS    |  R*8   |
++ Beam (1)		                      | PBEAM    |  R*8   | arcsec
++ Beam (2)		                      | PBEAM+1  |  R*8   | arcsec
+- Beam (1)		                      | MBEAM    |  R*8   | arcsec
+- Beam (2)		                      | MBEAM+1  |  R*8   | arcsec
+RA/Dec Offsets (1)			      | SROFF    |  R*8   | arcsec
+RA/Dec Offsets (2)			      | SROFF+1  |  R*8   | arcsec
+RA/Dec Offsets (3)			      | SROFF+2  |  R*8   | arcsec
+RA/Dec Offsets (4)			      | SROFF+3  |  R*8   | arcsec
+Frequency switching signal offset             | FOFFSIG  |  R*8   | MHz
+Frequency switching reference offset 1        | FOFFREF1 |  R*8   | MHz
+Frequency switching reference offset 2        | FOFFREF2 |  R*8   | MHz
+#if RFRNC CKBK
+
+
+#end

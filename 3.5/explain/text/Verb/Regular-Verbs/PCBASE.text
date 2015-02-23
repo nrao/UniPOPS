@@ -1,0 +1,42 @@
+	(REGULAR VERB)
+
+	PCBASE subtracts a constant value from the data in Array (0) so
+	that a specified percentage of data points become negative.
+	The results are stored back into Array (0).  The percentage is
+	specified through the value of the adverb DCPCT.
+
+ 	ADVERBS USED:
+
+          BDROP         # points to be ignored at beginning of data.
+          EDROP         # points to be ignored at end of data.
+			Initial values are 0.
+
+          NREGION(32)   Region(s) of data where baseline is computed.
+			Up to 16 regions can be assigned.  Initial
+			values of NREGION are 0.
+
+          BBASE         Number of points at each end of data (excluding 
+	  EBASE         BDROP & EDROP) where baseline is fit if
+			NREGION(1)=0.  Initial values are 50.
+
+	  DCPCT         The percentage of data points which the user
+			wants to be negative after using PCBASE.
+			Initial value is 10.
+
+	No adverbs are set by PCBASE.
+
+	EXAMPLE:
+
+	You want to remove a constant value from the data in Array (0)
+	such that 40 percent of the resulting data values are less than
+	zero.  You first specify the region over which the constant
+	value is to be determined; next, give a value to DCPCT; and
+	then call PCBASE:
+
+			NREGION(1) = 50
+			NREGION(2) = 230
+			NREGION(3) = 330
+			NREGION(4) = 495
+			DCPCT = 40
+			PCBASE PAGE SHOW
+

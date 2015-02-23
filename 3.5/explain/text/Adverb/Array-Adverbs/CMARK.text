@@ -1,0 +1,31 @@
+	(ARRAY ADVERB of 12 elements)
+
+	CMARK is the array containing the channel numbers at which SHOW
+	will draw vertical lines.  It also may contain the x-axis
+	values at which PLOT draws vertical lines.  For two-dimensional
+	displays, CMARK contains the x-cell numbers at which LABEL will
+	draw vertical lines.  Up to 12 different values may be
+	specified.
+
+	CMARK is used by : LABEL	SHOW       PLOT      
+
+	No verbs change CMARK.
+
+	The initial values of CMARK(N) are -999999, meaning that no
+	vertical lines will be drawn.  
+
+	EXAMPLES :
+
+	You want to flag channels 111 and 128 in your next SHOW display,
+	so you type:
+
+		CMARK(1) = 111;  CMARK(2) = 128;  SHOW
+
+	You want to reset CMARK to its default values so that no
+	vertical lines will be drawn, so you type:
+
+
+		CMARK = DEFAULT
+	or
+		CMARK = -999999
+	

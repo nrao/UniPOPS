@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FRONTEND:  (HEADER-TUC) Front end type -- 8 character'
+print 'string.'
+PRINT ' '

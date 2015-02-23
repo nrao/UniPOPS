@@ -1,0 +1,8 @@
+	(SCALAR ADVERB)
+
+	XCLICK is set by CLICK.  It corresponds to the value that the
+	function XCUR would have returned at the crosshair location
+	when the user clicks a mouse button.
+
+	It is the x-pixel number (screen coordinates).
+

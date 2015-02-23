@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MINIT:  Initializes the specified matrix.  '
+PRINT 'Syntax: MINIT(matrix_num)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

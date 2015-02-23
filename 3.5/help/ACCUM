@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'ACCUM:  Adds data in Array (0) to that in internal ACCUM'
+PRINT 'array using default weight factors.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

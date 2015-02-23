@@ -1,0 +1,201 @@
+	UniPOPS has numerous on-line help facilities.  This includes:
+
+		HELP	 EXPLAIN 	IDENTIFY 	SYSHELP
+		WHATIS
+
+	The user can make comments to the programmers about UniPOPS,
+	suggest changes and improvements or report problems with
+
+		REPORT
+
+	The possible uses of these facilities are described below.
+
+	[NOTE: Report to the computer division if some documentation
+	you need is missing from any of these facilities.]
+
+
+The HELP Facility
+-----------------
+
+	The HELP facility will give you quick references and listings
+	about certain aspects of the program.  The following table
+	describes what you will get if you type the listed HELP
+	command.
+
+#if RFRNC
+		Table 2.1.1 :  Usages of the HELP Facility
+#else
+			Usages of the HELP Facility
+#end
+	-------------------------------------------------------------
+	If you type:	You will get:
+	-------------------------------------------------------------
+	HELP		this message.
+
+	HELP ADVERB	a list of available adverbs.
+
+	HELP ALIAS      a list of available aliases for commands.
+
+	HELP ARRAY      a list of available arrays adverbs.
+
+	HELP HELP 	this message.
+
+	HELP POINTER    a list of pointer and keyword adverbs.
+
+	HELP PROCEDURE	a list of available procedures.
+
+	HELP PROC       a list of available procedures.
+
+	HELP SCALAR     a list of available scalar adverbs.
+
+	HELP STRINGS    a list of available string adverbs.
+
+	HELP VERB	a list of available verbs.
+
+	HELP <name>     a short summary of the documentation for
+			  <name> (where <name> is any built-in verb,
+			  adverb, or procedure) and most times a list
+			  of associated verbs or adverbs (with their
+			  current values).
+	-------------------------------------------------------------
+
+
+The EXPLAIN Facility
+--------------------
+
+	EXPLAIN will give you general, more extensive help on all
+	verbs, adverbs, library procedures, and general topics about
+	UniPOPS.  In fact, all of the information in the Reference
+	Manual and Cookbook can be found on-line with the EXPLAIN
+	facility.  EXPLAIN is a hierarchal (hyper-text) help facility 
+	in which you can roam around to find the documentation
+	you need.
+
+	The syntax for using EXPLAIN is either
+
+		EXPLAIN
+
+	or
+
+		EXPLAIN <topic>
+
+	where topic could be the name of a verb, adverb, procedure, as
+	well as that of a general topic like Data-Access, Data-Display,
+	Utilities, etc.  In the first way of starting up EXPLAIN (i.e.,
+	if you don't provide it with a topic), you will start off at
+	the root of the hierarchy while the second form will get you
+	the documentation on <topic> directly.
+
+	Once you are in the EXPLAIN hierarchy, you will be given, for
+	each topic you request, extensive documentation plus a list of
+	suggested sub-topics that you may want to examine.  You can
+	then issue requests for documentation concerning any other
+	topic without leaving the EXPLAIN facility.  The instructions
+	for using EXPLAIN are available from within the EXPLAIN
+	facility itself.
+
+
+The IDENTIFY Facility
+---------------------
+
+	IDENTIFY will help you if you do not know what is the name of a
+	command but have a particular word in mind that is associated
+	with a topic.  The syntax for using IDENTIFY is:
+
+#if RFRNC
+		Table 2.1.2 :  Usages of the IDENTIFY Facility
+#else
+			Usages of the IDENTIFY Facility
+#end
+	---------------------------------------------------------------------
+	What you type:				What will happen:
+	---------------------------------------------------------------------
+	IDENTIFY                                will ask you for a word
+						 to search for and the
+						 degree of the search.
+						 and then will proceed
+						 with the search.
+
+	IDENTIFY <word>                         will search for <word>
+						  using a quick
+						  search.
+
+	IDENTIFY <word> <degree_of_search>      will search for <word>
+						  using the specified
+						  degree of searching.
+	---------------------------------------------------------------------
+	Note: <word> can be any word that you are interested in knowing
+	more about and <degree_of_search> can be either a 0 or a 1 for
+	a quick or in-depth search, respectively.   Be careful not to
+	search for frequently-occurring words like "the", "a", etc.
+
+	IDENTIFY searches through the help files looking for
+	occurrences of <word> and will list out the names of commands
+	which may have something to do with <word>.  For a quick search
+	(degree of 0), IDENTIFY only looks at a representative subset
+	of the total help library but for an in-depth search (degree of
+	1) it will look through all the help files.  Depending upon the
+	degree of searching, IDENTIFY may take some time to complete
+	it's job.  After IDENTIFY gives it's list of commands, you should
+	use either the HELP or EXPLAIN facility to get more details
+	about the listed commands.
+
+	For example, you want to fit a sinusoidal baseline to your data
+	but you don't know the name of the UniPOPS commands that
+	perform that function.  So you type  IDENTIFY SINUSOID   and
+	hopefully UniPOPS will list the commands you are interested
+	in.
+
+
+The SYSHELP Facility
+--------------------
+
+	SYSHELP provides documentation about the computer's operating
+	system using its help facility.  The usage is either:
+
+		SYSHELP 
+
+	(and you will be asked for the name of an operating system
+	command) or
+
+		SYSHELP <command>
+
+	where <command> is the name of the operating system command you
+	are interested in.
+
+
+The WHATIS Facility
+-------------------
+
+	WHATIS will tell you what kind of symbol a particular entity
+	is.  For example, you may know that there is in UniPOPS a
+	command or variable called  GAUSS but you don't know whether
+	GAUSS is a Pseudo verb, an array adverb, etc.  To find out,
+	type:
+
+		WHATIS GAUSS
+
+	and you will be told what kind of symbol GAUSS is.  The general
+	syntax to use this facility is:
+
+		WHATIS <symbol>
+
+	where <symbol> is the name of the symbol you want to know
+	about.
+
+
+The REPORT Facility
+-------------------
+
+	REPORT allows you to send a message back to the computer
+	staff.  These messages could be such items as suggestions,
+	comments, and bug reports.  The syntax to use the facility is
+	simply:
+
+		REPORT
+
+	REPORT will bring up a system editor for you to type your
+	comments in and, after finishing your message and exiting the
+	editor, the message will be automatically e-mailed to the
+	computer staff.
+

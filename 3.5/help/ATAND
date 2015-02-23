@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ATAND:  (PROC-LIBRARY) Returns the arc tangent (in degrees)'
+PRINT 'of the given parameter.'
+PRINT ' '

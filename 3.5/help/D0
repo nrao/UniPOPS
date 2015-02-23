@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'D0:  (INTERNAL-ARRAY) Returns/sets the value of the '
+PRINT 'specified data point in Array 0.'
+PRINT ' '

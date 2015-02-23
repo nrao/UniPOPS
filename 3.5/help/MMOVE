@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MMOVE:  Moves a matrix to another matrix.  '
+PRINT 'Syntax: MMOVE(matrix1, matrix2)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

@@ -1,0 +1,827 @@
+#if CKBK
+#def SCT A-8.
+#def DSH ----
+A-8 Regular Verbs
+-----------------
+
+#else
+#def SCT 
+#def DSH
+#end
+In the descriptions, features that are only available at Green Bank or
+Tucson, or function differently at the two sites, have this indicated
+by (GB) or (TUC) respectively.  Features that belong to only LINE or
+CONDAR, or function differently in the two, have this indicated by
+(LINE) and (CONDAR).
+
+SCT1 Averaging Data 
+DSH----------------
+
+ACCUM: Adds data in Array (0) to that in internal ACCUM array using
+       default weight factors.
+
+AVE:  Divides the accumulated data in internal ACCUM array by the sum
+      of the weight factors and places the averaged data in Array (0).
+
+SCLEAR:  Deletes present accumulation of data which may be in
+	 progress.  Clears all former use of ACCUM and SUM.
+	 Clears the internal array of scan number, ASHIFT pairs
+	 set by SHIFT.
+
+SUM:  Adds data in Array (0) to that in internal ACCUM array using
+      user-defined weight factors.
+
+TELL: Lists scans in "save", "keep", or off-line or on-line data files.
+      Will also list contents of the stack array and scans averaged
+      together by ACCUM, SUM, and AVE.  Syntax:  TELL pointer
+
+
+SCT2 Baseline fitting
+DSH------------------
+
+BASELINE: Removes polynomial baseline from Array (0), storing results
+	  back into Array (0).
+
+BMODEL:  Uses the polynomial baseline coefficients in BPARM and stores
+	 a model of the fit into Array (0).
+
+BSHAPE:  Fits polynomial baseline to data in Array (0) and stores the
+	 resulting fit coefficients in BPARM.
+
+BSHOW:  Uses the polynomial baseline coefficients in BPARM and displays
+	a model of the fitted baseline.
+
+DCBASE:  Calculates and takes out a DC bias from the data in Array (0)
+	 and stores the results back into (0).
+
+MDBASE:  Removes the point-by-point "running-median" intensity for a
+	 box of size MDBOX channels from Array(0).  
+
+PCBASE:  Removes from Array (0) a constant value such that the
+	 resulting percentage of data with values < 0 equals DCPCT.
+
+RIPPLE:  Fits and removes sinusoidal baseline from data in Array (0),
+	 returning results to Array (0). RPERIOD is the initial guess
+	 for the wavelength (in channels); the fit coefficients are
+	 returned in RAMPLTDE, RPHASE, and RPERIOD.
+
+RMODEL:  Creates a sinusoidal model of the baseline described by
+	RAMPLTDE, RPHASE, and RPERIOD and stores the results in Array (0).
+
+RSHAPE:  Fits sinusoidal baseline to data in Array (0), using value of
+	 RPERIOD as initial guess, and storing the fit coefficients in
+	 RAMPLTDE, RPHASE, and RPERIOD.
+
+RSHOW:  Uses coefficients in RAMPLTDE, RPHASE, and RPERIOD to display
+	the fitted sinusoid.
+#if CKBK
+
+#else
+
+
+#end
+SCT3 Conditional Branching and Looping 
+DSH-----------------------------------
+
+BY:  	   Part of an FOR-TO-BY-END construct.
+
+ELSE:  	   Part of an IF-THEN-ELSE-END construct.
+
+END:  	   Marks end of a WHILE-END, FOR-TO-END, FOR-TO-BY-END,
+	   IF-THEN-ELSE-END, or IF-THEN-END construct.
+
+FOR:       Start of a FOR-TO-BY-END or FOR-TO-END construct.
+
+IF:  	   Specifies the start of an IF-THEN-END or
+	   IF-THEN-ELSE-END logical construct.
+
+THEN:  	   Part of IF-THEN-ELSE-END or IF-THEN-END construct.
+
+TO:  	   Part of an FOR-TO-BY-END construct.
+
+WHILE:     Specifies the start of a WHILE-END loop.
+
+
+SCT4 Data Access
+DSH-------------
+
+CGET: Retrieves the specified feed for the current scan and places the
+      header and data into Array (0).  Syntax: CGET feed.
+
+CGGET: Retrieves the specified feed for the most recent gains scan and 
+       places the header and data into Array (2).  Syntax: CGGET feed.
+
+CHECK: Checks whether "save"-file location NSAVE contains a scan.
+
+CHNGONLINE: (TUC) Changes the assumptions about unspecified
+	    subscan (feed) numbers and file version number of the
+	    indicated type.  Syntax: CHNGONLINE(file_type, version)
+
+GET: Retrieves the data and header for the specified scan and feed from
+     the off-line or on-line data files and places them in Array (0).
+     Syntax:  GET scan_num.feed_num
+
+GET0 - GET9: Retrieves data and header for specified scan and feed from
+	     off-line or on-line data files, placing them in Array (n).
+	     Syntax:  GETn scan_num.feed_num
+
+GETCOL: Gets a column from Matrix (0) and places it in Array (0).
+	Syntax: GETCOL(column_number)
+
+GETIR: (GB) Retrieves an individual record or phase from either the 
+	    on-line or off-line records files and places it in Array (0).
+	    Syntax: GETIR(scan_no.rcvr-number, record_no, phase_no)
+
+GETOTF: (TUC) Retrieves an individual scan or supplementary array
+	      from an OTF spectral line scan and places it Array (0).
+	      Syntax: GETOTF(scan_no.subscan-number, record-number)
+
+GETPOLZ: (TUC) Retrieves an individual scan from a spectral line 
+	       polarizer scan and places it Array (0).
+	       Syntax: GETPOLZ(scan_no.subscan-number, record-number)
+
+GETROW: Gets a row from Matrix (0) and places it in Array (0).
+	Syntax: GETROW(row_number)
+
+GGET: Retrieves gains data and header for specified scan and feed from
+      the off-line or on-line gains files and places them in Array (2).
+      Syntax: GET scan_num.feed_num
+
+KEEP: Stores the data and header in Array (0) into the "keep" file.
+
+KGET: Retrieves data and header for specified scan and feed from the
+      "keep" file, placing them in Array (0).  
+      Syntax: KGET scan_num.feed_num
+
+MREAD:  Reads the specified two-dimensional FITS image file from disk
+	into Matrix (0).  Syntax:  MREAD('filename')
+
+MWRITE:  Writes Matrix (0) into a specified disk file as a two-dimensional
+	 FITS image file.  Syntax:  MWRITE('filename')
+
+OFF: Retrieves the data and header for the specified scan and feed from
+     the off-line or on-line data files and places them in Array (1).
+     Syntax:  OFF scan_number.feed_number
+
+ON: Retrieves the data and header for the specified scan and feed from
+    the off-line or on-line data files and places them in Array (0).
+    Syntax:  ON scan_number.feed_number
+
+PUTCOL: Places the data in Array (0) into the indicated column of Matrix (0).
+	Syntax: PUTCOL(column_number)
+
+PUTROW: Places the data in Array (0) into the indicated row of Matrix (0).
+	Syntax: PUTROW(row_number)
+
+READCUBE:  Reads the specified three-dimensional FITS image file in
+	   preparation for SLICE'ing.  Syntax:  READCUBE('filename')
+
+RECALL: Recalls a scan from the "save" file and places the data and
+        header into Array (0).
+
+SAVE: Stores the data and header in Array (0) into the "save" file.
+
+SUMMARY:  Summarizes the data in the "save", "keep", "gains", "zeros", 
+	  off-line or on-line data files.  BSCAN, ESCAN specify the
+	  range of scans to be summarized.  Syntax: SUMMARY file_ptr
+
+TELL: Lists scans in the "save", "keep", "gains", "zeros", off-line or
+      on-line data files.  Will also list the contents of the stack 
+      array and the scans averaged together by ACCUM, SUM, and AVE.
+      Syntax:  TELL pointer
+#if CKBK
+
+#else
+
+
+#end
+SCT5 Data Display
+DSH--------------
+
+AUTOLEV:  Sets up automatically contour levels (ADVERB array LEVS)
+	  for two-dimensional displays.  Syntax:  AUTOLEV(num_levs)
+
+CC:  Sets lower AND upper x-axis to channel nos for SHOW.
+
+CF:  Sets lower x-axis to chan. nos. and upper to freq (LINE), or time
+     (CONDAR), for SHOW.
+
+CHAR:  Draws specified character string on graphics screen at location
+       last specified by PLACE.  Syntax: CHAR("Hello World")
+
+CHARSIZE:  Changes the size of characters drawn to the graphics screen.
+	   Syntax:  CHARSIZE(num_points)
+
+CLICK:  Performs the equivalent of all the cursor functions with a
+	single click, placing the values in 7 adverbs.
+
+COLOR:  Changes the default color used for plotting.
+	Syntax:  COLOR(-red,- green, -blue) or 
+	         COLOR(hue, intensity, saturation)
+
+CONTOUR:  Contours the contents of Matrix (0) -- high quality algorithm.
+
+CROSSHAIR:  Displays cross hairs -- the cross hairs can be moved around
+	    and the computer can display various quantities depending upon
+	    whether it is a SHOW display of Continuum or Spectral-Line data, 
+	    a PLOT display, or a two-dimensional display.
+
+CV:  Sets lower x-axis to chan. no. and upper to velocity (LINE), or
+     position (CONDAR) for SHOW.
+
+EQHISTLEV: Sets the LEVS array adverb so that an equal number of data
+	   values occur between each level (an equal histogram).
+	   Syntax: EQHISTLEV(min, max, num_levels)
+
+FC:  Sets lower x-axis to freq (LINE), or time (CONDAR), and upper to
+     chan. no. for SHOW.
+
+FF:  Sets both lower and upper x-axis to frequency (LINE), or time
+     (CONDAR), for SHOW.
+
+FLAG:  Draws vertical line on the display at a specified lower x-axis
+       value of all types of displays.  Syntax:  FLAG(x_value)
+
+FONTSET:  Alters the character font used by the graphics screen.
+	  Syntax:  FONTSET(font)
+
+FREEY:  Allows for automatic rescaling of the y-axis by SHOW.
+
+FULLGRID:  Overlays a grid on any kind of current display.
+
+FUNCLEV:  Sets the LEVS array adverb such that each level has a
+	  fraction of the total number of data points as indicated
+	  by the value of the FLEVS array adverb.
+	  Syntax: FUNCLEV(min, max)
+
+FV:  Sets lower x-axis to freq. (LINE), or time (CONDAR), and upper to
+     vel. (LINE), or position (CONDAR) for SHOW.
+
+GRAPHICS:  Sends printed output to the graphics screen.
+
+HISTOGRAM:  Sets up SHOW command so it will use a histogram display.
+	    PLOT will use points display (i.e., equivalent to POINTS).
+
+HLFTNE:  Half-tone plots the contents of Matrix (0).
+
+HOLDY:  Fixes present y-axis scaling for future SHOW displays.  Revoked
+	by FREEY command.
+
+LABEL:  Draws a box and labels current 2-d display.
+
+LINE:  Sets up SHOW & PLOT commands so they will use connected lines.
+
+LINETYPE:  Sets up default line type for one-dimensional SHOW, RESHOW, or PLOT
+	   displays.  Syntax:  LINETYPE(line_num)
+
+ONS:  (CONDAR) Draws a plus sign at location of `On' positions in
+      	       an On-Off continuum scan.
+
+PAGE:  Clears the graphics screen.
+
+PDOC:  (TUC) Reduces a 12-m pointing observation.
+
+PLACE:  Places "virtual" graphics pen at specified location on graphics
+	screen in preparation for a subsequent CHAR or VCTR command.
+	Syntax:  PLACE(x, y).
+
+PLOT:  Plots the data in Array (1) versus the data in Array (0).
+
+PLOTDOTS: Plots dots or plusses at all defined (or undefined) data
+	  values in Matrix (0).
+
+POINTS:  Sets up SHOW & PLOT commands so that they will plot points.
+
+QCONTOUR:  Contour plots (quick algorithm) the contents of Matrix (0).
+
+RASTER:  Plots the contents of Matrix (0) as a color or gray-scale
+	 raster image.
+
+RESHOW:  Plots the data in Array (0) over any existing plot.
+
+RHIST:  Sets up RESHOW command to use a histogram display.
+
+RLINE:  Sets up RESHOW command to use connected lines.
+
+RPOINTS:  Sets up RESHOW command to plot points.
+
+RSTCOLOR:  Resets the default color to white.
+
+RSTPAGE:  Resets plotting region of graphics screen to default values.
+
+SAXIS:    Sets upper and lower x-axis for SHOW.  Syntax: SAXIS(upr,lwr)
+
+SETCLUT:  Assigns values to the color-look-up-table (ADVERB array CLUT)
+	  from a set of default color tables.  
+	  Syntax: SETCLUT(table_num, num_levs)
+
+SETLEV:  Easily sets linear or logarithmic contour levels
+	 (ADVERB array LEVS).  
+	 Syntax: SETLEV(start, increment, number, type)
+
+SETPAGE:  Sets plotting region of graphics screen to user-specified
+	  values. Syntax:  SETPAGE(xlo, xhi, ylo, yhi)
+
+SHOW:  Plots data and some header information for scan in Array (0).
+
+VC:  Sets lower x-axis to vel. (LINE), or position (CONDAR), and upper
+     to chan. no. for SHOW.
+
+VCHAR:  Draws a character string along a vertical line on the graphics
+	screen.  Syntax:  VCHAR(string,rotate)
+
+VCTR:  Draws a line to the specified location on the graphics screen
+       from the location last specified by PLACE.  Syntax: VCTR(x, y).
+
+VF:  Sets lower x-axis to vel. (LINE), or position (CONDAR), and upper
+     to freq. (LINE), or time (CONDAR), for SHOW.
+
+VV:  Sets both lower and upper x-axis to vel. (LINE), or position
+     (CONDAR), for SHOW.
+
+XRANGE:  Alters BDROP and EDROP according to the specified range in the
+	 units of the current lower x-axis.  Syntax:  XRANGE(xmin, xmax)
+
+YRANGE:  Alters YMIN and YINCR to reflect the specified limits to the
+	 y-axis.  Syntax:  YRANGE(ymin, ymax)
+#if CKBK
+
+#else
+
+
+#end
+SCT6 Data Manipulation
+DSH-------------------
+
+AVG: (CONDAR)  Computes mean source temp. and standard deviation of
+	       mean for analog continuum data (from standard backend)
+	       in Array (0).
+
+AVGD: (TUC) (CONDAR)  Computes mean source temp. and standard deviation
+		      of mean for digital backend data in Array (0).
+
+BIAS:  Adds the value of FACT to the data points in Array (0) and
+       stores results back in (0).
+
+CALDBE: (TUC) (CONDAR) Computes calibration values for each point of a
+		       digital backend scan.
+
+CLIP:  Clips the data in Array (0) such that they will be within the
+       range specified by CLIPMIN and CLIPMAX.
+
+CONVFCN:  Takes the convolution of data in Arrays (0) and (1) and
+	  places result in Array (0).
+
+COPY: Copies data and header from one specified Array to another.
+      Syntax:  COPY(from, to).
+
+CROSSFCN:  Takes the cross-correlation of data in Arrays (0) and (1)
+	   and places result in Array (0).
+
+DECNVLV:  Deconvolves the data in Array (0) from the data in Array (1)
+	  and places result in Array (0).
+
+DIFF:  Subtracts the data in Array (1) from that in Array (0) and
+       places the results in Array (0).
+
+DIVIDE:  Divides the data in Array (0) by that in Array (1) and stores
+	 the results in Array (0).
+
+FFT:  Takes the FFT of the data in Array (0) and stores the real part
+      of the result in Array (0) and the imaginary part in Array (1).
+
+FIXDBE: (TUC) (CONDAR)  Computes & reorders four-phase digital backend
+			data in Array (0) as switched power, total
+			power, calibration values and zero levels.
+
+IFFT:  Takes inverse FFT of real data in Array (0) and imaginary data
+       in Array (1) and places the results back in Arrays (0) and (1).
+
+INVERT:  Flips the data in Array (0) end-to-end.
+
+
+MINUS:  Subtracts the data in Array 1 from that in Array 0 and places
+	the results in Array 0.
+
+MOVE: Moves data and header from one specified Array to another.
+      Syntax:  MOVE(from, to).
+
+MULTIPLY:  Multiplies the data in Array 1 with that in Array 0 and
+	   places the results in Array 0.
+	
+PLUS:  Adds the data in Array 1 to that in Array 0 and places the
+       results in Array 0.
+
+POWSPEC:  Calculates the power spectrum of real data in Array (0) and
+	  imaginary data in Array (1), storing results in Array (0).
+
+RAP: (LINE)  For freq.-switched scans, overlaps data in Array (0) with
+	     itself, placing results back in (0). RAP sets OSHIFT equal
+	     to the no. of channels corresponding to the freq. switch. 
+     (TUC)   The user should specify the freq. shift using FS and FR.
+
+REMOVE: Deletes data and header from the specified Array.  
+	Syntax:  REMOVE(Array_num)
+
+REPLACE:  Replaces the data in Array (0) at the channels specified in
+	  BADPT with the averages of neighboring data points; the
+	  results are stored back into Array (0).
+
+SCALE:  Multiplies the data in Array (0) by the value of FACT.
+
+SEDITS: (CONDAR)  Deletes the specified series or pairs from the On-Off
+		  scan in Array (0) and recomputes the source temp. and
+		  RMS with the pairs deleted.
+
+SHIFT:  Shifts the data in Array (0) by the no. of channels specified
+	by ASHIFT.  Stores the scan number and ASHIFT in an internal
+        array that can be display with LISTSHIFT.
+
+SWITCHED: (CONDAR)  Computes switched power data from raw phases of
+		    digital backend scan in Array (0).
+
+TEMP: (LINE) (GB)  Performs (on-off)/off assuming that the on scan is
+		   in Array (0) and the off in Array (1); the results
+		   are stored in (0).
+
+	    (TUC)  Performs (on-off)/off * gains assuming that the on
+		   scan is in Array (0), the off in Array (1) and the
+		   gains in Array (2); the results are stored in (0).
+
+TOTALPWR: (CONDAR) (TUC)  Computes total-power data from the raw phases
+			  of the digital backend scan in Array (0).
+
+ZERO: (CONDAR) (TUC)  Computes zero levels for digital backend data in
+		      ARRAY (0). The RMS of the zero levels is
+		      computed, stored in VRMS, & printed on the
+		      screen.
+#if CKBK
+
+#else
+
+
+#end
+SCT7 Data Parameters
+DSH-----------------
+
+CHEADER:  Lists the header parameters of the contents of Cube (0).
+
+D0 - D9:  Returns or sets value of given data point in Array (n).
+
+DOC:  Writes one line of documentation about the scan in Array (0);
+      uses PFLAG to determine whether to print a header.
+
+FSHIFT: (LINE)  Calculates the freq. difference between the scans in
+		Array (0) & internal ACCUM array, storing this (in
+		chans.) in ASHIFT.
+      (CONDAR)  Sets ASHIFT to zero.
+
+GMEASURE: (LINE)  Assumes that Array (0) contains a spectrum of a
+		  spiral galaxy & calculates the following line
+		  parameters:  flux integral, velocity, and line
+		  width.  The array adverbs GMFRAC and GOUT hold the
+		  input parameters, and the results, respectively.
+
+HEADER:  Lists some of the more importants parameters in the header of
+	 the scan in Array (0).
+
+MHEADER:  Lists the header parameters of the contents of Matrix (0).
+
+MOMENT:  Calculates the zeroth and first moments of the data in Array
+	 (0) and places the results in SIZE.
+
+PDOC: (TUC)  Reduces 12-m pointing observations.
+
+PEAK:  Finds the highest data point in Array (0) and prints the height,
+       chan. no., velocity, half-width, & frequency (LINE), or height,
+       chan. no., position, half-width, & time (CONDAR); results are
+       also stored in HWIDTH, CENTER, HWIDTH, BGAUSS, EGAUSS.
+
+RMS:  Calculates the RMS deviation of the data in Array (0) and both
+      prints out the results and stores it in VRMS.
+
+SOLVETIP: (CONDAR)  Reduces antenna tipping observation.
+
+SPIKE:  Finds the chan. nos. for data points in Array (0) that deviate
+	more than CUTOFF from zero; the results are stored in BADPT.
+
+TABLE:  Prints out data values (and vels) for the data in Array (0).
+
+TEMPS: (CONDAR)  Reduces On-Off continuum observations.
+
+THUMB:  Reports the user's pointing offsets for the scan in Array (0).
+
+TITLE:  Writes one line of documentation about the scan in Array (0).
+
+VSHIFT: (LINE)  Calculates the vel. difference between the scans in
+		Array (0) & internal ACCUM array, storing this (in
+		chans.) in ASHIFT.
+      (CONDAR)  Sets ASHIFT to zero.
+#if CKBK
+
+#else
+
+
+#end
+SCT8 Declaration  Statements
+DSH-------------------------
+
+ALIAS:     Creates an alias for the name of a verb or procedure.
+
+ARRAY:     Creates an array adverb.
+
+GLOBAL:    Declares user-defined adverbs to be global.
+
+POINTER:   Creates a pointer adverb.
+
+SCALAR:    Creates a scalar adverb.
+
+STRING:    Creates a string adverb.
+
+
+SCT9 Error Control and Diagnostics
+DSH-------------------------------
+
+DEBUG:      Turns on or off the program debug mode.  
+	    Syntax:  DEBUG TRUE or DEBUG FALSE
+
+DUMP:  Dumps contents of the specified range of the internal CORE Array
+       -- debugging tool only.  Syntax:  DUMP(start_word, num_words)
+
+ERROFF:  Turns off only the checking for less severe errors.
+
+ERRON:  Turns on all error checking.
+
+
+SCT10 Gaussian Fitting
+DSH-------------------
+
+GAUSS:  Fits up to 24 Gaussians to the data in Array (0); uses CENTER
+	and HWIDTH as initial guesses and returns to these ADVERBs and
+	HEIGHT the results of the fit.
+
+GDISPLAY:  Uses the Gaussian parameters in HEIGHT, CENTER, and HWIDTH
+	   and displays the sum of the Gaussians.
+
+GMODEL:  Uses the Gaussian parameters in HEIGHT, CENTER, HWIDTH and
+	 stores a model of the Gaussians into Array (0).
+
+GPARTS:  Uses the Gaussian parameters in HEIGHT, CENTER, and HWIDTH and
+	 displays the individual Gaussians.
+
+RESIDUAL:  Uses the Gaussian parameters in HEIGHT, CENTER, and HWIDTH
+	   and subtracts the Gaussians from the data in Array (0)
+	   storing the results back into Array (0).
+
+
+SCT11 Header Values
+DSH----------------
+
+CH0:	  Returns value of given header parameter in Cube (0).
+
+H0 - H9:  Returns or sets value of given header parameter in 
+	  Array (n).
+
+MH0-MH3:  Returns or sets value of given header parameter in 
+	  Matrix (n). 
+#if CKBK
+
+#else
+
+
+#end
+SCT12 Input/Output
+DSH---------------
+
+COPYOFF:  Turns off the ability to make hardcopies of the graphics
+	  screen.
+
+COPYON:  Turns on the ability to make hardcopies of the graphics
+	 screen.
+
+CRT:  Sends printed output to the scrolled text screen.
+
+FCLOSE:  Closes the ASCII file specified by the provided unit number.
+	 Syntax:  FCLOSE(unit)
+
+FPRINT:  Writes to the ASCII file specified by the given unit, using
+	 the given format, and writes out the values of the provided
+	 list.  Syntax: FPRINT(unit,fmt) list
+
+FREAD:  Reads from the ASCII file specified by the given unit, using
+	the given format, and alters the values of the adverbs in the
+	provided list.  Syntax: FREAD(unit,fmt) list
+
+FREWIND:  Rewinds the ASCII file specified by the provided unit
+	  number.  Syntax: FREWIND(unit)
+
+FSTATUS:  Lists all open ASCII files and the file's attributes.
+
+FULLOFF:  Turns off the FULLON feature.
+
+FULLON:  Stops scrolling of text screen after screen is full.
+
+GCOPY:  Makes a hardcopy of the graphics screen.
+
+LOGOFF:  Turns off the command logging facility.
+
+LOGON:  Turns on the command logging facility.
+
+OUTPUT:  Makes a hardcopy of the "printout" file.
+
+? or PRINT:  Prints values of the specified variables or calculations.
+	     Syntax:  PRINT list
+
+PRINTER:  Sends printed output to the "printout" file.
+
+PRNTFMT:  Alters the format used by the PRINT or ? verb for printing
+	  out real values.  Syntax:  PRNTFMT(format)
+
+READ:  Assigns values via the keyboard to the specified variables.
+       Syntax: READ list
+
+SPRINT:  Performs an internal write to the specified string adverb,
+	 using the given format,  and writes out the values of the
+	 provided list. Syntax: SPRINT(strng,fmt) list
+
+SREAD:  Performs an internal read from the specified string adverb,
+	using the given format, and alters the values of the adverbs in
+	the provided list. Syntax: SREAD(strng,fmt) list
+
+TCOPY:  Makes a hardcopy of the scrolled text screen.
+#if CKBK
+
+#else
+
+
+#end
+SCT13 Matrix and Cube Analysis
+DSH---------------------------
+
+CD0:	  Returns value of given data point in Cube (0).
+	  Syntax:  CD0(x1, x2, x3)
+
+
+HOLFITFOC:  For holographic data reduction.  Fits an error pattern due
+	    to focus and pointing offsets to Matrix 0.  Matrices 0 and
+	    1 are overwritten with the residuals and the error
+	    pattern.  Syntax:  HOLFITFOC(nyq,dishd,focus)
+
+HOLWINDOW:  For holographic data reduction.  Convolves the data in
+	    Matrices 0 and 1 with a specified function placing the
+	    results back into these matrices.  Syntax: HOLWINDOW(fnct).
+
+MBIAS:  Adds the value of the argument to the data in Matrix (0) and
+	places the result in Matrix (0).  Syntax: MBIAS(factor)
+
+MBLANK:  Turns all values of a matrix to undefined values.
+	 Syntax:  MBLANK(matrix_num)
+
+MCOPY:  Copies a matrix to another matrix.  
+	Syntax: MCOPY(matrix1, matrix2)
+
+MD0-MD3:  Returns or sets value of given data point in Matrix (n).
+	  Syntax:  MDn(x1, x2)
+
+MDIVIDE:  Divides the data in Matrix (0) by the data in Matrix (1)
+	  and places the result in Matrix (0).
+
+MFFT:  Takes the FFT of the real data in Matrix 0 and the imaginary
+       data in Matrix 1 and places the results back in Matrices 0 and
+       1.
+
+MFILL:  Attempts to interpolate values for undefined pixels in 
+	Matrix (0).
+
+MIFFT:  Takes the inverse FFT of the real data in Matrix 0 and the
+	imaginary data in Matrix 1 and places the results back in
+	Matrices 0 and 1.
+
+MINIT:  Initializes the specified matrix.  Syntax:  MINIT(matrix_num)
+
+MLIMITS:  Finds the maximum and minimum values in Matrix (0).
+
+MMINUS:  Subtracts the data in Matrix (1) from the data in Matrix (0)
+	 and places the result in Matrix (0).
+
+MMOVE:  Moves a matrix to another matrix.  Syntax: MMOVE(matrix1, matrix2)
+
+MMULTIPLY:  Multiplies the data in Matrix (0) by the data in Matrix (1)
+	    and places the result in Matrix (0).
+
+MPLUS:  Adds the data in Matrix (1) to the data in Matrix (0) and places
+	the result in Matrix (0).
+
+MRANGE:  Limits all matrix displays and processing to the specified 
+	 subset of Matrix (0).
+	 Syntax: MRANGE(xcell1, xcell2, ycell1, ycell2)
+
+MREMOVE: Deletes data and header from the specified Matrix.  
+	 Syntax:  MREMOVE(matrix_num)
+
+MSCALE:  Multiplies the contents of Matrix (0) by the value of the
+	 argument and places the result in Matrix (0).
+	 Syntax: MSCALE(factor)
+
+MSMOOTH:  Provides two-dimensional smoothing of the data in 
+	  Matrix (0).
+
+MTABLE:  Lists out the data in Matrix (0).
+
+ROTATE:  Offers various possibilities for rotating and flipping 
+	 Matrix (0).
+
+SLICE:  Slices the three-dimensional data cube specified by READCUBE
+	and places the slice in Matrix (0).  
+	Syntax: SLICE(face, lower_cell, upper_cell)
+#if CKBK
+
+#else
+
+
+#end
+SCT14 Miscellaneous
+DSH----------------
+
+AMATHOFF and AMATHON: Internal verbs which the user should not use.
+
+EQTOGAL:  Transforms 1950 RA and DEC coordinates into galactics.
+	  Syntax: EQTOGAL( HHMMSS.S, sDDMMSS).
+
+EXEC:  Executes a string of POPS commands (the argument).
+       Syntax: EXEC(command)
+
+GALTOEQ:  Transforms galactic coordinates into 1950 RA and DEC.
+	  Syntax: GALTOEQ(DDD.DDDDD, sDD.DDDDD).
+
+LISTSHIFT: Lists the contents of the internal array of scan number,
+	   ASHIFT pairs set by SHIFT.
+
+OSB: (TUC) Alters several header parameters of the data in Array (0)
+      as if the observation had been made in the other side band.
+
+PAUSE:  Puts the program to sleep for the specified number of secs.
+	Syntax: PAUSE num_secs
+
+UNDOOFF:  Turns off the UNDO feature.
+
+UNDOON:  Turns on the UNDO feature.
+
+Z_CHNGFIL:  Regular verb version of CHNGFILE. CHNGFILE is preferred.
+	    Syntax: Z_CHNGFIL(str1, num, str2)
+
+Z_SYSTEM:  Regular verb version of SYSTEM. SYSTEM is preferred.
+	   Syntax: Z_SYSTEM(string)
+
+
+SCT15 Procedure Definition
+DSH-----------------------
+
+ENDEDIT:   Ends a "POPSEDIT"ing session.
+
+FINISH:    Signals the end of a procedure.
+
+RETURN:    Signals return from procedure or function-procedure.
+#if CKBK
+
+#else
+
+
+#end
+SCT16 Smoothing
+DSH------------
+
+BOXCAR:  Smooths data in Array (0) using a boxcar smoothing function.
+
+CHNGRES:  Changes resolution of scan in Array (0) to value of NEWRES.
+
+HANNING:  Smooths the data in Array (0) using a Hanning smoothing fn.
+
+SMOOTH:  Smoothes the data in Array (0) using the smoothing function
+	 described by SMWGT and stores results back into (0).
+
+
+SCT17 Stacking
+DSH-----------
+
+ADDSTACK:  Adds the specified scan number range to the stack array.  
+           Syntax:  ADDSTACK(first, last, increment)
+
+ASTACK:   Returns or sets value of specified element in the stack.
+	  Syntax: ASTACK(index) = value, or, print ASTACK(index)
+
+DELETE:  Deletes the specified scan number from the stack array.
+	 Syntax: DELETE scan_number
+
+EMPTY:  Deletes the contents of the stack array.
+
+SELECT:  Places a selection of scan numbers in the stack array, chosen
+	 via certain user-specified selection criteria.
+	 Syntax : SELECT attribute
+ 
+TELL: Lists scans in "save", "keep", or off-line or on-line data files.
+      Will also list the contents of the stack array and the scans
+      averaged together by ACCUM, SUM, and AVE.  Syntax:  TELL pointer
+#if CKBK
+
+#end

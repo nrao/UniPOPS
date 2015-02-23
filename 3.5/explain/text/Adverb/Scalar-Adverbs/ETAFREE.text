@@ -1,0 +1,29 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	ETAFREE is a flag that specifies, for data from the 12-m
+C-	telescope, whether or not method 3 of SOLVETIP should try to
+C-	solve for ETA, the 'warm-spillover' efficiency.  If ETAFREE =
+C-	TRUE (+1), then ETA is a free parameter of the fit; else, if
+C-	ETAFREE = FALSE (-1), then ETA is a constant in the fit.
+C-
+C-	ETAFREE is used by : SOLVETIP
+C-
+C-	No verbs change ETAFREE.
+C-
+C-	The initial value of ETAFREE is FALSE (-1).
+C-
+C-	EXAMPLE :
+C-
+C-	You want to use algorithm 3 for fitting a model to your sky-tip
+C-	data from the 12-m telescope, and you think ETA = 0.75 and you
+C-	don't want SOLVETIP to solve for ETA, so you specify :
+C-
+C-		TYPETIP = 3; ETA = 0.75; ETAFREE = FALSE; SOLVETIP
+C-
+C-	You find that the results of SOLVETIP look strange so now
+C-	you think your estimate of ETA is wrong, so you type:
+C-
+C-		TYPETIP = 3; ETAFREE = TRUE; SOLVETIP
+C-
+C------------------------- Continuum --------------------------------

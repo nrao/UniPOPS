@@ -1,0 +1,12 @@
+#!  /bin/csh
+#
+#   @(#)vsst.sourcetemp.sh	5.2 08/02/94
+#
+# Determines whether to call vlbfo or vlbfo.rmt
+#
+if (`hostname` == "fahd") then
+   ${popsdir}utilities/vlbfo.exe $argv
+else
+   ${popsdir}utilities/vlbfo.rmt.exe $argv
+endif
+#

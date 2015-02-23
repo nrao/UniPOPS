@@ -1,0 +1,38 @@
+	(PSEUDO VERB)
+
+	Syntax:    OLFILES
+
+	OLFILES is for 12-m on-line data only.  It is similar to
+        the FILES verb.  It displays the currently opened on-line
+        files.
+
+	Each observer at the 12-m has their own data subdirectory.
+	There are 4 types of raw data files that an observer needs to
+	access from UniPOPS.  These 4 file types are are pdfl, gzfl 
+	(filter bank data and gains), pdfl_hc and gzfl_hc (hybrid 
+	spectrometer data and gains).  The names of these files are 
+	composed of these base file types with the observers initials 
+	as the "dot" extension and the version number as a 3 digit
+        value which follows an underscore (_) following the initials.
+
+        Version 14 of the hybrid spectrometer data file of an observer
+        with initials xyz would be "pdfl_hc.xyz_014".
+
+        These files have a limited size and it is possible that more than 
+        one of each file type will be used during an observing run.  
+        As a file fills, a new file is created with the same name and a 
+	higher version number.
+
+	Using a relative pathname syntax, the raw data for an observer 
+	with initials xyz would be found in ~obs/../data/xyz where 
+	~obs indicates the obs home directory.  The subdirectory 
+	intended for the use of the observer (catalogues, personal 
+	procedures, etc) is ~obs/xyz.  The 12-m staff will set up all 
+	of these directories for each observer.
+
+        Use CHNGONLINE or CHNGVER to change the files that are currently
+        being used.  Gains files (gzfl files) are always opened with
+        the same version number as their corresponding pdfl files.
+
+	No adverbs are used or set by OLFILES.
+

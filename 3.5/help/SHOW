@@ -1,0 +1,12 @@
+PRINT ' '
+PRINT 'SHOW:  Plots the data and some header information for'
+PRINT 'the data in Array 0.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+print 'YMIN,YINCR=',YMIN,YINCR
+PRINT 'SLABEL,ZLINE,BMARK=',SLABEL,ZLINE,BMARK
+PRINT 'CMARK='; print CMARK
+PRINT 'TMARK='; print TMARK
+PRINT 'VMARK='; print VMARK
+PRINT 'FMARK='; print FMARK
+PRINT ' ' 

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NITER:  (ADVERB) Maximum number of iterations for Gaussian'
+PRINT 'fit.'
+PRINT ' '

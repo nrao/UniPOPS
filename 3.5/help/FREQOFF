@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FREQOFF:  (POINTER-LINE)  Used with SAXIS to indicate that'
+PRINT 'SHOW should use as an x-axis offset IF frequency.'
+PRINT ' '

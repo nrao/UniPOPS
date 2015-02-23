@@ -1,0 +1,57 @@
+
+Matrix Keywords :
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Number of X-axis pixels                       | MNAXIS1  |  R*8   | 
+Number of Y-axis pixels                       | MNAXIS2  |  R*8   | 
+X-axis Coordinate at reference pixel          | MRVAL1   |  R*8   | 
+Y-axis Coordinate at reference pixel          | MRVAL2   |  R*8   | 
+X-axis Increment between pixels               | MDELT1   |  R*8   | 
+Y-axis Increment between pixels               | MDELT2   |  R*8   | 
+Matrix location of X-axis reference pixel     | MPIX1    |  R*8   |
+Matrix location of Y-axis reference pixel     | MPIX2    |  R*8   |
+Value assigned to undefined pixels            | MUNDEF   |  R*8   |
+Equinox of coordinate system.                 | MEQUINOX |  R*8   |
+Type of X-axis coordinate                     | MTYPE1   |  C*8   |
+Type of Y-axis coordinate                     | MTYPE2   |  C*8   |
+Units of data in matrix                       | MBUNIT   |  C*8   |
+Object Name                                   | MOBJECT  |  C*16  |
+Place of origin of the data or file           | MORIGIN  |  C*8   |
+Date of matrix creation                       | MDATE    |  C*8   |
+Matrix comment                                | MCOMMENT |  C*54  |
+
+
+
+
+Cube Keywords :
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Number of X-axis pixels                       | CNAXIS1  |  R*8   | 
+Number of Y-axis pixels                       | CNAXIS2  |  R*8   | 
+Number of Z-axis pixels                       | CNAXIS3  |  R*8   | 
+X-axis Coordinate at reference pixel          | CRVAL1   |  R*8   | 
+Y-axis Coordinate at reference pixel          | CRVAL2   |  R*8   | 
+Z-axis Coordinate at reference pixel          | CRVAL3   |  R*8   | 
+X-axis Increment between pixels               | CDELT1   |  R*8   | 
+Y-axis Increment between pixels               | CDELT2   |  R*8   | 
+Z-axis Increment between pixels               | CDELT3   |  R*8   | 
+Matrix location of X-axis reference pixel     | CPIX1    |  R*8   |
+Matrix location of Y-axis reference pixel     | CPIX2    |  R*8   |
+Matrix location of Z-axis reference pixel     | CPIX3    |  R*8   |
+Value assigned to undefined pixels            | CUNDEF   |  R*8   |
+Minimum data value in cube                    | CTMIN    |  R*8   |
+Maximum data value in cube                    | CTMAX    |  R*8   |
+Scale factor from internal data to CBUNITs    | CTSCALE  |  R*8   |
+Bias factor from internal data to CBUNITs     | CTZERO   |  R*8   |
+Equinox of coordinate system.                 | CEQUINOX |  R*8   |
+Type of X-axis coordinate                     | CTYPE1   |  C*8   |
+Type of Y-axis coordinate                     | CTYPE2   |  C*8   |
+Type of Z-axis coordinate                     | CTYPE3   |  C*8   |
+Units of data in cube                         | CBUNIT   |  C*8   |
+Object Name                                   | COBJECT  |  C*16  |
+Place of origin of the data or file           | CORIGIN  |  C*8   |
+Date of cube creation                         | CDATE    |  C*8   |
+Cube comment                                  | CCOMMENT |  C*54  |
+

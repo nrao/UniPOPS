@@ -1,0 +1,57 @@
+	(REGULAR VERB)
+
+	QCONTOUR will produce a contour map of the contents of Matrix
+	(0).  This routine is different from CONTOUR in that the user
+	cannot specify the line types and labeling to use for each
+	contour level.  The QCONTOUR algorithm tends to be faster than
+	that in CONTOUR.
+
+	Adverbs used:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MRATIO          Aspect ratio of x to y axis that you want for
+			the display.  Initial value is 1.
+
+	LEVS(32)        Levels at which various contours will
+			be plotted.  The values of LEVS must be in
+			ascending order.  If you want n contour levels,
+			then you should specify the default value
+			(-999999) for the n+1 level.
+
+	The color of the plotted lines are affected by the last call to
+	COLOR or RSTCOLOR.
+
+	ADVERB set:
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLOTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+	Note that some complicated QCONTOUR plots may take a long time
+	to produce; you can save yourself same time by specifying
+	COPYOFF before starting
+
+	EXAMPLE:
+
+	You want to produce a QCONTOUR plot of the data in Matrix (0).
+	You could type:
+
+		MXMIN=1; MXMAX=10	Specify the limits of the
+		MYMIN=10; MYMAX=20	matrix that you want to plot (i.e.,
+					you want to plot a sub-matrix of
+					Matrix (0).
+		AUTOLEV(5)		Sets up 5 contour levels which
+					span the full z extent of sub-matrix.
+		QCONTOUR LABEL		Draws the contour map and 
+					labels the resulting plot.

@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'RFIXPER:  (ADVERB) If > 0, RIPPLE and RSHAPE will use and'
+PRINT 'hold fixed the input value for RPERIOD, if < 0 (the default'
+PRINT 'value), RIPPLE and RSHAPE will use the value of RPERIOD as'
+PRINT 'the initial value.  RFIXPER = 0 is not allowed (i.e. RIPPLE'
+PRINT 'and RSHAPE are incapable of making an unassisted'
+PRINT 'initial guess).'
+PRINT ' '

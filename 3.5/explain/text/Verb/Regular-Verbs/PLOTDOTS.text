@@ -1,0 +1,50 @@
+	(REGULAR VERB)
+
+	Syntax:  PLOTDOTS(mode)
+
+	PLOTDOTS will draw dots or pluses wherever in Matrix (0) a
+	defined or undefined data value exists. It takes one argument
+	that controls its mode of operation as follows:
+
+	   0 or 1 = Plots dots at the positions of all undefined data.
+	   2      = Plots plus-signs at the positions of all undefined
+	   		data.
+	  -1      = Plots dots at the positions of all defined data.
+	  -2      = Plots plus-signs at the positions of all defined
+	  		data.
+
+	You can use PLOTDOTS to annotate CONTOUR, RASTER, QCONTOUR, or
+	HLFTNE plots with some indication where data does or doesn't
+	exist. 
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX	Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be processed.
+
+	MYMIN, MYMAX	Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be processed.
+
+	MRATIO          Aspect ratio of x to y axis that you want for
+			the display.  Initial value is 1.
+
+
+	ADVERBS SET:
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLOTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+
+	EXAMPLE:
+
+	You want to produce a RASTER plot of the data in Matrix (0) and
+	to indicate with 'plus' signs where data doesn't exist.  You
+	could type:
+
+		RASTER PLOTDOTS(2) LABEL
+

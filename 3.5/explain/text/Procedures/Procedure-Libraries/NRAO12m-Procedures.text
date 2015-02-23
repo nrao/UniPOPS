@@ -1,0 +1,10 @@
+	These procedures are intended for use with the NRAO 12m
+	telescope.  They are intended to be batched in through
+	the setup files (LSETUP.12meter for spectral line procedures
+	and CSETUP.12meter for continuum procedures).  New users are
+	provided with setup files (LSETUP and CSETUP) which automatically
+	load these procedures into UniPOPS.
+
+	These procedures were up to date as of June, 1994.  Users
+	should check with the 12 meter staff for the most up to date
+	list of 12 meter specific procedures.

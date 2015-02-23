@@ -1,0 +1,8 @@
+	(SCALAR ADVERB)
+
+	MCLICK is set by CLICK.  It corresponds to the value that the
+	function MCUR would have returned at the crosshair location
+	when the user clicks a mouse button.
+
+	It is the z-value at the crosshair location for a 2-d plot.
+

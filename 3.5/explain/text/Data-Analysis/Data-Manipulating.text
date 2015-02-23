@@ -1,0 +1,6 @@
+
+	Data manipulation routines are those which alter data values in
+	ways which do not fall under any of the other categories.  For
+	example, routines are provided for rescaling data, taking
+	Fourier transforms, removing noise spikes, etc.
+

@@ -1,0 +1,42 @@
+	The makeoldrecindex.exe utility will go through the data section of
+	an SDD individual records file and reconstruct the index part of the 
+	file using the old SDD index format.  It is intended to be used 
+	to convert a new format SDD individual records file into an 
+	individual records file with the old format index.  This may be 
+	necessary if you wish to use the file with a version of UniPOPS 
+	prior to version 3.3.
+
+	To use the utility, type:
+
+		makeoldrecindex.exe file-name
+
+	where file-name is the name of the SDD data file.
+
+	WARNING: Since the new format allows for much larger SDD files
+	than the old format, its possible that makeoldrecindex.exe will
+	not be able to generate an index for your entire SDD file.
+	If that is the case, a warning will be issued.  If that happens,
+	there is currently no way to split an individual records file.
+	You should regenerate the original new format index using 
+	makerecindex.exe.  It may be possible to regenerate the
+	individual records file in several parts from the original
+	telescope tape in the old index format.  Talk to the Green
+	Bank staff for suggestions.
+
+	Besides generating the index, the program will also generate a
+	listing similar to what checkfile.exe produces so that you will
+	know what has happened to the index.
+
+	The output of the program is ~ 130 characters wide so you may
+	want to expand you window horizontally, if you are sitting at a
+	workstation.  The output can be redirected into a file, for
+	example, or redirected to a printer.  To redirect the output to
+	a file, try something like the following:
+
+		makeoldrecindex.exe My-File > file-contents
+
+	where My-File is the data file and file-contents is the name of
+	the file which will contain the output of makeoldrecindex.exe.
+
+	The output is self-explanatory.
+

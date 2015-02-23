@@ -1,0 +1,13 @@
+	Uses the CHNGONLINE verb to change the continuum on-line
+	data file version number.
+
+	Syntax: CONVER(ver_no)
+
+	This is equivalent to: CHNGONLINE(CONTYPE, ver_no)
+
+	It will attempt to switch the input on-line data file to
+	the file having the indicated version number.
+
+	File name: conver.prc
+
+	This file is included in CSETUP.12meter

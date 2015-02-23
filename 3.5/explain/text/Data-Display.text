@@ -1,0 +1,123 @@
+	UniPOPS has many commands for producing and altering displays
+	of data.  The types of data displays possible include routines
+	to display evenly spaced 1-dimensional data, to display two
+	arbitrary arrays plotted against each other, and to display
+	two-dimensional arrays (matrices).  
+
+
+Verbs for Displaying Data
+-------------------------
+
+     .  For 1-dimensional, evenly-spaced data, the following routines 
+	are used:
+
+	RESHOW		SHOW				
+
+     .  For plots of 1-dimensional data not evenly spaced:
+
+	PLOT
+
+     .  For two-dimensional plots:
+
+	CONTOUR		HLFTNE		LABEL		PLOTDOTS
+	QCONTOUR	RASTER				
+
+
+Verbs for Modifying Displays
+----------------------------
+
+     .  All types of plots will be modified by the use of the following
+	commands:
+
+	CHAR		CHARSIZE	COLOR		CROSSHAIR
+	CRT		DOCUMENT	FLAG		FONTSET
+	FULLGRID	GRAPHICS	PAGE		PLACE
+	PRINTER		RSTCOLOR	RSTPAGE		SETPAGE
+	VCHAR		VCTR
+
+     .  SHOW and RESHOW types of plots will be modified by the following:
+
+	BSHOW		CC		CF		CV
+	FC		FF		FREEY		FV
+	GDISPLAY	GMEASURE	GPARTS		HISTOGRAM
+	HOLDY		LINE		LINETYPE	ONS
+	PDOC		POINTS		RHIST		RLINE
+	RPOINTS		RSHOW		SAXIS		VC
+	VF		VV		XRANGE		YRANGE		
+
+     .  PLOT types of one-dimensional displays will be modified by the
+	following:
+
+	HISTOGRAM	LINE		LINETYPE	POINTS
+
+     .  The following command modifies the x-axis and y-axis of
+	two-dimensional displays:
+
+	MRANGE
+
+     .  The following commands modify the contour levels used by
+	the two-dimensional plotting verbs:
+
+	AUTOLEV		EQHISTLEV	FUNCLEV		SETCLUT
+	SETLEV
+
+
+     .  The following commands turn on and off the generation of 
+	files which can be sent to the printer when a hard copy is
+	requested.  Turning off the hard copy ability will make 
+	screen displays occur faster (but, obviously, will make it
+	impossible to get hard copies of those displays):
+
+	COPYON		COPYOFF
+
+
+Verbs and Functions for Interacting with a Display
+--------------------------------------------------
+
+     .  One can find, interactively and using cross hairs, coordinates of
+	features in any kind of plot using:
+
+	CCUR		CLICK		CROSSHAIR	TCUR
+	XCUR 		YCUR						
+
+     .  One can find, interactively and using cross hairs, coordinates of
+	features in a SHOW, RESHOW, and two-dimensional plots using:
+
+	FCUR		VCUR				
+
+     .  One can find, interactively and using cross hairs, the z-value of
+	features in a two-dimensional plot using:
+
+	MCUR
+
+
+Adverbs which Modify Displays
+-----------------------------
+
+     .  The values of the following adverbs affect all SHOW AND RESHOW
+	plots:
+
+	BDROP		BMARK		CMARK		EDROP
+	FMARK		SLABEL		TMARK		VMARK
+	YINCR		YMIN		ZLINE		
+
+     .  The values of the following adverbs affect PLOT displays:
+
+	CMARK		HTITLE		SLABEL		TMARK
+	XLOGP		XMAXP		XMINP		XTITLE
+	YLOGP		YMAXP		YMINP		YTITLE
+	ZLINE						
+
+     .  The values of the following adverbs affect two-dimensional
+	plots:
+
+	CLUT		CMARK		CONLINE		FMARK
+	LEVS		MRATIO		MXMAX		MXMIN
+	MYMAX		MYMIN		SLABEL		TMARK
+	VMARK		ZLINE				
+
+     .  The value of the following adverb controls the information
+	displayed by the CROSSHAIR verb:
+
+	CROSSFLG
+

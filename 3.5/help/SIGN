@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'SIGN:  (FUNCTION) Returns the absolute value of the first'
+PRINT 'parameter times the sign of the second parameter (transfer'
+PRINT 'of sign).  Syntax: SIGN(x1,x2)'
+PRINT ' '

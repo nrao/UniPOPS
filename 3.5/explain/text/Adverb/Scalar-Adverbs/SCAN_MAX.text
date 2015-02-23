@@ -1,0 +1,35 @@
+	(SCALAR ADVERB)
+
+	SCAN_MIN and SCAN_MAX specify the range in scan numbers used by
+	the SELECT verb.  Only the integer part of the scan number is
+	used.
+
+	Scans will be SELECTed if they have scan numbers within the
+	range specified by SCAN_MIN through SCAN_MAX, inclusive.
+
+	If SCAN_MIN is set to the DEFAULT value, there is no lower
+	limit to the range.  Similarly, if SCAN_MAX is set to the
+	DEFAULT value, there is no upper limit to the range.
+
+	SCAN_MIN and SCAN_MAX are used by : SELECT
+
+	No verbs change SCAN_MIN or SCAN_MAX.
+
+	Initial values of SCAN_MIN and SCAN_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans having scan numbers greater than or equal
+	to 250, specify:
+
+		SCAN_MIN = 250; SCAN_MAX = DEFAULT
+
+	To select all scans having scan numbers less than or equal to
+	1210, specify:
+
+		SCAN_MIN = DEFAULT; SCAN_MAX = 1210
+
+	To select all scans with scan numbers between 250 and 1210,
+	specify, inclusive:
+
+		SCAN_MIN = 250; SCAN_MAX = 1210

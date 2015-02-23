@@ -1,0 +1,575 @@
+#   @(#)Makeman	5.1 06/22/94
+#
+# Makefile for producing hardcopy of the Cookbook and Reference Manual.
+# To use, type:  make -f Makeman <target>
+# where target is one of the targets listed below.
+#
+# Note that the full documentation is over 600 pages long!!
+#
+# Please READ these comments before you use the Makefile.
+#
+# Alter below lines to designate formatter, print command, and directories
+# to use.
+#
+#-------------------------------------------------------------------------
+# Text formatters and printer:
+#
+PAGES = 
+FRMTR = lwf $(PAGES) -s7 -t8 -l -p"-2 -h '
+PRNTR = ' " | lpr
+TFRMTR = lwf -s12 -t8 -p"-t -h '
+ADDPAGE = $(popsdir)explain/source/addpage 2
+#
+# FRMTR = text formatter
+# PRNTRT = print command 
+# TFRMTR = title page formatter (could be same as FRMTR)
+# PAGES = default definition if you want to print out a range of pages within 
+#		the manuals; a power-user option.  Typical usage:
+#		make PAGES="-o3:4" -f Makeman etc.
+# ADDPAGE is the program that will add a page so as to keep chapters 
+# an even number of pages long.  It is useful if you are planning on making
+# double sided copies and you don't want to worry about where blank pages
+# need to be inserted.  Use a '1' if you are not using lwf and are using
+# 'pr' for FRMTR.  Use a '2' if you are using lwf.
+#
+# For most systems, all you will need is:
+#	FRMTR = pr -h '
+#	PRNTR = ' | lpr
+#	ADDPAGE = $(popsdir)explain/source/addpage 1
+#	TFRMTR = pr -h '
+# The -h and single quotes are nessary.  The actual print statement looks 
+# like:  
+#    cat file | pr -h '  Some Title ' | lpr
+#
+# If you have the lwf filter for creating postscript files out of
+# text files, then we suggest you use.  
+# 	FRMTR = lwf $(PAGES) -s7 -t8 -l -p"-2 -h '
+# 	PRNTR = ' " | lpr -Pps
+# 	ADDPAGE = $(popsdir)explain/source/addpage 2
+# 	TFRMTR = lwf -s12 -t8 -p"-t -h '
+# The actual print statement would look like:  
+#    	cat file | lwf -s7 -t8 -l -p"-2 -h '   Some Title   ' | lpr -Pps
+#-------------------------------------------------------------------------
+# Directories :
+#
+EXPDIR = $(popsdir)explain/text/
+EXP = $(EXPDIR)expdir
+TMPFILE = /tmp/explain.$(USER)
+#
+# EXPDIR = explain directory
+# EXP = explain information file
+# (These should not need to be changed.)
+#
+#-------------------------------------------------------------------------
+# Manual page generation script
+#
+MANPAGE = $(popsdir)explain/source/manrange 
+ONEPAGE = $(popsdir)explain/source/manonepage 
+PGSZ = 70
+# PGSZ = 56
+#
+# MANPAGE = Manual page collator and the number of printed lines that
+# will fit on a page. If you use the lwf filter (see above) then you
+# should specify 70 lines per page else you should experimint.  
+# Note that if using pr, that pr adds 10 lines to each page.
+# Therefore, when using pr you need to tell MANPAGE that you 
+# have 10 lines less per page than you really have (hence if your 
+# printer puts 66 lines on a page, which is true for most printers, 
+# you need to use 56 on the above line.
+#
+#-------------------------------------------------------------------------
+#  Targets:   	
+#	        all:  cookbook, description, and reference manual
+#
+#		cookbook -- complete cookbook
+#  		reference -- complete reference manual
+#		description -- general description document
+#
+#		cook-title -- cookbook title page
+#		cook-contents -- cookbook table of contents
+#		cook-c1 through cook-c17 -- cookbook chapters
+#		cook-apa through cook-apm -- cookbook appendices
+#		cook-glossary -- cookbook glossary
+#		cook-index -- cookbook index
+#
+#		ref-title -- reference manual; title page
+#		ref-contents -- reference manual; table of contents
+#		ref-intro -- reference manual; Introduction
+#
+#		ref-moreon -- reference manual; more on section
+#		ref-morehelp -- reference manual; more on help
+#		ref-moresyntax -- reference manual; more on syntax
+#		ref-moremodes -- reference manual; more on modes
+#		ref-moremem -- reference manual; more on memory
+#		ref-moreproc -- reference manual; more on proc
+#		ref-morecond -- reference manual; more on conditionals and loops
+#		ref-moredisk -- reference manual; more on disk format
+#
+#		ref-xref -- reference manual; cross reference section
+#		ref-xaccess -- reference manual; cross reference; data access
+#		ref-xanalysis -- reference manual; cross reference; data analysis
+#		ref-xdisplay -- reference manual; cross reference; data display
+#		ref-xdoc -- reference manual; cross reference; data documentation
+#		ref-xio -- reference manual; cross reference; input/output
+#		ref-xsystem -- reference manual; cross reference; system interface
+#		ref-xinterp -- reference manual; cross reference; interpretor
+#
+#		ref-adverbs -- reference manual; adverb dictionary
+#		ref-advtype -- reference manual; adverb dictionary description
+#		ref-array -- reference manual; array-adverb dictionary 
+#		ref-keyword -- reference manual; keyword- dictionary 
+#		ref-pointer -- reference manual; pointer-adverb dictionary 
+#		ref-scalar -- reference manual; scalar-adverb dictionary 
+#		ref-string -- reference manual; string-adverb dictionary 
+#
+#		ref-procs -- reference manual; procedure dictionary
+#		ref-proclib -- reference manual; procedure library description
+#		ref-procgen -- reference manual; general procedure dictionary
+#		ref-procgb -- reference manual; Green Bank procedure dictionary
+#		ref-proc12m -- reference manual; NRAO 12-m procedure dictionary
+#
+#		ref-util -- reference manual; utilities dictionary
+#
+#		ref-verbs -- reference manual; verbs dictionary
+#		ref-verbtype -- reference manual; verb dictionary description
+#		ref-function -- reference manual; function dictionary
+#		ref-internal -- reference manual; internal-array verb dictionary
+#		ref-pseudo -- reference manual; pseudo verb dictionary
+#		ref-regular -- reference manual; regular verbs dictionary
+#
+#		ref-index -- reference manual; index 
+#
+#		1page -- for an individual reference using ONEPAGE manual
+#				collator; experienced users only.  Usage:
+#				make 1PAGE=<topic> -f Makeman 1page
+#		mpage -- for an individual reference using ONEPAGE manual
+#				collator; experienced users only.  Usage:
+#				make MPAGE=<topic> -f Makeman mpage
+#
+1PAGE = 
+MPAGE = 
+START = .
+STOP = zzzzzzzzz
+# Default START, STOP, 1PAGE and MPAGE declerations
+#-------------------------------------------------------------------------
+all: description cookbook reference 
+
+#-------------------------------------------------------------------------
+description:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) General-Description BLAH $(PGSZ) | \
+	$(FRMTR)      UniPops : General Description      $(PRNTR))
+
+#-------------------------------------------------------------------------
+cookbook: cook-title cook-contents cook-c1 cook-c2 cook-c3 cook-c4 cook-c5 \
+	  cook-c6 cook-c7 cook-c8 cook-c9 cook-c10 cook-c11 cook-c12 cook-c13 \
+	  cook-c14 cook-c15 cook-c16 cook-c17 cook-apa cook-apb \
+	  cook-apc cook-apd cook-ape cook-apf cook-apg cook-aph cook-api \
+	  cook-apj cook-apk cook-apl cook-apl cook-apm cook-glossary cook-index
+
+cook-title:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Title-Page CKBK $(PGSZ) | \
+	$(TFRMTR) $(PRNTR))
+
+cook-contents:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Table-Contents CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)           Table of Contents              $(PRNTR))
+
+cook-c1:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c01 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 1 : Introduction           $(PRNTR))
+
+cook-c2:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c02 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 2 : Getting Started        $(PRNTR))
+
+cook-c3:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c03 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 3 : UniPops Syntax        $(PRNTR))
+
+cook-c4:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c04 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     Chapter 4 : On-Line Assistance      $(PRNTR))
+
+cook-c5:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c05 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  Chapter 5 : Data Access/Manipulation   $(PRNTR))
+
+cook-c6:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c06 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 6 : Data Display          $(PRNTR))
+
+cook-c7:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c07 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   Chapter 7 : Baselines and Gaussians   $(PRNTR))
+
+cook-c8:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c08 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 8 : Smoothing Data        $(PRNTR))
+
+cook-c9:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c09 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)      Chapter 9 : General Analysis       $(PRNTR))
+
+cook-c10:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c10 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)      Chapter 10 : Averaging Scans       $(PRNTR))
+
+cook-c11:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c11 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)        Chapter 11 : The Stack           $(PRNTR))
+
+cook-c12:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c12 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) Chapter 12 : Interacting with the System $(PRNTR))
+
+cook-c13:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c13 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Chapter 13 : Procedures           $(PRNTR))
+
+cook-c14:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c14 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  Chapter 14 : Math/Logical Expressions  $(PRNTR))
+
+cook-c15:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c15 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   Chapter 15 : Optional Facilities      $(PRNTR))
+
+cook-c16:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c16 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) Chapter 16 : Matrix and Cube Analysis   $(PRNTR))
+
+cook-c17:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) c17 CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Chapter 17 : Continuum Analysis      $(PRNTR))
+
+cook-apa:
+	(rm -f $(TMPFILE); cd $(EXPDIR); \
+	$(ONEPAGE) $(EXP) ApA CKBK $(PGSZ) > $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Adverbs CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Arrays CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Keywords CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Pointers CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Strings CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Functions CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Pseudo CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Verbs CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Logicals CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Math CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Synopsis-Syntax CKBK $(PGSZ) >> $(TMPFILE); \
+	cat $(TMPFILE) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     Appendix A : UniPOPS Synopsis       $(PRNTR); \
+	rm -f $(TMPFILE) )
+
+cook-apb:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApB CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)      Appendix B : UNIX Commands         $(PRNTR))
+
+cook-apc:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApC CKBK $(PGSZ) |  \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Appendix C : Sun Windows (SunView)   $(PRNTR))
+
+cook-apd:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApD CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     Appendix D : Associated Utilities   $(PRNTR))
+
+cook-ape:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApE CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Appendix E : Verbs and Data Arrays   $(PRNTR))
+
+cook-apf:
+	(rm -f $(TMPFILE); cd $(EXPDIR); \
+	$(ONEPAGE) $(EXP) ApF CKBK $(PGSZ)  > $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Error-Floating-Point CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Error-Numbered CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Error-Unnumbered CKBK $(PGSZ) >> $(TMPFILE); \
+	cat $(TMPFILE) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)      Appendix F : Error Messages        $(PRNTR); \
+	rm -f $(TMPFILE) )
+
+cook-apg:
+	(rm -f $(TMPFILE); cd $(EXPDIR); \
+	$(ONEPAGE) $(EXP) ApG CKBK $(PGSZ) > $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class01 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class02 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class03 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class04 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class05 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class06 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class07 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class08 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class09 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class10 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class11 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class12 CKBK $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Class13 CKBK $(PGSZ) >> $(TMPFILE); \
+	cat $(TMPFILE) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     Appendix G : The SDD File Format    $(PRNTR); \
+	rm -f $(TMPFILE) )
+
+cook-aph:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApH CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Appendix H : The Status Array     $(PRNTR))
+
+cook-api:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApI CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Appendix I : Color Specifications    $(PRNTR))
+
+cook-apj:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApJ CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       Appendix J : Character Sets       $(PRNTR))
+
+cook-apk:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApK CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Appendix K : History Substitution    $(PRNTR))
+
+cook-apl:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApL CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    Appendix L : Format Specification    $(PRNTR))
+
+cook-apm:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) ApM CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   Appendix M : Environment Variables    $(PRNTR))
+
+cook-glossary:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Cook_Glossary CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)           Glossary                      $(PRNTR))
+
+cook-index:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Cook_Index CKBK $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)             Index                       $(PRNTR))
+
+#-------------------------------------------------------------------------
+reference: ref-title ref-contents ref-intro ref-moreon ref-xref ref-adverbs \
+	   ref-verbs ref-procs ref-util ref-index
+
+ref-title:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Ref_Title_Page RFRNC $(PGSZ) | $(TFRMTR) $(PRNTR))
+
+ref-contents:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Ref_Table_of_Contents RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)           Table of Contents            $(PRNTR))
+
+ref-intro:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Ref_Intro RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 1. Introduction -- How to Use this Manual $(PRNTR))
+
+ref-moreon:  ref-morehelp ref-moresyntax ref-moremodes ref-moremem ref-moreproc \
+	     ref-morecond ref-moredisk
+
+ref-morehelp:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Help-Facilities RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     2.1 : More on : Help Facilities       $(PRNTR))
+
+ref-moresyntax:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Command-Syntax RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     2.2 : More on : Command Syntax        $(PRNTR))
+
+ref-moremodes:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Command-Modes RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)     2.3 : More on : Command Modes         $(PRNTR))
+
+ref-moremem:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Memory RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)        2.4 : More on : Memory             $(PRNTR))
+
+ref-moreproc:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Procedure-Writing RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   2.5 : More on : Procedure Writing       $(PRNTR))
+
+ref-morecond:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Conditionals-Loops RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  2.6 : More on : Conditionals and Loops    $(PRNTR))
+
+ref-moredisk:
+	(rm -f $(TMPFILE); cd $(EXPDIR); \
+	$(ONEPAGE) $(EXP) Data-Format RFRNC $(PGSZ) > $(TMPFILE); \
+	$(ONEPAGE) $(EXP) 140ft-telescope-tape RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) GB-ASCII RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) IEEE-Keep RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Modcomp-Keep RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) PC-Pops RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) SDD RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) Modcomp-binary RFRNC $(PGSZ) >> $(TMPFILE); \
+	$(ONEPAGE) $(EXP) IEEE-Binary RFRNC $(PGSZ) >> $(TMPFILE); \
+	cat $(TMPFILE) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 2.7 : More on : Data, Disk, and Tape Formats $(PRNTR); \
+	rm -f $(TMPFILE) )
+
+ref-xref: ref-xaccess ref-xanalysis ref-xdisplay ref-xdoc ref-xio ref-xsystem ref-xinterp
+
+ref-xaccess:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Data-Access RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  3.1 : Cross-Reference : Data Access      $(PRNTR))
+
+ref-xanalysis:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Data-Analysis RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.2 : Cross-Reference : Data Analysis     $(PRNTR))
+
+ref-xdisplay:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Data-Display RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.3 : Cross-Reference : Data Display      $(PRNTR))
+
+ref-xdoc:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Data-Documentation RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.4 : Cross-Reference : Data Documentation   $(PRNTR))
+
+ref-xio:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Input-Output RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.5 : Cross-Reference : Input and Output    $(PRNTR))
+
+ref-xsystem:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) System-Interface RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.6 : Cross-Reference : System Interface    $(PRNTR))
+
+ref-xinterp:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Interpretor RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 3.7 : Cross-Reference : Interpretor    $(PRNTR))
+
+ref-adverbs: ref-advtype ref-array ref-keyword ref-pointer ref-scalar ref-string
+
+ref-advtype:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Adverb RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 4.1 : Adverbs : Types, Creation, and Uses  $(PRNTR))
+
+ref-array:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Array-Adverbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  4.2 : Array Adverbs : Dictionary       $(PRNTR))
+
+ref-keyword:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Keyword-Adverbs RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 4.3 : Keyword Adverbs : Dictionary      $(PRNTR))
+
+ref-pointer:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Pointer-Adverbs RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 4.4 : Pointer Adverbs : Dictionary      $(PRNTR))
+
+ref-scalar:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Scalar-Adverbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 4.5 : Scalar Adverbs : Dictionary       $(PRNTR))
+
+ref-string:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) String-Adverbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 4.6 : String Adverbs : Dictionary       $(PRNTR))
+
+ref-verbs: ref-verbtype ref-function ref-internal ref-pseudo ref-regular
+
+ref-verbtype:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Verb RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)    5.1 : Verbs : Types and Uses          $(PRNTR))
+
+ref-internal:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Internal-Array-Verbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 5.2 : Internal-Array Verbs : Dictionary  $(PRNTR))
+
+ref-function:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Functions RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  5.3 : Function Verbs : Dictionary       $(PRNTR))
+
+ref-pseudo:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Pseudo-Verbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   5.4 : Pseudo Verbs : Dictionary        $(PRNTR))
+ 
+ref-regular:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Regular-Verbs RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)   5.5 : Regular Verbs : Dictionary       $(PRNTR))
+
+ref-procs: ref-proclib ref-procgen ref-procgb ref-proc12m
+
+ref-proclib:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Procedure-Libraries RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)       6.1 : Procedure Libraries          $(PRNTR))
+
+ref-procgen:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) General-Procedures RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)  6.2 : General Procedures : Dictionary   $(PRNTR))
+
+ref-procgb:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) GreenBank-Procedures RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR) 6.3 : Green Bank Procedures : Dictionary $(PRNTR))
+
+ref-proc12m:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) NRAO12m-Procedures RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)6.4 : NRAO 12-meter Procedures : Dictionary$(PRNTR))
+
+ref-util:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) Utilities-List RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)      7 : Utilities Dictionary           $(PRNTR))
+
+ref-index:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) Ref_Index RFRNC $(PGSZ) | \
+	$(ADDPAGE) $(PGSZ) | \
+	$(FRMTR)            8 : General Index             $(PRNTR))
+
+1page:
+	(cd $(EXPDIR); $(ONEPAGE) $(EXP) $(1PAGE) RFRNC $(PGSZ) | \
+	$(FRMTR)            $(1PAGE)             $(PRNTR))
+
+mpage:
+	(cd $(EXPDIR); $(MANPAGE) $(EXP) $(MPAGE) RFRNC $(START) $(STOP) $(PGSZ) | \
+	$(FRMTR)            $(MPAGE)             $(PRNTR))
+

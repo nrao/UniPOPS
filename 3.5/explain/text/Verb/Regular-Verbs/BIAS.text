@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+	BIAS adds the value of adverb FACT to the data in Array (0).
+
+	ADVERBS USED:
+
+	   FACT         The value which is to be added to the data.
+			FACT is also used by the VERB SCALE.  The
+			initial value is 0.
+
+	No adverbs are set by BIAS.
+
+	EXAMPLE:
+
+	BIAS can be used to plot more than one scan on the same graph,
+	separated for clarity.  Specify:
+
+		GET 16370 PAGE SHOW
+	
+	Then set FACT to separate the scans:
+
+		GET 16380
+		FACT = 3.0; BIAS RESHOW

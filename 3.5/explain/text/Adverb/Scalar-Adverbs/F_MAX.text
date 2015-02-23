@@ -1,0 +1,39 @@
+L------------------------- Spectral Line --------------------------------
+L-	(SCALAR ADVERB)
+L-
+L-	F_MIN and F_MAX specify the range in rest frequency used by the
+L-	SELECT verb.  The units are MHz and the values of the adverbs
+L-	only apply if the data are spectral-line scans.
+L-
+L-	Spectral-line scans  will be SELECTed if they have a rest
+L-	frequency within the range specified by F_MIN through F_MAX,
+L-	inclusive.
+L-
+L-	If F_MIN is set to the DEFAULT value, there is no lower limit
+L-	to the range.  Similarly, if F_MAX is set to the DEFAULT value,
+L-	there is no upper limit to the range.
+L-
+L-	F_MIN and F_MAX are used by : SELECT
+L-
+L-	No verbs change F_MIN or F_MAX.
+L-
+L-	Initial values of F_MIN and F_MAX are DEFAULT.
+L-
+L-	EXAMPLE :
+L-
+L-	To select all scans having rest frequency index values greater 
+L-	than 720 MHz, specify:
+L-
+L-		F_MIN = 720.0; F_MAX = DEFAULT
+L-
+L-	To select all scans having rest frequency index values less than
+L-      725 MHz, specify:
+L-
+L-		F_MIN = DEFAULT; F_MAX = 725.0
+L-
+L-	To select all scans with rest frequency between 720 and 
+L-	725 MHz, specify:
+L-
+L-		F_MIN = 720.0; F_MAX = 725.0
+L-	
+L------------------------- Spectral Line --------------------------------

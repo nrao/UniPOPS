@@ -1,0 +1,40 @@
+	(SCALAR ADVERB)
+
+	RFIXAMP, RFIXPHA, and RFIXPER are used as flags or switches 
+	by the verbs RIPPLE and RSHAPE.  The corresponding sinusoid
+	parameters are RAMPLTDE, RPHASE, and RPERIOD, respectively.
+
+	When less than zero, the RFIX adverbs signal that the 
+	corresponding parameter should be varied to achieve the best 
+	fit using the current value as the initial value.
+
+	When equal to zero, the RFIX adverbs signal that the algorithm 
+	should attempt to guess an appropriate starting value.  The result 
+	of that guess is then varied to achieve the best fit. Any 
+	initial value for the corresponding parameter is ignored.  
+	It is an error to set RFIXPER to zero.
+
+	When greater than zero, the RFIX adverbs signal that the 
+	corresponding parameter should be held fixed.  It is an error 
+	for all RFIX adverbs to be greater than zero at the same time.
+
+	RFIXAMP, RFIXPHA, and RFIXPER are used by : RIPPLE and RSHAPE,  
+
+	No verbs change RFIXAMP, RFIXPHA, or RFIXPER.
+
+	The initial value for RFIXPER is -1.
+
+	The initial value for RFIXAMP and RFIXPHA is 0.
+
+
+	EXAMPLE :
+
+	You want to fit a sinusoid with a fixed period of 29 channels,
+	an initial guess of 0.4 for the amplitude and let the algorithm 
+	make an initial guess for the the period.
+
+		RPERIOD=29; RFIXPER = 1
+		RAMPLTDE=0.4; RFIXAMP = -1
+		RFIXPHA = 0
+		RSHAPE
+

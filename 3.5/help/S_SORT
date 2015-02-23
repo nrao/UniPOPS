@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'S_SORT:  Flag which tells SELECT how you want to sort scan'
+PRINT 'numbers; if >= 1, scan numbers assorted in ascending value;'
+PRINT 'if <= -1, scans numbers assorted in descending order; if ='
+PRINT '0, no sorting will be done.'
+PRINT ' '

@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FPRINT:  Writes to the ASCII file specified by the given'
+PRINT 'unit, using the given format, and writes out the values of'
+PRINT 'the provided list. Syntax: FPRINT(unit,fmt) list'
+PRINT ' '

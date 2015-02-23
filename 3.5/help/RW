@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RW:  (POINTER) Indicates you want to open the file with'
+PRINT 'FOPEN with read/write privelages.'
+PRINT ' '

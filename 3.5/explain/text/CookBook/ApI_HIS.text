@@ -1,0 +1,76 @@
+Appendix I : The HIS Color-Coding System
+----------------------------------------
+
+When using color coding for UniPOPS graphics, (see Sections 6.6 and
+17.7), this coding can be done in the RGB (Red-Green-Blue), or HIS
+(Hue-Intensity-Saturation, schemes. The RGB system is described in
+Section 6.6, and in this Appendix we give the full coding table for the
+HIS system.
+
+The UniPOPS verb COLOR assigns a standard color for all types of
+displays.  Its syntax for the HIS system is,
+
+	COLOR(Hue, Intensity, Saturation)
+
+To assign colors in the HIS system, there are  64 hue codes (numbered
+from 0 through 63), 9 intensity codes (numbered from 0 through 8), and
+7 saturation codes (numbered from 0 through 6).
+
+The hue codes are:
+
+	0 - Red				32 - Blue
+	1 - Slightly orangish red	33 - Slightly purplish blue
+	2 - Orangish red		34 - Purplish blue
+	3 - Slightly orange red		35 - Slightly purple blue
+	4 - Orange red			36 - Purple blue
+	5 - Slightly red orange		37 - Slightly blue purple
+	6 - Reddish orange		38 - Bluish purple
+	7 - Slightly reddish orange	39 - Slightly bluish purple
+	8 - Orange			40 - Purple
+	9 - Slightly yellowish orange	41 - Slightly reddish purple
+	10 - Yellowish orange		42 - Reddish purple
+	11 - Slightly yellow orange	43 - Slightly red purple
+	12 - Yellow orange		44 - Red purple
+	13 - Slightly orange yellow	45 - Slightly purple red
+	14 - Orangish yellow		46 - Purplish red
+	15 - Slightly orangish yellow	47 - Slightly purplish red
+	16 - Yellow			48 - Slightly brownish red
+	17 - Slightly greenish yellow	49 - Brownish red
+	18 - Greenish yellow		50 - Slightly brown red
+	19 - Slightly green yellow	51 - Red brown
+	20 - Green yellow		52 - Slightly red brown
+	21 - Slightly yellow green	53 - Reddish brown
+	22 - Yellowish green		54 - Slightly reddish brown
+	23 - Slightly yellowish green	55 - Brown
+	24 - Green			56 - Slightly Yellowish brown
+	25 - Slightly bluish green	57 - Yellowish brown
+	26 - Bluish green		58 - Slightly yellow brown
+	27 - Slightly blue green	59 - Yellow brown
+	28 - Blue green			60 - Slightly brown yellow
+	29 - Slightly green blue	61 - Brownish yellow
+	30 - Greenish blue		62 - Slightly brownish yellow
+	31 - Slightly greenish blue	63 - Gray shades
+
+The intensity codes are:
+
+	0 - Very light			4 - Medium
+	1 - Lighter-light		5 - Medium dark
+	2 - Light			6 - Dark
+	3 - Medium light		7 - Darker dark
+					8 - Very dark
+
+The saturation codes are:
+
+	0 - Grayish			4 - Strong
+	1 - Moderately grayish		5 - Stronger strong
+	2 - Moderate			6 - Vivid
+	3 - Moderately strong
+
+For example, to specify a medium-intensity, vivid red in the HIS
+system, the color parameters are (0,4,6).  The HIS system is capable of
+only a 9 level gray scale (63,0,6) through (63,8,6), so for gray scales
+the RGB system is superior.  However, for an aesthetic color scale, the
+HIS system is easier to use.  For example, the colors (0,4,6), (1,4,6),
+(2,4,6), (3,4,6), ... (32,4,6) is a color scale that gradually goes
+from vivid, medium-bright red to vivid, medium-bright blue.
+

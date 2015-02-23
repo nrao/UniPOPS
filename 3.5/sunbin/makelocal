@@ -1,0 +1,131 @@
+#!/bin/csh
+#
+# @(#)makelocal	5.8 03/24/00 
+#
+#-------------------------------------------------------------------------
+# Shell script to do a make with values for some crucial macros as 
+# appropriate locally.
+#
+# The uncommented values found here are appropriate for:  optimization 
+# level 2, no special floating-point options, equipped with inline math 
+# libraries, and using Sun's WorkShop compilers (f77 and cc) version 4.2
+#
+#-------------------------------------------------------------------------
+set CDEBOROPT = -xO2
+set FDEBOROPT = -xO2
+#	Debug option for C and Fortran compiler.  Some compilers use different
+#	flags to indicate optimization level.  Check the man page for the
+#	compilers you will be using to make sure you get this correct.
+#	We recommend something equivalent to -O2, optimization level 2, which
+#	we feel is safe.  Change the -O2 to -g if you want to compile with
+#	the debugger (or see the man page for your compiler to make sure
+#	you get this flag set appropriately)..
+#
+#-------------------------------------------------------------------------
+set FLOATOPT = 
+#	Floating point options (e.g. on a sun3 you may wish to set 
+#       this to -f68881 (i.e., set FLOATOPT = -f6888).  This option has
+#       not been tested with anything than the above unset value in years.
+#
+#-------------------------------------------------------------------------
+set CCMP = "cc"
+set FCMP = "f77"
+set F77VS = "VS2_0_1"
+#       The above define which C and Fortran compilers to use.
+#
+#       With the current WorkShop fortran compiler, you must also set F77VS = "VS2_0_1",
+#       this badly named variable is used to set the appropriate "MAIN" variable
+#       in the code.
+#-------------------------------------------------------------------------
+set LIBCORE = (/usr/old/libcore77.a /usr/old/libcore.a)
+#	Ignore if you are not compiling the Sunview version.
+#
+#	The sunview display server is unavailable under Solaris because
+#	these libraries no longer work with Solaris.
+#
+#       These libraries are no longer available at NRAO and hence the dependent
+#       is likely to no longer work.
+#
+#-------------------------------------------------------------------------
+set FILLIB = -xlibmil
+set CILLIB = -xlibmil
+#       These trigger the use of inline functions.  This may make the
+#       program run faster.  Set these as appropriate to your machine.
+#	If you don't have one of the libm.il's then replace that
+#	variable with simply -lm (the standard math library).  
+#
+#-------------------------------------------------------------------------
+set XHOME=/opt/local/X11R5
+#       Change this to point to the top-level of an X11R5 installation.
+#    .  The X libraries should be in $XHOME/lib and the X include files 
+#       should be in $XHOME/include.
+#
+set EXTRAXLIBS =
+# set EXTRAXLIBS=-lXext
+#       Uncomment the previous line if you are using /usr/openwin as XHOME.
+#       Sun's libX11.a depends on libXext.a for one symbol:
+#         XSolarisIASetProcessInfo.
+#
+#-------------------------------------------------------------------------
+set USEHACK =
+#	The above refers to a hack suggested by Sun customer support
+#	to turn off some annoying IEEE error messages.  This hack is
+#	only appropriate for Fortran 1.4 and is not necessary.
+#	There is no guarantee that this will work in subsequent releases of
+#	of Sun Fortran.  Hopefully Sun will have an easier way of ignoring
+#	these flags.  IF you need to use this hack, use: 
+#	set USEHACK = "-DIEEEHACK"
+#       This hack hasn't been necessary in some time and the related code
+#       has been untested for years and is likely unreliable.
+#-------------------------------------------------------------------------
+set SOLARIS = 
+#       Comment out the above line when building on old SunOS system.
+#       NRAO no longer has any non-Solaris machines hence, any non-solaris
+#       depenencies are no longer tested and are likely to be unreliable.
+#-------------------------------------------------------------------------
+set LOCALMAILLIST = " "
+#	Comments.exe sends users comments (started via the REPORT verb
+#	in unipops) to selected mail addresses.  LOCALMAILLIST allows
+#	you to define a list of local mail addresses which are to receive 
+#	these comments (all comments are, in addition, always sent to:
+#	unipops-comments@nrao.edu mail).  Edit this field to include any
+#	valid mail address (e.g.: set LOCALMAILLIST = myname@whatsamatau.edu).
+#
+#-------------------------------------------------------------------------
+set USEX = TRUE
+set USESUNVIEW = FALSE
+#       The value of USEX indicates whether you want to create the UniPOPS
+#       X11 display server while the value of USESUNVIEW indicates
+#       whether you want to create the UniPOPS sunview display server.
+#       When set to TRUE the corresponding display server will be created.
+#       Both settings are independant (i.e. both may be FALSE, both TRUE, etc.).
+#       Since sunview is becoming increasingly obsolete, it is strongly
+#       recommended that you stick to using the X11 display server
+#       (USEX = TRUE and USESUNVIEW = FALSE).  The sunview display server
+#       is unavailable under Solaris since there are no sunview libraries
+#       available for Solaris.
+#       The sunview libraries and environment are no longer available at
+#       NRAO and so the related code has been untested for years and may
+#       no longer work.
+#
+#-------------------------------------------------------------------------
+#
+# DO NOT ALTER the following 
+#
+if ($?SOLARIS) then
+#	This is for Solaris
+   make USEX="$USEX" USESUNVIEW="$USESUNVIEW" CCMP="$CCMP" FCMP="$FCMP" \
+	CDEBOROPT="$CDEBOROPT" FDEBOROPT="$FDEBOROPT" FLOATOPT="$FLOATOPT" \
+	F77VS="$F77VS" LIBCORE="$LIBCORE" FILLIB="$FILLIB" CILLIB="$CILLIB" \
+	XHOME="$XHOME" EXTRAXLIBS="$EXTRAXLIBS" usehack="$USEHACK" \
+        LOCALMAILLIST="$LOCALMAILLIST" \
+	AR=ar CPP=/usr/ccs/lib/cpp SUNOS=-DSOLARIS \
+	LLIBS="-lsocket -lnsl -lm" $*
+else
+#	This is for old SunOS
+   make USEX="$USEX" USESUNVIEW="$USESUNVIEW" CCMP="$CCMP" FCMP="$FCMP" \
+	CDEBOROPT="$CDEBOROPT" FDEBOROPT="$FDEBOROPT" FLOATOPT="$FLOATOPT" \
+	F77VS="$F77VS" LIBCORE="$LIBCORE" FILLIB="$FILLIB" CILLIB="$CILLIB" \
+	XHOME="$XHOME" EXTRAXLIBS="$EXTRAXLIBS" USEHACK="$USEHACK" \
+        LOCALMAILLIST="$LOCALMAILLIST" $*
+endif

@@ -1,0 +1,33 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	For 12-m data, you should give TRCVR the best-known value for
+C-	the receiver noise temperature that you want method 1 of
+C-	SOLVETIP to use.  If you supply a value less than or equal to
+C-	zero for TRCVR, method 1 will assume a value of 0.9187 * system
+C-	temperature.
+C-
+C-	For Green Bank data, SOLVETIP set TRCVR to the fitted value of the
+C-	receiver noise temperature.
+C-
+C-	TRCVR is used by : SOLVETIP (method 1, Tucson data)
+C-
+C-	TRCVR is set by : SOLVETIP (Green Bank data)
+C-
+C-	The initial value of TRCVR is 0.
+C-
+C-	EXAMPLE :
+C-
+C-      .  You want to use algorithm 1 for fitting a model to your
+C-	   sky-tip data from the 12-m telescope, and you think the
+C-	   receiver temperature was 85 K,  so you type :
+C-
+C-		TYPETIP = 1; TRCVR = 85; SOLVETIP
+C-
+C-      .  You want to reduce your Green Bank tipping scan and find out
+C-	   what it says your receiver noise temperature is, so you
+C-	   type:
+C-
+C-		SOLVETIP; PRINT TRCVR
+C-
+C------------------------- Continuum --------------------------------

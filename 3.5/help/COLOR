@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'COLOR:  Changes the default color used for plotting.'
+PRINT 'Syntax:  COLOR(-red, -green, -blue) or'
+print '         COLOR(hue,intensity, saturation)'
+PRINT ' '

@@ -1,0 +1,50 @@
+	GDISP12M is the gain equivalent to DISP12M.  See the
+	documentation for DISP12M for additional information.
+
+	Syntax: GDISP12M(xscan, fb)
+
+	Short hand procedures:
+
+	GGET1(xscan) is equivalent to GDISP12M(xscan, 1)
+
+	GGET2(xscan) is equivalent to GDISP12M(xscan, 2)
+
+	Aliases:
+
+	GGETS is aliased to GDISP12M
+	GF is aliased to GGET1 (gain equivalent of F, first filter bank)
+	GS is aliased to GGET2 (gain equivalent of S, second filter bank)
+
+	These procedures and aliases are used to display gains data
+	for the requested scan and filter bank number.
+
+	The arguments are the same as for DISP12M.  See the documentation
+	for that procedure for more details.
+
+	File name: gdisp12m.prc
+	Note: all of the above procedures and aliases are contained in
+	this single file.
+
+	These procedures and aliases are included in LSETUP.12meter
+
+	Examples:
+
+	. You want to look at the gain data for scan 823, filter bank 1:
+
+		GDISP12M(823, 1)
+	    or  GGETS(823, 1)
+            or  GGET1(823)
+            or  GF(823)
+
+	  and the data for scan 823.01 (and 823.02 if it is a parallel mode
+	  scan) would be displayed.
+
+	. You want to look at the gain data for scan 520, filter bank 2:
+
+		GDISP12M(520, 2)
+	    or  GGETS(520, 2)
+            or  GGET2(520)
+            or  GS(520)
+
+	  and the data for scan 520.03 (and 520.04 if it is a parallel mode
+	  scan) would be displayed.

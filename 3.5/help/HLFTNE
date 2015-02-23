@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'HLFTNE:  Half-tone plots the contents of Matrix (0).'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT 'MRATIO=',MRATIO
+PRINT 'LEVS='
+print LEVS
+PRINT ' ' 

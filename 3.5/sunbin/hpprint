@@ -1,0 +1,8 @@
+#! /bin/csh -f
+# @(#)hpprint.sh	5.1 06/22/94
+# Script for printing to HPGL printer
+#
+if ($#argv < 2) exit(1)
+if (-z $2) exit(0)
+#
+echo "cat ${popsdir}sunbin/hpstart $2 ${popsdir}sunbin/hpterm | $1" | /bin/csh -f

@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'VARVAL01:  (HEADER-TUC) The value of a single switch'
+PRINT 'state.  Units depend on VARDESnn.  nn = 01, 02, ...'
+PRINT '(NOSWVAR + NOSWVARF) Slow phases are first, then the fast'
+PRINT 'phases.'
+PRINT ' '

@@ -1,0 +1,602 @@
+13. Procedures - How, Why, When
+-------------------------------
+
+A facility that allows UniPOPS to be used at its full power is the
+ability to define and use procedures at will. Essentially, procedures
+are self-contained blocks of UniPOPS commands that can be either
+defined at run time as temporary solutions to current problems, or be
+entered into disk files and made accessible for any (or all) future
+UniPOPS sessions.  Most UniPOPS commands are available for use in
+procedures, plus the power to execute loops and employ conditional
+branching. Among the advantages of procedures are,
+
+    i) A procedure to solve a particular problem need only be written 
+       and entered once, and can be employed in all subsequent analysis.
+
+   ii) A procedure can employ conditional branching, allowing rather 
+       sophisticated processing. 
+
+  iii) Procedures can define new scalar, array, string and pointer
+       adverbs that can be either global, or local to that procedure,
+       (see Section 3.2.2).
+
+   iv) Procedures can be called by other procedures, building up 
+       sophisticated operations from simple building blocks.
+
+    v) Procedures can return a value, and hence be designed as
+       `functions' (and be used either in PRINT statements, or in the
+       right-hand side of assignment statements), as well as performing
+       the role of `subroutines'.
+
+   vi) The NRAO staff have provided libraries of procedures, and you
+       can also build up your own collection of useful procedures,
+       submitting the more general ones for inclusion in the general
+       procedure libraries.
+
+
+It is recommended that you prepare most of your procedures as disk
+files, either entering them externally to the program via the system
+editor, or by using the EDIT pseudo verb from within UniPOPS to prepare
+a disk file. Such files can be made available in UniPOPS via the BATCH
+command (see Section 13.9)
+
+13.1 The General Structure of a Procedure
+-----------------------------------------
+
+Procedures have a general structure of the form,
+
+	>PROCEDURE Procedure-name [ (parameters) ]
+	:Statements that the procedure executes.
+	:FINISH
+
+(NOTE : The command PROCEDURE has the pseudonym PROC that can be used
+	in its place.)
+
+The bare-minimum procedure omits all statements from its body, i.e.,
+
+	>PROCEDURE NOGUTS(LOP)
+	:FINISH
+
+although this would not serve any very useful purpose ! You can choose
+the procedure-name, restricted only in that it should not be a name
+already used either by UniPOPS or by yourself for another adverb, verb,
+alias or procedure. The procedure can take zero, or any number of dummy
+parameters, each of which will become a scalar adverb local to the
+procedure. (For example, the skeleton procedure, NOGUTS, would create
+just a local scalar adverb, LOP, although the name NOGUTS would no
+longer be available for other purposes.)
+
+The main body of the procedure can be of any size, limited only by
+memory capacity. In this Chapter, we will detail what you need to know
+in order to prepare your own procedures.
+
+13.2 Defining a Procedure
+-------------------------
+
+The first line of every procedure defines its name, and declares its
+dummy parameters, i.e.,
+
+	>PROCEDURE FACTO(NN)
+
+It also puts UniPOPS into `define mode', which has a colon prompt (:),
+in which it will remain until the obligatory last line of all
+procedures, FINISH, is encountered. At this point, UniPOPS will return
+to `execute mode', with its caret prompt (>). In `define mode', the
+input line is parsed and compiled, but NOT executed. The total compiled
+code, (the definition of the procedure), is stored in the program's
+memory, and to execute the procedure, it must be called by name in
+`execute mode'. The only limit to the number of commands in a procedure
+is the size of the program memory.
+
+PROCEDURE is a pseudo verb, and has the pseudonym PROC, which can be
+substituted for it, i.e.,
+
+	>PROC FACTO(NN)
+
+Both PROCEDURE (and hence PROC) and FINISH must be the only statements
+on a line.
+
+An example of a very simple, but useful, procedure to display any scan
+from the data file would be,
+
+	>PROCEDURE VIEW(SCAN_NO)
+	:# This procedure will GET and display a given scan.
+	:GET SCAN_NO
+	:PAGE SHOW
+	:RETURN
+	:FINISH
+
+Later, to get scan 700 from disk and display it, just type,
+
+	>VIEW(700)
+
+NOTE : Any line in a procedure beginning with the symbol # becomes a
+       Comment Line. It is good practise to document your procedures
+       liberally within their bodies using comment lines.
+
+
+13.3 The Declaration of Variables in Procedures
+-----------------------------------------------
+
+All variables (adverbs) in procedures that are not built-in UniPOPS
+adverbs, or already-declared user-defined global adverbs, must be
+EXPLICITLY declared in the procedure. These can be scalar, array,
+string, or pointer adverbs, and can be declared to be either global or
+local to the routine. The syntax for declaring such adverbs are
+described in detail in Section 3.2.2., which the new user should read
+at this point.
+
+We strongly recommend that you choose names for adverbs that indicate
+their use, rather than simple, but easily-confused, names such as XX,
+A1 or TWO. Underscores can be useful in helping define meaningful
+names, i.e. RX_BW, FEED2_SYST or K286_SNAM.
+
+
+13.4 Conditional Branching in Procedures
+----------------------------------------
+
+Conditional branching in procedures is achieved by the IF-THEN-END and
+IF-THEN-ELSE-END constructs.  The syntax for the IF-THEN-END form allow
+both one-line and multi-line formats whose respective forms are,
+
+	a) IF (logical expression) THEN ; \
+				commands executed if TRUE ; END
+	       (where \ is the line-continuation symbol)
+
+     or b) IF (logical expression) THEN
+		statements executed if TRUE
+   	   END
+
+NOTE : These are mostly used in procedures, and can be nested there,
+but the one-line form can be used in `execute mode'.
+
+If the (logical expression) is TRUE (value = +1), then the block of
+statements in the body of the construct are executed. If the logical
+expression is FALSE (value = -1), then the statements are skipped.
+Suppose that you wish to assign the first number in a scan to the
+adverb BIAS if it is negative, or set BIAS to zero if it is not. Then,
+prepare the procedure,
+
+	>PROC NEG
+	:BIAS = 0
+	:IF D0(1) < 0 THEN ; BIAS = D0(1) ; END
+	:RETURN
+	:FINISH
+
+Note that the IF construct could also be entered in the procedure as,
+
+	:IF D0(1) < 0 THEN
+	:	BIAS = D0(1)
+	:END
+
+
+The most general conditional branch is the IF-THEN-ELSE-END construct.
+The syntax for IF-THEN-ELSE-END constructs also allows one-line and
+multi-line versions of the form,
+
+	a) IF (logical expression) THEN ; commands executed if TRUE ;\
+			ELSE ; commands executed if FALSE ; END
+
+     or b) IF (logical expression) THEN 
+		statements executed if TRUE
+	   ELSE
+		statements executed if FALSE
+	   END
+
+NOTE : These are mostly used in procedures, and can be nested there,
+but again the one-line form can be used in `execute mode'.
+
+In both versions, which set of statements are executed is decreed by
+whether the (logical expression) is TRUE (+1) or FALSE (-1). Suppose
+that you wish to modify a scan, setting the 50-th element to zero if it
+is negative, and 5 K if it is greater than 5 K. Then prepare the
+procedure,
+
+	>PROCEDURE TRUNCATE
+	:IF D0(50) < 0 THEN
+	:	D0(50) = 0.
+	:ELSE
+	:	IF D0(50) > 5. THEN
+	:		D0(50) = 5.
+	:	END
+	:END
+	:RETURN
+	:FINISH
+
+NOTE : The indenting in the above examples are not necessary, but make
+the syntax of the construct much clearer, and can help prevent errors.
+You can indent using the space bar or the `Tab' key.
+
+NOTE : There is no ELSEIF command in UniPOPS.
+
+
+13.5 Loops in Procedures
+------------------------
+
+There are two varieties of loops permitted in UniPOPS procedures, using
+the procedure verbs FOR or WHILE. They can both be used in the `execute
+mode', provided they are specified in `one-line' format, with the
+line-continuation symbol being used if the command is too long for a
+single line.
+
+The syntax of a FOR loop  will allow one-line and multi-line versions,
+
+	a) FOR (variable) = (first) TO (last) [ BY (increment) ] ;\
+		statements to be cycled ; END
+
+     or b) FOR (variable) = (first) TO (last) [ BY (increment) ]
+	   statements to be cycled
+	   END
+
+NOTE : Version a) can be used in procedures or in `execute mode', while
+b) can only be used in procedures.
+
+In the above, (variable) is the scalar cycle variable. Starting with a
+value (first), this will be incremented each time through the loop by
+(increment), or by unity if (increment) is omitted. The value of
+(increment) can be positive or negative.  The loop is terminated when
+(variable) > (last) after being incremented, if the increment is
+positive, or (variable) < last after being incremented, if the
+increment is negative. As the test of (variable) against (last) is made
+at the END of the loop, the loop is always traversed at least once. The
+terms (first), (last) and (increment) can be specified as constants,
+variables (scalar adverbs) or arithmetic expressions.
+
+Suppose it is required to add a value to each point in a spectrum equal
+to its channel value, displaying the final result, then prepare the
+procedure,
+
+	>PROC RAMP
+	:SCALAR NO_ELEM, I_VAR
+	:NO_ELEM = H0(NOINT)
+	:FOR I_VAR = 1 TO NO_ELEM
+		D0(I_VAR) = D0(I_VAR) + I_VAR
+	:END
+	:PAGE SHOW
+	:RETURN
+	:FINISH
+
+(NOTE : The FOR loop here could be replaced by the "Array Math"
+expression (see Section 14.4) : {D0(@) =  D0@ + @}.) 
+
+	The second variety of loop is controlled by the procedure verb
+WHILE. The syntax for a WHILE loop also allows one-line or multi-line
+versions,
+
+	a) WHILE (logical expression) ; statements to be cycled ; END
+
+     or b) WHILE (logical expression)
+	   statements to be cycled
+	   END
+
+NOTE : Version a) can be used in procedures or in `execute mode', while
+b) can only be used in procedures.
+
+The WHILE construct allows conditional looping. The (logical
+expression) is evaluated before each passage through the loop, and the
+commands in the body of the loop executed while the expression is TRUE
+(value = +1). When the (logical expression) is found to be FALSE (-1),
+the cycle is terminated. As the logical test is at the beginning of the
+loop, it is possible that the statements in the body of the loop are
+never executed.
+
+Suppose one wishes to find which channel in a spectrum represents the
+fifth occurrence of a negative value in the scan (if there is a fifth
+occurrence of a negative value !) Then prepare the procedure,
+
+	>PROCEDURE FIFTH
+	:SCALAR I_IND, I_NEG
+	:I_IND = 0; I_NEG = 0
+	:WHILE (I_IND < H0(NOINT)) & (I_NEG ~= 5)
+	:	I_IND = I_IND + 1
+	:	IF D0(I_IND) < 0 THEN
+	:		I_NEG = I_NEG + 1 
+	: 	END
+	:END
+	:IF I_NEG = 5 THEN
+	:	PRINT 'Fifth Negative Value is Channel', I_IND
+	:ELSE
+	:	PRINT 'No Fifth Negative Value.'
+	:END
+	:RETURN
+	:FINISH
+
+
+13.6 Calling Procedures from Procedures
+---------------------------------------
+
+The procedure verb RETURN marks an exit point from a procedure. The
+presence of at least one RETURN statement is necessary in a procedure
+if it is to be called by another procedure.  While a RETURN command is
+not needed in a simple procedure, it is a wise precaution to include
+one in all procedures before the final FINISH command.
+
+A procedure to check whether a number is positive or negative (counting
+zero as positive) could be prepared as follows,
+
+	>PROC NSIGN(AA)
+	:IF AA < 0 THEN
+	:	PRINT 'NEGATIVE'
+	:	RETURN
+	:END
+	:PRINT 'POSITIVE'
+	:RETURN
+	:FINISH
+
+13.7 Returning  a Value -- Procedures as Functions
+--------------------------------------------------
+
+If a RETURN command is followed by,
+
+	a) an arithmetic or logical expression,
+	b) a reference to a scalar adverb or an element of an array
+					adverb,
+     or c) a string adverb,
+
+then the procedure returns the value of this, and can be used in a
+PRINT command, or in the right-hand side of an assignment statement.
+
+Suppose that it is wished to have a function that will provide the
+value of `factorial n', then prepare the following procedure,
+
+	>PROCEDURE FACTO(N_FACT)
+	:SCALAR F_VAL, N_INDEX
+	:F_VAL = 1.
+	:IF N_FACT > 1 THEN
+	:	FOR N_INDEX = 2 TO N_FACT
+	:		F_VAL = F_VAL * N_INDEX
+	:	END
+	:END
+	:RETURN F_VAL
+	:FINISH
+
+To use this procedure, one would employ it in such expressions as,
+
+	>PRINT FACTO(9)
+
+     or >BBASE = FACTO(3)
+
+
+Note that limited recursion is possible in UniPOPS, and the following 
+version of the above procedure is also possible,
+
+	PROC FACTO1(N_FACT)
+	:SCALAR F_VAL 
+	:IF N_FACT > 1 THEN
+	:	F_VAL = N_FACT
+	:	RETURN F_VAL * FACTO1(N_FACT - 1)
+	:ELSE
+	:	RETURN 1
+	:END
+	:FINISH
+
+
+13.8 Entering, Listing and Editing a Procedure directly into Memory
+-------------------------------------------------------------------
+
+Entering a procedure directly into memory is not normally recommended.
+Editing such procedures when inevitable errors have been entered, is
+both tedious, and unnecessarily complicated. Further, the procedure is
+only present for the current UniPOPS session, unless the memory is
+STOREd, or saved in the `Recover' file (see Section 2.2) on exit.
+However, for short, temporary procedures, this form of entry may be
+suitable, and hence we detail it here. The procedure is entered to
+memory in `define mode' (see Section 3.7.2), which is entered by typing
+a PROCEDURE (or PROC) command, i.e.,
+
+	>PROCEDURE FACTO(NN)
+	:.............
+
+The colon prompt (:) tells you that you are in `define mode', and will
+stay there until a FINISH command is encountered, when the program
+returns to `execute mode' with its caret (>) prompt. At this point the
+procedure is available for use. Note that if a procedure calls another
+procedure, then these must be entered in `bottom-up' order, i.e. the
+`called procedure' must be typed-in before the `calling procedure'.
+
+If, after typing-in a procedure, an error detectable by UniPOPS is
+present, you will be informed at this point. A procedure (say FACTO)
+may be listed on the screen using the pseudo verb LIST by typing,
+
+	>LIST FACTO
+
+LIST should be the only command on the line. It will list the procedure
+with a line number before each line of the list. When you have found
+the location of an error in the procedure, this can be corrected using
+the pseudo verb POPSEDIT. POPSEDIT will put the program in `edit mode'
+(see Section 3.7.2), again showing a colon (:) prompt. It will remain
+in `edit mode' until the command ENDEDIT is typed.
+
+Suppose,
+
+   a) there is a typing mistake on line 3 of Procedure FACTO, and the
+      line must be replaced, type,
+
+	>POPSEDIT FACTO 3
+	:IF NN > 1 THEN
+	:ENDEDIT
+
+or b) there is a mistake on line 3, which must be replaced with two
+      lines, type,
+
+	>POPSEDIT FACTO 3
+	:IF NN > 1 THEN
+	: 	PRINT 'Fred Here !'
+	:ENDEDIT
+
+or c) you wish to remove line 4, type,
+
+	>POPSEDIT FACTO 4
+	:ENDEDIT
+
+or d) you wish to add one or more lines between lines 3 and 4, type,
+   
+ 	>POPSEDIT FACTO 3.5
+	:	PRINT 'Fred Here !'
+	:	PRINT 'and Bert too !'
+	:ENDEDIT
+
+
+13.9 Procedures defined as Disk Files
+-------------------------------------
+
+The recommended way of preparing procedures is as disk files in the
+directory from which you run UniPOPS. Just type them into disk files
+whose names have the extension .prc (note lower case letters) using the
+editor of your choice. For example, to invoke the vi editor for a file
+called facto.prc, type,
+
+	%vi facto.prc
+
+When you are running UniPOPS, and wish to define or edit a disk file,
+invoke the pseudo verb EDIT with the required file name as attribute,
+by typing,
+
+	>EDIT facto.prc
+
+This will start up the editor of your choice (determined by the value of
+the popseditor environment variable when you started the program, popseditor 
+is usually defined in a file called .unipops in your home directory, see
+Appendix M), and create a new file, or edit an existing file. After 
+preparing the file, exit the editor in the normal way.
+
+
+In UniPOPS you can list the names of all files which have the
+extensions .prc in your current directory, and also in the system
+procedure libraries, by typing,
+
+	>PRCDIR
+
+PRCDIR is a pseudo verb and should be the only command on the line.  In
+a window environment, PRCDIR (like a number of other verbs) puts up its
+own window to list the files. To QUIT the PRCDIR window, type <CR>
+there.
+
+To examine the contents of any of these files on the screen, use the 
+pseudo verb TYPE, which can take a file name as attribute. If no 
+attribute is given, the program will prompt for a file name, i.e. either,
+
+	>TYPE facto.prc
+
+     or >TYPE
+	 (here UniPOPS will prompt for the file  name)
+
+
+A disk file of UniPOPS commands can be read into the program, and
+executed, using the pseudo verb BATCH. BATCH takes the disk file name
+as attribute. If the file contains the definition of a procedure, this 
+will be installed ready for use. For example, to read in the procedure 
+held in the disk file facto.prc, type,
+
+	>BATCH facto.prc
+
+(NOTE : Using upper or lower case letters is important with verbs EDIT,
+TYPE and BATCH.)
+
+(NOTE : If you are BATCHing in a pair of procedures, where one calls
+the other, it should be remembered that these MUST be read-in in
+`bottom-up' order, i.e. the `called procedure' should be BATCHed-in
+before the `calling procedure'.)
+
+13.10 Storing a Copy of the UniPOPS Memory
+------------------------------------------
+
+At any point, you can store on disk an exact copy of your UniPOPS
+memory using the pseudo verb STORE. Such memory images can be recalled
+later via the pseudo verb RECALL. Three `storage-areas', numbered 1, 2
+and 3, are available. STORE and RESTORE both take the `storage-area'
+number as their single attribute. Use of STORE does not change the
+present state of the memory. All procedure definitions, adverbs and
+variable values are stored.  When RECALL is used to resurrect the
+memory image, the existing UniPOPS memory is completely over-written,
+and the procedure definitions, adverbs, and variable values in the
+stored memory image will be available again.
+
+Suppose that you wish to store the particular configuration that the
+UniPOPS memory has at present in `storage-area' number 2. Then type,
+
+	>STORE 2
+
+This memory image can be recalled on a future occasion by typing,
+
+	>RESTORE 2
+
+
+13.11 Procedures and the UniPOPS Memory
+---------------------------------------
+
+Whenever a procedure is installed, either using BATCH, or via a direct
+procedure definition, the program displays a table informing you how
+much of the memory is currently used. This table can be displayed at
+any time through the pseudo verb CORE. Just type,
+
+	>CORE
+
+
+A pseudo verb SCRATCH can be used to eliminate a procedure, or a
+user-defined adverb or alias from UniPOPS.  This is useful if you wish
+to reuse the name of the variable, completely change its definition, or
+reclaim the memory space occupied by the symbol's definition (see
+below). SCRATCH takes the name of the procedure, adverb or alias as its
+single attribute. Note, however, that SCRATCH checks whether the entity
+to be scratched is used in any of your remaining user-defined
+procedures, and if it is, will not allow you to delete that symbol.
+Suppose it was required to completely redefine the procedure FACTO. You
+would probably find it most convenient to first remove all reference to
+the existing version of the procedure by typing,
+
+	>SCRATCH FACTO
+
+and then enter (or BATCH in) the new definition.
+
+Note that while SCRATCH removes all reference to the symbol that is its
+attribute, it does not return the memory space which was occupied by
+its definition. To recover all wasted memory at any stage, you should
+invoke the pseudo verb COMPRESS, which takes no attributes. Thus to
+also recover the memory occupied by the old definition of FACTO in the
+previous example, you should type,
+
+	>SCRATCH FACTO
+	>COMPRESS
+
+
+When sufficient procedures or variables have been defined to fill the
+UniPOPS memory, no more procedures, adverbs or aliases can be defined.
+You will be able to recognize this condition, as the program will
+inform you via an error message telling you "Blew core", (see Appendix
+F, Section F-2.3, Error message No. 1).  
+
+One way to free memory for new procedures, etc. is through the pseudo
+verb RESTART.  However, BEWARE, because RESTART really does give a
+restart ! It reinitializes the program memory, and destroys all
+procedures and user-defined adverbs, and sets all system adverbs to
+their initial values. To effect a restart, type,
+
+	>RESTART
+
+A much more `civilized' approach to reclaiming memory space is through
+the verb COMPRESS.  If you have got the message "Blew core", a good
+strategy to try is as follows,
+
+	a) Use COMPRESS to reclaim all memory currently `lying fallow',
+	   by typing,
+
+		>COMPRESS
+
+	b) Scratch any procedures, adverbs or aliases that you are
+	   unlikely to need again, (especially if you have the
+	   originals as disc files), and then use COMPRESS.  For
+	   example, if you don't require procedures FACTO, BLAH and
+	   array adverb UGH, but need memory space, try typing,
+
+		>SCRATCH FACTO
+		>SCRATCH BLAH
+		>SCRATCH UGH
+		>COMPRESS
+
+	c) Rethink your problem. CORE will tell you whether you are
+	   exceeding the space for adverbs, source code, or compiled
+	   code.
+
+	d) If even this does not free enough space, you may have to
+	   consider a RESTART, as described above.

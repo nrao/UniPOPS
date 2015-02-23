@@ -1,0 +1,27 @@
+	(REGULAR VERB)
+
+	 SCLEAR effectively will destroy the accumulation of data which
+	 may be in progress.  Clears all former uses of ACCUM and SUM.
+	 SCLEAR also clears the internal array holding the list of 
+	 (ASHIFT, scan number) pairs set by SHIFT.
+
+	 Unlike AVE, there is no error message if no scans have been
+	 averaged.
+
+	 No adverbs are used by SCLEAR.
+
+	 ADVERB SET:
+
+	 
+	   STATUS(8) :  Number of scans accumulated in internal accum
+		        array and determined by the ACCUM or SUM
+		        commands.  Reset to zero by SCLEAR.
+
+	 EXAMPLE:
+
+	 Before ACCUMulating scans, specify:
+
+		SCLEAR			
+
+	to clear any present accumulation.
+

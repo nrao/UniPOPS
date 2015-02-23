@@ -1,0 +1,49 @@
+	(REGULAR VERB)
+         
+        Syntax:    FLAG (value)
+
+	FLAG draws a vertical line on the current display at the
+	specified value of the lower x-axis.
+
+L------------------------- Spectral Line --------------------------------
+L-	For SHOW displays, the value can represent frequency, velocity,
+L-	or channel number depending on the display option chosen for
+L-	the bottom x-axis by CV, VC, CF, FC, CC, VV, VF, FV, or FF.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	For SHOW displays, the value can represent position, time, or
+C-	channel number depending on the display option chosen for the
+C-	bottom x-axis by CV, VC, CF, FC, CC, VV, VF, FV, or FF.
+C------------------------- Continuum ------------------------------------
+
+	For PLOT and two-dimensional displays, the value should be in
+	the units of the x-axis.  For FLAG to work correctly with
+	PLOT displays, the value of XLOGP must be the same as when
+	the PLOT display was made.
+
+	FLAG also labels the line.
+
+	No adverbs are set by FLAG.
+
+	Adverb used:
+
+		XLOGP  :   Used if the display is a PLOT display.  The
+			     value must be the same as when the PLOT display
+			     was made.
+			   if TRUE (+1), then the x-axis is assumed to
+			     be logarithmic
+			   if FALSE (-1), then the x-axis is assumed to
+			     be linear.
+			   
+	EXAMPLE:
+
+	You wish to see if a feature in the display is between -10 and
+	-20 km/s and the current values of the tick marks make
+	estimation uncertain.  Specify:
+
+		VV; PAGE SHOW
+		FLAG (-10); FLAG (-20)
+
+	and vertical lines will be plotted on the screen at the two
+	velocities.

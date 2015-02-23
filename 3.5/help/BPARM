@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BPARM:  (ARRAY-15) Chebyshev polynomial coefficients found '
+PRINT 'by BASELINE or BSHAPE and used by BMODEL or BSHOW.'
+PRINT ' '

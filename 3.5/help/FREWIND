@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FREWIND:  Rewinds the ASCII file specified by the provided'
+PRINT 'unit number.  Syntax: FREWIND(unit)'
+PRINT ' '

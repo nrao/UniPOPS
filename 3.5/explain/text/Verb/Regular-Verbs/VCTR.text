@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+        Syntax:    VCTR (x_pixel,y_pixel)
+
+	VCTR draws a line from the current cursor position of the
+	graphics screen to the position commanded by x_pixel and
+	y_pixel, where x_pixel and y_pixel are defined as follows:
+
+	   x_pixel        One of 1024 horizontal points on the
+			     graphics screen.
+	   y_pixel        One of 800 vertical points on the
+			     graphics screen.
+                   
+	No adverbs are used or set by VCTR.
+       
+	Note that each character on the graphics screen is about 25
+	pixels high and 14 wide.
+
+	EXAMPLE:
+
+		PLACE (100,100)		Draws a line from (100,100)
+		VCTR (400,200)		to (400,200) and at (400,200)
+		CHAR ('Hello')		draws the word 'Hello'.

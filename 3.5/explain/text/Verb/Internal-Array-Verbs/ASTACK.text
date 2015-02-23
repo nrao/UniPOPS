@@ -1,0 +1,51 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:  ASTACK(element)
+
+	ASTACK is a internal-array verb which returns or sets the value
+	of the indicated element of the internal ASTACK array.  The
+	internal ASTACK array is modified by such verbs as ADDSTACK, 
+	DELETE, EMPTY, SELECT, and the contents of the internal array 
+	can be listed with TELL STACK.  The initial values of the internal
+	astack array are 0.
+
+	You should always supply ASTACK with a single integer-valued
+	argument which is the element that you want to either query or
+	change in ASTACK.
+
+	If the verb appears to the left of an equal sign, than the
+	specified element has its value changed to the value of the
+	expression to the right of the equal sign.
+
+	If the verb appears in a mathematical expression or as an
+	argument to a verb or procedure, then the value of the
+	specified element is returned.
+
+	The element must be greater than zero and less than the size 
+	of ASTACK (5120).
+
+	No adverbs are used or set by ASTACK.
+
+	See the description of internal-array verbs for restrictions on
+	their use.
+
+	EXAMPLE :
+
+		EMPTY               Assures that the ASTACK is empty.
+	        ADDSTACK(600,614,2) Inserts scans into the ASTACK.
+		TELL STACK          Will produce the following output
+                    		                 on the terminal :
+
+	1:     	600.00  602.00  604.00  606.00  608.00  610.00  612.00 
+	8:	614.00 
+
+		PRINT ASTACK(3)	    Will produce the following output:
+
+	604.00
+
+		ASTACK(2)=10	    Sets the second element of ASTACK to 10.
+		TELL STACK	    Will produce the following output:
+
+
+	1:     	600.00   10.00  604.00  606.00  608.00  610.00  612.00 
+	8:	614.00 

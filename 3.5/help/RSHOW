@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'RSHOW:  Uses the coefficients in RAMPLTDE, RPHASE, and '
+PRINT 'RPERIOD and displays the resulting sinusoid.'
+PRINT ' '
+PRINT 'RAMPLTDE=',RAMPLTDE
+PRINT 'RPHASE=',RPHASE
+PRINT 'RPERIOD=',RPERIOD
+PRINT ' ' 

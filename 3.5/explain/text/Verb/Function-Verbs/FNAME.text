@@ -1,0 +1,32 @@
+	(FUNCTION VERB)
+
+	Syntax:  FNAME( file_number)
+
+	FNAME returns a string containing the file name 
+	corresponding to the file number given as the argument.
+	The file number may be either a file number returned
+	through the use of FOPEN or one of the standard file
+	types (see the FILES verb for more details, see
+	the CHNGFILE verb for a list of standard file types).
+
+	No adverbs are used or set by FNAME.
+
+	EXAMPLES:
+
+		# open a file named 'garbage' and then print 
+	        # out its name
+
+		UNIT = FOPEN('garbage', RW+EOF+OLD)
+		PRINT FNAME(UNIT)
+
+		# print out the name of the current SAVE file
+		PRINT FNAME(SSCANS)
+		# or
+		PRINT FNAME(3)
+
+		# store the name of the file number 52 (which must
+		# have already been opened) in a string.
+		# strings are limited to 60 characters maximum
+		STRING*60 MYFNAME
+                MYFNAME = FNAME(52)
+

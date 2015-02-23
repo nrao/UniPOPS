@@ -1,0 +1,69 @@
+        (REGULAR VERB)
+
+	Syntax:	    ALIAS name1 verb1, name2 verb2, ....
+		    GLOBAL ALIAS name1 verb1, name2 verb2, ....
+
+	ALIAS creates symbols with the specified names that are aliases
+	of existing verbs or procedures.  ALIAS must be the only
+	command on the input line -- no other commands can precede or
+	follow it.  The procedure or verb you are trying to rename
+	(alias) must already exist.
+
+	The names for aliases must follow the conventions for naming
+	adverbs and procedures.  The name of the verb or procedure you
+	are aliasing must follow the name of the alias.
+
+	More than one alias can be defined by a single ALIAS
+	statement.
+
+	If the alias is created while in execute mode, the alias
+	becomes a global symbol and you can reference it from within
+	execute mode and from within all procedures.  If the alias is
+	created while in compile mode (i.e., in a procedure definition)
+	and is proceeded by the word GLOBAL (as in the second example
+	of syntax above), then the alias is created as a global symbol
+	and you can reference it within execute mode and all
+	procedures.  If the alias is created while in compile mode
+	(i.e., in a procedure definition) and is NOT proceeded by the
+	word GLOBAL, then the alias is created as a local symbol and
+	you can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global aliases cannot be redefined but they can be scratched
+	(deleted) using the SCRATCH verb.  Local aliases can be
+	scratched by editing the procedure definition which created the
+	array.
+
+	HELP ALIAS will list all of the global arrays (built-in and
+	user-defined) that currently exist.
+
+	LIST alias_name  will tell you what a particular global
+	alias_name is an alias for.
+
+	EXAMPLE: 
+
+	.  The following creates an alias named XY for the verb BASELINE.
+
+	   	ALIAS XY BASELINE
+
+	.  The following creates two aliases, one for PLOTDOTS and the
+	   other for LABEL.
+
+	   	ALIAS PD PLOTDOTS, LB LABEL
+   
+	.  The following, if included within a procedure definition,
+	   creates a global alias named DEF for a procedure by the name
+	   of DEFINITION.
+
+		GLOBAL ALIAS DEF DEFINITION 
+
+	   Now, if you type
+
+		LIST DEF
+
+	   UniPOPS will produce the following:
+
+		DEF  ->  DEFINITION  
+
+	   which tells you that DEF is your shorthand notation for DEFINITION.	
+

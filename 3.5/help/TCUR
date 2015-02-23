@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'TCUR:  (FUNCTION) Returns y-axis value at location of'
+PRINT 'crosshair for SHOW and PLOT.  Returns y-cell no. at'
+PRINT 'location of crosshair for 2-d plot.'
+PRINT ' '

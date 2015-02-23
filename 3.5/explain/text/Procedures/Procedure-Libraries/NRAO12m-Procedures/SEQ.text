@@ -1,0 +1,31 @@
+	SEQ reduces a CONTSEQ scan and displays the result.
+
+	Syntax: SEQ(scan_number)
+
+	SEQ is:
+
+		GET(scan_number)
+		SWITCHED; AVGD
+		PAGE;SHOW
+
+	File name: seq.prc
+
+	SEQ is often invoked through the use of the following two procedures:
+
+	CON_S1(scan_number)
+
+	This forces the subscan number of scan_number to be 1.
+	For example, if you scan 233 is a CONTSEQ scan then
+	S1(233) is the same as SEQ(233.01).
+
+	File name: cs1.prc
+
+	CON_S2(scan_number)
+
+	This forces the subscan number of scan_number to be 2.
+	For example, if you scan 233 is a CONTSEQ scan then
+	CON_S2(233) is the same as SEQ(233.02).
+
+	File name: cs2.prc
+
+	All of these procedures are included in CSETUP.12meter

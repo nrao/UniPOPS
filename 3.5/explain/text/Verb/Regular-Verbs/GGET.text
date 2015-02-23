@@ -1,0 +1,36 @@
+	(REGULAR VERB)
+
+	Syntax:    GGET scan-number.rcvr-number 
+
+	Copies a gains scan from disk to Array (2).  A scan number is
+	required as its object.
+
+	If scan-number > 0, then the on-line gains file is searched
+	first, followed by the off-line gains file, if a scan with the
+	correct number hasn't been found.
+
+	If scan-number < 0, then the off-line gains file is searched
+	first and then the on-line gains file if a scan with the
+	correct number isn't found.
+
+	The rcvr-number specifies which back-end's gains is to be
+	retrieved.  Back-end number 1 is specified as a .01, back-end
+	number 2 as .02, etc.  If rcvr-number is not specified, the
+	first back-end is retrieved.
+
+	No adverbs are used or set by GGET.
+
+	EXAMPLES:
+       
+	.   To bring gains data from the first receiver of scan 550
+	    from the disk and display it on the screen,
+
+	      GGET 550 COPY(2,0) PAGE SHOW      Equivalent to GGET 550.01
+						COPY(2,0) PAGE SHOW
+
+	.   To bring gains data from the fourth receiver of scan 550
+	    from the disk and display it on the screen,
+
+	      GGET 550.04 COPY(2,0) PAGE SHOW
+
+

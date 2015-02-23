@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'T2YPIX:  (FUNCTION) Returns the y-pixel value corresponding'
+print 'to the given t-value (temperature for SHOW, y-axis value'
+print 'for PLOT, y-cell number for 2-dim display) valid for the'
+print 'last plot generated.  Syntax: y-pixel=T2YPIX(t-value)'
+PRINT ' '

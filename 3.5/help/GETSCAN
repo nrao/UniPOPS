@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'GETSCAN:  (PROC-LIBRARY) Gets the specified scan (and, if'
+PRINT 'total-power, also gets the previous off scan and performs a'
+PRINT 'TEMP).  Syntax: GETSCAN(scan_num.feed_num)'
+PRINT ' '

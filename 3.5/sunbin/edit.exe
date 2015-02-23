@@ -1,0 +1,43 @@
+#! /bin/csh -f
+# @(#)edit.exe.sh	5.1 06/22/94
+# Uses an editor to create/edit a file; uses the edit2.exe script which does all
+# the real work.
+#  Usage: edit.exe <filename>
+#  or     edit.exe (and name of file will be asked for)
+#
+if ($#argv < 1) then
+  echo -n 'Enter name of the file you want to edit: '
+  set filename = $<
+else
+  set filename = $1
+endif
+# Use supplied filenanme or ask for one.
+#
+#   If filename exists in $popsproc1 or $popsproc2, copy it over
+#   and edit the copy.
+set edit_found = "FALSE"
+if (-e $filename) then
+   set edit_found = "TRUE"
+endif
+if ($?popsproc1 != 0 && $edit_found == "FALSE") then
+   if (-e $popsproc1/$filename) then
+      cp $popsproc1/$filename $filename
+      if ($status == 0) then
+         chmod +w $filename
+         set edit_found = "TRUE"
+         echo $filename copied from $popsproc1 for editing.
+      endif
+   endif
+endif
+if ($?popsproc2 != 0 && $edit_found == "FALSE") then
+   if (-e $popsproc2/$filename) then
+      cp $popsproc2/$filename $filename
+      if ($status == 0) then
+         chmod +w $filename
+         echo $filename copied from $popsproc2 for editing.
+      endif
+   endif
+endif
+#
+exec ${popsdir}sunbin/edit2.exe $filename comments.icon "EDIT" YES
+#

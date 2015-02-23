@@ -1,0 +1,42 @@
+	(REGULAR VERB)
+
+        Syntax:    VCHAR (string, rotate)
+
+	VCHAR draws vertically a string of characters on the graphics
+	screen at the current cursor position.  (To draw a string
+	horizontally you should use the verb CHAR).
+
+	The first argument to VCHAR is either a string expression,
+	string adverb, or a string constant.
+
+	The second argument should have the value of either TRUE (+1)
+	or FALSE (-1).  If FALSE, the string will be printed from the
+	current cursor position on the screen (defined by the last
+	usage of a CHAR, PLACE, VCTR, or VCHAR verb DOWN the screen
+	with the characters NOT rotated.  If TRUE, the string will be
+	printed from the current position UP the screen with each
+	character rotated counter-clockwise by 90 degrees.  This takes
+	care of the two ways, for example, y-axes are typically
+	labeled.
+
+	Note that each character has a default size of about 25 pixels
+	high and 14 wide which can be changed with the CHARSIZE
+	command.  Bottom left corner of the first character will be
+	plotted at a location specified by the last PLACE, VCTR, VCHAR,
+	or CHAR command or by the program.
+
+	You can change the character font with FONTSET.
+
+	No adverbs are used or set by VCHAR.
+
+	EXAMPLE: 
+
+		PLACE (100,100)
+		VCHAR ('HELP',FALSE)
+		PLACE(300,234); VCHAR(XTITLE, TRUE)
+
+	will draw the string 'HELP' at pixel (100,100) on the graphics
+	screen and will draw the string adverb XTITLE at pixel
+	(300,234).  The characters in the first drawn string will not
+	be rotated and will go down the screen while the second string
+	will have its characters rotated and drawn up the screen.

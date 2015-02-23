@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'GMEASURE:  (LINE) Assumes that Array 0 contains an extra-'
+PRINT 'galactic observation and calculates the following line'
+PRINT 'parameters: flux-integral, velocity, and line'
+print 'widths.  Syntax:  GMEASURE(methods)'
+PRINT ' '
+PRINT 'BMOMENT,EMOMENT,VRMS=',BMOMENT,EMOMENT,VRMS
+print 'GMFRAC=',GMFRAC
+print 'GOUT='; print gout
+PRINT ' ' 

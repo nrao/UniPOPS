@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LENGTH:  (FUNCTION) Returns the number of characters in the'
+PRINT 'given character string argument.'
+PRINT ' '

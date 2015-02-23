@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CROSSFCN:  Takes the cross-correlation of the data in Array'
+PRINT '0 and Array 1 and places the results into Array 0.'
+PRINT ' '

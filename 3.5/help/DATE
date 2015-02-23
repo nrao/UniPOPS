@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DATE:  (FUNCTION) Returns a string containing the current'
+PRINT 'date.  Example: PRINT DATE'
+PRINT ' '

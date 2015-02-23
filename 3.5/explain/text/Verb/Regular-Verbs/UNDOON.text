@@ -1,0 +1,34 @@
+	(REGULAR VERB)
+
+	UNDOON and UNDOOFF are used with the pseudo verb UNDO and have
+	the following meaning to the program:
+
+		UNDOOFF		Toggles the UNDO feature to OFF so that
+				future UNDOs will not work.
+
+		UNDOON		Toggles the UNDO feature to ON so that
+				future UNDOs will work. 
+	
+	UNDOOFF is the default mode.  With UNDOOFF, the program runs
+	faster than with UNDOON.
+
+	No adverbs are used by UNDOON or UNDOOFF.
+
+	ADVERB SET:
+
+	   STATUS(22) : Whether or not the UNDO facility is enabled.
+			This is set by the last UNDOON or UNDOOFF
+			command.
+
+			Values : 1 (or TRUE) if UNDOON on is in effect;
+			-1 (of FALSE) if UNDOOFF is in effect.
+	
+	EXAMPLE:
+
+		PAGE SHOW			Draws original spectrum.
+		UNDOON				Turns ONDO on.
+		NFIT=5;BASELINE PAGE SHOW	Draws spectrum with 
+							BASELINE removed.
+		UNDO				Undoes previous command line.
+		PAGE SHOW			Draws original spectrum again.
+		UNDOOFF

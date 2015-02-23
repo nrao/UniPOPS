@@ -1,0 +1,10 @@
+	(SCALAR ADVERB)
+
+	VCLICK is set by CLICK.  It corresponds to the value that 
+	the function VCUR would have returned at the crosshair location 
+	when the user clicks a mouse button.
+
+	For a plot made with SHOW, this is the velocity in km/s (LINE), 
+	or the position relative to the start of the scan in degrees 
+	(CONDAR), and for a 2-d plot, this is the x-axis value.
+

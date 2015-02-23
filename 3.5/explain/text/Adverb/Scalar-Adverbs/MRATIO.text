@@ -1,0 +1,21 @@
+	(SCALAR ADVERB)
+
+	MRATIO defines the ratio between x and y scaling of all
+	two-dimensional maps.   The user may change MRATIO to get a
+	different aspect ratio for two-dimensional maps.  Its value
+	must be > 0.
+
+	MRATIO is used by : CONTOUR	   HLFTNE       PLOTDOTS
+			    QCONTOUR       RASTER
+						
+	No verbs change MRATIO.
+
+	The initial value of MRATIO is 1.
+
+	EXAMPLE :
+
+	If you want to change the aspect ratio of a map, specify :
+
+		MRATIO = 2
+
+	and then issue the mapping verb.

@@ -1,0 +1,30 @@
+	(SCALAR ADVERB)
+
+	ACOUNT is a counter for the internal ASTACK array.  It
+	determines how many scans numbers are in the ASTACK.  It is
+	used by TELL STACK and in procedures.
+
+	ACOUNT is used by : TELL STACK
+
+	ACOUNT is modified or set by : 	ADDSTACK    DELETE    EMPTY
+					SELECT
+
+	The initial value of ACOUNT is 0, which means that the ASTACK is
+	empty.  Maximum value is 5120 and you shouldn't set its value to
+	less than 0.
+
+	EXAMPLE :
+
+	   .   If you type the following:
+
+		EMPTY
+	       	ADDSTACK(500,508,1)
+
+               then, the value of ACOUNT will be 9.
+
+	   .   If you type the following:
+
+		EMPTY
+	       	ADDSTACK(500,508,2)
+
+	        then, the value of ACOUNT will be 5.

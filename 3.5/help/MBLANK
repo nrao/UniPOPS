@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MBLANK:  Turns all values of a matrix to undefined values.'
+PRINT 'Syntax:  MBLANK(matrix_num)'
+PRINT ' '

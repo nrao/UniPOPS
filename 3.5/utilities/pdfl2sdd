@@ -1,0 +1,91 @@
+#!/bin/sh
+#	script using cvtpdflsdd.exe to convert from pdfl to sdd format
+#	without requiring the user to remember more than on command
+#
+#	In case anyone is interested, this uses the bourne shell because
+#	of the need to examine the stderr output of cvtpdflsdd.exe without
+#	tampering with the stdout output which is the converted data.
+#	You can't do that with the c-shell.
+#
+#	Usage: pdfl2sdd pdfl_file sdd_file
+#
+if [ $# -ne 2 ]; then
+   echo Usage: pdfl2sdd pdfl_file sdd_file
+   exit 1
+fi
+
+if [ ! -r $1 ]; then
+   echo $1 does not exist or has the wrong permissions.
+   exit 1
+fi
+
+if [ -f $2 ]; then
+   echo $2 already exists.  pdfl2sdd will not overwrite a file.
+   exit 1
+fi
+
+#		Do the actual conversion
+echo Begin converting $1 to sdd format file $2 ...
+cvtpdflsdd.exe $1 > $2 2> /tmp/cvt.$$
+if [ $? -ne 0 ]; then
+   cat /tmp/cvt.$$
+   echo There was a problem during conversion, bailing out ...
+   /bin/rm -f $2
+   /bin/rm -f /tmp/cvt.$$
+   exit 1
+fi
+cat /tmp/cvt.$$
+
+#		Is the output sddfile index really large enough
+#		Get number of scans converted from output of cvtpdflsdd.exe
+nscans=`cat /tmp/cvt.$$ | awk ' /Finished/ { print $3 } '`
+if [ $? -ne 0 ]; then
+   echo Warning : can not determine number of scans converted.  $2 may be too small.
+   nscans = 0
+fi
+
+/bin/rm -f /tmp/cvt.$$
+#		Get the bootstrap info from the sddfile (first 4 words only)
+#		Assumes new style sdd format (which is all cvtpdflsdd produces)
+bs=`bootstrap $2 16 LONG`
+if [ $? -ne 0 ]; then
+   echo Can not extract index info from $2, bailing out.
+   exit 1
+fi
+#		Put these values into variables
+eval `echo $bs | awk ' { print sprintf("nir=%s rs=%s ies=%s",$2,$4,$5) } '`
+if [ $? -ne 0 ]; then
+   echo Can not extract index info from $2, bailing out.
+   exit 1
+fi
+#		Combine them to find out size of index
+if [ $ies -ne 0 ]; then
+   maxnscans=`echo "($nir - 1) * $rs / $ies" | bc`
+   if [ $? -ne 0 ]; then
+      echo Warning : Can not determine size of the index in $2, it may be too small.
+      maxnscans=$nscans
+   fi
+else
+   echo Warning : Can not determine size of the index in $2, it may be too small.
+   maxnscans=$nscans
+fi
+
+#		Do we need to expand the sdd file?
+if [ $maxnscans -lt $nscans ]; then
+   echo "Expanding size of $2"
+   expandsdd $2 $nscans
+   if [ $? -ne 0 ]; then
+      echo Can not expand $2 to its required size, bailing out.
+      exit 1
+   fi
+fi
+#		And finally, make the index.
+echo "Constructing index for $2"
+makeindex.exe $2 > /dev/null
+if [ $? -ne 0 ]; then
+   echo Warning : makeindex.exe exited with a non-zero status.
+   echo There may be a problem with the index for $2
+   exit 1
+fi
+echo Conversion finished.
+exit 0

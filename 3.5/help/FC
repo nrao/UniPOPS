@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'FC:  (LINE) Sets the lower x-axis to frequency and the '
+PRINT 'upper to channel number for SHOW.'
+PRINT ' '
+PRINT 'FC:  (CONTINUUM) Sets the lower x-axis to time and the '
+PRINT 'upper to channel number for SHOW.'
+PRINT ' '

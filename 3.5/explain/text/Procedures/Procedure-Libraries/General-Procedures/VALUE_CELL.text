@@ -1,0 +1,28 @@
+	The file, value_cell.prc, provides a number of conversion
+	function procedures for cubes and matrices.
+
+	CVAL2CELL(axis, value)
+		Converts a value along the indicated axis of a cube to
+		it's corresponding cell (pixel) number and returns that 
+		value to the stack.
+
+	CCELL2VAL(axis, pix)
+		Converts a cell (pixel) number on the indicated axis of
+		a cube to it's corresponding value along the axis and
+		returns that value to the stack.
+
+	MVAL2CELL(axis, value)
+		Converts a value along the indicated axis of a Matrix(0)
+		to it's corresponding cell (pixel) number and returns that
+		value to the stack.
+
+	MCELL2VAL(axis, pix)
+		Converts a cell (pixel) number on the indicated axis of
+		Matrix(0) to it's corresponding value along the axis and
+		returns that value to the stack.
+
+
+	These functions are quite useful in conjunction with the mapping
+	procedures described elsewhere.
+
+	File name: value_cell.prc

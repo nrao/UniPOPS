@@ -1,0 +1,13 @@
+	(REGULAR VERB)
+
+	MHEADER summarizes the header parameters for Matrix (0).  The
+	format of the output is self explanatory.
+
+	No adverbs are used or set by MHEADER.
+
+	EXAMPLE:
+
+	To print the header information for Matrix (0) on the text
+	screen, specify:
+
+		MHEADER

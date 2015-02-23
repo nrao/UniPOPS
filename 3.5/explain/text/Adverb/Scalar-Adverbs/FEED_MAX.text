@@ -1,0 +1,36 @@
+	(SCALAR ADVERB)
+
+	FEED_MAX and FEED_MIN specify the range in subscan numbers
+	(sometimes referred to as feed numbers) used by the SELECT
+	verb.  Subscan number is the fractional part of the scan number
+	multiplied by 100.  Only integer subscan numbers are valid
+	(i.e. subscan number can range from 0 to 99).
+
+	Scans will be SELECTed if they have a subscan numbers within
+	the range specified by FEED_MIN through FEED_MAX, inclusive.
+
+	If FEED_MAX is set to the DEFAULT value, there is no upper
+	limit to the range.  Similarly, if FEED_MIN is set to the
+	DEFAULT value, there is no lower limit to the range.
+
+	FEED_MIN and FEED_MAX are used by : SELECT
+
+	No verbs change FEED_MIN or FEED_MAX.
+
+	Initial values of FEED_MIN or FEED_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans having subscan numbers greater than but not
+	equal to 2, specify:
+
+		FEED_MIN = 3; FEED_MAX = DEFAULT
+
+	To select all scans having subscan numbers less than or equal to 4,
+	specify:
+
+		FEED_MIN = DEFAULT; FEED_MAX = 4
+
+	To select only those scans with subscan numbers equal to 2, specify:
+
+		FEED_MIN = 2; FEED_MAX = 2

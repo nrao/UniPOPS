@@ -1,0 +1,55 @@
+	(SCALAR ADVERB)
+
+	CROSSFLG determines how CROSSHAIR behaves (which values are
+	displayed).
+
+	CROSSHAIR can print out up to five values (see the documentation
+	for CROSSHAIR for the placement of the five values):
+	C-value, T-value, V-value, F-value, and M-value.  These 
+	correspond to the values returned by the CUR functions having
+	the same first letter (CCUR, TCUR, VCUR, FCUR, and MCUR).
+
+	CROSSFLG is a 5-digit number made up of one's and zero's.
+	Each of the five digits correspond to one of the five
+	values.  A digit with a value of zero turns off the
+	printing of the corresponding value while a non-zero value
+	turns on the printing of the value.
+
+	The digits in CROSSFLG correspond to the values listed above
+	as follows:
+
+		CROSSFLG = ctvfm
+
+	where c, t, v, f, and m represent the 5 digits and are either a
+	1 or a 0.  That is, the first digit is the flag for the C-value,
+	the second for the T-value, etc.
+
+	The default value of CROSSFLG is 11111, that is all values
+	are printed when appropriate (some values are inappropriate
+	for some types of plots).
+
+	EXAMPLES:
+
+	You don't want channel and frequency information printed
+	out for SHOW displays but you do want all other information
+	(you don't want C-value and F-value printed, but you do
+	want all others).
+
+	> CROSSFLG = 01101
+
+	You want only frequency information display (just F-value).
+
+	> CROSSFLG = 00010
+
+	You just want CROSSHAIR to draw a 'plus' sign.
+
+	> CROSSFLG = 00000
+
+	You want to reset CROSSFLG to its default value (i.e. you want
+	CROSSHAIR to display all fields).
+
+	> CROSSFLG = DEFAULT
+
+	Obviously, leading zeros can be eliminated in the above examples
+	but trailing zeros can not.
+

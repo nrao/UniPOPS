@@ -1,0 +1,35 @@
+	(REGULAR VERB)
+
+	RSTCOLOR will reset your color back to the default color of
+	white (-16,-16,-16).
+
+	ADVERBS SET:
+
+	STATUS(5)    Present color as determined by the last call to
+		     COLOR or RSTCOLOR.
+
+		     Values are coded as:  red*16*16 + green*16 + blue
+		     where red, green, and blue can take on any value
+		     from 0 to 15.  For example, if STATUS(5) = 0, the
+		     color is black; if STATUS(5) = 4095, the color is
+		     white; if STATUS(5) = 873, the color is red = 3,
+		     green = 6, blue = 9 (a sort of dark, saturated
+		     blue).
+
+	EXAMPLE:
+
+	You want to overlap two plots of scans in Array (0) and Array
+	(1) in different colors so you specify:
+
+		COLOR(-16, 0, 0); PAGE SHOW 	  
+		COPY(1,0) COLOR(32,4,6) RESHOW
+ 
+	which draws Array (0) in bright red, overwrites Array (0) with
+	Array (1), and draws Array (0) in vivid blue.  To return to
+	default color, type:
+
+		RSTCOLOR         [or COLOR(-16,-16,-16) ]
+
+		PAGE SHOW
+
+	and Array (0) will be drawn in white.

@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'BSHAPE:  Fits polynomial baseline to data in Array 0 and'
+PRINT 'stores the resulting fit coefficients in BPARM.'
+PRINT ' '
+PRINT 'BDROP,EDROP,NFIT=',BDROP,EDROP,NFIT
+PRINT 'BBASE,EBASE=',BBASE,EBASE
+PRINT 'BPARM='; print BPARM
+PRINT 'NREGION='; print NREGION
+PRINT ' ' 

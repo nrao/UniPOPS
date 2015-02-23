@@ -1,0 +1,60 @@
+	(PSEUDO VERB)
+
+        Syntax:     BATCH filename
+
+	BATCH executes commands that are located within the specified disk
+	file.  The file could contain the definition of a procedure or
+	any valid command.  After executing the last line in the file,
+	control of the program returns to the keyboard or a previously
+	invoked batch file if the batch was executed from a batch
+	file.  If the file contains a procedure definition, after 
+	executing BATCH, the procedure is available to the user.
+
+	BATCH searches for the filename in one of three places:
+		(1) as typed - i.e. in or relative to the current
+		    directory or as an absolute pathname.
+		(2) In the procedure directory pointed to by the
+		    popsproc1 environment variable (which must be set
+		    before the program starts).  This is the location
+		    of all of the "official" UniPOPS procedures.
+		(3) In the procedure directory pointed to by the
+		    popsproc2 environment variable (which must be set
+		    before the program starts).
+
+	BATCH will display the filename actually used before reading
+	from that file (examine the output if you are not sure what file
+	BATCH was using).
+
+	If an error occurs while reading the file, the rest of the file
+	is ignored and control of the program is returned to the keyboard.
+
+	If an error occurs while a procedure is being defined,
+	a FINISH is placed after the last line without an error
+	and control of the program is returned to the keyboard.
+
+	BATCH can be used only in execute mode and must be the only 
+	command on the input line.
+
+	At most, 50 total input devices (see the description of STATUS(13)
+	below for possible input devices) can be opened at once (this
+	includes files opened with the FOPEN command but does not include
+	any on-line data files or files controlled with the 
+	CHNGFILE pseudo verb.
+
+	No adverbs are used by BATCH.
+
+	ADVERB SET:
+
+	STATUS(13) : Specifies from where the program is trying to get
+		     its command input and is set by BATCH or HELP 
+	             commands.
+
+		     Values: 5 = standard (keyboard) input; 7 = batch
+		     file; 12 = setup file; 13 = help file
+
+	EXAMPLE: 
+
+	To read in PROCEDURE XX stored on disk in file xx.prc, specify:
+
+		BATCH xx.prc
+

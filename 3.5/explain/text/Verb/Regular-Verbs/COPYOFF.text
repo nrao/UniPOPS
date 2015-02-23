@@ -1,0 +1,31 @@
+	(REGULAR VERB)
+
+	COPYOFF is used to momentarily stop the production of
+	hardcopies; specifying COPYOFF will speed up most graphics
+	display routines.
+
+	COPYON is used to turn back on the production of hardcopies.
+	The default state of the program is COPYON.
+
+	No adverbs are used by COPYON or COPYOFF.
+
+	ADVERB SET:
+
+	STATUS(12) : Specifies the printer type and is set by the
+		     system or by the user when the program starts up.
+
+		     Values: 1 = no printer available; 2 = Tek 4010
+		     emulation; 3 = PostScript; 4 = HPGL printer; 5 =
+		     QMS-QUIC.  If less than zero, than COPYOFF is in
+		     affect.
+
+	EXAMPLE:
+
+	You wish to make a contour plot quickly so you specify :
+
+		COPYOFF QCONTOUR LABEL
+
+	You like what you see and what a hardcopy of it so you specify
+
+		COPYON QCONTOUR LABEL GCOPY
+

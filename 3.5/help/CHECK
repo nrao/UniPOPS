@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CHECK: Checks whether the NSAVE location in the "save"'
+PRINT 'file contains a scan.'
+PRINT ' '
+PRINT 'NSAVE=',NSAVE
+PRINT ' ' 

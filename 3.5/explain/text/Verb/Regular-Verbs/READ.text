@@ -1,0 +1,66 @@
+	(REGULAR VERB)
+   	
+	Syntax:    READ list 
+	 
+	READ puts UniPOPS into 'input mode' and allows the program to
+	read in the values of the adverbs you specified in the list.
+	The list may contain one or more adverb names.  READ will
+	respond with a hash prompt (#) until the user has entered
+	enough values to satisfy the list.
+
+	READ can be used to diminish the typing required to input the
+	values of adverbs.  You cannot place constants or internal-array
+	verbs in the list.  If the list doesn't exist, READ acts as an
+	indefinite pause which will wait until you hit a carriage
+	return.
+
+	You can read formatted input from the screen or files using the
+	FREAD verb.  UniPOPS can also do internal input/output using
+	the SREAD or SPRINT verbs.
+
+	NOTE: To read into string adverbs, it is best to use a single
+	read statement for the adverb.  That is, use:
+
+		READ X; READ STRING1   
+
+	where X and STRING1 are scalar and string adverbs, respectively,
+	instead of:
+
+		READ X, STRING1
+
+	EXAMPLES:
+
+	.  To input the values of CENTER, which has 12 elements, you
+	    can specify:
+
+			READ CENTER
+
+	  The program will respond with #, and then you input the values
+	  of CENTER -- either all at once:
+ 
+			#25 70 65 0 0 0 0 0 0 0 0 0
+
+	  or, one at a time:
+
+			#25  
+			#70  
+			#65  
+			#0  
+			#0 ... 
+
+	  When you have input 12 values, the program will prompt with 
+	  the caret (>) again.
+
+	.  READ can also be used as an indefinite pause, 
+
+			PROCEDURE WAIT(WT_X1,WT_X2)
+			SCALAR WT_I
+			FOR WT_I = WT_X1 TO WT_X2
+			   GET (WT_I) PAGE SHOW
+			   READ
+			   END
+			FINISH
+
+	   will plot one scan and then wait for the user to input a
+	   carriage return before it goes on to draw the next graph.
+

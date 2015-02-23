@@ -1,0 +1,31 @@
+#! /bin/csh -f
+# @(#)comments.exe.base	5.2 10/26/94
+# Uses the POPS comments facility
+#
+set filename = /tmp/$USER.cmnt
+if (-e $filename) rm -f $filename
+touch $filename
+#
+echo '--------------------------------------------------------------------'
+echo 'Please enter your suggestions or comments.  If you are reporting a'
+echo 'bug, provide as much detail as possible.'
+#
+if (! $?popseditor) then
+   echo "After entering your comments, type Ctrl-D to send your comments."
+   echo '--------------------------------------------------------------------'
+   cat >> $filename
+else
+   echo "After entering your comments, exit the editor in the normal fashion."
+   echo '--------------------------------------------------------------------'
+   ${popsdir}sunbin/edit2.exe $filename comments.icon "REPORTS"
+endif
+#
+if (! -z $filename) then
+   echo "Your comments will now be electronically mailed to your local unipops"
+   echo "guru and unipops-comments@nrao.edu."
+   mail unipops-comments@nrao.edu  < $filename
+   echo "Thank you for submitting a report."
+else
+   echo "There was nothing in your report -- No report has been sent."
+endif
+rm -f $filename

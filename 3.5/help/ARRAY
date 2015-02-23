@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'ARRAY: Creates an array adverb.'
+print ' '
+PRINT 'Also: (POINTER) Indicates a listing of array adverbs for'
+print 'HELP.'
+PRINT ' '

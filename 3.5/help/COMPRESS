@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COMPRESS:  (PSEUDO) Recovers all wasted memory space for'
+PRINT 'user.'
+PRINT ' '

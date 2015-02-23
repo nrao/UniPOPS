@@ -1,0 +1,51 @@
+	(SCALAR ADVERB)
+
+	YINCR and YMIN are used to set the Y scaling of the SHOW
+	verb.  YINCR equals the increment between each Y-tick mark.
+	YMIN equals the lowest y-value that will appear on the graph.
+
+	YINCR and YMIN are used by : RESHOW    SHOW
+
+	YMIN is set by : FREEY    HOLDY
+
+	YINCR and YMIN are set by : YRANGE
+
+	The initial value of YINCR is 1.  
+
+	The initial value of YMIN is -9999.
+
+	If  YMIN is less than or equal to -9999 then SHOW and  RESHOW
+	will set the  Y scaling  automatically.  If YMIN  is less than
+	or equal to to -9x10^9, then SHOW and RESHOW will use the
+	scaling factors found for the last SHOW or RESHOW display.  If
+	YMIN is set to a value greater than -9999, SHOW and RESHOW will
+	use  the values of  YMIN and  YINCR specified by the user.
+	Thus, if the user sets YMIN they should also set YINCR.
+
+	FREEY sets YMIN to -9x10^4, so that SHOW and RESHOW will set
+	the Y scaling.   HOLDY sets  YMIN to -9x10^10 so that SHOW will
+	not update its Y range.
+
+ 	EXAMPLES :
+
+ 	.  To expand the scale with SHOW, specify;
+
+		YMIN = -1
+		YINCR = 1.00
+  
+	.  You  want  to  compare two different spectra but you are
+	   frustrated because SHOW plots them to different scales.  To
+	   get the second graph to the same scale, you specify 
+
+		HOLDY
+
+	   after the first SHOW but before the second.
+
+	.  You have used HOLDY and now everything is coming out to the
+	   same scale. To get back to automatic scaling, specify
+
+		FREEY 
+
+	   or type 
+
+		YMIN = DEFAULT

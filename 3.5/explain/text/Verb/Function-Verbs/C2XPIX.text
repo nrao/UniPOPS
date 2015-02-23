@@ -1,0 +1,89 @@
+	(FUNCTION VERB)
+
+	C2XPIX, T2YPIX, XPIX2C, and YPIX2T are functions that are
+	used to convert between the pixel coordinates of the display
+	surface and the coordinates of the thing being displayed.
+
+	These functions work for the last plot generated.
+
+	C2XPIX converts a c-value (channel number for SHOW, x-axis
+	value for PLOT, x-cell number for a matrix display) into
+	the corresponding x-pixel value.
+
+	XPIX2C converts an x-pixel value into the corresponding
+	c-value.
+
+	T2YPIX converts a t-value (temperature for SHOW, y-axis value
+	for PLOT, y-cell number for a matrix display) into the
+	corresponding y-pixel value.
+
+	YPIX2T converts a y-pixel value into the corresponding
+	t-value.
+
+	These are primarily useful in procedures that, for example,
+	draw a feature at a certain location on the plot, draw the
+	galactic plan on an Ra-Dec map, etc.
+
+
+	Each of these functions take one argument.
+
+	No adverbs are set by these functions.
+
+	Adverbs used:
+
+		XLOGP  : used by C2XPIX and XPIX2C when the last
+			 plot generated was a PLOT display.  It
+		         must be the same value as used for the 
+			 PLOT display.
+
+		YLOGP  : used by T2YPIX and YPIX2C when the last
+			 plot generated was a PLOT display.  It
+			 must be the same value as used for the
+			 PLOT display.	
+
+	Example:
+
+	This example uses procedure from the following two 
+	standard procedure libraries :
+
+	degtrig.prc	trigonometric functions that accept/give 
+			angles in degrees 
+	value_cell.prc	functions for conversion of axis values to/from
+			cell values for cubes and matrices
+
+	
+	You want to read a file containing (X,Y) positional
+	pairs and plot a 'cross' on the current matrix plot
+	at the appropriate positions:
+
+	This procedure does the work (you may choose
+	to eliminate some of the comments when creating this
+	procedure to save on procedure space):
+
+	PROCEDURE PLTSTARS
+	#
+	SCALAR X, Y, I0, J0
+	GLOBAL SCALAR UNIT
+	#	rewind the file, must have already been opened
+	FREWIND(UNIT)
+	#	loop until an error occurs (i.e. end of file) 
+	WHILE 1
+	#     read in an (X,Y) pair
+	   FREAD(UNIT," ") X, Y
+	#     Convert each value on each axis to the cell value
+	#     on that axis (MVAL2CELL) and then to a pixel value
+	#     on the last displayed plot  (C2XPIX, T2YPIX)
+	   I0 = C2XPIX(MVAL2CELL(1,X)); J0 = T2YPIX(MVAL2CELL(2,Y))
+	#	Draw the "cross", 10 screen pixels wide 
+	   PLACE(I0+5,J0); VCTR(I0-5,J0) 
+	   PLACE(I0,J0+5); VCTR(I0,J0-5) 
+	END 
+	RETURN
+	FINISH
+
+	To use this (the file name is "Stars"):
+
+	> UNIT = FOPEN("Stars", R0)
+	> PAGE; RASTER; LABEL
+	> PLTSTARS
+

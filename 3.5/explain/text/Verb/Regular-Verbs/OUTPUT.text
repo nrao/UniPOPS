@@ -1,0 +1,15 @@
+	(REGULAR VERB)
+
+	OUTPUT allows the user to print the attached printout file on
+	the local printer.
+
+	No adverbs are used or set by OUTPUT.
+
+	EXAMPLE:
+
+	With the TABLE command, you have directed the data values of
+	Array (0) to be stored in the standard printout file,
+	LPRINTOUT, and now wish to have a hard copy of that file, so
+	specify:
+
+		OUTPUT		 

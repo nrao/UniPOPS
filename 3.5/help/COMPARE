@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'COMPARE:  (FUNCTION) Compares two strings and returns TRUE'
+PRINT 'if they are identical and FALSE if they are not.  Syntax:'
+PRINT 'COMPARE(string1, string2)'
+PRINT ' '

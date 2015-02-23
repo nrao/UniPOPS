@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'UNK:  (POINTER) Indicates that you want FOPEN to open a'
+PRINT 'file whose exsistence is unknown'
+PRINT ' '

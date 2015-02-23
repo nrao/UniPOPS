@@ -1,0 +1,30 @@
+	(FUNCTION VERB)
+
+	CHANTOX returns the x-axis value of the specified channel
+	number.  The units of the returned value depends upon what the
+	current lower x-axis is for the last display.
+
+L------------------------- Spectral Line ------------------------------
+L-      The returned value can represent frequency, velocity, or
+L-      channel number depending on the display option chosen for the
+L-      bottom x-axis by CV, VC, CF, FC, CC, VV, VF, FV, FF, or SAXIS.
+L------------------------- Spectral Line ------------------------------
+
+C------------------------- Continuum ----------------------------------
+C-      The returned value can represent position, time, or channel
+C-      number depending on the display option chosen for the bottom
+C-	x-axis by CV, VC, CF, FC, CC, VV, VF, FV, FF or SAXIS.
+C------------------------- Continuum ----------------------------------
+
+	No adverbs are used or set by CHANTOX.
+
+	EXAMPLE:
+
+	You want to know what is the velocity and frequency of channel
+	34.  Type:
+
+		VV PRINT CHANTOX(34)
+		FF PRINT CHANTOX(34)
+
+	And the velocity and frequency will be printed out.
+

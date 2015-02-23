@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'ADDSTACK:  Adds the specified scan number range to the '
+PRINT 'ASTACK array.  Syntax: ADDSTACK(first, last, increment).'
+PRINT ' '
+PRINT 'ACOUNT=',ACOUNT
+PRINT ' ' 

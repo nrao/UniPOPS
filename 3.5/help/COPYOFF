@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COPYOFF:  Turns off the ability to make hardcopies of the'
+PRINT 'graphics screen.'
+PRINT ' '

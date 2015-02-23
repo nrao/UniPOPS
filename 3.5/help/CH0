@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CH0:  (INTERNAL-ARRAY) Returns value of given header '
+PRINT 'parameter in Cube (0).'
+PRINT ' '

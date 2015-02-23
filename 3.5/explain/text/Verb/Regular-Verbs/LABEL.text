@@ -1,0 +1,52 @@
+	(REGULAR VERB)
+
+	LABEL is used to complete a two-dimensional map made by RASTER,
+	HLFTNE, CONTOUR, PLOTDOTS, or QCONTOUR.  LABEL draws and labels
+	the axes of the map, adds documentary informations, and labels
+	the contour, color, gray-scale, or half-tone levels.
+
+	ADVERBS USED:
+
+	  LEVS(32)      The levels at which the contours were drawn.
+			Up to 32 levels may be specified.  The default
+			values are -999999.  If n levels are required,
+			set LEVS(n+1) = DEFAULT or -999999.
+
+	  SLABEL        If SLABEL = 1 or 2, then the plot will be
+			documented and tick marks will be labeled.  If
+			SLABEL = 0, no documentation or tick mark labels
+			will be generated.  Initial value is 1.
+
+	  CLUT(3x32)    If RASTER display, then the Color-Look-Up-Table
+			used for the display is needed.  Initial values
+			are 0.
+
+	  CMARK(12)     If CMARK(N) is not equal to its default value
+			(-999999), a vertical line will be drawn at the
+			x-cell number, CMARK(N).
+
+	  FMARK(12)     If FMARK(N) is not equal to its default value
+			(-999999), a horizontal line will be drawn at
+			the y-axis value, FMARK(N).
+
+	  TMARK(12)     If TMARK(N) is not equal to its default value
+			(-999999), a horizontal line will be drawn at
+			at x-cell, TMARK(N).
+
+	  VMARK(12)     If VMARK(N) is not equal to its default value
+			(-999999), a vertical line will be drawn at the
+			x-axis value, VMARK(N).
+
+	  ZLINE         If TRUE (+1), a horizontal line will be drawn
+			at Y=0.  Initial value is FALSE (-1).
+
+	No adverbs are set by LABEL.
+
+	EXAMPLE:
+
+	After making a contour map using CONTOUR, specifying;
+
+		LABEL
+
+	will draw and label the axis and print the contour levels.
+

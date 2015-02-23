@@ -1,0 +1,41 @@
+#! /bin/csh -f
+# @(#)man.exe.sh	5.1 06/22/94
+# Utility for displaying Unix Manual pages; uses some of the ideas
+# from B. Barnett's MANTOOL/HELPTOOL facility.
+#
+set noglob
+if ($#argv < 1) then
+  echo -n 'Enter name of the UNIX command: '
+  set cmnd1 = $<
+  set cmnd = ($cmnd1[1])
+else
+  set cmnd = $argv[1]
+endif
+# Use supplied command name or ask for one.
+#
+man $cmnd[1] | ul -tdumb > /tmp/man$$
+# Create temporay file containing manual pages
+#
+set count = `wc -l /tmp/man$$`
+if ($count[1] <= 1) then
+     echo "Cannot find anything on" $cmnd[1]
+     rm /tmp/man$$
+#    Make sure that user input is legit
+#
+else
+    if ($?WINDOW_PARENT || $?DISPLAY) then
+      if ($?WINDOW_PARENT) then
+         exec cmdtool -WL "SYSHELP"  -Wl "SYSHELP" \
+	      -WI ${popsdir}sunbin/man.icon ${popsdir}sunbin/prcdir.exe \
+		/tmp/man$$ &
+      else
+	 exec xterm -j -sb -wf -sl 1000 -title "SYSHELP" -n "SYSHELP"  \
+		-e ${popsdir}sunbin/prcdir.exe /tmp/man$$ &
+      endif
+    else
+	exec prcdir.exe $cmnd[1]
+    endif
+#   Use cmdtool or xterm to display manual page, if in a window environment, else
+#   just display the manualpages
+#
+endif

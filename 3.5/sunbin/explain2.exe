@@ -1,0 +1,26 @@
+#! /bin/csh -f
+# @(#)explain2.exe.sh	5.1 06/22/94
+# Uses the POPS hiearchial EXPLAIN facility
+#
+set noglob
+#
+if ($#argv < 1) then
+   set topic
+else
+   set topic = $1
+endif
+#
+cd ${popsdir}explain/text
+if ($?WINDOW_PARENT || $?DISPLAY) then
+     if ($?WINDOW_PARENT) then
+        exec cmdtool  -Wl "Explain" -WL ""  -WI \
+	   ${popsdir}sunbin/explain.icon ${popsdir}explain/source/explain \
+	   expdir $topic &
+     else
+	exec xterm -j -sb -wf -sl 1000 -title "Explain" -n "EXPLAIN"  \
+	    -e ${popsdir}explain/source/explain expdir $topic &
+     endif
+else
+     exec ${popsdir}explain/source/explain expdir $topic
+endif
+

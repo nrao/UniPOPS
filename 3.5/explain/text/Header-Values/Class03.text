@@ -1,0 +1,18 @@
+Class 3 :  Observing Parameters               
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Universal Time Date                           | UTDATE   |  R*8   | YYYY.MMDD
+Universal Time                                | UT       |  R*8   | Hours
+LST                                           | LST      |  R*8   | Hours
+Number of Receiver Channels                   | NORCHAN  |  R*8   |
+Number of Switching Variables                 | NOSWVAR  |  R*8   |
+Number of Phases per Cycle                    | NOPHASE  |  R*8   |
+Length of Cycle                               | CYCLLEN  |  R*8   | Seconds
+Length of Sample                              | SAMPRAT  |  R*8   | Seconds
+Class 11 type                                 | CL11TYPE |  C*8   |
+The phase number of this indiv. record scan   | PHASEID  |  R*8   |
+#if RFRNC CKBK
+
+
+#end

@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'VCTR:  Draws a line to the specified location on the'
+PRINT 'graphics screen from the location last specified by PLACE.'
+print 'Syntax: VCTR(x,y).'
+PRINT ' '

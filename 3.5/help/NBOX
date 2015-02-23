@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'NBOX:  (ADVERB) Boxcar filter size (must be odd and <= 11).'
+PRINT ' '

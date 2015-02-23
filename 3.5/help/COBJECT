@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COBJECT:  (HEADER-CUBE) The name associated with the image'
+PRINT 'in the Cube'
+PRINT ' '

@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'DCBASE:  Calculates and takes out a DC bias from the data'
+PRINT 'in Array 0 and stores the results back into 0.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+print 'BBASE,EBASE=',BBASE,EBASE
+PRINT 'NREGION='; print NREGION
+PRINT ' ' 

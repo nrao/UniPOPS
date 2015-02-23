@@ -1,0 +1,390 @@
+2. Getting Started
+------------------
+
+This chapter describes the basics of logging into a computer account
+starting up UniPOPS and arriving in the program with the set-up of 
+your choice. It also details how to exit the program, and log out 
+of the computer.
+
+
+2.1 Your Computer Account
+-------------------------
+
+The way computer accounts are created and managed differs from site
+to site.  The following attempts to describe both the Green Bank
+and Tucson policies concerning the creation of accounts.  Since
+these policies may change, you should always consult the local
+staff for the most up to date information.  These policies also
+differ from site to site.  For example, in Tucson observers share a 
+common account (the "obs" account) and are given different subdirectories 
+for their use during an observing run.  In Green Bank, users are given 
+their own accounts for using while observing and reducing data.  
+
+When your observations appear on the schedule for the Green-Bank
+140-foot telescope, the System Administrator will ensure that you have
+a computer account. If you, or one of your collaborators, already have
+an account on the Green-Bank Suns, you will probably use that account
+during your stay. Otherwise, a new account will be set up in the name
+of the principle investigator on the observing proposal.  If, on
+arrival at Green Bank, you should be confused by the computer system,
+or believe that you have slipped through the `net' and have no computer
+account, ask the System Administrator, or the Friend-of-the-Telescope,
+about your account and they will set up a new account.
+
+Shortly before your observations are to begin at the 12-meter telescope
+on Kitt Peak.  A subdirectory in the "obs" account will be created
+and initialized for your use during your stay at the 12-meter.  Your
+initials are typically used as the name of this subdirectory.  The
+telescope operators can create this subdirectory if none exists
+for you when you arrive at the site.
+
+At both sites, UniPOPS can be used to process data on any of the
+observatory's Sun workstations. There is a minor difference between the
+Sun at the 140-foot telescope, and all other Green-Bank Suns, in that
+the disk on the machine at the telescope holds the master on-line data
+file (see Section 2.2).
+
+
+2.2 Logging In and Starting-Up UniPOPS
+--------------------------------------
+
+You are recommended to run UniPOPS directly from a Sun workstation,
+although you can run the program from either a dumb terminal, (albeit
+without graphics and many other useful features), or a Tektronix 4014
+terminal or emulator.
+
+
+2.2.1 Logging In
+----------------
+
+When you first sit before the terminal, you should get the computer's
+attention by striking a <CR> (i.e. a carriage return). When prompted,
+you should enter the account username plus a <CR>, followed by the
+correct password (if yet set), and a further <CR>.  For users at the
+12-meter, you should obtain the current password for the "obs" account
+from the telescope operator.  Each time you log in to the "obs" account,
+you will be asked for your 3 initials (the same initials used to
+create your subdirectory).  It is vital that you enter these initials
+correctly or you will not be able to access your on-line data.  You
+should always verify that you are in the correct subdirectory before
+continuing.  If you suspect that you are not in the correct subdirectory,
+you should log out of the account and start over.  If you continue
+to have problems while logging in, report them to the telescope operator 
+or another member of the 12-meter staff.
+
+When you log in for the first time at either site, the computer will ask 
+a series of questions. At present, the series consists of just one request, 
+namely, "Which of a range of editors do you wish to make your default 
+editor ?" If you are operating from a Sun workstation, we recommend that 
+you choose the Sun screen editor, (textedit), unless you are more familiar 
+with an alternative (e.g. vi, edt, emacs).  Select an editor from
+the list that you have just been shown.  At this point, you should
+see "preparing directory - be patient ...".  Your directory is
+being prepared so that you can use UniPOPS.  Specifically, you are getting 
+empty data files for LINE and CONDAR (LDATA, LKEEP, LSAVE, etc), copies of 
+the UniPOPS memory files (LMEMORY, CMEMORY), a default setup file 
+(12-m only) and a .unipops file that contains the settings of various
+variables that control the behavior of UniPOPS.  The default values found 
+in the .unipops file should be adequate for new users while experienced 
+users may wish to change it's contents (see Appendix M).
+
+All other things being equal, it is preferable that you operate from
+the `windows' environment of a workstation for UniPOPS to work most
+affectively.  However, if you are working from a dumb terminal or a
+Tektronics 4014 terminal, there is no `windows' facility available, and
+after logging in you will be left at the normal UNIX command line.
+When using a dumb terminal, you can continue to log in to UniPOPS and
+work with your data, but you will not be able to display your data
+until a workstation or a Tektronics 4014 is available.  Graphical
+display is possible with the Tektronics 4014, although both text and
+graphics share the one screen. Slight differences on starting-up
+UniPOPS from the different terminals will be highlighted below.
+
+If you are sitting before a Sun workstation and have successfully
+logged into the computer, it will start to bring up its windowing
+environment. A short description of possible window environments is
+given in Appendix C, "Window Systems", of this Cookbook and we urge all
+first time users to read that Appendix before proceeding further. For
+the rest of this Cookbook we assume that you are using either the
+X-Window or SunView window system.  At one point early in this login
+sequence for Green Bank users, the computer will pause and give you five 
+seconds to hit a <Ctrl-C> should you not wish to enter the `windows' 
+environment.  The `windows' environment that appears probably will then 
+consist of open CmdTool windows (one being the Console window), plus 
+icons representing a clock, a MailTool and further CmdTools.
+
+(For the benefit of users who are not familiar with UNIX, but wish
+either to perform normal computing outside UniPOPS, or to send commands
+to the system from inside the program using the UniPOPS command SYSTEM
+-- see Section 12.1 -- we give a summary of the most-used UNIX commands
+in Appendix B, at the end of this Cookbook.)
+
+
+2.2.2 Setting a Password
+------------------------
+
+New accounts in Green Bank are created with no password or a default 
+password supplied by the System Administrator.  We STRONGLY RECOMMEND that
+observers set a password for themselves the very first time that they
+log in.  User at the 12-meter MUST NOT change the password of the
+"obs" account for obvious reasons.  To change the password of an
+account place the cursor in a CmdTool window (preferably not the Console 
+window, as this is where the system will sometimes print messages) and 
+type either the command 
+
+		% yppasswd
+
+or
+
+		% passwd
+
+[Ask the system administrator which you should use].  On pressing <CR>,
+the computer will prompt you for the password of your choice.  Note
+that at some sites you should NOT use the UNIX `passwd' command, as
+this will set your password only on the Sun that you are logged in to,
+and will not export it to the rest of the LAN !
+
+
+2.2.3 Starting-Up UniPOPS
+-------------------------
+
+If you are sitting at a Sun workstation, we suggest that you start-up
+UniPOPS from a CmdTool window that is NOT the Console window as that
+window will be used by the system to display messages.  Start-up
+UniPOPS by typing one of the following commands at the UNIX % prompt: 
+
+	--------------------------------------------------------
+	| Program Name	|  Type of Data   |	Where          |
+	|---------------|-----------------|--------------------|
+	| gbline        |  Spectral-Line  |   	Green Bank     |
+        | tucline	|  Spectral-Line  |     Tucson         |
+        | cvline	|  Spectral-Line  |     Anywhere else  |
+	|		|		  |		       |
+        | gbcondar	|  Continuum	  |     Green Bank     |
+        | tuccondar	|  Continuum	  |     Tucson         |
+        | cvcondar 	|  Continuum	  |	Anywhere else  | 
+	--------------------------------------------------------
+
+
+(NOTE that the gb, tuc, and cv versions of LINE and CONDAR are
+identical, except as to which on-line data files they access. CONDAR
+and LINE are themselves identical, except for a handful of specialized
+commands and the type of data. Throughout this Cookbook, a reference to
+CONDAR or LINE, implies the local -- i.e. gb, tuc, or cv -- version,
+while UniPOPS implies either LINE or CONDAR.)
+
+During the UniPOPS start-up sequence, a LinePlot or ContPlot icon will
+appear on the screen, which represents the graphics window in which
+your plots will appear. The program will also request you to enter a
+few pieces of information,
+
+  a) The first time you log in to UniPOPS, a series of messages will
+     appear containing news items concerning recent changes made to the
+     program and messages from the programming staff. On subsequent
+     log ins you will be shown a list of the current news items. To
+     read any of these, enter the name of the item when prompted, or
+     <CR> to proceed.
+
+  b) You will be asked whether you wish to recover the UniPOPS
+     environment from the last time you ran the program ? You may
+     answer Y or N for "Yes" or "No" respectively, while just a <CR>
+     will give the default of N. (You will not be asked this if it is
+     your first run of LINE or CONDAR.)
+
+  c) Unless you are logged directly into a Sun workstation, and are
+     running UniPOPS in the window environment on THAT workstation,
+     you will now be asked what graphics capability your terminal
+     possesses. Answer from the table of options displayed. Unless you
+     have a standard printer defined at login (see Appendix M), you will 
+     also be asked which printer you wish to use.  Again your answer should 
+     be from the displayed table of options.
+
+  d1) If you will be using UniPOPS to reduce 140-foot telescope data via
+     gbline or gbcondar, you will be requested to supply the project
+     code for your observations. This should be identical to the code
+     you specified in your observing file.  If you specify a project
+     code of 'null' then all your requests for on-line data will be
+     ignored.
+
+  d2) If you will be using UniPOPS to reduce 12-meter telescope data
+     and you are at the telescope, you will be shown a list of default
+     on-line data files.  These will be the highest versions of each
+     file type for your initials (which you entered when you logged in
+     to the workstation) found in the default data area.  If you wish
+     to change the version numbers, you should use the CHNGONLINE or
+     CHNGVER verbs after these initialization steps have been
+     completed.
+
+     There is currently no remote data access for 12-meter on-line data.
+
+  e) Finally, you will be shown the currently accessible data and disk 
+     files.  These are either default files or files you last used
+     in a previous UniPOPS sessions [if you had saved your environment
+     and have recovered it by answering Yes in step b) above].  
+
+     After startup is completed, you can use the CHNGFILE verb to
+     change which files you want UniPOPS to access (see Section 5.3).  
+
+  f) If you answered 'N' to the question described in b) above
+     concerning `recovering' your UniPOPS environment, then the final
+     action by the program when logging-in to UniPOPS is to look for a
+     file called LSETUP for LINE or CSETUP for CONDAR, containing
+     UniPOPS instructions.  This file can be used to tailor the UniPOPS
+     session to your convenience.  For example, suppose that a file
+     yy.prc exists in the log-in disk area containing a procedure (see
+     Chapter 13) that you need in every UniPOPS session, then this can
+     be made immediately available by editing into LSETUP the
+     instruction,
+
+	BATCH yy.prc
+
+     which will automatically install the procedure at log-in (see
+     Section 13.9 for a description of the BATCH command.)
+
+     The commands in the setup file are executed silently (i.e., you'll
+     not see the contents of the setup file as they are being read and
+     executed but you will see any generated error message).
+
+     The default setup files for 12-m users are either CSETUP.12meter
+     and LSETUP.12meter (for CONDAR and Line users, respectively).
+     The setup files that were created for you when you first logged into
+     your subdirectory in the obs account contain commands to BATCH
+     in these default setup files.
+
+     No default setup files are available for Green Bank observers.  
+
+
+If you are running UniPOPS from a Sun workstation, you should now open
+the LinePlot or ContPlot icon and, if required, reposition the
+resultant graphics-display screen.  See the Appendix C for information 
+on how to open, move, and resize windows.  
+
+
+2.3 The UniPOPS Prompt
+----------------------
+
+Now that you are logged into UniPOPS, the program prompt should appear.
+The default prompt is,
+
+	Line > 
+
+     or 
+
+	Condar > 
+
+You can change this by setting the string that you desire to use as
+the prompt into the 8-character UniPOPS string adverb (see Sections
+3.2.2 and 3.3) PROMPT.  Trailing blanks in the adverb PROMPT will not
+appear in the screen prompt.  For example to set the prompt to the
+string, 'HI >', type,
+
+	>PROMPT = 'HI >'
+
+At the 12-meter, the prompt is used to indicate what the default
+on-line data file type is (for filter bank data, the prompt is
+"LineF>" while for hybrid spectrometer data, the prompt is
+"LineH>" and for Condar, the prompt is as stated above).  This
+prompt is set by the two standard 12-meter procedures, FBDATA and
+HCDATA.  At startup (in LSETUP.12meter, the default setup file),
+FBDATA is executed and the default prompt is therefore "LineF>"
+We recommend that you NOT change the prompt while observing at
+the 12-meter.  See the documentation on FBDATA and HCDATA for
+more information.
+
+NOTE : In this Cookbook, the examples given will assume that the prompt
+is '>',
+
+
+
+2.4 Possible Snags during Start-up 
+----------------------------------
+
+Appendix F, at the end of this Cookbook, lists the full set of UniPOPS
+error messages, and can be consulted when problems arise. However, on
+start-up the most usual snags are,
+
+  .  If you last left UniPOPS `explosively', then a `lock' may well
+     exist on your files. This has to be cleared before the program can
+     be started up successfully. If one attempts to start-up UniPOPS in
+     this condition, it will inform you of the presence of the lock, 
+     and give you the following 3 options:
+
+	To exit the program, type: 0
+	To remove a leftover LOCKFILE, type: 1
+	To ignore the LOCKFILE, type: 2
+
+     If you are sure that the LOCKFILE exists because you last left
+     UniPOPS `explosively' (i.e. in a non-standard way, without using
+     EXIT successfully), then you should type "1" to indicate that the
+     program should remove the offending LOCKFILE.
+
+     However, BEWARE, as a lockfile will also exist on your files if your 
+     collaborator is already running UniPOPS from the same account and 
+     directory, and you may create a disastrous conflict if you clear that 
+     lock.  Or, you may have left UniPOPS running on another terminal
+     using the same directory and forgotten about it.  In both cases,
+     the LOCKFILE really does indicate that someone else is using the
+     program.  The program will show you who created the LOCKFILE and
+     when and where it was created.  You should use that information
+     to determine what the likely cause of the existence of the LOCKFILE
+     is and take appropriate action.  See Appendix F for a further
+     discussion of this problem and the implications of ignoring 
+     the LOCKFILE.
+
+  .  Suppose you have been away from the observatory for some while, or
+     have had your version of the UniPOPS program replaced by the
+     latest upgrade, UniPOPS may indicate on start-up that the memory file, 
+     or recover file, and the program versions are not compatible.  You will
+     then be offered the following choice:
+
+	Do you want to recreate your memory file :
+        (y or n) ? [ default :n ]:
+
+     If you choose "n" the program will exit.  One possible cause of
+     a missing memory file or a memory file with the wrong access
+     privileges is attempting to start up the program from an
+     incorrect subdirectory.  It is probably a good idea to understand
+     why your memory file is out of data or does not exist before
+     answering "y" to the above question.
+
+
+NOTE : If the recover file is out of date, you will be told so by the
+program which will continue.  You will not be allowed to recover from
+that file.  There is usually no way to recover the information in an
+out of data recover file except to hope that you can use an older version
+of the program that can read the recover file.
+
+
+2.5 Logging Out
+---------------
+
+Before exiting UniPOPS, think if you need to STORE a copy of the
+program memory (see Section 13.10). When you are content that you are
+really ready to exit the program, do this by typing at the UniPOPS '>'
+prompt,
+
+	>EXIT
+
+Before returning you to the operating system, EXIT will first ask
+whether it should update the `recovery file'. Answer either Y or N for
+"Yes" or "No" respectively, as there is no default.  If you choose to
+update the file, then next time you use UniPOPS you can tell the
+program to read in the recovery file that has just been saved.  This
+will recreate the exact environment of the present analysis session
+apart from the two- and three-dimensional facilities described in
+Chapter 16.  
+
+After exiting from UniPOPS, you should exit the windowing system (if you are
+using one).  See Appendix C for details.
+
+You can now log-out by typing, at the UNIX % prompt,
+
+	logout
+
+If this doesn't work, try,
+
+	exit
+
+     or 
+
+	bye

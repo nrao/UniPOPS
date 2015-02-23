@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SSCANS:  (POINTER) Indicates save data file for TELL,'
+PRINT 'SUMMARY, SELECT, CHNGFILE, and Z_CHNGFIL.'
+PRINT ' '

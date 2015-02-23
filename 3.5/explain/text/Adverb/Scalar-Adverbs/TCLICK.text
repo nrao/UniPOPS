@@ -1,0 +1,8 @@
+	(SCALAR ADVERB)
+
+	TCLICK is set by CLICK.	 It corresponds to the value that 
+	the function TCUR would have returned at the location of the 
+	crosshair when the user clicks a mouse button.
+
+	For a plot made using SHOW or PLOT, this is the y-axis value
+	and for a 2-d plot this is the y-cell number.

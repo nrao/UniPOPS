@@ -1,0 +1,80 @@
+	(PSEUDO VERB)
+        
+	Syntax:    PROCEDURE  name (dummy_parameters)
+
+	PROCEDURE is used to define a user-defined command which can
+	then be executed by entering its name on the command line or
+	from within another procedure or a batch file.  Procedure names 
+	are essentially user-define verbs or functions.  The PROCEDURE 
+	statement is of the form:
+
+		PROCEDURE procedure-name (optional dummy parameters)
+		Statements the procedure is to execute.  
+		FINISH
+
+	The PROCEDURE statement puts the program into compile mode.  
+	When in compile mode, the program prompts with a colon (:) instead 
+	of a caret (>) or the value of the PROMPT adverb.  The FINISH 
+	statement is required to complete the definition of the PROCEDURE 
+	and return the program to execute mode.
+
+	The procedure's name must follow the conventions for naming
+	adverbs and procedures; the optional dummy parameter list
+	contains the names of scalar adverbs whose values the procedure
+	will either use or change (similar to parameter lists in
+	Fortran subroutines or functions).  String adverbs can not
+	be used in the parameter list.
+
+	PROC is an alias for PROCEDURE.
+
+	PROCEDURE can be used only in execute mode and must be the only
+	command on the input line.
+
+	We recommend that you do not type a procedure definition
+	directly into UniPOPS but that you should use the EDIT command
+	to create a file on disk containing the definition of the
+	procedure followed by a BATCH command to install the
+	procedure.
+
+	See the Procedure-Writing documentation for full details
+	concerning writing procedures.
+
+	No adverbs are used or set by PROCEDURE.
+
+	EXAMPLES: 
+ 
+	.   The following could be entered as a procedure to print the
+	    square roots of the numbers from 1 to 10:
+
+		PROCEDURE EXAMPLE
+		SCALAR EX_I
+		FOR EX_I = 1 TO 10
+		  PRINT EX_I, SQRT(EX_I)
+		  END
+		FINISH
+
+	   Now, type EXAMPLE and a list of square roots will be
+	   generated.
+		
+	.  The following is an example of a function procedure (a
+	   procedure that acts like a Fortran or C function in that a
+	   value is returned by the procedure):
+
+		PROC FACTORIAL(FACT_I)
+		# Procedure function that calculates the factorial of
+		# its argument.
+		SCALAR FACT_I1,FACT_I2,FACT_I3
+		FACT_I1=NINT(FACT_I)
+		FACT_I3=1
+		IF FACT_I>1 THEN
+		   FOR FACT_I2=FACT_I1 TO 2 BY -1
+		      FACT_I3=FACT_I3*FACT_I2
+		      END
+		   END
+		RETURN FACT_I3
+		FINISH
+
+	   Typing: PRINT FACTORIAL (33) will print out the factorial of 33.
+	   X=FACTORIAL(0) will assign to adverb X the value of the factorial
+	   of zero (= 1.000). 
+

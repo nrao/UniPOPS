@@ -1,0 +1,112 @@
+	(REGULAR VERB)
+
+	Syntax:    GETIR(scan_no.rcvr-number, record_no, phase_no) 
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-	GETIR copies the data for an individual record or phase for a
+L-	scan from either the on-line or off-line records files to Array
+L-	(0).  The verb is useful for debugging problems, for
+L-	understanding your data, and for eliminating problems, such as
+L-	interference, from your data.
+L-
+L-	The verb works only for Green Bank spectral-line data and
+L-	requires three arguments
+L-
+L-	The first argument is the scan and receiver number:
+L-
+L-	    If scan-no > 0, then the on-line records file is searched
+L-	    first, followed by the off-line data file, if a scan with the
+L-	    correct number hasn't been found.
+L-
+L-	    If scan-no < 0, then the off-line records file is searched
+L-	    first, followed by the on-line data file, if a scan with the
+L-	    correct number hasn't been found.
+L-  
+L-	    The rcvr-number specifies which back-end's data is to be
+L-	    retrieved.  Back-end number 1 is specified as a .01, back-end
+L-	    number 2 as .02, etc.  If rcvr-number is not specified, the
+L-	    first back-end is retrieved.
+L-
+L-	The second argument is the desired record number:  
+L-
+L-	    Record_no can have any value up to the number of records
+L-	    that comprise the scan.  If you specify a record_no of
+L-	    zero, all the records in the scan will be averaged together
+L-	    (using Eff_int/Tsys**2 weighting) to produce a single
+L-	    data array.
+L-
+L-	    An error message is generated if you specify a non-existing
+L-	    record_no.
+L-
+L-	The third argument describes the phase of the data you want:
+L-
+L-	    For Switched-Power data, you can access the signal or
+L-	    reference phase separately by using a phase_no of 1 or 2,
+L-	    respectively.  For Total- power observing, only one phase
+L-	    is available and, thus, phase_no can have a maximum value
+L-	    of 1.
+L-
+L-	    If you specify a phase_no of zero for Switched-Power, the
+L-	    signal and references phases are combined via
+L-	    Tsys*(sig-ref)/ref into a single array.  A phase_no of zero
+L-	    for Total-Power is equivalent to a phase_no of 1.  In all
+L-	    but special cases, a phase_no of zero should be used.
+L-
+L-	    An error message is generated if you specify a non-existing
+L-	    phase_no.
+L-
+L-	No adverbs are used or set by GETIR.
+L-
+L-	EXAMPLES:
+L-
+L-	GETIR(1001.03, 0, 0)  <- averages all records and process all
+L-				phases for scan 1001, feed 3.  This is
+L-				equivalent to a GET 1001.03
+L-
+L-	GETIR(-1001.03, 7, 0) <- look through off-line file first for
+L-				   scan 1001, feed 3 and then on-line
+L-				   file.  Returns record 7 and process
+L-				   signal and reference if Switched Power.
+L-
+L-	GETIR(1001.03, 7, 2)  <- returns the reference spectra, record
+L-				 7 for scan 1001, feed 3.
+L-
+L-
+L-	The following procedure will create a 2-dim matrix of the 
+L-	records from a scan:
+L-
+L-		PROC RECMAP(SCANNO, REF_REC)
+L-		# SCANNO = Desired Scan number
+L-		# REF_REC > 0 if you want to plot up the difference
+L-		#	between a record and record REF_REC (use for
+L-		#	total-power observing.
+L-		#
+L-		SCALAR I
+L-		#
+L-		# Set up matrix header
+L-		GET SCANNO; MBLANK 0
+L-		MH0(MNAXIS1)=H0(NOINT); MH0(MNAXIS2)=H0(NORECORD)
+L-		MH0(MTYPE1)="Channel"; MH0(MTYPE2)="Record"
+L-		MH0(MOBJECT)=H0(OBJECT)
+L-		#
+L-		# Store away reference record for possible later use
+L-		IF REF_REC > 0 THEN
+L-		    GETIR(SCANNO, REF_REC, 0); COPY(0,1)
+L-		END
+L-		#
+L-		# Fill matrix with records
+L-		FOR I = 1 TO MH0(MNAXIS2)
+L-		    GETIR(SCANNO, I, 0) 
+L-		    IF REF_REC > 0 THEN; MINUS; END
+L-		    PUTROW(I)
+L-		    END
+L-		RETURN
+L-		FINISH
+L-
+L-	To use the procedure, type something like:
+L-
+L-		> RECMAP(2580.02,0)   [or, if total-power, RECMAP(2580.02,1)
+L-		> AUTOLEV(32) SETCLUT(3,32) PAGE RASTER LABEL
+L-
+L-------------------------- Spectral Line --------------------------------

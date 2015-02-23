@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'FIXDBE:  (CONTINUUM-TUCSON) Computes and reorders the four'
+PRINT 'phase digital backend data in Array 0 as switched power'
+PRINT 'followed by total power, calibration values and zero'
+PRINT 'levels.'
+print ' '
+print 'CALVAL=',calval
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'NOXPTS:  (HEADER-TUC) Number of x coordinate points in map.'
+PRINT ' '

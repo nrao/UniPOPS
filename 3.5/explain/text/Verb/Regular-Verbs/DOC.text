@@ -1,0 +1,44 @@
+	(REGULAR VERB)
+
+	DOC writes to the text screen one line of header information
+	for the data in Array (0).  The information printed includes:
+
+L------------------------- Spectral Line --------------------------------
+L-      Scan number, date(YY.MMDD), LST, RA, DEC, duration of
+L-	scan(seconds), TSYS, rest frequency and source name with column
+L-	headers.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-      Scan number, date(YY.MMDD), LST, RA, DEC, Integration time
+C-	(seconds), calibration factor and source name with column
+C-	headers.
+C------------------------- Continuum ------------------------------------
+
+	If PFLAG is FALSE (-1), a table heading will be printed, else no
+	headings will be printed.  PFLAG is set to TRUE by DOC, and
+	must be set to FALSE (-1) again when this is required.
+
+	 ADVERB USED:
+
+	    PFLAG               Flag to determine whether the output
+				should print table headings or not.
+				PFLAG=TRUE does not print headings;
+				PFLAG=FALSE will print headings for the
+				table.  Initial value is FALSE.
+
+	 ADVERB SET:
+
+	    PFLAG               PFLAG controls the output of verb DOC.
+				The value of PFLAG is set to TRUE (+1)
+				after every use  of DOC.
+				
+	 EXAMPLE:
+
+	 You want some documentation about scans 1000 to 1010.
+	 Specify:
+
+			PFLAG = FALSE
+			FOR I = 1000 TO 1010; GET I; DOC; END
+
+	and UniPOPS will produce a table of documentation.

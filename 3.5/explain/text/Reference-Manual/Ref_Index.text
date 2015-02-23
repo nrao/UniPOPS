@@ -1,0 +1,933 @@
+ABS 	            	Function Verbs 
+ACCMD	            	Pointer Adverbs
+ACCUM 	           	Regular Verbs  
+ACOS 	            	Function Verbs
+ACOSD			Procedure Library 
+ACOUNT 	            	Scalar Adverbs 
+ADDSTACK            	Regular Verbs  
+ADVERB	            	Pointer Adverbs
+Adverbs		    	2.1, 2.2, 3.7, 4.1
+ALIAS	            	Regular Verbs, Pointer Adverbs
+Aliases			2.1, 2.2, 3.7, 5.1
+AMATHOFF            	Regular Verbs  
+AMATHON             	Regular Verbs  
+ANTGAIN	            	Keyword Adverbs
+APPEFF	            	Keyword Adverbs
+Arguments	    	2.2, 2.5
+ARRAY 	            	Regular Verbs, Pointer Adverbs
+Array Adverbs		2.1, 2.2, 4.1, 4.2
+ASHIFT 	            	Scalar Adverbs 
+ASIN 	            	Function Verbs
+ASIND			Procedure Library 
+ASTACK 	            	Internal-Array Verbs 
+ATAN 	            	Function Verbs 
+ATAN2 	            	Function Verbs 
+ATAN2D			Procedure Library
+ATAND			Procedure Library
+AUTOLEV             	Regular Verbs  
+AVE 	            	Regular Verbs
+Averaging Data      	3.2  
+AVG 	            	Regular Verbs  
+AVGD 	            	Regular Verbs  
+AZ	            	Keyword Adverbs
+
+BACKEND	            	Keyword Adverbs
+BADCHV	            	Keyword Adverbs
+BADPT 	            	Array Adverbs  
+BASELINE            	Regular Verbs  
+Baseline Fitting    	3.2  
+BASEOFF	            	Keyword Adverbs
+BATCH 	            	Pseudo Verbs, 2.5
+BBASE 	            	Scalar Adverbs 
+BDROP 	            	Scalar Adverbs 
+BEAMEFF	            	Keyword Adverbs
+BEEP	            	Procedure Library
+BFWHM	            	Keyword Adverbs
+BGAUSS 	            	Scalar Adverbs 
+BIAS 	            	Regular Verbs  
+Blown Core	    	2.4
+BMARK 	            	Scalar Adverbs 
+BMODEL 	            	Regular Verbs  
+BMOMENT             	Scalar Adverbs 
+BMORENT	            	Keyword Adverbs
+BMTHROW	            	Keyword Adverbs
+BOXCAR 	            	Regular Verbs  
+BPARM 	            	Array Adverbs  
+BSCAN 	            	Scalar Adverbs 
+BSHAPE 	            	Regular Verbs  
+BSHOW 	            	Regular Verbs  
+BW	            	Keyword Adverbs
+BW_MAX 	            	Scalar Adverbs 
+BW_MIN 	            	Scalar Adverbs 
+BY 	            	Regular Verbs, 2.6
+
+C2XPIX			Function Verbs
+CALDBE 	            	Regular Verbs
+Calibration		Utilities
+CALVAL			Scalar Adverbs
+CBUNIT 	            	Keyword Adverbs
+CC 	            	Regular Verbs  
+CCLICK			Scalar Adverbs
+CCOMMENT	       	Keyword Adverbs
+CCUR 	            	Function Verbs 
+CD0			Internal-Array Verbs 
+CDATE	            	Keyword Adverbs
+CDELT1	            	Keyword Adverbs
+CDELT2	            	Keyword Adverbs
+CDELT3	            	Keyword Adverbs
+CENTER 	            	Array Adverbs  
+CEQUINOX		Keyword Adverbs
+CF 	            	Regular Verbs  
+CFETCH	            	Procedure Library
+CFFORM	            	Keyword Adverbs
+CGET 	            	Regular Verbs  
+CGGET 	            	Regular Verbs  
+CH0			Internal-Array Verbs 
+CHANNEL	            	Pointer Adverbs
+CHANTOX             	Function Verbs 
+CHAR 	            	Regular Verbs  
+CHARSIZE            	Regular Verbs  
+CHEADER                 Regular Verbs
+CHECK	            	Regular Verbs  
+checkfile.exe	    	Utilities, 2.7  
+CHNGFILE            	Pseudo Verbs   
+CHNGONLINE		Regular Verbs, 3.1, 3.5, 3.6
+CHNGPRJ             	Pseudo Verbs   
+CHNGRES             	Regular Verbs
+CHNGVER             	Pseudo Verbs   
+CL11TYPE	       	Keyword Adverbs
+Clearing Memory		2.4 
+CLICK			Regular Verbs
+CLIP                	Regular Verbs  
+CLIPMAX             	Scalar Adverbs 
+CLIPMIN             	Scalar Adverbs 
+CLUT 	            	Array Adverbs  
+CMARK 	            	Array Adverbs
+CNAXIS1	            	Keyword Adverbs
+CNAXIS2	            	Keyword Adverbs
+CNAXIS3	            	Keyword Adverbs  
+CNTERR 	            	Array Adverbs
+COBJECT	            	Keyword Adverbs  
+COLOR 	            	Regular Verbs 
+Command Arguments   	2.2, 2.5
+Command Logging	    	3.5
+Command Syntax	    	2.2
+Commands            	2.2 
+Comment Lines		2.2
+COMPARE             	Function Verbs 
+Compile Mode	    	2.3, 2.6  
+COMPRESS	    	Pseudo Verbs
+Compressing Memory	2.4, 2.5
+CONCAT			Function Verbs
+Conditionals		2.6, 3.7
+CONLINE             	Array Adverbs  
+Constants	    	2.2  
+CONTOUR             	Regular Verbs
+Control Characters  	2.2 
+CONTYPE			Pointer Adverbs
+Converting Data		Utilities, 2.7 
+CONVFCN             	Regular Verbs  
+CON_VER			Pointer Adverbs
+COORDCD	            	Keyword Adverbs
+COPY 	            	Regular Verbs  
+COPYOFF             	Regular Verbs  
+COPYON 	            	Regular Verbs  
+CORE 	            	Pseudo Verbs
+CORIGIN	            	Keyword Adverbs   
+COS 	            	Function Verbs
+COSD			Procedure Library 
+COSH 	            	Function Verbs
+CPIX1	            	Keyword Adverbs
+CPIX2	            	Keyword Adverbs
+CPIX3	            	Keyword Adverbs 
+Creating Adverbs	3.7, 4.1
+Creating Aliases	3.7
+Creating Procedures	2.5, 3.7
+CROSSFCN            	Regular Verbs  
+CROSSFLG		Scalar Adverbs
+CROSSHAIR           	Regular Verbs  
+CRT 	            	Regular Verbs
+CRVAL1	            	Keyword Adverbs
+CRVAL2	            	Keyword Adverbs
+CRVAL3	            	Keyword Adverbs
+CTMAX	            	Keyword Adverbs
+CTMIN	            	Keyword Adverbs
+CTSCALE	            	Keyword Adverbs
+CTYPE1	            	Keyword Adverbs
+CTYPE2	            	Keyword Adverbs
+CTYPE3	            	Keyword Adverbs
+CTZERO	            	Keyword Adverbs  
+cube.exe		Utilities
+Cubes		    	Utilities, 3.1, 3.2, 3.3
+CUNDEF	            	Keyword Adverbs
+CUTOFF 	            	Scalar Adverbs 
+CV 	            	Regular Verbs  
+cvt.disk-disk	    	Utilities, 2.7  
+cvt.disk-tape	    	Utilities, 2.7  
+cvt.tape-disk	    	Utilities, 2.7  
+cvtpdflsdd.exe		Utilities, 2.7
+CYCLLEN	            	Keyword Adverbs
+CYCLLENF	       	Keyword Adverbs
+     
+D0 			Internal-Array Verbs 
+D1			Internal-Array Verbs 
+D2			Internal-Array Verbs 
+D3			Internal-Array Verbs 
+D4			Internal-Array Verbs 
+D5 			Internal-Array Verbs 
+D6 			Internal-Array Verbs 
+D7			Internal-Array Verbs 
+D8 			Internal-Array Verbs 
+D9			Internal-Array Verbs 
+Data Access	    	3.1
+Data Analysis       	3.2  
+Data Conversion		Utilities, 2.7
+Data Display        	3.3  
+Data Documentation      3.4  
+Data Files	    	2.7, 3.5
+Data Formats	    	2.7  
+Data Manipulating   	3.2  
+Data Parameters     	3.2  
+DATALEN	            	Keyword Adverbs
+DATE			Function Verbs
+DBREF			Procedure Library
+DCBASE 	            	Regular Verbs  
+DCPCT 	            	Scalar Adverbs 
+DEBUG 	            	Regular Verbs 
+Debugging		3.7  
+DECNVLV             	Regular Verbs  
+DEFAULT	            	Pointer Adverbs
+Define Mode		2.3, 2.6
+DEFMODE			Scalar Adverbs
+DELETE 	            	Regular Verbs  
+DELTAX	            	Keyword Adverbs
+DELTAXR	            	Keyword Adverbs
+DELTAYR	            	Keyword Adverbs
+DESORG	            	Keyword Adverbs
+Destroying Symbols	2.4, 2.5
+DEWPT	            	Keyword Adverbs
+Diagnostics, Files	Utilities
+DIFF 	            	Regular Verbs  
+DIM 	            	Function Verbs 
+DIR 	            	Pseudo Verbs   
+Directories	    	3.5, 3.6
+DISK	            	Pointer Adverbs
+Displaying Data     	3.3  
+DIVIDE 	            	Regular Verbs  
+DOC 	            	Regular Verbs  
+DOCUMENT            	Pseudo Verbs
+Documentation		3.4   
+DRMS	            	Keyword Adverbs
+DSCANS	            	Pointer Adverbs
+Dummy Parameters    	2.5
+DUMP 	            	Regular Verbs  
+
+EBASE 	            	Scalar Adverbs 
+EDIT 	            	Pseudo Verbs   
+Edit Mode	    	2.3, 2.6  
+Editing Procedures	2.4, 2.5
+EDROP 	            	Scalar Adverbs 
+EFFINT			Keyword Adverbs
+EGAUSS 	            	Scalar Adverbs 
+EL	            	Keyword Adverbs
+ELSE 	            	Regular Verbs, 2.6
+EMOMENT             	Scalar Adverbs 
+EMPTY 	            	Regular Verbs  
+END 	            	Regular Verbs, 2.6
+ENDEDIT             	Regular Verbs
+EOF			Pointer Adverbs
+EPOCDEC	            	Keyword Adverbs
+EPOCH	            	Keyword Adverbs
+EPOCRA	            	Keyword Adverbs
+EQHISTLEV		Regular Verbs
+EQTOGAL             	Regular Verbs  
+ERRCODE             	Scalar Adverbs 
+ERROFF 	            	Regular Verbs  
+ERRON 	            	Regular Verbs  
+ESCAN 	            	Scalar Adverbs
+ETA			Scalar Adverbs
+ETAFREE			Scalar Adverbs 
+ETAFSS	            	Keyword Adverbs
+ETAL	            	Keyword Adverbs
+EXEC			Regular Verbs
+Execute Mode	    	2.3, 2.6  
+EXIT 	            	Pseudo Verbs   
+EXP 	            	Function Verbs 
+EXPLAIN             	Pseudo Verbs, 2.1
+Expressions     	2.2, 3.7
+  
+FACT 	            	Scalar Adverbs 
+FALSE 	            	Pointer Adverbs
+FBTYPE			Pointer Adverbs
+FB_VER			Pointer Adverbs
+FC 	            	Regular Verbs  
+FCLICK			Scalar Adverbs
+FCLOSE	 	        Regular Verbs  
+FCUR 	            	Function Verbs 
+FEED_MAX            	Scalar Adverbs 
+FEED_MIN            	Scalar Adverbs 
+FF 	            	Regular Verbs  
+FFT 	            	Regular Verbs  
+File Diagnostics	Utilities
+File Formats		2.7, Utilities   
+FILES 	            	Pseudo Verbs
+FINISH 	            	Regular Verbs, 2.5
+FIRSTIF	            	Keyword Adverbs
+fits2uni	    	Utilities, 2.7  
+FIXC 	            	Scalar Adverbs 
+FIXDBE 	            	Regular Verbs  
+FIXH 	            	Scalar Adverbs 
+FIXHW 	            	Scalar Adverbs 
+FIXRELC 	        Scalar Adverbs 
+FIXRELH 	        Scalar Adverbs 
+FIXRELHW	        Scalar Adverbs 
+FLAG 	            	Regular Verbs  
+FLEVS			Array Adverbs
+FMARK 	            	Array Adverbs  
+FNAME			Function Verbs
+FOCUSH	            	Keyword Adverbs
+FOCUSR	            	Keyword Adverbs
+FOCUSV	            	Keyword Adverbs
+FOFFREF1          	Keyword Adverbs
+FOFFREF2         	Keyword Adverbs
+FOFFSIG	            	Keyword Adverbs
+FONTSET 	        Regular Verbs  
+FOPEN 	            	Function Verbs 
+FOR 	            	Regular Verbs, 2.6
+FPRINT 	            	Regular Verbs  
+FR 	            	Scalar Adverbs 
+FRAME	            	Keyword Adverbs
+FREAD 	            	Regular Verbs  
+FREEY 	            	Regular Verbs  
+FREQIRST	        Pointer Adverbs
+FREQISKY	        Pointer Adverbs
+FREQOFF	            	Pointer Adverbs
+FREQRES	            	Keyword Adverbs
+FREQRST	            	Pointer Adverbs
+FREQSKY	            	Pointer Adverbs
+FREWIND 	        Regular Verbs  
+FRONTEND            	Keyword Adverbs
+FS 	            	Scalar Adverbs 
+FSCAN	            	Keyword Adverbs
+FSHIFT 	            	Regular Verbs
+FSTATUS 	        Regular Verbs  
+FTM			Scalar Adverbs
+FTSBR			Scalar Adverbs 
+FULLGRID            	Regular Verbs  
+FULLOFF             	Regular Verbs  
+FULLON 	            	Regular Verbs  
+FUNCLEV			Regular Verbs	
+Function Procedures 	2.5
+Function Verbs 	    	2.2, 3.7, 5.1, 5.3
+FV 	            	Regular Verbs  
+F_MAX 	            	Scalar Adverbs 
+F_MIN 	            	Scalar Adverbs 
+
+GAINS	            	Keyword Adverbs
+GALLAT	            	Keyword Adverbs
+GALLONG	            	Keyword Adverbs
+GALTOEQ             	Regular Verbs  
+GAUSS 	            	Regular Verbs  
+GAUSSFIT            	Procedure Library
+Gaussian Fitting    	3.2  
+GB ASCII Format     	2.7 
+GBTIPPING		Procedure Library 
+GCOPY 	            	Regular Verbs  
+GDISPLAY            	Regular Verbs  
+GET 	            	Regular Verbs  
+GET0 	            	Regular Verbs  
+GET1 	            	Regular Verbs  
+GET2 	            	Regular Verbs  
+GET3 	            	Regular Verbs  
+GET4 	            	Regular Verbs  
+GET5 	            	Regular Verbs  
+GET6 	            	Regular Verbs  
+GET7 	            	Regular Verbs  
+GET8 	            	Regular Verbs  
+GET9 	            	Regular Verbs  
+GETCOL			Regular Verbs
+GETIR			Regular Verbs
+GETOTF			Regular Verbs
+GETPOLZ			Regular Verbs
+GETROW			Regular Verbs
+GETSCAN	            	Procedure Library
+GGET 	            	Regular Verbs
+GLOBAL			Regular Verbs
+Global Symbols		2.5, 4.1  
+GMEASURE            	Regular Verbs  
+GMFRAC 	            	Array Adverbs 
+GMODEL 	            	Regular Verbs  
+GOUT 	            	Array Adverbs 
+GPARTS 	            	Regular Verbs  
+GRAPHICS            	Regular Verbs  
+GREGION             	Array Adverbs  
+GSCANS	            	Pointer Adverbs
+
+H0			Internal-Array Verbs 
+H1 			Internal-Array Verbs 
+H2			Internal-Array Verbs 
+H3			Internal-Array Verbs 
+H4			Internal-Array Verbs 
+H5			Internal-Array Verbs 
+H6			Internal-Array Verbs 
+H7			Internal-Array Verbs 
+H8			Internal-Array Verbs 
+H9			Internal-Array Verbs 
+HANNING             	Regular Verbs  
+Hardcopies	    	3.5, 3.6
+HARMONIC            	Keyword Adverbs
+HCTYPE			Pointer Adverbs
+HC_VER			Pointer Adverbs
+HEADER 	            	Regular Verbs  
+HEADLEN	            	Keyword Adverbs
+HEIGHT 	            	Array Adverbs  
+HELP	            	2.1
+Help Facilities		2.1, 3.7
+HGHTERR             	Array Adverbs  
+HISTOGRAM           	Regular Verbs  
+HISTORY             	Pseudo Verbs
+History Facility 	3.7   
+HLFTNE 	            	Regular Verbs  
+HOLDY 	            	Regular Verbs  
+HOLFITFOC 	        Regular Verbs  
+HOLWINDOW	        Regular Verbs  
+HTITLE 	            	String Adverbs 
+HUMIDITY            	Keyword Adverbs
+HWERR 	            	Array Adverbs  
+HWIDTH 	            	Array Adverbs  
+
+IDENTIFY            	Pseudo Verbs, 2.1
+IEEE Binary         	2.7  
+IEEE Keep Format    	2.7  
+ieee2pcpops	    	Utilities, 2.7  
+ieeesummary.exe	    	Utilities, 2.7  
+IF 	            	Regular Verbs, 2.6
+IFFT 	            	Regular Verbs  
+IFIX 	            	Function Verbs 
+ILI	            	Keyword Adverbs
+INDEX			Function Verbs
+INDX	            	Keyword Adverbs
+INDY	            	Keyword Adverbs
+INFO	            	Pointer Adverbs
+Input and Output    	3.5
+Input Mode	    	2.3  
+Installing Procedures	2.5
+INT			Function Verbs
+Internal-Array Verbs	2.2, 5.1, 5.2
+INTTIME	            	Keyword Adverbs
+INVERT 	            	Regular Verbs  
+IT_MAX 	            	Scalar Adverbs 
+IT_MIN 	            	Scalar Adverbs 
+
+KEEP 	            	Regular Verbs
+Keyword Adverbs		2.1, 2.2, 3.7, 4.1, 4.3 
+KGET 	            	Regular Verbs
+KILLGRPH		Pseudo Verbs  
+KPROTECT            	Scalar Adverbs 
+KSCANS	            	Pointer Adverbs
+
+L1	            	Keyword Adverbs
+L1F1	            	Keyword Adverbs
+L1F2	            	Keyword Adverbs
+L2	            	Keyword Adverbs
+L2F1	            	Keyword Adverbs
+L2F2	            	Keyword Adverbs
+LA	            	Keyword Adverbs
+LABEL 	            	Regular Verbs  
+LAMP	            	Keyword Adverbs
+LASER 	            	Pseudo Verbs   
+LB	            	Keyword Adverbs
+LC	            	Keyword Adverbs
+LD	            	Keyword Adverbs
+LENGTH			Function Verbs
+LEVCORR	            	Keyword Adverbs
+LEVS 	            	Array Adverbs  
+LINE 	            	Regular Verbs  
+LINETYPE            	Regular Verbs  
+LIST 	            	Pseudo Verbs 
+Listing Procedures	2.5
+LISTSHIFT            	Regular Verbs  
+Literal Constants   	2.2 
+LNBLNK 	            	Function Verbs 
+Local Symbols		2.5, 4.1  
+LOFACT	            	Keyword Adverbs
+LOG 	            	Function Verbs 
+LOG10 	            	Function Verbs 
+LOGFILE			Pointer Adverbs	
+Logical Expressions     2.2, 3.7
+Logical Operators    	2.2, 3.7
+LOGOFF 	            	Regular Verbs  
+LOGON 	            	Regular Verbs  
+LOIF	            	Keyword Adverbs
+Loops			2.6
+LSCAN	            	Keyword Adverbs
+LST	            	Keyword Adverbs
+LST_MAX             	Scalar Adverbs 
+LST_MIN             	Scalar Adverbs 
+LWID	            	Keyword Adverbs
+
+makefile.exe	    	Utilities
+makeindex.exe	    	Utilities
+Math Expressions       	2.2, 3.7
+Math Operators       	2.2, 3.7
+Matrices	    	3.1, 3.2, 3.3
+MAX 	            	Function Verbs 
+MBEAM	            	Keyword Adverbs
+MBIAS                   Regular Verbs
+MBLANK 	            	Regular Verbs  
+MBUNIT	            	Keyword Adverbs
+MCLICK			Scalar Adverbs
+MCOMMENT            	Keyword Adverbs
+MCOPY 	            	Regular Verbs  
+MCUR 	            	Function Verbs 
+MD0			Internal-Array Verbs 
+MD1			Internal-Array Verbs 
+MD2			Internal-Array Verbs 
+MD3			Internal-Array Verbs 
+MDATE	            	Keyword Adverbs
+MDBASE 	            	Regular Verbs  
+MDBOX 	            	Scalar Adverbs 
+MDELT1	            	Keyword Adverbs
+MDELT2	            	Keyword Adverbs
+MDIVIDE                 Regular Verbs
+Memory		    	2.4, 3.7
+MEQUINOX		Keyword Adverbs
+MFFT			Regular Verbs  
+MFILL			Regular Verbs  
+MH0			Internal-Array Verbs 
+MH1			Internal-Array Verbs 
+MH2			Internal-Array Verbs 
+MH3			Internal-Array Verbs 
+MHEADER             	Regular Verbs  
+MIFFT			Regular Verbs  
+MIN 	            	Function Verbs 
+MINIT 	            	Regular Verbs  
+MINUS 	            	Regular Verbs  
+MLIMITS             	Regular Verbs  
+MLIMS			Array Adverbs
+MMH2O	            	Keyword Adverbs
+MMINUS                  Regular Verbs
+MMOVE 	            	Regular Verbs  
+MMULTIPLY               Regular Verbs
+MNAXIS1	            	Keyword Adverbs
+MNAXIS2	            	Keyword Adverbs
+MOBJECT	            	Keyword Adverbs
+MOD 	            	Function Verbs 
+Modcomp Binary      	2.7  
+Modcomp Keep Format 	2.7  
+Modes, command	    	2.3, 2.6  
+MOMENT 	            	Regular Verbs
+MORIGIN			Keyword Adverbs  
+MOVE 	            	Regular Verbs  
+MPIX1	            	Keyword Adverbs
+MPIX2	            	Keyword Adverbs
+MPLUS                   Regular Verbs
+MRANGE 	            	Regular Verbs  
+MRATIO 	            	Scalar Adverbs 
+MREAD 	            	Regular Verbs  
+MREMOVE             	Regular Verbs  
+MRVAL1	            	Keyword Adverbs
+MRVAL2	            	Keyword Adverbs
+MSCALE                  Regular Verbs
+MSMOOTH			Regular Verbs
+MTABLE 	            	Regular Verbs  
+MTYPE1	            	Keyword Adverbs
+MTYPE2	            	Keyword Adverbs
+MULTIPLY 	        Regular Verbs  
+MUNDEF	            	Keyword Adverbs
+MWRITE 	            	Regular Verbs  
+MXMAX 	            	Scalar Adverbs 
+MXMIN 	            	Scalar Adverbs 
+MYMAX 	            	Scalar Adverbs 
+MYMIN 	            	Scalar Adverbs 
+
+Names of Symbols	2.2, 4.1
+NBOX 	            	Scalar Adverbs
+Nesting Conditionals	2.6
+Nesting Loops		2.6 
+NEW	            	Pointer Adverbs
+NEWRES 	            	Scalar Adverbs 
+NFIT 	            	Scalar Adverbs 
+NGAUSS 	            	Scalar Adverbs 
+NINT 	            	Function Verbs 
+NITER 	            	Scalar Adverbs 
+NOINT	            	Keyword Adverbs
+NOPHASE	            	Keyword Adverbs
+NOPHASEF          	Keyword Adverbs
+NOPTS	            	Keyword Adverbs
+NORCHAN	            	Keyword Adverbs
+NORECORD		Keyword Adverbs
+NOSTAC	            	Keyword Adverbs
+NOSWVAR	            	Keyword Adverbs
+NOSWVARF            	Keyword Adverbs
+NOXPTS	            	Keyword Adverbs
+NOYPTS	            	Keyword Adverbs
+NREGION             	Array Adverbs  
+NRSET	            	Procedure Library
+NSAVE 	            	Scalar Adverbs 
+NUMCYC			Keyword Adverbs
+NUMCYCF			Keyword Adverbs
+N_N 	            	Scalar Adverbs 
+
+OBJECT	            	Keyword Adverbs
+OBSERVER            	Keyword Adverbs
+OBSFREQ	            	Keyword Adverbs
+OBSID	            	Keyword Adverbs
+OBSMODE	            	Keyword Adverbs
+OBSTOL	            	Keyword Adverbs
+OFF 	            	Regular Verbs  
+OFFDATA	            	Pointer Adverbs
+OFFSCAN	            	Keyword Adverbs
+OLD	            	Pointer Adverbs
+OLFILES			Pseudo Verbs, 3.1, 3.5, 3.6
+ON 	            	Regular Verbs  
+ONDATA	            	Pointer Adverbs
+One-Dimensional Arrays	3.1, 3.3
+ONS 	            	Regular Verbs  
+OPENPAR	            	Keyword Adverbs
+Operands            	2.2 
+Operators           	2.2, 3.7 
+ORIENT	            	Keyword Adverbs
+OSB 	            	Regular Verbs  
+OSHIFT 	            	Scalar Adverbs 
+OUTPUT 	            	Regular Verbs  
+Output and Input    	3.5
+
+PAGE 	            	Regular Verbs  
+Parameters	    	2.5
+PAUSE 	            	Regular Verbs  
+PBEAM	            	Keyword Adverbs
+PC-Pops Format 	    	2.7  
+PCBASE 	            	Regular Verbs  
+PDOC 	            	Regular Verbs  
+PEAK 	            	Regular Verbs  
+PFLAG 	            	Scalar Adverbs 
+PHASEID			Keyword Adverbs
+PHASTB	            	Keyword Adverbs
+PHASTBnn	        Keyword Adverbs
+PLACE 	            	Regular Verbs  
+PLOT 	            	Regular Verbs  
+PLOTDOTS                Regular Verbs
+PLUS	            	Regular Verbs  
+POINTER	            	Regular Verbs, Pointer Adverbs
+Pointer Adverbs		2.1, 2.2, 3.7, 4.1, 4.4
+Pointing	    	Utilities
+POINTS 	            	Regular Verbs  
+POLARIZ	            	Keyword Adverbs
+POPSEDIT            	Pseudo Verbs   
+POSX	            	Pointer Adverbs
+POSXOFF	            	Pointer Adverbs
+POSY	            	Pointer Adverbs
+POSYOFF	            	Pointer Adverbs
+POS_OFF	            	Pointer Adverbs
+POWSPEC             	Regular Verbs  
+PRCDIR 	            	Pseudo Verbs, 2.5   
+PRECIS	            	Keyword Adverbs
+PRESSURE            	Keyword Adverbs
+PRINT 	            	Regular Verbs  
+PRINTER             	Regular Verbs  
+PRINTFILE		Pointer Adverbs
+PRNTFMT 	        Regular Verbs  
+PROC 	            	Pseudo Verbs, Pointer Adverbs   
+PROCEDURE           	Pseudo Verbs, Pointer Adverbs   
+Procedures 		2.1, 2.2, 2.5, 3.7
+PROJID	            	Keyword Adverbs
+PROMPT			String Adverbs
+Prompts             	2.2 
+Pseudo Verbs	    	2.2, 5.1, 5.4
+PTCON	            	Keyword Adverbs
+PTFUDGE	            	Keyword Adverbs
+PT_MODEL          	Keyword Adverbs
+PUTCOL			Regular Verbs
+PUTROW			Regular Verbs
+
+QCONTOUR            	Regular Verbs  
+
+RAMPERR			Scalar Adverbs
+RAMPLTDE		Scalar Adverbs
+RAND 	            	Function Verbs 
+RAP 	            	Regular Verbs  
+RASTER 	            	Regular Verbs  
+RATE_MAX            	Scalar Adverbs 
+RATE_MIN            	Scalar Adverbs 
+RAZOFF	            	Keyword Adverbs
+READ 	            	Regular Verbs  
+READCUBE            	Regular Verbs 
+readfits	    	Utilities, 2.7  
+Real-value Constant 	2.2 
+RECALL 	            	Regular Verbs  
+RECORDID		Keyword Adverbs
+Recursion	    	2.5
+REFPT	            	Keyword Adverbs
+REFRAC	            	Keyword Adverbs
+Regular Procedures  	2.5
+Regular Verbs	    	2.2, 5.1, 5.5
+RELOFF	            	Keyword Adverbs
+REMOVE 	            	Regular Verbs  
+REPLACE             	Regular Verbs  
+REPORT 	            	Pseudo Verbs, 2.1
+RESHOW 	           	Regular Verbs  
+RESIDUAL           	Regular Verbs  
+RESTART            	Pseudo Verbs, 2.4
+Restarting UniPops	2.4
+RESTFREQ            	Keyword Adverbs
+RESTORE             	Pseudo Verbs, 2.4
+Restoring Memory	2.4
+RETURN 	            	Regular Verbs, 2.5
+REW			Pointer Adverbs
+RFIXAMP			Scalar Adverbs
+RFIXPER			Scalar Adverbs
+RFIXPHA			Scalar Adverbs
+RHIST 	            	Regular Verbs  
+RHO	            	Keyword Adverbs
+RIPPLE 	            	Regular Verbs  
+RLINE 	            	Regular Verbs  
+RMODEL 	            	Regular Verbs  
+RMS 	            	Regular Verbs  
+RO			Pointer Adverbs
+ROTATE                  Regular Verbs
+RPERERR			Scalar Adverbs
+RPERIOD             	Scalar Adverbs 
+RPHAERR			Scalar Adverbs
+RPHASE			Scalar Adverbs
+RPOINTS             	Regular Verbs  
+RSCANS			Pointer Adverbs
+RSHAPE 	            	Regular Verbs  
+RSHOW 	            	Regular Verbs  
+RSTCOLOR            	Regular Verbs  
+RSTPAGE             	Regular Verbs  
+RTSYS	            	Keyword Adverbs
+RVSYS	            	Keyword Adverbs
+RW			Pointer Adverbs
+RX_INFO                 Keyword Adverbs
+
+SAMPLE	            	Pointer Adverbs
+SAMPRAT	            	Keyword Adverbs
+SAMPTIMF	       	Keyword Adverbs
+SAVE 	            	Regular Verbs  
+SAVENUM	            	Keyword Adverbs
+SAXIS 	            	Regular Verbs  
+SCALAR	            	Pointer Adverbs
+Scalar Adverbs		2.1, 2.2, 3.7, 4.1, 4.5
+SCALE 	            	Regular Verbs  
+SCAN	            	Keyword Adverbs
+SCANANG	            	Keyword Adverbs
+SCAN_MAX            	Scalar Adverbs 
+SCAN_MIN            	Scalar Adverbs 
+SCLEAR 	            	Regular Verbs  
+SCR			Pointer Adverbs
+SCRATCH             	Pseudo Verbs   
+Scratching Symbols	2.4, 2.5
+Scrolling, text screen	3.5
+SDD File Format     	2.7  
+SEDITS 	            	Regular Verbs  
+SELECT 	            	Regular Verbs  
+SETCLUT             	Regular Verbs  
+SETLEV 	            	Regular Verbs  
+SETPAGE             	Regular Verbs  
+SHIFT 	            	Regular Verbs  
+SHOW 	            	Regular Verbs  
+SIDEBAND            	Keyword Adverbs
+SIGN 	            	Function Verbs 
+SIN 	            	Function Verbs
+SIND			Procedure Library 
+SINH 	            	Function Verbs 
+SIZE 	            	Array Adverbs  
+SLABEL 	            	Scalar Adverbs 
+SLICE 	            	Regular Verbs  
+SMOOTH 	            	Regular Verbs  
+Smoothing Data      	3.2  
+SMWGT 	            	Array Adverbs  
+SOLVETIP            	Regular Verbs
+Special Characters  	2.2  
+SPIKE 	            	Regular Verbs  
+SPN	            	Keyword Adverbs
+SPRINT 	            	Regular Verbs  
+SPROTECT            	Scalar Adverbs 
+SQRT 	            	Function Verbs 
+SREAD 	            	Regular Verbs  
+SROFF	            	Keyword Adverbs
+SSCANS	            	Pointer Adverbs
+STACK	            	Pointer Adverbs
+STAT			Pointer Adverbs
+STATUS 	            	Array Adverbs  
+STORE 	            	Pseudo Verbs, 2.4
+Storing Memory		2.4
+STRING 	            	Regular Verbs, Pointer Adverbs
+String Adverbs		2.1, 2.2, 3.7, 4.1, 4.5
+STSYS	            	Keyword Adverbs
+SUBSTR                  Function Verbs
+SUM 	            	Regular Verbs  
+SUMMARY             	Regular Verbs  
+SWITCHED            	Regular Verbs
+Symbols			2.2, 2.4, 2.5, 4.1  
+SYNFREQ	            	Keyword Adverbs
+Syntax, Command		2.2
+SYSHELP             	Pseudo Verbs, 2.1
+SYSTEM 	            	Pseudo Verbs
+System, interacting 	3.6   
+S_MODE 	            	String Adverbs 
+S_OBJECT            	String Adverbs 
+S_SORT 	            	Scalar Adverbs 
+
+T2YPIX			Function Verbs
+TABLE 	           	Regular Verbs  
+TAMB	           	Keyword Adverbs
+TAN 	           	Function Verbs
+TAND			Procedure Library 
+TANH 	           	Function Verbs
+TAU0			Scalar Adverbs 
+TAUH2O	           	Keyword Adverbs
+TAUO2	           	Keyword Adverbs
+TCAL	           	Keyword Adverbs
+TCLICK			Scalar Adverbs
+TCOPY 	           	Regular Verbs  
+TCUR 	           	Function Verbs 
+TELESCOP           	Keyword Adverbs
+Telescope Tape 	   	2.7  
+TELL 	           	Regular Verbs  
+TEMP 	           	Regular Verbs  
+TEMPS 	           	Regular Verbs  
+TESTSCN	           	Procedure Library
+TESTSCN2           	Procedure Library
+Text Files	   	3.5, 3.6
+Text Screen Scrolling	3.5
+TH2O	            	Keyword Adverbs
+THEN 	            	Regular Verbs, 2.6
+THETA	            	Keyword Adverbs
+THUMB 	            	Regular Verbs  
+TIME			Function Verbs
+TIMELST	            	Pointer Adverbs
+TIMEOFF	            	Pointer Adverbs
+TIMEUT	            	Pointer Adverbs
+TITLE 	            	Regular Verbs  
+TMARK 	            	Array Adverbs  
+TO 	            	Regular Verbs, 2.6
+TO2	            	Keyword Adverbs
+TOTALPWR            	Regular Verbs
+TRCVR			Scalar Adverbs  
+TRMS	            	Keyword Adverbs
+TRUE	            	Pointer Adverbs
+TRX	            	Keyword Adverbs
+TSOURCE	            	Keyword Adverbs
+TVANE			Scalar Adverbs
+TYPE 	            	Pseudo Verbs   
+TYPECAL	            	Keyword Adverbs
+TYPETIP			Scalar Adverbs
+
+UNDO 	            	Pseudo Verbs
+Undoing Commands	3.7   
+UNDOOFF             	Regular Verbs   
+UNDOON 	            	Regular Verbs  
+uni2fits	    	Utilities, 2.7  
+UNK			Pointer Adverbs
+UT	            	Keyword Adverbs
+UTDATE	            	Keyword Adverbs
+UT_MAX 	            	Scalar Adverbs 
+UT_MIN 	            	Scalar Adverbs 
+UXPNT	            	Keyword Adverbs
+UYPNT	            	Keyword Adverbs
+
+VARDES	            	Keyword Adverbs
+VARDESnn	        Keyword Adverbs
+VARVAL	            	Keyword Adverbs
+VARVALnn	        Keyword Adverbs
+VC 	            	Regular Verbs  
+VCHAR 	            	Regular Verbs  
+VCLICK			Scalar Adverbs
+VCTR 	            	Regular Verbs  
+VCUR 	            	Function Verbs 
+VELDEF	            	Keyword Adverbs
+VELHEAD	            	Pointer Adverbs
+VELLINR                 Pointer Adverbs
+VELOCITY            	Keyword Adverbs
+VELOPTI	            	Pointer Adverbs
+VELRADI	            	Pointer Adverbs
+VELRELT	            	Pointer Adverbs
+VERB	            	Pointer Adverbs
+Verbs		        2.1, 5.1
+VERS	            	Pointer Adverbs
+VF 	            	Regular Verbs  
+VMARK 	            	Array Adverbs  
+VRMS 	            	Scalar Adverbs 
+VSHIFT 	            	Regular Verbs  
+vsst.sourcetemp	    	Utilities
+vsst.systemp	    	Utilities
+VV 	            	Regular Verbs  
+
+WEIGHT 	            	Scalar Adverbs 
+WHATIS             	Pseudo Verbs   
+WHILE 	            	Regular Verbs, 2.6
+WL	            	Keyword Adverbs
+WO			Pointer Adverbs
+
+X0	            	Keyword Adverbs
+XCELL0	            	Keyword Adverbs
+XCLICK			Scalar Adverbs
+XCUR 	            	Function Verbs 
+XLOGP 	            	Scalar Adverbs 
+XMAXP 	            	Scalar Adverbs 
+XMINP 	            	Scalar Adverbs 
+XPIX2C			Function Verbs
+XPOINT	            	Keyword Adverbs
+XRANGE 	            	Regular Verbs  
+XREF	            	Keyword Adverbs
+XSOURCE	            	Keyword Adverbs
+XTITLE 	            	String Adverbs 
+XTOCHAN             	Function Verbs 
+XX	            	Procedure Library
+XZERO	            	Keyword Adverbs
+X_MAX 	            	Scalar Adverbs 
+X_MIN 	            	Scalar Adverbs 
+
+YCELL0	            	Keyword Adverbs
+YCLICK			Scalar Adverbs
+YCUR 	            	Function Verbs 
+YINCR 	            	Scalar Adverbs 
+YLOGP 	            	Scalar Adverbs 
+YMAXP 	            	Scalar Adverbs 
+YMIN 	            	Scalar Adverbs 
+YMINP 	            	Scalar Adverbs 
+YPIX2T			Function Verbs
+YPOINT	            	Keyword Adverbs
+YRANGE 	            	Regular Verbs  
+YREF	            	Keyword Adverbs
+YSOURCE	            	Keyword Adverbs
+YTITLE 	            	String Adverbs 
+YZERO	            	Keyword Adverbs
+Y_MAX 	            	Scalar Adverbs 
+Y_MIN 	            	Scalar Adverbs 
+
+ZERO 	           	Regular Verbs  
+ZLINE 	           	Scalar Adverbs 
+Z_CHNGFIL          	Regular Verbs  
+Z_SYSTEM           	Regular Verbs  
+
+Special Symbols:
+
+{	    		2.2 
+}	    		2.2 
+@	    		2.2 
+#	    		2.2 
+\	    		2.2 
+!	    		2.2, 3.7 
+&	    		2.2, 3.7           
+(	    		2.2 
+)	    		2.2 
+*	    		2.2, 3.7           
+**	    		2.2, 3.7           
++	    		2.2, 3.7           
+,	    		2.2 
+-	    		2.2, 3.7           
+/	    		2.2, 3.7           
+;	    		2.2 
+<	    		2.2, 3.7           
+<=	    		2.2, 3.7           
+=	    		2.2, 3.7           
+>	    		2.2, 3.7           
+>=	    		2.2, 3.7           
+?	    		Regular Verbs (PRINT) 
+|	    		2.2, 3.7           
+~	    		2.2, 3.7           
+~=	    		2.2, 3.7           
+

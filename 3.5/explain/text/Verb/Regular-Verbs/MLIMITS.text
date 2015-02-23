@@ -1,0 +1,36 @@
+	(REGULAR VERB)
+
+	MLIMITS goes through the section of Matrix (0) defined by
+	(MXMIN,MYMIN) and (MXMAX,MYMAX) and reports what are the
+	maximum and minimum data values in that section of the Matrix
+	plus what (x,y) cell they fall in.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+	ADVERBS SET:
+
+	MLIMS(2,5)	A 2x5 array adverb with the values corresponding
+			to the values that MLIMITS prints out.
+			The 2x5 values in MLIMS are set so that, for
+			example, the 3rd number on the second line
+			displayed by MLIMITS is stored as MLIMS(2,3).
+
+	EXAMPLE:
+
+	You want to find out what are the maximum and minimum data
+	values in Matrix (0) so that you can specify contour levels.
+	You type:
+
+			MLIMITS
+
+	and the program will report what the maximum and minimum values
+	are.  You can now set up values for LEVS using MLIMS(1,1) (the
+	maximum value) and MLIMS(2,1) (the minimum value).

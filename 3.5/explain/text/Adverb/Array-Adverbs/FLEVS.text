@@ -1,0 +1,22 @@
+	(ARRAY ADVERB of 32 elements)
+
+	FLEVS is an array containing the relative number of data points
+	you want at each level.  
+
+	FLEVS is used by : FUNCLEV to set LEVS
+	
+	FLEVS is not set by any verb.
+
+	Since FLEVS describes the relative number of data points,
+	what counts in the ration of FLEVS values and not the absolute
+	values themselves.  Hence,
+	
+		FLEVS = 1,2,3,DEFAULT
+
+	is equivalent to
+
+		FLEVS = 5,10,15,DEFAULT
+	
+
+	Each element that will be used must be greater than zero.
+

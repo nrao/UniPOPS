@@ -1,0 +1,180 @@
+      UniPOPS can work with one-dimensional arrays as well as two and
+      three dimensional arrays (which we will call matrices and cubes,
+      respectively).  Here, we document how to access and store these
+      matrices and cubes from and to disk.
+
+
+One-Dimensional (Scan) Data Access
+----------------------------------
+
+      UniPOPS presently can use up to six different data files
+      simultaneously:
+
+	on-line data	off-line data		save		keep 
+     	gains		individual records.
+
+      The "off-line", "save", "keep" and "gains" files are in the same 
+      format and their roles can be interchanged at will with the CHNGFILE
+      verb.  The "gains" file is intended to be used with the GGET verb
+      to hold the 12-m off-line gains data.  The default size of the files 
+      is site dependent and usually is set up for a maximum of 1024 scans.
+      Bigger files can be easily accommodated (see the documentation for the
+      makefile.exe and expandsdd utilities).  The individual records file
+      is in a very slightly different format.  It is used to hold
+      Green-Bank individual record data to make it possible to edit
+      individual records of a scan (see the GETIR documentation).
+      Any of these files can be missing at any time without any consequences 
+      other then the inability to use the verbs which access the missing 
+      data files.
+
+   .  On-line data file
+      -----------------
+      The "on-line" data file may be present and contains the scans
+      which have been taken recently by the telescope.  When running
+      UniPOPS away from a telescope, the "on-line" file does not exist.
+      The actual name, size, and location of the "on-line" file is site
+      dependent (at the 12-m, there are actually several "on-line" files).
+      The user cannot write scans to the "on-line" file.  Scans are accessed 
+      by scan number and feed (receiver, subscan) number using the scheme:  
+      scan number + (feed number / 100).  For example, 100.04 and 200.13 
+      refer to feed 4, scan number 100 and feed 13, scan number 200, 
+      respectively.  An integer scan number is the same as specifying a 
+      feed number of 1 (i.e., 100 is the same as 100.01).  The following 
+      verbs access data in the "on-line" file:
+
+	CGET		GET		GET0-9		OFF
+	ON		GETIR		GETOTF		GETPOLZ
+	GGET		CGGET
+
+    . Off-line data file
+      ------------------
+      The "off-line" data file contains scans which the user has stored
+      into a file in his or her own directory under whatever name
+      desired.  The program will assume that the file has the name of
+      LDATA or CDATA (depending upon whether you are running the line
+      or continuum version of the program) until told otherwise by the
+      user (see CHNGFILE).  Data in the "off-line" file is accessed
+      using most of the same commands as the "on-line" file:
+
+	GET		GET0-9		OFF		ON
+	GETIR		GGET
+
+      Access is by scan number and feed number -- UniPOPS first
+      searches the "off-line" file and then the "on-line" file if the
+      specified scan number is greater than zero; else, it will search
+      the "on-line" file first.  UniPOPS cannot write scans to the
+      "off-line" data file.
+
+    . Save data file
+      --------------
+      The "save" file is a file where a user can read and write scans.
+      The file can have any name desired although UniPOPS will assume
+      that the file has the name of LSAVE (or CSAVE) until told
+      otherwise (see CHNGFILE).  Data in the file is accessed and
+      stored by location in the file via the value of the NSAVE
+      adverb.  The following verbs access or store data into the "save"
+      file.
+
+	CHECK		RECALL          SAVE
+
+    . Keep data file
+      --------------
+      The "keep" file is also a file where a user can read and write
+      scans.   It can have any name desired by the user -- the program 
+      assumes LKEEP (or CKEEP) until told differently (see CHNGFILE).  
+      Data in the file is accessed and stored by scan number.  No two
+      scans of the same number can be stored in the same file.  The
+      following verbs access or store data into the "keep" file.
+
+	KEEP		KGET
+
+    . Gains data file
+      ---------------
+      While observing at the 12-meter, you will also have an additional
+      on-line data files for storing the spectrometer's gains.  You can
+      access the data in the "gains" files by using the following
+      verbs.
+
+	CGGET		GGET
+
+      You can put those same scans (or other scans, since the files
+      have the same format as the other off-line files described
+      above) into a disk file and use that file as an off-line gains
+      file.  The GGET verb is then used to access that file.  The
+      off-line gain file has the same access rules as the off-line
+      data file described above.
+
+      Individual records data
+      -----------------------
+
+      Individual records of a scan are available in Green Bank using
+      the GETIR verb.  This data is available on-line or through an
+      off-line file.  The off-line individual records file has the
+      same access rules as the off-line data file described above.
+
+      On-the-fly data at the 12-meter
+      -------------------------------
+
+      On-the-fly spectral line scans are currently only available
+      through the on-line data file at the 12-meter.  Use the
+      GETOTF verb to access this data.
+
+      Data from the polarizer at the 12-meter
+      ---------------------------------------
+
+      Data from the polarizer is only available through the on-line
+      data at the 12-meter.  Use the GETPOLZ verb to access this data.
+
+
+    . Verbs and Adverbs Related to the Access of One-Dimensional Data
+      ---------------------------------------------------------------
+      The following verbs relate to changing or listing the data files
+      currently available to the program :
+
+	CHNGFILE	CHNGONLINE	CHNGPRJ		CHNGVER
+	FILES 		OLFILES		Z_CHNGFIL
+
+      The following verbs summarize the contents of data files :
+
+	CHECK		SELECT		SUMMARY		TELL
+
+      The values of the following adverbs can prevent the accidental
+      overwriting of a scan in the "keep" or "save" files :
+
+	KPROTECT        SPROTECT
+
+      The format of the UniPOPS disk files ("off-line", "save", 
+      "keep", "gains", and "individual records") are described under 
+      "Data-Format".
+
+
+Multi-Dimensional Arrays Data Access
+------------------------------------
+
+      Two dimensional arrays (matrices) can be read from disk into UniPOPS
+      and written to disk with the verbs
+
+	MREAD		MWRITE
+
+      The format of the disk files is that of a two-dimensional FITS
+      image file.
+
+      The UniPOPS utility program (i.e., a program that runs outside
+      of UniPOPS)
+
+	cube.exe
+
+      takes an "off-line data", "save", or "keep" file of
+      one-dimensional spectral-line scans and produces a
+      three-dimensional FITS image file (cube) on disk.  The
+
+	READCUBE	SLICE
+
+      verbs allows UniPOPS to read in the cube and slice the cube.  The
+      sliced cube is a two-dimensional array (matrix) which can then be
+      displayed.
+
+      The FITS image files produced by MWRITE and cube.exe can be read
+      into most programs (e.g., IRAF and AIPS) that know how to read
+      FITS image files.  In most cases, the two- and three-dimensional
+      FITS image file produced by other program can be read into UniPOPS.

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MCOPY:  Copies a matrix to another matrix.  '
+PRINT 'Syntax: MCOPY(matrix1,matrix2)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

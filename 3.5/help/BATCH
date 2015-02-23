@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BATCH:  (PSEUDO) Reads in and executes the POPS commands in'
+PRINT 'the specified file.  Syntax: BATCH filename'
+PRINT ' '

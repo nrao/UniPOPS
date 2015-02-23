@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'EMPTY:  Deletes the contents of the ASTACK array.'
+PRINT ' '
+PRINT 'ACOUNT=',ACOUNT
+PRINT ' ' 

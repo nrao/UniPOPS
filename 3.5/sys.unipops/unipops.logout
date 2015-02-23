@@ -1,0 +1,5 @@
+#  @(#)unipops.logout	5.1 06/22/94
+#  Standard UniPops .logout file
+#
+echo "** Goodbye" $LOGNAME "**"
+clear

@@ -1,0 +1,12 @@
+PRINT ' '
+PRINT 'TEMP: (LINE-GREEN BANK) Performs (on-off)/off assuming '
+PRINT 'that the on scan is in Array 0 and the off is in Array 1.'
+PRINT 'The results are stored in Array 0.'
+PRINT ' '
+PRINT 'TEMP: (LINE-TUCSON) Performs ((on-off)/off)*gains assuming'
+PRINT 'that the on scan is in Array 0, the off is in Array 1,'
+PRINT 'and the gains are in Array 3.'
+PRINT 'The results are stored in Array 0.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

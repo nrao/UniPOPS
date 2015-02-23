@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MAX:  (FUNCTION) Returns the maximum value of the TWO'
+PRINT 'parameters.  Syntax:  MAX(x1, x2).'
+PRINT ' '

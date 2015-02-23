@@ -1,0 +1,112 @@
+!   @(#)unipops.mwmrc	5.1 06/22/94
+!
+! (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+! ALL RIGHTS RESERVED 
+! 
+! 
+! Motif Release 1.2
+! 
+
+!!
+!!  DEFAULT Mwm 1.2 RESOURCE DESCRIPTION FILE (system.mwmrc)
+!!
+!!  NOTE: To personalize this file, copy this file before editing it.
+!!  	  Personalize copies of the Mwm resource file typically
+!!	  reside as:
+!!
+!!		$HOME/.mwmrc
+!!
+
+!!
+!! Root Menu Description (this menu must be explicitly posted via f.menu)
+!!
+
+Menu DefaultRootMenu
+{
+	"Root Menu"		f.title
+	"Shuffle Up"		f.circle_up
+	"Shuffle Down"		f.circle_down
+	"Refresh"		f.refresh
+	"Pack Icons"		f.pack_icons
+	 no-label		f.separator
+	"Restart..."		f.restart
+	"Exit..."		f.quit_mwm
+
+}
+
+
+# rlogin Menu (buton 2)
+Menu RloginMenu
+{
+	"Applications"		f.title
+	"xterm"			f.exec "xterm -sb -sl 900 -font 9x15bold &"
+	"Console"		f.exec "xterm -C -sb -sl 900 -font 9x15bold -title Console &"
+	"emacs"			f.exec "emacs &"
+	"textedit"		f.exec "textedit &"
+	"mailtool"		f.exec "mailtool -Wi &"
+	"calculator"		f.exec "xcalc -iconic &"
+	"clock"			f.exec "xclock -update 1 &"
+}
+!!
+!! Default Window Menu Description
+!!
+
+
+!!
+!! Key Binding Description
+!!
+
+Keys DefaultKeyBindings
+{
+	Shift<Key>Escape	window|icon		f.post_wmenu
+	Alt<Key>space		window|icon		f.post_wmenu
+	Alt<Key>Tab		root|icon|window	f.next_key
+	Alt Shift<Key>Tab	root|icon|window	f.prev_key
+	Alt<Key>Escape		root|icon|window	f.circle_down
+	Alt Shift<Key>Escape	root|icon|window	f.circle_up
+	Alt Shift Ctrl<Key>exclam root|icon|window	f.set_behavior
+	Alt<Key>F6		window			f.next_key transient
+	Alt Shift<Key>F6	window			f.prev_key transient
+	Shift<Key>F10		icon			f.post_wmenu
+!	Alt Shift<Key>Delete	root|icon|window	f.restart
+}
+
+!!
+!! Button Binding Description(s)
+!!
+
+Buttons DefaultButtonBindings
+{
+	<Btn1Down>	icon|frame	f.raise
+	<Btn3Down>	icon|frame	f.post_wmenu
+	<Btn1Down>	root		f.menu	DefaultRootMenu
+	<Btn2Down>	root		f.menu	RloginMenu
+}
+ 
+Buttons ExplicitButtonBindings
+{
+	<Btn1Down>	frame|icon	f.raise
+	<Btn3Down>	frame|icon	f.post_wmenu
+	<Btn3Down>	root		f.menu	DefaultRootMenu
+!	<Btn1Up>	icon		f.restore
+	Alt<Btn1Down>	window|icon	f.lower
+!	Alt<Btn2Down>	window|icon	f.resize
+!	Alt<Btn3Down>	window|icon	f.move
+
+}
+ 
+Buttons PointerButtonBindings
+{
+	<Btn1Down>	frame|icon	f.raise
+	<Btn3Down>	frame|icon	f.post_wmenu
+	<Btn3Down>	root		f.menu	DefaultRootMenu
+	<Btn1Down>	window		f.raise
+	<Btn1Up>	icon		f.restore
+	Alt<Btn1Down>	window|icon	f.lower
+!	Alt<Btn2Down>	window|icon	f.resize
+!	Alt<Btn3Down>	window|icon	f.move
+}
+
+!!
+!!  END OF mwm RESOURCE DESCRIPTION FILE
+!!

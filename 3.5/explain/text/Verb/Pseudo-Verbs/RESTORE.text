@@ -1,0 +1,25 @@
+    	(PSEUDO VERB)
+
+	Syntax:    RESTORE page-number   
+
+	RESTORE restores the core memory space stored on disk in the
+	memory file by the command STORE page-number.  The user must
+	specify what 'page' number to RESTORE (1-3 only).  Procedure
+	definitions, adverb values, and user defined variables are
+	restored.
+
+	STORE, RESTORE, and RESTART are used to control the program
+	memory space.  RESTORE restores the program to a prior
+	condition saved for that purpose with STORE.
+
+	RESTORE can be used only in execute mode and must be the only
+	thing on the command line.
+
+	EXAMPLE:
+
+	Remember that copy of memory you saved yesterday with the
+	procedures and adverb values just the way you wanted them by
+	using STORE 3.  Well, you can get back to where you were before
+	by specifying:
+
+		RESTORE 3

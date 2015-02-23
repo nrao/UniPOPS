@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	Syntax:  MBLANK(matrix_num)
+
+	MBLANK erases all data values in the specified Matrix and
+	places the undefined value (as found in the Matrix's header) in
+	place of the data.
+
+	No adverbs are used or set by MBLANK.
+
+	EXAMPLE:
+
+	You want to set in Matrix (3) the value of undefined data to 10
+	billion and you want all the data in that Matrix to be assigned
+	this value.  Type:
+
+		MH3(MUNDEF) = 1.e10; MBLANK
+
+
+
+

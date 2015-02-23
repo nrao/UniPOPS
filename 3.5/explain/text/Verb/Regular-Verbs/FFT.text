@@ -1,0 +1,25 @@
+	(REGULAR VERB)
+
+	FFT performs a fast Fourier transform for the data in Array
+	(0) and stores the real part of the result in Array (0) and
+	the imaginary part in Array (1).
+
+        ADVERBS USED:
+
+	BDROP         The number of channels at each end of the
+	EDROP         receiver which are ignored by the routine.
+			The initial values are 0.
+
+	No adverbs are set by FFT.
+
+	EXAMPLE:
+
+	You want to take the FFT of the data in Array (0) so type:
+
+		FFT
+
+	and you can use SHOW to display the results.
+
+
+         
+	    

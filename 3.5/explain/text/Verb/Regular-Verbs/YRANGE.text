@@ -1,0 +1,27 @@
+	(REGULAR VERB)
+
+	Syntax:    YRANGE (min,max)
+
+	A routine which sets the y-axis axis limits of a SHOW display.
+	The user specifies the minimum and maximum intensity for the
+	display.  YRANGE will calculate the YMIN and YINCR value for
+	the graph.  YMIN and YINCR can also be set by the user.
+
+	No adverbs are used by YRANGE.
+
+	ADVERBS SET:
+
+	  YMIN		The minimum temperature to appear on the graph.
+			The initial value is -9999.000
+
+	  YINCR		The increment for the y-axis tic marks.
+			The initial value is 1.000000
+
+	EXAMPLE:
+
+	The y-axis scaling needs to be changed from that displayed to 
+	compare with another graph; so specify:
+
+		YRANGE (-2,5)
+		PAGE SHOW
+

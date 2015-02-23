@@ -1,0 +1,97 @@
+	(REGULAR VERB)
+ 
+	Sets the upper and lower axis labels for SHOW.  Standard
+	default mode is FV.
+
+	The available routines and their actions are:
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-                       Bottom Axis            Top Axis 
+L-		---------------------------------------------
+L-		CC     Channel Number	      Channel Number
+L-		CF     Channel Number	      Frequency
+L-		CV     Channel Number         Velocity	
+L-		FC     Frequency              Channel Number
+L-		FF     Frequency	      Frequency
+L-		FV     Frequency              Velocity 
+L-         	VC     Velocity               Channel Number	
+L-              VF     Velocity               Frequency
+L-		VV     Velocity		      Velocity
+L-		---------------------------------------------
+L-      If frequencies or velocities cannot be calculated for the given
+L-	data, the axes label will resort to channel number.
+L-
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-
+C-                       Bottom Axis            Top Axis 
+C-		---------------------------------------------
+C-		CC     Channel Number	      Channel Number
+C-		CF     Channel Number	      Time
+C-		CV     Channel Number         Position	
+C-		FC     Time	              Channel Number
+C-		FF     Time		      Time
+C-		FV     Time	              Velocity 
+C-         	VC     Position               Channel Number	
+C-              VF     Position               Time
+C-		VV     Position		      Position
+C-		---------------------------------------------
+C-      If time or positions cannot be calculated for the given
+C-	data, the axes label will resort to channel number.
+C-
+C------------------------- Continuum ------------------------------------
+
+	The action of the above verbs can also be performed using the
+	more powerful SAXIS verb.
+
+	The selected mode remains in effect until changed by typing one of 
+	the other available verbs or through the use of SAXIS.
+
+	No adverbs are used by these verbs.
+
+	ADVERBS SET:
+
+	STATUS(1) :  Units of the lower  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.
+
+		     Values (Spectral Line): 1 = channels 
+		    		 	     2 = frequency offset
+					     3 = velocity (header definition)
+					     4 = radio velocity
+					     5 = optical velocity
+					     6 = relativistic velocity
+					     7 = linear velocity
+					     8 = rest frequency
+					     9 = sky frequency
+					    10 = image rest frequency
+					    11 = image sky frequency
+
+		     Values (Continuum): 1 = sample 
+		    		 	 2 = time offset
+					 3 = position offset
+					 4 = X position offset
+					 5 = Y position offset
+					 6 = X position
+					 7 = Y position
+					 8 = LST
+					 9 = UT
+
+	STATUS(2) :  Units of the upper  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.  Values are the
+		     same as STATUS(1)
+
+	EXAMPLE:
+
+	You are displaying the current spectra with the FV (default) option
+	and want to change the display so that channels are on the upper
+	axis; specify:
+
+		VC              For spectral-line data, will change the
+				graphics to velocity on the bottom
+				x-axis and channels on the top x-axis.
+		PAGE SHOW       Display original spectrum and new
+				x-axis.

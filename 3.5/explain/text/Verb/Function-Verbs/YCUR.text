@@ -1,0 +1,15 @@
+        (FUNCTION VERB)
+
+	YCUR is a function that activates the cross hair and returns the
+	Y position of the cursor in terms of screen pixels.
+
+	YCUR can be used for finding the pixel locations to be used by
+	subsequent calls to PLACE, VCTR, or CHAR.
+
+	No adverbs are set or used by YCUR.
+
+	EXAMPLE:
+
+		 PLACE(XCUR,YCUR); VCTR(XCUR,YCUR)
+
+	Will draw a line between two pixels on the graphics screen.

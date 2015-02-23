@@ -1,0 +1,90 @@
+#!/bin/csh -f
+#
+#  @(#)prepare.unipops.sh	5.2 02/29/96
+#
+#  When a user first logs into a unipops account, the following script
+#  is executed.
+#
+if ( ! $?popsversion ) setenv popsversion 3.5
+setenv popsdir ~unipops/$popsversion/ 
+#
+set EDITORS = (emacs textedit vi)
+set WINDOWS = (openlook)
+#
+# 	the above should be changed in `domainname`.prepare.unipops if 
+#	necessary to reflect the combinations available at your site
+#
+if ( -e ${popsdir}/sys.unipops/`domainname`.prepare.unipops ) then
+   source ${popsdir}/sys.unipops/`domainname`.prepare.unipops
+endif
+#
+if ( $#EDITORS > 1 ) then
+   while (! $?okedt)
+      echo " "
+      echo "Which of the following editors would you like to use with UniPops?"
+      echo -n "(" ${EDITORS} ")? "
+      set popseditor = $<
+      foreach editor ($EDITORS)
+         if ($popseditor == $editor) set okedt
+      end
+   end
+else
+   set popseditor = $EDITORS
+endif
+#
+if ( $#WINDOWS > 1 ) then
+   while (! $?okwindow)
+     echo " "
+     echo "Which of the following windowing systems would you like to use with UniPops?"
+     echo -n "(" ${WINDOWS} ")? "
+     set popswindow = $<
+     foreach window ($WINDOWS)
+        if ($popswindow == $window) set okwindow
+     end
+  end
+else
+   set popswindow = $WINDOWS
+endif
+#
+echo " "
+#
+set shl = $SHELL
+if ($shl:t == "csh") then
+
+  if (-e .unipops) rm -fr .unipops
+  touch .unipops
+
+  echo setenv popseditor $popseditor >> .unipops
+  echo setenv popswindow $popswindow >> .unipops
+  echo setenv popsversion $popsversion >> .unipops
+  echo setenv popsdir '~unipops/$popsversion/' >> .unipops
+  echo set path = '($path ${popsdir}sunbin ${popsdir}utilities)' >> .unipops
+  echo setenv popsproc1 '${popsdir}procedures/' >> .unipops
+  if ( $?popsproc2 ) then
+	echo setenv popsproc2 $popsproc2 >> .unipops
+  endif
+
+else if ($shl:t == "bash") then
+#
+  if (-e .unipops) rm -fr .unipops_bash
+  touch .unipops_bash
+#
+  echo export popseditor=$popseditor >> .unipops_bash
+  echo export popswindow=$popswindow >> .unipops_bash
+  echo export popsversion=$popsversion >> .unipops_bash
+  echo export popsdir='~unipops/$popsversion/' >> .unipops_bash
+  echo export PATH='$PATH:${popsdir}sunbin:${popsdir}utilities' >> .unipops_bash
+  echo export popsproc1='${popsdir}procedures/' >> .unipops_bash
+  if ( $?popsproc2 ) then
+	echo export popsproc2=$popsproc2 >> .unipops_bash
+  endif
+
+else
+  echo " "
+  echo "Unsupported shell:" $shl:t
+  echo "See the local UniPops guru for help"
+  echo " "
+endif
+#
+if (-e $popsdir/sunbin/mkfiles.unipops) $popsdir/sunbin/mkfiles.unipops
+#		and finally put the required empty files here.

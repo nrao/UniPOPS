@@ -1,0 +1,15 @@
+	(REGULAR VERB)        	
+
+	Syntax: MSCALE(factor)
+
+	MSCALE Multiplies the contents of Matrix (0) by the value of the
+	argument (factor) and places the results back into Matrix (0).
+
+	No adverbs are used or set by SCALE.
+
+	EXAMPLE:
+
+	To multiply the contents of Matrix (0) by 3.2:
+
+		MSCALE(3.2)
+

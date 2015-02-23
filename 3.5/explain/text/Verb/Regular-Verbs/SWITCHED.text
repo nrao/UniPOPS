@@ -1,0 +1,55 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-      SWITCHED, which works only for data taken with the 12-meter
+C-	telescope, computes the switched power data from the raw phases
+C-	of the digital back-end scan in Array (0).  The data is scaled
+C-	by:
+C-
+C-		exp [atmospheric zenith opacity / sin(elevation) ]
+C- 
+C-	where the opacity and elevation are those stored in the TAUH20
+C-	and EL header parameter in Array (0).  
+C-
+C-      If the value stored in the header parameter FREQRES is less
+C-	than or equal to zero, then the value for 'Counts/K',
+C-	calculated from the header parameters RESTFREQ and TCAL, is
+C-	used to convert the data to K.  The adverb CALVAL is assigned
+C-	the value of the header parameter FREQRES.
+C-			
+C-      If the value stored in the header parameter FREQRES is not
+C-	equal to zero, then the value for 'Counts/K', which is then
+C-	obtained from the data and the header parameter TCAL, is stored
+C-	in the adverb CALVAL and is used to convert the data to K.
+C-
+C-	In addition, if the value stored in the header parameter
+C-	FREQRES is equal to 1, then the system temperature is
+C-	calculated from the data and stored in the STSYS header
+C-	parameter.
+C-
+C-	The adverb VRMS is assigned the value of the mean total-power
+C-	differences between signal and reference phases.
+C-
+C-	The results are placed back into Array (0) but the array will
+C-	have one-fourth as many data points as the original since the
+C-	four phases of the scan have been combined.  
+C-
+C-	No adverbs are used by SWITCHED.
+C-
+C-	ADVERBS SET:
+C-
+C-	   CALVAL       The mean value of (cal_on - cal_off) for the
+C-			data is Array (0).  Initial value is 0.
+C-
+C-	   VRMS         The mean value of (signal - reference) /
+C-			(signal + reference) for the data in Array
+C-			(0).  Initial value is 0.
+C-
+C-
+C-	EXAMPLE:
+C-
+C-		GET 500 SWITCHED AVGD PAGE SHOW
+C-
+C------------------------- Continuum ------------------------------------
+

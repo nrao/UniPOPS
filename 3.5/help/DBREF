@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'DBREF:  (PROC-LIB) Turns a (sig-ref)/ref scan into a'
+PRINT '(ref-sig)/sig scan.'
+PRINT ' '
+PRINT 'FACT=',FACT
+PRINT ' ' 

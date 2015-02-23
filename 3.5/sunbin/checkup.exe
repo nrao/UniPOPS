@@ -1,0 +1,41 @@
+#! /bin/csh -f
+#
+# @(#)checkup.exe.sh	5.3 03/20/96
+#
+# Makes sure that if a parent dies, it takes the child with it
+# if the child dies, or both die, simply exit
+# usage: checkup.exe child_pid parent_pid
+#
+if ($#argv < 2) then
+  echo "CHECKUP: Bad inputs" > /dev/console
+  exit(1)
+endif
+#
+if (`isSolaris` == "YES") set solar
+loop:
+  sleep 20
+  if ($?solar) then
+  	/usr/bin/ps -ef | grep $USER > /tmp/ps.$$
+  	set childpid = `awk '{print $2}' /tmp/ps.$$ | grep $1` 
+  	set parentpid = `awk '{print $2}' /tmp/ps.$$ | grep $2` 
+  else
+	/usr/bin/ps > /tmp/ps.$$
+  	set childpid = `awk '{print $1}' /tmp/ps.$$ | grep $1` 
+  	set parentpid = `awk '{print $1}' /tmp/ps.$$ | grep $2` 
+  endif
+  if ($#parentpid == 0 && $#childpid > 0) then
+	kill -6 $childpid[1]
+        rm /tmp/ps.$$
+        exit(0)
+  endif
+  if ($#parentpid > 0 && $#childpid == 0) then
+     rm /tmp/ps.$$
+     exit(0)
+  endif
+  if ($#parentpid == 0 && $#childpid == 0) then
+        rm /tmp/ps.$$
+	exit(0)
+  endif
+  /bin/rm /tmp/ps.$$
+  goto loop
+#

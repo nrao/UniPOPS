@@ -1,0 +1,37 @@
+	(REGULAR VERB)
+
+	MPLUS adds each element of Matrix (1) to the corresponding element
+	of Matrix (0) and places the results in Matrix (0).
+
+	ADVERBS USED:
+	
+          DEFMODE : Indicates how undefined data values (values equal to the
+		    value of the MUNDEF header word) are treated.
+
+                If DEFMODE is FALSE, the result will have an undefined
+                    data value if EITHER of the values in the input
+                    matrices were undefined at that location.
+
+                If DEFMODE is TRUE, the result will have an undefined
+                    data value at any location where BOTH of the
+                    input matrices have undefined values at that location.
+                    If only one value is undefined at that location, the
+                    result will be as if the undefined value were zero.
+
+                    The initial value is FALSE.
+
+        EXAMPLE:
+
+        You want to perform the following matrix calculation:
+
+		(Matrix (1) * 4.5) + Matrix (0)
+
+	You can do that with the following:
+
+	(MSCALE scales Matrix (0) only)
+
+		MCOPY(0,2); MCOPY(1,0)
+	 	MSCALE(4.5)
+		MCOPY(0,1); MCOPY(2,0)
+		MPLUS
+

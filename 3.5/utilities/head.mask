@@ -1,0 +1,36 @@
+SIMPLE  =                    T      /      Spectral line data cube....          
+BITPIX  =                   16      / Processed via UniPops CUBE utility        
+NAXIS   =                    3      /                                           
+NAXIS1  =                    1      /                                           
+NAXIS2  =                    1      /                                           
+NAXIS3  =                    1      /                                           
+CTYPE1  = 'VELO    '                /                                           
+CRVAL1  =      0.000000000E+00      /                                           
+CDELT1  =      0.000000000E+00      /                                           
+CRPIX1  =      1.000000000E+00      /                                           
+COMMENT E1     0.000000000E+00      / Parameter for CUBE.  Error in velocity    
+CTYPE2  = '        '                /                                           
+CRVAL2  =      0.000000000E+00      /                                           
+CDELT2  =      0.000000000E+00      /                                           
+CRPIX2  =      1.000000000E+00      /                                           
+COMMENT E2     0.000000000E+00      / Parameter for CUBE.  Error in H position  
+CTYPE3  = '        '                /                                           
+CRVAL3  =      0.000000000E+00      /                                           
+CDELT3  =      0.000000000E+00      /                                           
+CRPIX3  =      1.000000000E+00      /                                           
+COMMENT E3     0.000000000E+00      / Parameter for CUBE.  Error in V position  
+COMMENT A '        '                / Better description of coordinate system   
+OBJECT  = '                '        /                                           
+ORIGIN  = 'NRAO-GB '                /                                           
+DATE    =                           /                                           
+BLANK   =               -32768      /                                           
+BSCALE  =      1.000000000E+00      /                                           
+BZERO   =      0.000000000E+00      /                                           
+BUNIT   = 'K       '                /                                           
+DATAMIN =     -3.276700000E+04      /                                           
+DATAMAX =      3.276700000E+04      /                                           
+EQUINOX =      1.950000000E+03      /                                           
+COMMENT 1                                                                       
+COMMENT 2                                                                       
+COMMENT 3                                                                       
+END                                                                             

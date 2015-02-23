@@ -1,0 +1,90 @@
+	(REGULAR VERB)
+
+	CROSSHAIR activates the horizontal and vertical cross hairs.
+	You should position the cross hairs where you want and follow
+	the instructions on the text screen for obtaining the cross-hair
+	position and exiting cross-hair mode.
+
+	CROSSHAIR displays a 'plus' sign and up to five values when
+	you click button 3 (button 1 exits CROSSHAIR and returns
+	control to the POPS interpreter).  These five values are
+	arranged on the screen as follows:
+
+		            C-value   T-value
+		                   _|_
+		            V-value | F-value
+
+		                 M-value
+
+	where C, V, T, F, and M represent what the correspondingly named
+	CUR functions (CCUR, VCUR, etc) would have returned at that
+	position.  Some values may not appear since some types of plots
+	have no corresponding value.
+			
+	For a SHOW display, the following applies: 
+
+L------------------------- Spectral Line --------------------------------
+L-      The channel number (C-value) and y-value (T-value) [as well as 
+L-	velocity (V-value in units of the header parameters), and 
+L-	frequency offset(F-value), if derivable from the data] of that 
+L-	point will be displayed.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-      The channel number (C-value) and y-value (T-value) as well as 
+C-	position offset (V-value) and time offset (F-value), both relative 
+C-	to start of scan and only if derivable from the data) of that 
+C-	point will be displayed.
+C------------------------- Continuum ------------------------------------
+
+	For a PLOT display, the x and y-axis values (C-value and
+	T-value respectively) are displayed.
+
+	For a two-dimensional plot, the x and y-axis cell numbers
+	(C-value and T-value respectively), x and y-axis values
+	(V-value and F-value respectively), and the z value (M-value)
+	are displayed.
+
+	ADVERBS USED:
+
+	CROSSFLG	A five digit scalar with each digit being a one
+			or a zero that is used to give you complete
+			control over which pieces of information are
+			displayed.  Each digit corresponds to one of the
+			five values.  A digit with a value of zero turns
+			off printing of the corresponding value while a 
+			non-zero digit turns on the printing of the value.
+			
+			The digits in CROSSFLG correspond to the above 
+			printed values as follows:
+
+			CROSSFLG = ctvfm
+
+			where c, t, v, f, and m represent the 5 digits
+			and are either a 1 or a 0.  That is, the first
+			digit controls the the C-value, the second the
+			T-value, etc.
+			The default value is CROSSFLG=11111
+
+	No adverbs are set by CROSSHAIR.
+
+	EXAMPLE:
+
+	You have done a SHOW and you see a spectral feature and want to
+	know at what velocity it lies at, so type:
+
+		CROSSHAIR
+
+	and a set of cross hairs will be drawn on the screen.  You will
+	be given instructions on how to move the cursor or on how to
+	exit the CROSSHAIR mode.
+
+	If all you were interested in was JUST the velocity information,
+	you could type:
+
+		CROSSFLG=00100
+		CROSSHAIR
+
+	To reset CROSSFLG to its default state you would type:
+
+		CROSSFLG=DEFAULT

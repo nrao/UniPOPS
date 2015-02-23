@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COSH:  (FUNCTION) Returns the hyperbolic cosine of the'
+PRINT 'given parameter (in radians).'
+PRINT ' '

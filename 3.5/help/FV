@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'FV:  (LINE) Sets the lower x-axis to frequency and the'
+PRINT 'upper to velocity for SHOW.'
+PRINT ' '
+PRINT 'FV:  (CONTINUUM) Sets the lower x-axis to time and '
+PRINT 'the upper to position for SHOW.'
+PRINT ' '

@@ -1,0 +1,379 @@
+#! /bin/csh -f
+#  @(#)cvt.tape-disk.sh	5.3 10/04/96
+echo " "
+echo "Converts a tape file in IEEE Keep, Modcomp Keep, ASCII, Telescope Tape, or"
+echo "PCPOPS format to disk in either IEEE Keep, Modcomp Keep, ASCII, PCPOPS,"
+echo "or SDD format. All of the file or only the records specified by the user"
+echo "will be converted"
+echo " "
+echo "NOTE: The tape drive must be attached to" `hostname`
+echo " "
+#
+informat:
+echo " "
+echo "Enter one of the following to specify the format of the input tape"
+echo -n "IEEE, MOD, ASCII, TELE, or PC? "
+set informat = $<
+set informat = `echo $informat | tr "[a-z]" "[A-Z]"`
+if ($informat == "IEEE" || $informat == "MOD" || $informat == "PC") then
+	set recl = 5120
+else if ($informat == "TELE") then
+	set recl = 9600
+else if ($informat == "ASCII") then
+	set recl = 21680
+else
+	echo " "
+	echo "WARNING: Incorrect entry... Try again"
+	goto informat
+endif
+#
+echo " "
+if (`isSolaris` == "YES")  then
+   echo -n "Enter unit number of input tape drive (e.g., 0, 1, 2, ...) : "
+   set infile = $<
+   set drv = /dev/rmt/$infile
+   set ndrv = /dev/rmt/${infile}bn
+else
+   echo -n "Enter device name of input tape drive (e.g., rst0, rst1, rmt0,...): "
+   set infile = $<
+   set drv = /dev/$infile
+   set ndrv = /dev/n$infile
+endif
+
+if (! -e $drv || ! -e $ndrv) then
+   echo " "
+   echo "ERROR: Input drive" $drv " or "  $ndrv " does not exist... Try again"
+   echo " "
+   exit(256)
+endif
+#
+outformat:
+echo " "
+echo "Enter one of the following to specify the format of output file"
+echo -n "IEEE, MOD, ASCII, SDD, or PC? "
+set outformat = $<
+set outformat = `echo $outformat | tr "[a-z]" "[A-Z]"`
+if ($outformat != "IEEE" && $outformat != "MOD" && $outformat != "PC" && $outformat != "ASCII" && $outformat != "SDD") then
+	echo " "
+	echo "WARNING: Incorrect entry... Try again"
+	goto outformat
+endif
+#
+set cmnd2 = ""
+set pos = ""
+if ($informat != $outformat) then
+intype:
+   echo " "
+   echo "Enter L or C or B if you want line, continuum, or both"
+   echo -n "types of scans: "
+   set scntype = $<
+   set cmnd2 = ""
+   if ($scntype == "l" || $scntype == "L") then
+	set cmnd2 = "l"
+   else if($scntype == "c" || $scntype == "C") then
+	set cmnd2 = "c"
+   else if($scntype != "b" && $scntype != "B") then
+	echo "WARNING: Incorrect entry... Try again"
+	goto intype
+   endif
+#
+   if ($cmnd2 == "c" || $cmnd2 == "") then
+  	if ($informat == "TELE") then
+	   echo " "
+	   echo -n "Enter a Y if you want positional scans (feeds 98 and 99): "
+	   set postype = $<
+	   if ($postype == "Y" || $postype == "y") set pos = "p"
+	endif
+   endif
+endif
+#
+echo " "
+echo "Rewinding Input tape"
+mt -f $drv rewind
+if ($status != 0) then
+   echo "Cannot rewind ${drv}"
+   exit(256)
+endif
+#
+echo " "
+if ($informat == "MOD" || $informat == "TELE") then
+   echo "Reading label on tape"
+   if ($informat == "MOD") then
+      set labeltape = `dd if=$drv bs=512 count=1 | grep "MODCOMP USERTAPE" | wc`
+      if ($status != 0) then
+           echo "Cannot read label on ${drv}"
+           exit(256)
+      endif
+   else if($informat == "TELE") then
+      set labeltape = `dd if=$drv bs=512 count=1 | grep "VOL1ET" | wc`
+      if ($status != 0) then
+           echo "Cannot read label on ${drv}"
+           exit(256)
+      endif
+   endif
+   if ($labeltape[2] == 0) then
+      echo " "
+      echo "ERROR: Tape is of the wrong format... Try again "
+      echo " "
+      exit(256)
+   endif
+   mt -f $ndrv fsf 1
+   if ($status != 0) then
+      echo "Cannot position tape on ${drv}"
+      exit(256)
+   endif
+#
+else
+   echo "How many files do you want to skip on the input tape? "
+   set nfiles = $<
+   if ($nfiles > 0) then
+	   echo " "
+	   echo "Skiping" $nfiles "files"
+	   mt -f $ndrv fsf $nfiles
+     	   if ($status != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	   endif
+   endif	   	
+endif
+#
+set position = 0
+#
+newfile:
+echo " "
+echo -n "Enter output file name: "
+set outfile = $<
+#
+unset overwrite
+if (-e $outfile) then
+	echo " "
+	echo "WARNING: Output file" $outfile "exists..."
+	echo "Do you want to overwrite output file or append to it?"
+	echo -n "Enter o for overwrite, anything else to append: "
+	set answr = $<
+	if ($answr == "o" || $answr == "O") set overwrite
+else
+	set overwrite
+endif
+#
+inrecords:
+echo " "
+echo -n "Enter first tape record number to convert (1 for first record in file): "
+set first = $<
+echo -n "Enter last record number to convert (0 for last record in file): "
+set last = $<
+if ($first <= 0) set first = 1
+if ($last <= 0) set last = 9999999
+if ($last < $first) then
+	echo " "
+	echo -n "WARNING: First record number must be less than or equal to last"
+	echo ".... Try agin"
+	goto inrecords
+endif
+#
+@ count=1 + $last - $first 
+@ skip=$first - 1
+@ numskip=$skip - $position 
+#
+if ($numskip > 0) then
+	echo " "
+	echo "Bypassing" $numskip "records"
+	mt -f $ndrv fsr $numskip
+     	if ($status != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+else if ($numskip < 0) then
+	echo " "
+	echo -n "WARNING: Cannot backspace records... "
+	echo -n "Do you want to quit (Y/N)? "
+	set answr = $<
+	if ($answr == "y" || $answr == "Y") then
+	   echo " "
+	   echo "Rewinding and exiting"
+	   mt -f $drv rewind
+	   echo " "
+	   exit(0)
+	else
+	   goto inrecords 
+	endif
+else if ($first >= 2) then
+	echo "Must re-position tape -- Please be patient"
+	mt -f $ndrv bsr 1
+     	if ($status != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+	mt -f $ndrv fsr 1
+     	if ($status != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+# Backspace and skip the last read record -- hopefully bypasses a problem
+# with SCSI tape drive
+endif
+#
+echo " "
+if ($?overwrite) then
+   echo "Creating" $outfile
+   if (-e $outfile) \rm $outfile
+   if ($outformat == "SDD") then
+	echo " "
+        echo "How many output scans do you want the SDD file "    
+        echo -n "to hold (Default = 1024) ? " 
+        set nscans = $<
+	if ($nscans == "") set nscans = 1024
+	makeempty.exe $outfile $nscans
+	if ($status != 0) then
+	   echo "Cannot create ${outfile}"
+	   exit(256)
+	endif
+   endif
+else
+   if ($outformat == "SDD") then
+      set bb = `bootstrap $outfile 512 LONG`
+      if ( $bb[10] != 1 ) then
+         set bb = `bootstrap $outfile 512 SHORT`
+         set typesdd = $bb[8]
+      else
+         set typesdd = $bb[9]
+      endif
+      if ( $typesdd != 0 ) then
+	  echo "Output SDD file is in RECORDS format... Terminating"
+	  exit 256
+      endif
+   endif
+#
+   echo "Appending to" $outfile
+endif
+touch $outfile
+if ($status != 0) then
+   echo "Cannot modify ${outfile}"
+   exit(256)
+endif
+#
+if ($informat == "TELE" && $outformat == "PC") then
+        dd if=$ndrv bs=$recl \
+	count=$count | tele2ieee.exe $cmnd2 $pos | pcieee.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "TELE" && $outformat == "MOD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | tele2ieee.exe $cmnd2 $pos | ieee2keep.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "TELE" && $outformat == "IEEE") then
+	dd if=$ndrv bs=$recl \
+	count=$count | tele2ieee.exe $cmnd2 $pos >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "TELE" && $outformat == "ASCII") then
+	dd if=$ndrv bs=$recl \
+	count=$count | tele2ieee.exe $cmnd2 $pos | ieee2ascii.exe | dd obs=21680 \
+	cbs=80 conv=block >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "TELE" && $outformat == "SDD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | tele2ieee.exe $cmnd2 $pos | ieee2sdd.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "MOD" && $outformat == "PC") then
+	dd if=$ndrv bs=$recl \
+	count=$count | keep2ieee.exe $cmnd2 | pcieee.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "MOD" && $outformat == "IEEE") then
+	dd if=$ndrv bs=$recl \
+	count=$count | keep2ieee.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "MOD" && $outformat == "ASCII") then
+	dd if=$ndrv bs=$recl \
+	count=$count | keep2ieee.exe $cmnd2 | ieee2ascii.exe | dd obs=21680 \
+	cbs=80 conv=block >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "MOD" && $outformat == "SDD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | keep2ieee.exe $cmnd2 | ieee2sdd.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "PC" && $outformat == "IEEE") then
+	dd if=$ndrv bs=$recl \
+	count=$count | pcieee.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "PC" && $outformat == "MOD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | pcieee.exe $cmnd2 | ieee2keep.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "PC" && $outformat == "ASCII") then
+	dd if=$ndrv bs=$recl \
+	count=$count | pcieee.exe $cmnd2 | ieee2ascii.exe | dd obs=21680 \
+	cbs=80 conv=block >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "PC" && $outformat == "SDD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | pcieee.exe $cmnd2 | ieee2sdd.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "IEEE" && $outformat == "PC") then
+	dd if=$ndrv bs=$recl \
+	count=$count | pcieee.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "IEEE" && $outformat == "MOD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | ieee2keep.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "IEEE" && $outformat == "ASCII") then
+	dd if=$ndrv bs=$recl \
+	count=$count | ieee2ascii.exe $cmnd2  | dd obs=21680 \
+	cbs=80 conv=block >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "IEEE" && $outformat == "SDD") then
+	dd if=$ndrv bs=$recl \
+	count=$count | ieee2sdd.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "ASCII" && $outformat == "PC") then
+	dd if=$ndrv ibs=$recl cbs=80 conv=unblock \
+	count=$count | ascii2ieee.exe $cmnd2 | pcieee.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "ASCII" && $outformat == "MOD") then
+	dd if=$ndrv ibs=$recl cbs=80 conv=unblock \
+	count=$count | ascii2ieee.exe $cmnd2 | ieee2keep.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "ASCII" && $outformat == "IEEE") then
+	dd if=$ndrv ibs=$recl cbs=80 conv=unblock \
+	count=$count | ascii2ieee.exe $cmnd2 >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == "ASCII" && $outformat == "SDD") then
+	dd if=$ndrv ibs=$recl cbs=80 conv=unblock \
+	count=$count | ascii2ieee.exe $cmnd2 | ieee2sdd.exe >> $outfile
+	if ($status != 0) goto cnverr
+else if ($informat == $outformat) then
+        dd if=$ndrv bs=$recl count=$count >> $outfile
+	if ($status != 0) goto cnverr
+endif
+#
+unset overwrite
+#
+if ($outformat == "SDD") then
+   makeindex.exe $outfile > /dev/null
+   if ($status != 0) then
+      echo "Some problem encountered in recreating index for ${outfile}"
+      exit(256)
+   endif
+endif
+#
+more:
+echo " "
+echo -n "Do you want to convert more records (Y/N)?: "
+set answr = $<
+if ($answr == "y" || $answr == "Y") then
+	set position = $last
+	goto newfile
+else if($answr == "n" || $answr == "N") then
+	echo " "
+	echo "Rewinding and exiting"
+	mt -f $drv rewind
+	echo " "
+	exit(0)
+else
+	echo " "
+	echo "WARNING: Incorect entry... Try again"
+	goto more
+endif
+#
+cnverr:
+   echo "Some problem encountered in converting data"
+   exit(256)

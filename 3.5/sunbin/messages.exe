@@ -1,0 +1,106 @@
+#!  /bin/csh -f
+# @(#)messages.exe.sh	5.1 06/22/94
+#Shell script which dispalys various kinds of messages
+#   1.  A startup message
+#   2.  A message of the day
+#   3.  Messages for all recipients which are to be always displayed
+#   4.  Messages geared for a particular recipient which are to be
+#	always displayed.
+#   5.  Messages for all recipients but which are to be displayed only
+#       once for each recipient
+#   6.  Messages for a particular recipient but which are to be
+#	displayed only once for that recipient
+#
+#   Usage:  message.exe  <directory>  <filename>
+#   where <directory> = directory in which the various message
+#               subdirectories can be found.  
+#		The directory can contain any of the following:
+#		two files: startup motd
+#		subdirectories: AlwaysAll OnceAll Always_<name> Once_<name>
+#	        (substitute for <name> the login name of all recipients.
+#		i.e., Always_rmaddale, Once_mclark, Always_mclark, ...)
+#		Note: if a directories exist, it cannot be empty.
+#
+#   and where <filename> = the name of a dummy log file.  If it doesn't exist,
+#	                 one is created and all messages are displayed.
+#		  	 If it does exist, than all messages created after 
+#			 that file was last altered will be displayed.  
+#			 <filename> will be "touch"ed by this shell script .
+#			 It is best to have this a hidden file (i.e., 
+#			 one whost name begins with a dot.)
+#
+#
+if ($#argv >= 2) then
+ if (-e $1) then
+# Checks for bad input
+#
+  set tmpfile=/tmp/${LOGNAME}.msgs
+  if (-f $tmpfile) rm $tmpfile
+# file where messages are going to be stored
+#
+  if (-f ${1}/startup) cat $1/startup >>! $tmpfile
+  if (-f $1/motd) cat $1/motd >>! $tmpfile
+  if (-d $1/AlwaysAll) then
+    set NAMES = `find $1/AlwaysAll \! -type d -print | grep -v SCCS` 
+    echo $NAMES
+    if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+  endif
+  if (-d $1/Always_$LOGNAME) then
+    set NAMES = `find $1/Always_$LOGNAME \! -type d -print | grep -v SCCS`
+    echo $NAMES
+    if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+  endif
+# Puts startup, motd and those messages which are always to be
+# displayed, if they exist, into $tmpfile
+#
+  if (-f $2) then
+   if (-d $1/OnceAll) then
+     set NAMES = `find $1/OnceAll -newer $2 \! -type d -print | grep -v SCCS`
+     if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+   endif
+   if (-d $1/Once_$LOGNAME) then
+     set NAMES = `find $1/Once_$LOGNAME -newer $2 \! -type d -print | grep -v SCCS` 
+     if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+   endif
+   if (-w $2) then
+    touch $2
+   else
+    echo "ERROR: Cannot write to" $2 "... Continuing..." >>! $tmpfile
+   endif
+#  If <filename> exists, then check for all messages that have been
+#  created/modified since <filename> was created/modified.  Modify <filename>,
+#  if possible, so that messages will not be displayed again.
+#
+  else
+#
+   if (-e $1/OnceAll) then
+     set NAMES = `find $1/OnceAll \! -type d -print | grep -v SCCS`
+     if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+   endif
+   if (-e $1/Once_$LOGNAME) then
+     set NAMES = `find $1/Once_$LOGNAME \! -type d -print | grep -v SCCS`
+     if ($#NAMES != 0) cat $NAMES >>! $tmpfile
+   endif
+   date >! $2 
+#
+#  If filename doesn't exist, display all old messages and create filename
+#
+  endif
+#
+  setenv MORE -d
+  if (! -z $tmpfile) more $tmpfile
+  rm $tmpfile
+#
+#Use more to display $tmpfile containing all messages
+#
+ else
+  echo "USAGE: <directory> <filename> "
+  echo "<directory> = name of root directory of messages"
+  echo "<filename> = name of log file; logs the last time messages were read"
+ endif
+else
+ echo "USAGE: <directory> <filename> "
+ echo "<directory> = name of root directory of messages"
+ echo "<filename> = name of log file; logs the last time messages were read"
+endif
+

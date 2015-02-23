@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'VARDES01:  (HEADER-TUC) PROTO12M - A descriptor of the'
+PRINT 'switching variable (8 characters).  nn = 01, 02, ...'
+PRINT '(NOSWVAR + NOSWVARF) Slow phases are first, then the fast'
+PRINT 'phases.'
+PRINT ' '

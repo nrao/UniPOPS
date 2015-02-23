@@ -1,0 +1,247 @@
+#! /bin/csh -f
+#  @(#)cvt.tele-recs.cv.sh	5.2 10/27/94
+#  Charlottesville version
+set tapehost = rhesus
+#		make sure that they can rsh to  tapehost
+set username = `whoami`
+rsh -l $username $tapehost ls >& /dev/null
+if ($status != 0) then
+   set username = unipops
+   rsh -l $username $tapehost ls >& /dev/null
+   ls ($status != 0) then
+      echo "This will not work from your login."
+      echo "See the local unipops guru for help."
+      exit(256)
+   endif
+endif
+set rmtcmd = "rsh -l $username $tapehost /bin/csh -f"
+#
+echo " "
+echo "Converts a 140-ft telescope tape file into SDD-Records format"
+echo "All of the file or only the records specified by the user"
+echo "will be converted"
+echo " "
+echo "NOTE: The tape drive must be attached to" $tapehost
+echo " "
+#
+informat:
+set recl = 9600
+#
+echo " "
+echo -n "Enter device name of input tape drive (e.g., rst0, rst1, rmt0,...): "
+set infile = $<
+set drv = /dev/$infile
+#		On IBM machines, the odd drive number extensions are the
+#		non-rewind devices
+set ndrv = /dev/$infile.1
+set ifstr = "if ( -e $drv ) echo YES"
+set EXIST = `echo $ifstr | $rmtcmd`
+if ($status != 0) then
+   echo "Problems communicating with $tapehost."
+   exit(256)
+endif
+if ( $EXIST !~ YES ) then
+   echo " "
+   echo "ERROR: Input drive" $drv "does not exist on $tapehost. Try again."
+   exit(256)
+endif
+#
+echo " "
+echo "Rewinding Input tape"
+onintr -
+set cmdout = `echo mt -f $drv rewind\; echo \$status | $rmtcmd`
+if ($status != 0) then
+   echo "Problems communicating with $tapehost."
+   exit(256)
+endif
+if ($cmdout[$#cmdout] != 0) then
+   echo "Cannot rewind ${drv} on $tapehost."
+   exit(256)
+endif
+#
+echo " "
+echo "Reading label on tape"
+set labeltape = `echo dd if=$drv bs=512 count=1 | $rmtcmd | grep "VOL1ET" | wc`
+if ($status != 0) then
+      echo "Cannot read label on ${drv}"
+      exit(256)
+endif
+if ($labeltape[2] == 0) then
+      echo " "
+      echo "ERROR: Tape is of the wrong format... Try again "
+      echo " "
+      exit(256)
+endif
+set cmdout = `echo mt -f $ndrv fsf 1\; echo \$status | $rmtcmd`
+if ($status != 0) then
+   echo "Problems communicating with $tapehost."
+   exit(256)
+endif
+if ($cmdout[$#cmdout] != 0) then
+      echo "Cannot position tape on ${drv}"
+      exit(256)
+endif
+onintr
+#
+set position = 0
+#
+newfile:
+echo " "
+echo -n "Enter output file name: "
+set outfile = $<
+#
+unset overwrite
+if (-e $outfile) then
+	echo " "
+	echo "WARNING: Output file" $outfile "exists..."
+	echo "Do you want to overwrite output file or append to it?"
+	echo -n "Enter o for overwrite, anything else to append: "
+	set answr = $<
+	if ($answr == "o" || $answr == "O") set overwrite
+else
+	set overwrite
+endif
+#
+inrecords:
+echo " "
+echo -n "Enter first tape record number to convert (1 for first record in file): "
+set first = $<
+echo -n "Enter last record number to convert (0 for last record in file): "
+set last = $<
+if ($first <= 0) set first = 1
+if ($last <= 0) set last = 9999999
+if ($last < $first) then
+	echo " "
+	echo -n "WARNING: First record number must be less than or equal to last"
+	echo ".... Try agin"
+	goto inrecords
+endif
+#
+@ count=1 + $last - $first 
+@ skip=$first - 1
+@ numskip=$skip - $position 
+#
+onintr -
+if ($numskip > 0) then
+	echo " "
+	echo "Bypassing" $numskip "records"
+	set cmdout = `echo mt -f $ndrv fsr $numskip\; echo \$status | $rmtcmd`
+     	if ($status != 0) then
+           echo "Problems communicating with $tapehost"
+           exit(256)
+        endif
+        if ($cmdout[$#cmdout] != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+else if ($numskip < 0) then
+	echo " "
+	echo -n "WARNING: Cannot backspace records... "
+	echo -n "Do you want to quit (Y/N)? "
+	set answr = $<
+	if ($answr == "y" || $answr == "Y") then
+	   echo " "
+	   echo "Rewinding and exiting"
+	   echo mt -f $drv rewind | $rmtcmd
+	   echo " "
+	   exit(0)
+	else
+	   goto inrecords 
+	endif
+else if ($first >= 2) then
+	echo "Must re-position tape -- Please be patient"
+	set cmdout = `echo mt -f $ndrv bsr 1\; echo \$status | $rmtcmd`
+     	if ($status != 0) then
+           echo "Problems communicating with $tapehost"
+           exit(256)
+        endif
+        if ($cmdout[$#cmdout] != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+	set cmdout = `echo mt -f $ndrv fsr 1\; echo \$status | $rmtcmd`
+     	if ($status != 0) then
+           echo "Problems communicating with $tapehost"
+           exit(256)
+        endif
+        if ($cmdout[$#cmdout] != 0) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+     	endif
+# Backspace and skip the last read record -- hopefully bypasses a problem
+# with SCSI tape drive
+endif
+onintr
+#
+echo " "
+if ($?overwrite) then
+   echo "Creating" $outfile
+   if (-e $outfile) \rm $outfile
+   echo "How many output scans do you want the SDD file to hold"
+   echo "(currently, SDD files CAN NOT be expanded beyond their"
+   echo -n "initial size) (Default = 1024) ? "
+   set nscans = $<
+   if ($nscans == "") set nscans = 1024
+   makeempty.exe $outfile $nscans
+   if ($status != 0) then
+	echo "Cannot create ${outfile}"
+	exit(256)
+   endif
+else
+   set bb = `bootstrap $outfile 512 LONG`
+   if ( $bb[10] != 1 ) then
+      set bb = `bootstrap $outfile 512 SHORT`
+      set typesdd = $bb[8]
+   else
+      set typesdd = $bb[9]
+   endif
+   if ( $typesdd != 1 ) then
+	echo "Output SDD file is NOT in RECORDS format... Terminating"
+	exit 256
+   endif
+#
+   echo "Appending to" $outfile
+endif
+touch $outfile
+if ($status != 0) then
+   echo "Cannot modify ${outfile}"
+   exit(256)
+endif
+#
+onintr -
+echo dd if=$ndrv bs=$recl count=$count | $rmtcmd | tele2recs.exe | ieee2sdd.exe >> \
+	$outfile
+if ($status != 0) goto cnverr
+onintr
+#
+unset overwrite
+#
+makerecindex.exe $outfile > /dev/null
+if ($status != 0) then
+      echo "Some problem encountered in recreating index for ${outfile}"
+      exit(256)
+endif
+#
+more:
+echo " "
+echo -n "Do you want to convert more records (Y/N)?: "
+set answr = $<
+if ($answr == "y" || $answr == "Y") then
+	set position = $last
+	goto newfile
+else if($answr == "n" || $answr == "N") then
+	echo " "
+	echo "Rewinding and exiting"
+        onintr -
+	echo mt -f $drv rewind | $rmtcmd
+	echo " "
+	exit(0)
+else
+	echo " "
+	echo "WARNING: Incorect entry... Try again"
+	goto more
+endif
+#
+cnverr:
+   echo "Some problem encountered in converting data"
+   exit(256)

@@ -1,0 +1,24 @@
+	(REGULAR VERB)        	
+	
+	RECALL copies a scan from the 'save' file into Array (0).  You
+	first assign the value of the save-bin that you want to RECALL
+	to the adverb NSAVE.  Both the scan and its header information
+	are copied by RECALL.
+
+	ADVERBS USED:
+
+	NSAVE        The number of the save-bin whose contents is to be copied
+		     into Array (0).  NSAVE may range from 1 to an
+		     upper limit set by the size of the 'save' file.
+		     Initial value is 0.
+
+	No adverbs are set by RECALL.
+
+	EXAMPLE:  
+
+	To recall two scans into two different arrays, from different
+	save-bins, you can retrieve them by:
+
+	   	NSAVE = 65; RECALL COPY (0,2)    	 To Array 2
+            	NSAVE = 66; RECALL COPY (0,1)     	 To Array 1
+

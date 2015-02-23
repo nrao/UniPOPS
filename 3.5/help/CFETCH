@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CFETCH:  (PROC-LIBRARY) Gets the current observation (and,'
+PRINT 'if total-power, also gets the previous off scan and'
+PRINT 'performs a TEMP).  Syntax: CFETCH(feed_num)'
+PRINT ' '

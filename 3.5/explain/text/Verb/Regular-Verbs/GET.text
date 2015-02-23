@@ -1,0 +1,37 @@
+	(REGULAR VERB)
+
+	Syntax:    GET scan-number.rcvr-number 
+
+	GET copies a scan from the on-line or off-line disk files to
+	Array (0).  GET requires the desired scan number as its
+	object.  It is equivalent to GET0 and ON.
+
+	If scan-number > 0, then the on-line data file is searched
+	first, followed by the off-line data file, if a scan with the
+	correct number hasn't been found.
+
+	If scan-number < 0, then the off-line data file is searched
+	first, followed by the on-line data file, if a scan with the
+	correct number hasn't been found.
+
+	The rcvr-number specifies which back-end's data is to be
+	retrieved.  Back-end number 1 is specified as a .01, back-end
+	number 2 as .02, etc.  If rcvr-number is not specified, the
+	first back-end is retrieved.
+
+	No adverbs are used or set by GET.
+
+	EXAMPLES:
+       
+	.   To bring data from the first receiver of scan 550 from the
+	    disk and display it on the screen,
+              
+	      GET 550 PAGE SHOW 	Equivalent to GET 550.01
+					PAGE SHOW
+
+	.   To bring data from the fourth receiver of scan 550 from the
+	    disk and display it on the screen,
+
+	      GET 550.04 PAGE SHOW
+
+

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MORIGIN:  Character string describing place of origin of'
+PRINT 'the data in the Matrix (8 characters).'
+PRINT ' '

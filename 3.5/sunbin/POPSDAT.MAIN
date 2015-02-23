@@ -1,0 +1,13 @@
+C- Main File which includes all of the files that eventually make either
+C- LPOPSDAT or CPOPSDAT.  /lib/cpp is used and the -DCONTINUUM flag controls
+C- whether you get CPOPSDAT or LPOPSDAT, although the output-file name is
+C- controled by /lib/cpp.
+C- @(#)POPSDAT.MAIN	5.1 5
+C-
+#include "POPSDAT.GEN"
+C-
+#include "POPSDAT.VERBS"
+C-
+#include "POPSDAT.FFUNC"
+C-
+#include "POPSDAT.ADVERBS"

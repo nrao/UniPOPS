@@ -1,0 +1,19 @@
+	(STRING ADVERB of length 16 characters)
+
+	XTITLE and YTITLE are used to label the x and y axis labels of
+	the output of the PLOT verb.  XTITLE is the x label and YTITLE
+	is the y label.
+
+	XTITLE and YTITLE are used by :    PLOT     
+
+	No verbs change XTITLE and YTITLE
+
+	The initial values of XTITLE and YTITLE are blanks.
+
+ 	EXAMPLE :
+
+ 	To set the x-axis label of PLOT to "elevation" and the y-axis to
+	"System Temp", specify;
+
+		XTITLE = 'elevation'
+		YTITLE = 'System Temp.'

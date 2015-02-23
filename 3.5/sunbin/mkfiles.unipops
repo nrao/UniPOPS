@@ -1,0 +1,43 @@
+#!/bin/csh -f
+#
+#  @(#)mkfiles.unipops.sh	5.1 06/22/94
+#
+#	Put the default empty files into the current directory
+#
+if ( ! $?popsdir ) then
+  if (! $?popsversion) setenv popsversion 3.5
+  setenv popsdir ~unipops/$popsversion/
+endif 
+echo -n "preparing directory - be patient ."
+#
+#	first, do any local stuff
+#
+if (-e ${popsdir}sunbin/`domainname`.mkfiles.unipops) then
+  source ${popsdir}sunbin/`domainname`.mkfiles.unipops
+endif
+#		and then the standard stuff
+if (! -e LMEMORY) ${popsdir}sunbin/makefile.exe LMEMORY
+echo -n " ."
+if (! -e LDATA) ${popsdir}sunbin/makefile.exe LDATA
+echo -n " ."
+if (! -e LKEEP) ${popsdir}sunbin/makefile.exe LKEEP
+echo -n " ."
+if (! -e LSAVE) ${popsdir}sunbin/makefile.exe LSAVE
+echo -n " ."
+if (! -e LPRINTOUT) touch LPRINTOUT
+echo -n " ."
+if (! -e LCMDLOG) touch LCMDLOG
+#
+if (! -e CMEMORY) ${popsdir}sunbin/makefile.exe CMEMORY
+echo -n " ."
+if (! -e CDATA) ${popsdir}sunbin/makefile.exe CDATA
+echo -n " ."
+if (! -e CKEEP) ${popsdir}sunbin/makefile.exe CKEEP
+echo -n " ."
+if (! -e CSAVE) ${popsdir}sunbin/makefile.exe CSAVE
+echo -n " ."
+if (! -e CPRINTOUT) touch CPRINTOUT
+echo -n " ."
+if (! -e CCMDLOG) touch CCMDLOG
+#
+echo " finished."

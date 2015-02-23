@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+	CLIP sets any data points in Array (0) with values greater than
+	CLIPMAX to CLIPMAX and any points with values less than CLIPMIN
+	to CLIPMIN.  CLIP is commonly used to limit the range of data
+	values in a scan.
+
+	ADVERBS USED:
+
+	  BDROP         # of points to be ignored at beginning of
+	  		data.  
+	  EDROP         # of points to be ignored at end of
+	 		data.
+			Initial values are 0.
+
+	  CLIPMAX       The maximum data value that will be present in
+			a scan after it is clipped.  The initial value
+			is 9999.000.
+
+	  CLIPMIN       The minimum data value that will be present in
+			a scan after it is clipped.  The initial value
+			is -9999.000.
+
+	No adverbs are set by CLIP.
+
+	EXAMPLE:
+
+	Your data has a large interference spike (16 K) away from the
+	source structure (2.5 K) which caused the temperature scale to
+	be very large and decrease the source structure displayed.  To
+	examine the source structure more accurately, specify:
+
+			CLIPMIN = -1.0
+			CLIPMAX = 3.0
+                        CLIP PAGE SHOW
+
+	and all temperature values will be clipped between -1.0 and
+	3.0.

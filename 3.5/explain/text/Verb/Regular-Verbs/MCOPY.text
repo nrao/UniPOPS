@@ -1,0 +1,12 @@
+	(REGULAR VERB)
+
+	Syntax:    MCOPY (from,to)
+
+	MCOPY allows the user to copy any Matrix (0 though 3) to any
+	other Matrix (0 through 3).  The header and data are copied.
+
+	No adverbs are used or set by MCOPY.
+
+	EXAMPLE:
+
+		MCOPY (0,1)		Will copy Matrix (0) to Matrix (1)

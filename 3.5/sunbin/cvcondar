@@ -1,0 +1,17 @@
+#!/bin/csh -f
+#
+#   @(#)cvcondar.sh	5.1 06/22/94
+#
+# Determines whether to call condar or condar.rmt
+#
+onintr ERROR
+#
+setenv INFANTS /tmp/Infants.$$
+if (-e $INFANTS) rm -f $INFANTS
+touch $INFANTS
+#
+${popsdir}sunbin/cvcondar.exe
+#
+ERROR:
+${popsdir}sunbin/infantcide $INFANTS
+rm $INFANTS

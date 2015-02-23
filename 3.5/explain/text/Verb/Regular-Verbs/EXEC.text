@@ -1,0 +1,87 @@
+	(REGULAR VERB)
+
+	Syntax: EXEC(command)
+
+	EXEC executes a string of POPS commands as if they had been
+	typed on the input line or found within a procedure.
+
+	command is a string (either a string adverb or a literal
+	string [i.e. one enclosed by quotes]) containing any
+	legal POPS commands.
+
+	Since this can be used within a procedure, it allows for
+	much greater flexibility in procedures.  However, since
+	the executed POPS string is NOT pre-compiled but is
+	instead compiled when it is used (which currently means
+	at each point in any loops in a procedure) this will
+	slow procedures down somewhat (depending on the complexity
+	of the commands).
+
+	EXAMPLES:
+
+	- A simple example:
+
+		> EXEC('files')
+	   is equivalent to typing FILES on the command line (i.e.
+	   this example is not something you would ever choose to do).
+
+	- A somewhat more complicated example:
+
+		> STRING*12 MYSTRING
+		> MYSTRING = "HELLO WORLD"
+		> EXEC("PRINT MYSTRING")
+	   will result in "HELLO WORLD" appearing on your terminal.
+	   This is equivalent to PRINT "HELLO WORLD", again, not
+	   a very useful example.
+
+	- You want to loop through a set of scans, processing each
+	  scan with some procedure.  You also want to avoid a large
+          if/then/else within the procedure because POPS only
+	  allows for one else per if, so it could get rather large
+	  and painful.  You also want to avoid this because you really
+	  want different procedures for each core process.  The
+	  problem is, though, that procedure space is limited and
+	  a lot of the processing (that loop over the scans) is
+	  the same from procedure to procedure.
+
+	  You're loop-over-scans procedure might look like this:
+
+	  PROCEDURE BIGLOOP(FSCAN, LSCAN)
+	  #	THISPROC is the string containing the POPS commands
+	  #     to do the processing on a single scan
+	  #	It needs to be GLOBAL
+	  GLOBAL STRING*60 THISPROC
+	  SCALAR FSCAN, LSCAN, I
+	  #
+	  FOR I = FSCAN TO LSCAN
+	     GET I
+          #     if there were other standard things, you'ld do them all here
+	     EXEC(THISPROC)
+	  #     at this point, you'ld do something with the result, if
+	  #     necessary
+          END
+	  RETURN
+	  FINISH
+
+	  You could then have a suite of procedures like this:
+
+	  PROCEDURE MOMENT(FSCAN, LSCAN)
+	  #    this takes the moment of a scan
+	  GLOBAL STRING*60 THISPROC
+	  SCALAR FSCAN, LSCAN
+	  #
+	  THISPROC = "MOMENT"
+	  BIGLOOP(FSCAN, LSCAN)
+	  RETURN
+	  FINISH
+
+	  Other procedure would have their own definition of
+	  THISPROC.  THISPROC could contain multiple POPS
+	  commands, each separated by a semi-colon, or it could
+	  contain a procedure name, or it could be a combination
+	  of the above.  You could even have a default value for
+	  THISPROC (set when you batch in your suite of procedures)
+	  which could then be changed by the user on the command
+	  line.
+
+

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CORE:  (PSEUDO) Reports on the usage of the program''s'
+PRINT 'memory space.'
+PRINT ' '

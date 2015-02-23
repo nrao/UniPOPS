@@ -1,0 +1,18 @@
+	(SCALAR ADVERB)
+
+	VRMS is the variable in which RMS stores its results, in units
+	of the y-axis.  It is also used by GMEASURE, see the documentation
+	for GMEASURE for complete details on its use.  VRMS is also
+	set by the 12-m specific verbs SWITCHED, TOTALPWR, and ZERO.
+
+	VRMS is used by : GMEASURE
+
+	VRMS is set by : RMS   SWITCHED  TOTALPWR  ZERO
+
+	The initial value for VRMS is 0.
+
+	EXAMPLE : 
+
+	You have just used RMS, and wish to see the result.  Specify :
+
+		PRINT VRMS

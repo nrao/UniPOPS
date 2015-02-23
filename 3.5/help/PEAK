@@ -1,0 +1,15 @@
+PRINT ' '
+PRINT 'PEAK:  (LINE) Finds the highest data point in Array 0 and '
+PRINT 'prints out the height, channel number, velocity, half-'
+PRINT 'width, and frequency; results are also stored in HEIGHT, '
+PRINT 'CENTER, HWIDTH, BGAUSS, EGAUSS.'
+PRINT ' '
+PRINT 'PEAK:  (CONTINUUM) Finds the highest data point in Array 0 '
+PRINT 'and prints out the height, channel number, position, half-'
+PRINT 'width, and time; results are also stored in HEIGHT, '
+PRINT 'CENTER, HWIDTH, BGAUSS, EGAUSS.'
+PRINT ' '
+PRINT 'BDROP, EDROP=',BDROP, EDROP
+PRINT 'HEIGHT(1),CENTER(1),HWIDTH(1)=',HEIGHT(1),CENTER(1),HWIDTH(1)
+PRINT 'BGAUSS,EGAUSS=',BGAUSS,EGAUSS
+PRINT ' ' 

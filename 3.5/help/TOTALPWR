@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'TOTALPWR:  (CONTINUUM-TUCSON) Computes the total power data'
+PRINT 'from the raw phases of the digital backend scan in Array'
+PRINT '0.'
+PRINT ' '
+PRINT 'CALVAL,VRMS=',CALVAL,VRMS
+PRINT ' ' 

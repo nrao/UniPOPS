@@ -1,0 +1,15 @@
+	HEAD displays the header information for the requested scan.
+	
+	Syntax: HEAD(xscan)
+
+	It is short for:
+
+	 	GET XSCAN PAGE HEADER 
+
+	The contents of Array(0) are replaced with the indicated scan.
+	The graphics page is cleared (useful if working from a 	
+	simple terminal with a graphics emulator).
+
+	File name: head.prc
+
+	This file is included in LSETUP.12meter

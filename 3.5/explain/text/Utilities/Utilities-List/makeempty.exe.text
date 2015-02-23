@@ -1,0 +1,26 @@
+	The makefile.exe utility generates an empty copy of an SDD or
+	memory file.
+
+	To use makefile.exe to create an SDD file, type:
+
+		makefile.exe name max-scans
+
+	where name is the name of the file to be created and max-scans
+	is the maximum number of scans that file is to hold.  If you
+	eliminate the max-scans parameter, makefile.exe will use a
+	default of 1024 scans.
+
+	To use makefile.exe to create a memory file, type either:
+
+		makefile.exe LMEMORY
+
+	for a line version of the memory file or:
+
+		makefile.exe CMEMORY
+
+	for a continuum (Condar) version of the memory file or:
+
+	The utility programs can be run from within UniPOPS using the
+	SYSTEM command or it can be executed outside of UniPOPS at the
+	UNIX prompt.
+

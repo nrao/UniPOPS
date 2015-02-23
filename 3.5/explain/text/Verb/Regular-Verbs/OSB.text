@@ -1,0 +1,33 @@
+ 	(REGULAR VERB)
+
+L------------------------- Spectral Line -------------------------------
+L-
+L-	(Tucson data only)
+L-
+L-	OSB resets several header parameters so that the new values
+L-	are consistent with an observation in the other side band having
+L-	the same velocity at the reference channel.
+L-
+L-	SIDEBAND, RESTFREQ and OBSFREQ are changed.  The value of
+L-	FIRSTIF is used in calculating the new frequencies.  Typing OSB 
+L-	twice resets these header values to their original settings.
+L-
+L-	In addition, OPENPAR 1 of class 10 is set to "OSB" if it is 
+L-	not already set to that string, otherwise it is reset to all
+L-	blanks.  Any pre-existing information that a user may have
+L-	stored in OPENPAR 1 is permanently lost.
+L-
+L-	No adverbs are used or set by OSB.
+L-
+L-	EXAMPLE:
+L-
+L-	You think the line you are interested in is in the receiver's
+L-	other sideband so you type:
+L-
+L-		OSB 
+L-
+L-	SHOW and HEADER display the string "OSB" in their output if
+L-	it is found to be set in OPENPAR 1.  This indicates that the
+L-	data is likely to have been altered by OSB at some time.
+L-
+L-----------------------------------------------------------------------

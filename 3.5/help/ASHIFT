@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ASHIFT:  (ADVERB) Assigned a value by FSHIFT and VSHIFT'
+PRINT 'and/or used by SHIFT.'
+PRINT ' '

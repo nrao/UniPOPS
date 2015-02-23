@@ -1,0 +1,68 @@
+#
+#  LSETUP.system -- 12 m System procedures.
+#
+#	some trivial shorthand procedures
+batch a.prc
+batch add.prc
+batch fold.prc
+batch gshow.prc
+batch head.prc
+#	reset depends on all
+batch all.prc
+batch reset.prc
+#	addfeed and newfeed used by many procedures
+batch addfeed.prc
+#       more complicated, but independant procedures
+batch annotate.prc
+batch gset.prc
+batch ldisk.prc
+batch halves.prc
+batch psmsave.prc
+# front end for TEMP (with setup) and its shorthand
+batch tonns.prc
+batch t.prc
+#       spectral line five-point, the basic one plus 2 shorthands
+batch fiveline.prc
+batch fivel1.prc
+batch fivel2.prc
+#       baseline related, bset1 and 2 depend on bsets which calls bset
+batch bset.prc
+batch bsets.prc
+batch bset1.prc
+batch bset2.prc
+# HC/FB selection procedures, also sets global spectype, used by other procs
+batch fbdata.prc
+batch hcdata.prc
+# and set up the default
+fbdata
+# cboth et al.
+batch cboth.prc
+batch xx12m.prc
+batch badch.prc
+# the following depend on cboth (which depends on all) and fbmode and gfbmode
+batch fbmode.prc
+batch gfbmode.prc
+#                disp12m includes s1, s2, and aliases for f and s
+batch disp12m.prc
+batch g.prc
+#                gcdisp12m includes g1 and g2
+batch gcdisp12m.prc
+#                gdisp12m includes ggets, gget1, gget2, gf, and gs
+batch gdisp12m.prc
+# averaging data, they depend on cboth and pstack and numsubs
+batch prcstack.prc
+batch pstack.prc
+#		cbavg.prc includes c1 and c2
+batch cbavg.prc
+batch c1p1.prc
+batch c1p2.prc
+batch cb.prc
+batch cb1.prc
+batch cb2.prc
+#		Just a general avg of the stack
+batch cstack.prc
+# 	aliases
+alias makecopy gcopy
+alias lf fiveline
+alias lf1 fivel1
+alias lf2 fivel2

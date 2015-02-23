@@ -1,0 +1,43 @@
+	CSTACK averages all the scans found in the ASTACK array
+	and displays the result.
+	
+	CSTACK mearly gets each scan number found in the ASTACK
+	array and uses the PRCSTACK procedure to control how
+	ACCUM is used.
+
+	After all scans have been processed by PRCSTACK, AVE is
+	called to average the data, which are then displayed using
+	SHOW.
+
+	Note that unlike the other averaging procedures in the
+	12-m procedure library, CSTACK uses the full number (including
+	any subscan values that may be present).
+
+	PRCSTACK, the procedure that controls how ACCUM is used,
+	is different for spectral line and continuum analysis.
+	
+	The spectral line version of PRCSTACK does an 
+	fshift; shift; accum for each spectra.
+
+	The continuum version of PRCSTACK does a
+	switched; avgd; accum for each continuum scan.
+
+	File name : cstack.prc
+
+	This procedure is included in CSETUP.12meter and LSETUP.12meter
+
+	Example:
+
+	You want to average the scans 45.03, 50.01, 75.03, and 90.01.
+
+	You first place them in the stack (empty the stack to make
+	sure they are the only ones there) and then CSTACK does the work:
+
+		EMPTY
+		A(45.03); A(50.01); A(75.03); A(90.01)
+		CSTACK
+
+	(A is a standard 12-m procedure).
+	The result will be left in Array (0) and will be displayed on
+	the graphics screen.
+

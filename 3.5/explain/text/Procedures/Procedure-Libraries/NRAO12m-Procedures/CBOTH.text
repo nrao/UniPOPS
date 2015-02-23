@@ -1,0 +1,27 @@
+	CBOTH displays the contents of Array (3) and Array (4)
+	side-by-side (referred to elsewhere as a 2-up display).
+
+	This procedure is used by other 12-meter spectral-line
+	procedures to display both halves of a parallel mode data
+	side-by-side.
+
+	To use this procedure, first get the two halves of data
+	and copy them to the appropriate array.  The first
+	half (.01 or .03) should be in Array (3).  The second
+	half (.02 or .04) should be in Array (4).  If the data
+	has already been placed there (by you or through the use
+	of another procedure), then there is obviously no need to
+	get the data again.
+
+	File name: cboth.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Example:
+
+	To display both halves of the first filter bank of scan 124:
+
+		GET 124.01; MOVE(0,3)
+		GET 124.02; MOVE(0,4)
+		CBOTH
+	

@@ -1,0 +1,143 @@
+The following documents significant changes which have been made to the
+system since the printing of Version 3.0 of the Cookbook.
+
+I. The following commands have been added.  Some information summarizing 
+these new verbs follows this listing.  See the EXPLAIN on-line help
+facility and the new 3.1 version of the cookbook for details.
+
+CHNGVER		FCLOSE		FONTSET		FOPEN		FREAD
+FSTATUS		FWRITE		HOLFITFOC	HOLFITWINDOW	KGET
+LISTSHIFT	MFFT		MIFFT		MINUS		MULTIPLY
+PLUS		PRNTFMT		SAXIS		SPRINT		SREAD
+VCHAR		WHATIS
+
+CHNGVER is, along with CHNGONLINE and OLFILES, one of the 12-meter on-line
+data access verbs.  The 12-m on-line access routines were completely
+rewritten for version 3.1.
+
+FCLOSE, FOPEN, FREAD, FSTATUS, and FWRITE are for formatted I/O with disk
+files from within unipops.
+
+SPRINT and SREAD are for reading from and writing to (setting) internal
+STRING variables.
+
+FONTSET and VCHAR became possible with the move to X windows.  UniPOPS now
+draws all of its graphics characters rather than rely on the internal fonts
+of each device.  FONTSET allows the user to choose the font used and VCHAR
+allows vertical characters to be printed.  The most noticeable side-effect
+of drawing all characters is that plotting now takes longer, both to the
+graphics screen as well as to output devices.  Plotting to the graphics
+screen can be noticeably improved by turning off the ability to generate
+a hardcopy of the current graphics screen.  COPYOFF does this.  However,
+as mentioned, this makes it impossible to generate a hardcopy of the
+current graphics screen and so may not be a wise thing to do.  COPYON restores
+the ability to get hardcopies (assuming a hardcopy device was selected
+at startup either via the popsprinter environment variable or through the
+startup dialog with the program).
+
+HOLFITFOC and HOLFITWINDOW are holography related commands that probably
+have limited use outside of NRAO.
+
+KGET now allows the user to fetch scans by scan number from the KEEP file.
+
+LISTSHIFT lists the contents of an internal array that contains the 
+scan number, ASHIFT pairs set by the SHIFT verb.
+
+MFFT and MIFFT are the two-dimensional analogues of FFT and IFFT.
+
+MINUS, MULTIPLY, and PLUS along with the previously existing DIVIDE are
+verbs for combining the data in array 0 with that in array 1 (the result
+is always placed in array 0).  MINUS is equivalent to DIFF.
+
+PRNTFMT allows the user to specify the default output format used by 
+PRINT, FPRINT, and SPRINT.
+
+WHATIS is a help facility that will tell you what is the type of
+symbol of the name you supply.
+
+II. The behavior or syntax of the following commands has changed.
+
+ADDSTACK	CHAR		CHNGONLINE	DOCUMENT	GAUSS		
+OLFILES		OSB		PRINT		SELECT
+
+The name of the ADD verb has been changed to the more descriptive
+name ADDSTACK.
+
+CHAR no longer takes two arguments.  The syntax was changed from
+CHAR(string,num_chars) to just CHAR(string).
+
+The entire 12-m on-line data access routines were changed for version 3.1.
+See especially the EXPLAIN documentation for CHNGONLINE for a discussion
+of 12-m on-line data access as well as section 5.4.2 of the cookbook and
+the commands CHNGVER and OLFILES.
+
+PRINT and DOCUMENT, when output is going to the graphics screen (i.e.,
+you have previously issued a GRAPHICS command), no longer place
+their output on the left edge of the screen.  The cursor position
+last invoked by a VCTR or PLACE command now will dictate both
+the x and y positions of the start of the string.
+
+GAUSS has been completely rewritten to use the Levenberg-Marquardt
+method of non-linear least-squares fitting in most cases.  In addition,
+GAUSS can now fit up to 24 components.
+
+SELECT now words with the KSCANS pointer adverb to place scan numbers
+from the KEEP file that fit the selection criteria into the stack array.
+These values can then be used by the KGET verb to retrieve and analyze
+the selected scans.
+
+
+III.  Some verbs no longer exist since their powers are performed by 
+other verbs.
+
+	Old Syntax			New Syntax
+        -----------------------------   ------------------------
+	SETD0(i1, i2)			D0(i1) = i2
+	SETH0(OBJECT,'Hello')		H0(OBJECT) = 'Hello'
+	SETD0(34, D1(34)-SQRT(D2(34))	D0(34) = D1(34) - D2(34)
+	{ SETD0(@,RAND) }		{ D0@ = RAND }
+
+
+IV. A number of new procedures are provided.
+
+New 2-D (map) procedures (similar to their 1-D counterpart verbs) found
+in mmath.prc.
+
+MBIAS		MDIVIDE		MMULTIPLY	MPLUS		MSCALE
+
+The complete (as of 15 December 1992) suite of procedures currently
+in use at the NRAO 12 meter.  The default 12-m spectral line procedures
+can be loaded by batching in the LSETUP.12meter file.  The default 12-m
+continuum procedures can be loaded by batching in the CSETUP.12meter file.
+Documentation on these procedures currently exists only within any
+comments that can be found in the procedures themselves.
+
+
+V.  Users are warned that the syntax rules for UniPOPS will
+change at version 4.0.  Currently both prefix (aka RPN) and postfix
+syntax are allowed so that the following lines are equivalent and
+valid syntax in UniPOPS:
+
+	> 253.02 GET
+        > GET 253.02
+	> GET(253.02)
+
+The first example, which is RPN syntax, will be eliminated by version
+4.0.  Currently verbs, procedure, and functions requiring more than one
+argument must use the postfix syntax.  Users using RPN syntax should
+change now to avoid the shock of finding that procedures that used to
+work suddenly don't in version 4.0.
+
+VI. The requirement that NREGION and GREGION be sequential channel numbers, from
+low to high has been removed.   Regions can now be specified in any
+order.  Each pair of values in NREGION and GREGION still constitute the
+starting and stopping points for each region.  A warning message will
+be given and the verb using that adverb will exit if any two regions 
+overlap.
+
+VII. For NRAO 12-m data, the discussion of FS and FR in section 9.12 of
+the cookbook STILL applies, even though these values are now being
+stored in the header.  FS and FR must be set.  The standard procedure,
+FOLD (batch fold.prc) sets these values from the header before
+doing a RAP.
+

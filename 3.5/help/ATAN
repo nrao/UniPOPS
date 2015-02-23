@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ATAN:  (FUNCTION) Returns the arc tangent (in radians) of'
+PRINT 'the given parameter.'
+PRINT ' '

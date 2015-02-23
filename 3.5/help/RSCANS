@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RSCANS:  (POINTER) Indicates the offline individual records'
+PRINT 'file for TELL, SELECT, SUMMARY, CHNGFILE, and Z_CHNGFIL.'
+PRINT ' '

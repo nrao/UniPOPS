@@ -1,0 +1,46 @@
+	(REGULAR VERB)
+
+	Syntax:  AUTOLEV(num_levels)
+
+	AUTOLEV will use the maximum and minimum data values in Matrix
+	(0) in the region described by MXMIN, MXMAX, MYMIN and MYMAX to
+	assign values to LEVS so that there are num_levels equally
+	spaced levels spanning the range of data values.  This is a very 
+	useful command if you want a quick two-dimensional display and 
+	don't care what the contour levels will be.  Num_levels must be 
+	between 1 and 32.
+
+        ADVERBS USED:
+ 
+        MXMIN, MXMAX    Limits in cell numbers along the x-axis
+                        for which Matrix (0) values will be processed.
+
+        MYMIN, MYMAX    Limits in cell numbers along the y-axis
+                        for which Matrix (0) values will be processed.
+
+
+	ADVERB SET:
+
+	LEVS(32)        Contour levels which will span the data
+			values in Matrix (0).  If you have specified
+			num_levels, then all LEVS with indices greater
+			than num_levels will be assigned a default
+			value of -999999
+
+	Example:
+
+	If the contents of Matrix (0) go from 0.0 through 20.0.  Then
+	if you type:
+
+		AUTOLEV(20); PRINT LEVS
+
+	the following will be produced:
+
+		1.00000		2.0000		3.0000		4.0000
+		5.00000		6.0000		7.0000		8.0000
+		9.00000		10.000		11.000		12.000
+		13.0000		14.000		15.000		16.000	
+		17.0000		18.000		19.000		20.000
+		Infinity	Infinity	Infinity	Infinity
+		Infinity	Infinity	Infinity	Infinity
+		Infinity	Infinity	Infinity	Infinity

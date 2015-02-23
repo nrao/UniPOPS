@@ -1,0 +1,44 @@
+      	(PSEUDO VERB)
+
+	Syntax:    LIST proc-name
+		   LIST alias-name 	
+
+	LIST is an information verb used to produce a listing of a
+	defined procedures or to tell you what verb or procedure an
+	alias operand is an alias for.  LIST requires as its object the
+	name of the procedure or alias to be listed.
+
+	LIST, for procedures, adds line-numbers as it lists.  These
+	line  numbers should be used when editing the procedure with
+	POPSEDIT.
+
+	List, for aliases, tells you the name of the verb or procedure
+	that has been aliased.
+
+	LIST can only be used in execute mode and must be the only
+	thing on the command line.
+
+	EXAMPLE:
+
+	.   You have defined the procedure DUMMY. To list it, specify:
+
+		LIST DUMMY
+
+	    and something like the following will appear
+
+		1   PROCEDURE DUMMY
+		2   READ AA
+		3   PRINT AA
+		4   FINISH
+
+	.  You have created an alias by the name of BB for the BASELINE
+	   verb.  Type
+
+		LIST BB
+
+	   and the following will be produced:
+
+		BB -> BASELINE
+
+	   which tells you that BB is an alias for BASELINE.
+

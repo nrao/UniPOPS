@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ZLINE:  (ADVERB) If TRUE, SHOW, PLOT, or LABEL will draw a'
+print 'line through Y=0; else they will not draw the line.'
+PRINT ' '

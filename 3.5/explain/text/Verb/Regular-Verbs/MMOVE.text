@@ -1,0 +1,16 @@
+	(REGULAR VERB)
+
+     	Syntax:    MMOVE (old-matrix, new-matrix)
+
+	MOVE moves data and header from one specified Matrix to another
+	and clears the original Matrix.  The matrices are numbered from
+	0 through 3.
+
+	No adverbs are used or set by MMOVE.
+
+	EXAMPLE:
+
+	You have a reduced data in Matrix (0) and wish to place it in
+	Matrix 3 so you specify:
+
+		MMOVE (0,3)

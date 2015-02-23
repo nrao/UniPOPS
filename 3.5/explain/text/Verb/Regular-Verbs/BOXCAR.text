@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	BOXCAR smoothes the data in Array (0) by averaging together an
+	odd number of consecutive points.
+
+	ADVERB USED:
+
+	   NBOX      # of points which will be averaged together to
+		     smooth the scan.  NBOX must be an odd number
+		     greater than zero but less than or equal to 11.
+		     Initial value of NBOX is 3.
+
+	No adverbs are set by BOXCAR.
+
+	EXAMPLE:
+
+        	 NBOX=5; BOXCAR
+
+	will perform boxcar smoothing with a box that is five channels
+	wide.
+

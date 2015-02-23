@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EQTOGAL:  Transforms the given 1950 RA and DEC coordinates'
+PRINT 'into galactic. Syntax: EQTOGAL( HHMMSS.s, DDMMSS).'
+PRINT ' '

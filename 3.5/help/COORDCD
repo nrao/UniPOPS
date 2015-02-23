@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COORDCD:  (HEADER) Coordinate system code -- 8 character'
+PRINT 'string.'
+PRINT ' '

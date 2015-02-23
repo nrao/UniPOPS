@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'SPRINT:  Performs an internal write to the specified string'
+PRINT 'adverb, using the given format,  and writes out the values'
+PRINT 'of the provided list. Syntax: SPRINT(strng,fmt) list'
+PRINT ' '

@@ -1,0 +1,41 @@
+	(REGULAR VERB)
+
+	Syntax:  MRANGE(x1,x2,y1,y2)
+
+	MRANGE limits the processing of Matrix (0) to the x and y-axis
+	limits specified in the call to MRANGE.  If any of the given
+	parameters are out of range for Matrix (0), then default values
+	corresponding to the edges of the matrix are used.
+
+	To return these limits to their default values, use the
+	pointer adverb DEFAULT as the corresponding argument to
+	MRANGE.
+
+	No adverbs are used by MRANGE.
+
+	ADVERBS SET:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+	EXAMPLE:
+
+	Matrix (0)'s x-axis goes from 12.5 to 13.25 and its y-axis goes
+	from -45 to +33.  To limits processing of data to x-axis values
+	from 12.5 to 13.0 and y-axis values from -30 to + 30, type:
+
+		MRANGE(12.5, 13.0, -30, +30)
+
+	To process the whole array, one can simply type:
+
+		MRANGE(-DEFAULT, DEFAULT, -DEFAULT, DEFAULT)
+
+	or, in the case of the above example, something like:
+
+		MRANGE(0, 15, -90, 90)
+
+	(i.e., anything outside the bounds of the Matrix).

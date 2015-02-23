@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'DIVIDE:  Divides the data in Array 0 by that in Array 1 and'
+PRINT 'stores the results in Array 0.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

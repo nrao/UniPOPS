@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CENTER:  (ARRAY-24) Either initial guesses for Gaussian'
+PRINT 'centers or the values found by GAUSS or PEAK (channels).'
+PRINT ' '

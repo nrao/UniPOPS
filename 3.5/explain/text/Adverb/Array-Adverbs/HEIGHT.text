@@ -1,0 +1,34 @@
+	(ARRAY ADVERB of 24 elements)
+
+	HEIGHT is an array containing the height of up to 24
+	Gaussians.  The values need not be > 0 and are in the units
+	of the data values.
+  
+	HEIGHT is used by:  GDISPLAY   GMODEL   GPARTS   RESIDUAL
+
+	HEIGHT is set by :  GAUSS   PEAK
+
+	The initial values of HEIGHT(N) are 0.
+
+	If FIXH and FIXRELH have a value of FALSE, then GAUSS will
+	determine values for HEIGHT.  If FIXH or FIXRELH = TRUE, the
+	user must supply NGAUSS values to HEIGHT.  If FIXH = TRUE, then
+	GAUSS will not modify the values in HEIGHT.  If FIXRELH = TRUE,
+	GAUSS will scale all values in HEIGHT be the same value.
+
+	If GAUSS is not called before GMODEL, GPARTS, or RESIDUAL,
+	NGAUSS values of HEIGHT should be set by the user.  PEAK will
+	set the HEIGHT of a single Gaussian.  
+
+	EXAMPLE:
+
+	To fit one Gaussian, you may specify:
+
+		CENTER = 79
+		HWIDTH = 24
+		NGAUSS =  1
+
+	The value of HEIGHT will be ignored.  After GAUSS, the
+	calculated value of HEIGHT may be printed by:
+
+		PRINT HEIGHT(1)

@@ -1,0 +1,6 @@
+PROCEDURE FOLD
+#   12m: sets FS and FR from header before RAP with PAGE; SHOW thrown in
+FS=H0(FOFFSIG); FR=H0(FOFFREF1)
+RAP; PAGE; SHOW
+RETURN
+FINISH 

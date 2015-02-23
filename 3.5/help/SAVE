@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'SAVE: Stores the data and header in Array 0 into the "save"'
+PRINT 'file.'
+PRINT ' '
+PRINT 'SPROTECT,NSAVE=',sprotect,nsave
+PRINT ' ' 

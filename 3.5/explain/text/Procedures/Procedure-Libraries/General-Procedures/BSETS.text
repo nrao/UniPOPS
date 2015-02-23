@@ -1,0 +1,77 @@
+	BSETS sets NREGION (using the BSET procedure) and then
+	copies the result into any one of the 8 rows of the array, 
+	BLINESEGS, which is 8x32.  
+
+	Syntax: BSETS(nrx)
+
+	Where nrx is the section of BLINESEGS to fill with the 32
+	NREGION values (e.g. BSETS(4) would fill BLINESEGS(4,i),
+	with NREGION(i) for each of the 32 possible values of i).
+
+	BSETS could be used to set the baseline fitting region for
+	a number of receivers which could each correspond to a different
+	subscan number and could therefore be used to reduce all
+	of that data with a simple FOR loop.
+
+	File name : bsets.prc
+
+	This procedure is included in LSETUP.12meter.
+
+	No adverbs are used by this procedure.
+
+	Adverbs Set:	NREGION  (by the BSET procedure)
+
+	Global Adverbs:
+
+		NSEG:	declared in the the BSET procedure, the number of
+			baseline segments actually set.
+	   BLINESEGS:   The array that holds up to 8 sets of NREGION values.
+
+
+	Example:
+
+	You have data with 4 possible subscan values corresponding to
+	the 4 filter banks (.01, .02, .03, and .04).  For each
+	subscan value, the baseline fitting region you wish to use is
+	slightly different, so, using a good example of data from each
+	filter bank you type:
+
+		(you get the data for filter bank .01)
+		SHOW 		to show the data for that filter bank
+		BSET(1)		To set the baseline regions for filter bank
+				1 and place those values into BLINESEGS.
+		(you get the data for filter bank .02)
+		SHOW
+		BSET(2)
+
+		etc.
+
+	When finished, you will have 4 sets of NREGIONs stored in
+	BLINESEGS.  These can then be extracted as appropriate when
+	you process a large number of data from all 4 filter banks.
+
+	Suppose you have a keep file where you want to place the
+	data after you remove a first order baseline (a simple line).
+	You place the data into the ASTACK array (e.g. using SELECT).
+	The following procedure could then be used:
+
+		Procedure FITALL
+		scalar i, j, xscan, iscan, subscan
+		# 	set the order of the fit to be 1
+		nfit = 1
+		#	Loop over all ACOUNT values in ASTACK
+		for i = 1 to acount
+		   xscan = astack(i); get(xscan)
+		#	Get the subscan number
+		   iscan = ifix(xscan); subscan = ifix((xscan-iscan)*100)
+		#	copy the NREGION from BLINESEGS
+		   for j = 1 to 32
+		      nregion(j) = blinesegs(iscan,j)
+                   end
+		#	Now you can do the baseline fit
+		   baseline
+		#	and save the result to the keep file
+		   keep
+		end
+		return
+		finish

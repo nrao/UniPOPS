@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'GGET: Retrieves the gains data and header for the specified'
+PRINT 'scan and feed from the offline or online gains files and'
+PRINT 'places them in Array 3.  Syntax: GET scan_num.feed_num'
+PRINT ' '

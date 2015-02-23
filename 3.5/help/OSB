@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'OSB:  For Tucson data, alters several header words to make'
+PRINT 'the data appear to have been observed with the other'
+PRINT 'sideband such that the velocity at the reference channel'
+PRINT 'remains the same.'
+PRINT ' '

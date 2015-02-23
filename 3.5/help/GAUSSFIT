@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'GAUSSFIT:  (PROC-LIBRARY) Uses the cursor to set up initial'
+PRINT 'guesses for Gaussian fitting.  Syntax:  GAUSSFIT(num_gauss)'
+PRINT ' '
+print 'BGAUSS,EGAUSS,NGAUSS=',bgauss,egauss,ngauss
+print 'CENTER=';print CENTER
+print 'HWIDTH=';print HWIDTH
+PRINT ' '

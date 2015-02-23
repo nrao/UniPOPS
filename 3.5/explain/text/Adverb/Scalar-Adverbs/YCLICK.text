@@ -1,0 +1,8 @@
+	(SCALAR ADVERB)
+
+	YCLICK is set by CLICK.  It corresponds to the value that the
+	function YCUR would have returned at the crosshair location
+	when the user clicks a mouse button.
+
+	It is the y-pixel number (screen coordinates).
+

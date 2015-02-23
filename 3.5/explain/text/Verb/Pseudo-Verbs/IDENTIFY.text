@@ -1,0 +1,61 @@
+	(PSEUDO VERB)
+
+	Syntax: IDENTIFY
+		IDENTIFY topic   
+		IDENTIFY topic degree
+
+	IDENTIFY will help you if you do not know an exact symbol or
+	command name but have a particular word in mind that is 
+	associated with the topic.  The syntax for using IDENTIFY is:
+
+	---------------------------------------------------------------------
+	What you type:				What will happen:
+	---------------------------------------------------------------------
+	IDENTIFY                                will ask you for a word
+						 to search for and the
+						 degree of the search.
+						 and then will proceed
+						 with the search.
+
+	IDENTIFY <word>                         will search for <word>
+						  using a quick
+						  search.
+
+	IDENTIFY <word> <degree_of_search>      will search for <word>
+						  using the specified
+						  degree of searching.
+	---------------------------------------------------------------------
+	Note: <word> can be any word that you are interested in knowing
+	more about and <degree_of_search> can be either a 0 or a 1 for
+	a quick or in-depth search, respectively.   Be careful not to
+	search for frequently-occurring words like "the", "a", etc.
+
+	IDENTIFY searches through the documentation looking for
+	occurrences of <word> and will list out the names of commands
+	which may have something to do with <word>.  For a quick search
+	(degree of 0), IDENTIFY only looks at a representative subset
+	of the total documentation but for an in-depth search (degree of
+	1) it will look through all of the documentation.  Depending upon 
+	the degree of searching, IDENTIFY make take some time to complete
+	its job.  After IDENTIFY gives its list of commands, you should
+	use either the HELP or EXPLAIN facility to get more details
+	about the listed commands.
+
+	IDENTIFY can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by IDENTIFY.
+
+	EXAMPLE:
+
+	For example, you want to fit a sinusoidal baseline to your data
+	but you don't know the name of the UniPOPS commands that
+	perform that function.  So you type :
+
+		 IDENTIFY SINUSOID   
+
+	and hopefully UniPOPS will list the commands you are interested
+	in.
+
+
+

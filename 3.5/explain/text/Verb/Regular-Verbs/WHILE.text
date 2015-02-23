@@ -1,0 +1,56 @@
+	(REGULAR VERB)
+
+	There are two kinds of loop constructs in UniPOPS.  The
+	FOR-TO-END and FOR-TO-BY-END constructs are for definite loops
+	while the WHILE construct if for indefinite loops.  A definite
+	loop is one which will occur a predetermined number of times
+	while the number of times an indefinite loop will be executed
+	cannot be determined beforehand.
+
+	If included within a procedure (i.e., while in compile mode),
+	the WHILE construct may extend across many lines and, along with
+	conditional statements, can be nested to what ever level is
+	necessary.  But if you want to use the construct while in
+	execute mode, the WHILE constructs cannot extend beyond a single
+	command line though you can nest constructs.
+
+	The format for  multi-line and single-line WHILE loop statements
+	can look like one of the following :
+
+	.	WHILE <expr>; statements 1 -> n; END
+
+	.	WHILE <expr>
+			statement 1
+			statement 2
+			...
+			statement n
+		END
+
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If the <exp> is true (+1), then the 1 through n
+	statements are executed over and over again until <exp> is
+	false; whenever <exp> if false (-1), all the statements are
+	skipped and execution will continue after the END statement.
+	One usually cannot calculate the number of times the loop will
+	execute before it is terminated.  Note the use of semi-colons
+	(;) to delineate the various sub-statements.
+
+	EXAMPLES:
+	
+	.  The WHILE construction on several lines in a PROCEDURE;
+
+		PROCEDURE EG(EG_X,EG_Y)
+		WHILE EG_X>EG_Y
+		   EG_Y=EG_X*EG_Y/2+1
+		   PRINT EG_X EG_Y
+		   END
+		RETURN
+		FINISH
+
+	.  The WHILE construction on one line in a PROCEDURE;
+
+		WHILE E_X>E_Y; E_Y=E_X*E_Y/2+1; PRINT E_X E_Y; END
+

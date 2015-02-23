@@ -1,0 +1,57 @@
+#! /bin/csh -f
+#
+#  @(#)identify.exe.sh	5.1 06/22/94
+#
+# IDENTIFY help utility
+#
+set noglob
+#
+if ($#argv == 0) then
+   echo -n "Enter topic (blanks to quit): "
+   set topic = $<
+   if ($topic == "") exit(0)
+else
+   set topic = $1
+endif
+#  Find topic if not given on command line.
+#
+if ($#argv == 1) then
+   set degree = 0
+else if ($#argv == 0) then
+   echo -n "Enter degree of search (0 = fast, 1 = complete): "
+   set degree = $<
+else
+   set degree = $2
+endif
+#
+degloop:
+if ($degree != 0 && $degree != 1) then
+   echo -n "Enter degree of search (0 = fast, 1 = complete): "
+   set degree = $<
+   goto degloop
+endif
+# Find degree of search if nothing on command line
+#
+unset noglob
+if ($degree == 0) then
+  cd ${popsdir}help
+  grep -i $topic * | grep -v SCCS |& grep -v ^grep | sed -e s/:PRINT/": "/ | sed -e s/:print/": "/
+# Do short IDENTIFY using short help files
+# 
+else
+  cd ${popsdir}explain/text
+  set directs = `find . -type f -name "*.text" -print | grep -v SCCS`
+  grep -i $topic $directs |& grep -v ^grep | grep -v ":\#" > ! /tmp/ident.$$
+  set files = `cut -f1 -d: /tmp/ident.$$`
+  if (-e /tmp/ident1.$$) rm /tmp/ident1.$$
+  touch /tmp/ident1.$$
+  foreach fle ($files)
+    basename $fle .text >> /tmp/ident1.$$
+  end
+  cut -f2- -d: /tmp/ident.$$ | paste -d: /tmp/ident1.$$ -
+  rm /tmp/ident*.$$
+#  For higher degree search, go thru explain file directory looking for
+#  matches
+endif
+	
+      

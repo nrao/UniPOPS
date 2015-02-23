@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LINE:  Sets up the SHOW and PLOT commands so that they will'
+PRINT 'use connected lines.'
+PRINT ' '

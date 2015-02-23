@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CDELT3:  (HEADER-CUBE) The step-size between z-axis cells'
+PRINT 'in the Cube.'
+PRINT ' '

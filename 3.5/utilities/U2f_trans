@@ -1,0 +1,313 @@
+/*  @(#)U2f_trans	5.3 09/10/98	*/
+/************************************************************************/
+/* Translation:  Line UNIPOPS to FITS, First version: Jan 16,1991       */
+/*    revisions:  version 1.1 (Aug 30, 1991) adjust format of headers.  */
+/*                  so that "=" always in col.9, etc.                   */
+/*    ver 1.2 (Sep.12, 1991) move DELTAVEL to UNIPOPS general area.     */
+/*    ver 1.3 (Jan.23, 1992) add DURTIME and change CFFORM size to 24.  */
+/*    ver 1.4 (Jan.24, 1993) added several new header words,esp ucl 11  */
+/*    ver 1.5 (Sept.,  1993) continuum                                  */
+/************************************************************************/
+/* TTYPE   - column name in binary table = value of FITS TTYPE keyword. */
+/* TFORM   - format descriptor.  Same meaning as for FITS tables.       */
+/*           E=32bit float; D=64bit float; I=16bit integer.             */
+/*           A=8bit ASCII                                               */
+/*           note that multiplicity is a separate number.               */
+/* TUNIT   - name of unit in FITS table. (use "-" for pure number)      */
+/* K       - for kategory - c=core, s=shared, l=local, g=GB, k=KP       */
+/*           a=axis, v=velocity defn, p=position define,                */
+/*           t=prototype class 11 (implies KP)                          */
+/* OPN     - option: 0=always use; 1=freq axis; 2=veloc axis,           */
+/*                                 3=Sample axis;                       */
+/* AXIS    - axis number if matrix axis.  = axnumber*10 + index, where  */
+/*           index=1 for MAXIS# (# pixels on axis),                     */
+/*            =2 for type(name of axis), =3 for CRDELT, =4 for CRPIX,   */
+/*            =5 for CRVAL, =6 for CROTA                                */
+/* UCL     - class number in UNIPOPS header                             */
+/* UOFF    - byte offset wrt start of UNIPOPS class.                    */
+/*           value of -1 if param is not found in UNIPOPS record.       */
+/* INTYPE  - format in Keep record (same meanings as for TFORM)         */
+/* FACTOR  - multiply value from UNIPOPS record to get value in FITS.   */
+/*           If "-", do not apply any scaling.                          */
+/* SPECIAL - code number for special handling of this table column.     */
+/*           Code is -1  if this is a header-only parameter, ie,        */
+/*           its value is not stored in the table.  (= -2 for comment)  */
+/* descrip - description goes in comments part of FITS header           */
+/************************************************************************/
+/*                                                                    012345678901234567890123456789012345678901234567890*/
+/* TTYPE     TFORM   TUNIT    K OPN AXIS UCL UOFF INTYPE  FACTOR  SPECIAL / description   5555555555666666666677777777778*/ 
+   CTYPE1      8 A   'FREQ'   a  1   12  -1   -1   8 A      -      -1     / Frequency Axis.
+   MAXIS1      1 I      -     a  1   11  12  112   1 D      -       0     / Number of data points in series.
+   CRVAL1      1 D     HZ     a  1   15  12    0   1 D    MHZTHZ    0     / Frequency at reference Pixel.
+   CRPIX1      1 E      -     a  1   14  12   80   1 D      -       0     / Frequency Reference Pixel. 
+   CDELT1      1 E     HZ     a  1   13  12   16   1 D    MHZTHZ    0     / Frequency increment.
+/*
+   CTYPE1      8 A      -     a  2   12   7   40   8 A      -       1     / Velocity Axis Name.
+   MAXIS1      1 I      -     a  2   11  12  112   1 D      -       0     / Number of data points in series.
+   CRVAL1      1 D    M/SEC   a  2   15  12   88   1 D     KTM      0     / Velocity at reference Pixel.
+   CRPIX1      1 E      -     a  2   14  12   80   1 D      -       0     / Velocity Reference Pixel. 
+   CDELT1      1 E    M/SEC   a  2   13  12   96   1 D     KTM      0     / Velocity increment.
+/*
+   CTYPE1      8 A   'SAMPLE' a  3   12  -1   -1   8 A      -      -1     / Sample Axis.
+   MAXIS1      1 I      -     a  3   11  12  112   1 D      -       0     / Number of data points in series.
+   CRVAL1      1 I      1     a  3   15  -1   -1   1 D      -      -1     / Sample Number at Reference Pixel.
+   CRPIX1      1 I      1     a  3   14  -1   -1   1 D      -      -1     / Sample Reference Pixel.
+   CDELT1      1 I      1     a  3   13  -1   -1   1 D      -      -1     / Sample increment.
+/*
+   MAXIS2      1 I      1     a  0   21   6   48   1 D      -      -1     / Number points on longitude-like axis.
+   CTYPE2      8 A      -     a  0   22   4  128   8 A      -       2     / Name of longitude-like axis.
+   CRVAL2      1 D   DEGREES  a  0   25   4    8   1 D      -       2     / Value at longitude reference pixel.
+   CRPIX2      1 E      -     a  0   24  -1   -1   1 D      -       2     / Longitude reference pixel.
+   CDELT2      1 E   DEGREES  a  0   23   6   24   1 D      -       2     / Longitude increment.
+/*   
+   MAXIS3      1 I      1     a  0   31   6   56   1 D      -      -1     / Number points on latitude-like axis.
+   CTYPE3      8 A      -     a  0   32   4  128   8 A      -       3     / Name of latitude-like axis.
+   CRVAL3      1 D   DEGREES  a  0   35   4   16   1 D      -       3     / Value at latitude reference pixel.
+   CRPIX3      1 E      -     a  0   34  -1   -1   1 D      -       3     / Latitude reference pixel.
+   CDELT3      1 E   DEGREES  a  0   33   6   32   1 D      -       3     / Latitude increment.
+   CROTA3      1 E   DEGREES  a  0   36   4  120   1 D      -       3     / Rotation of Axes.
+/*
+   MAXIS4      1 I      1     a  0   41  -1   -1   1 D      -      -1     / Number points on time axis.
+   CTYPE4      8 A   'TIME'   a  0   42  -1   -1   8 A      -      -1     / 
+   CRPIX4      1 E    1.0     a  0   44  -1   -1   1 D      -      -1     / Reference pixel on time axis.
+   CRVAL4      1 E   SECONDS  a  0   45   3    8   1 D     HTS      0     / UT time in seconds.
+/*
+   MAXIS5      1 I      1     a  0   51  -1   -1   1 D      -      -1     / Number points on RECEIVER axis.
+   CTYPE5      8 A 'RECEIVER' a  0   52  -1   -1   8 A      -      -1     / 
+   CRPIX5      1 E    1.0     a  0   54  -1   -1   1 D      -      -1     / Reference pixel on RECEIVER axis.
+   CRVAL5      1 E      -     a  0   55   1   16   1 D     x100     4     / RECEIVER or BEAM number.  
+/*
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / The following defines the velocity system.
+   VELDEF      8 A      -     s  0    0   7   40   8 A      -       5     / Velocity Definition and reference.  
+   VELOCITY    1 D    M/SEC   c  0    0   7   32   1 D     KTM      0     / Velocity at reference pixel. 
+   VCORR       1 E    M/SEC   s  0    0   7   24   1 D     KTM      0     / Velocity Correction, Vref-Vtel.
+   DELTAVEL    1 E    M/SEC   l  0    0  12   96   1 D     KTM      0     / Channel spacing in Velocity.
+   RESTFREQ    1 D      HZ    l  0    0  12    8   1 D    MHZTHZ    8     / Rest Frequency at ref. pixel.
+   OBSFREQ     1 D      HZ    s  0    0  12    0   1 D    MHZTHZ    0     / Sky Frequency at ref. pixel.
+/*
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / The following defines the celestial coordinate frame.
+   RADECSYS    8 A      -     c  0    0   4  128   8 A      -       6     / Position Reference Frame code.
+   EQUINOX     1 E    YEAR    c  0    0   4    0   1 D      -       2     / Equinox of position ref. frame.
+/*          (remaining CORE keywords)
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / Remaining Single-dish CORE keywords follow.
+   SCAN        1 D      -     s  0    0   1   16   1 D      -       0     / Scan number (frac.part may be rcvr no.)
+   LST         1 E   SECONDS  s  0    0   3   16   1 D     HTS      0     / Local sidereal time.
+   DATE-OBS   10 A      -     c  0    0   3    0   1 D      -       7     / Date of observation
+   OBJECT     16 A      -     s  0    0   1   64  16 A      -       0     / Observed object name.
+   TELESCOP    8 A      -     c  0    0   1   48   8 A      -       0     / Telescope designation.
+   OBSERVER   16 A      -     s  0    0   1   32  16 A      -       0     / Observer's name
+   OBSMODE     8 A      -     s  0    0   1   80   8 A      -       0     / Observing mode.
+   EXPOSURE    1 E   SECONDS  c  0    0  12  168   1 D      -       0     / Effective on-source integration time.
+   TSYS        1 E    KELVIN  c  0    0  12   48   1 D      -       0     / System Temperature on source.
+   DATAMAX     1 E       -    c  0    0  -1   -1   1 E      -      17     / Max value in series.
+   DATAMIN     1 E       -    c  0    0  -1   -1   1 E      -      18     / Min value in series.
+/*          (remaining SHARED keywords)
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / The following are single-dish SHARED keywords.
+   OBSID       8 A      -     s  0    0   1   24   8 A      -       0     / Observer's ID code.
+   PROJECT     8 A      -     s  0    0   1   56   8 A      -       0     / Project ID code
+   FRONTEND    8 A      -     s  0    0   1   88   8 A      -       0     / Front-end receiver description.
+   BACKEND     8 A      -     s  0    0   1   96   8 A      -       0     / Backend description.
+   TCAL        1 E    KELVIN  s  0    0  12   40   1 D      -       0     / Calibration Temperature.  
+   TRX         1 E    KELVIN  k  0    0  12   32   1 D      -       0     / Receiver Temperature.
+   FREQRES     1 E      HZ    l  0    0  12   16   1 D    MHZTHZ   10     / Frequency resolution of a channel.
+   BANDWIDT    1 E      HZ    s  0    0  12   24   1 D    MHZTHZ    0     / Total Receiver Bandwidth.
+   TOUTSIDE    1 E    KELVIN  s  0    0   5    0   1 D     CTK      0     / Ambient Temperature at the 140-ft.  
+   PRESSURE    1 E    PASCAL  s  0    0   5    8   1 D    cmHgTP    0     / Atmospheric Pressure in Pascals.  
+   HUMIDITY    1 E      -     s  0    0   5   16   1 D     %Tf      0     / Relative Humidity (fraction).
+   DEWPOINT    1 E    KELVIN  s  0    0   5   32   1 D     CTK      0     / DewPoint (Kelvin).  
+   APEREFF     1 E      -     s  0    0   8    0   1 D      -       0     / Aperture Efficiency.
+   BEAMEFF     1 E      -     s  0    0   8    8   1 D      -       0     / Main Beam Efficiency.
+   ANTGAIN     1 E    K/JY    s  0    0   8   16   1 D      -       0     / Antenna Gain, Kelvins per Jy.
+   ETAL        1 E      -     s  0    0   8   24   1 D      -       0     / Rear spillover and scattering eff.
+   ETAFSS      1 E      -     s  0    0   8   32   1 D      -       0     / Forward spillover and scattering eff.
+   BEAMWIDT    1 E   DEGREES  s  0    0   7    0   1 D     STD      0     / Beam full width at half-max.
+   AZIMUTH     1 D   DEGREES  s  0    0   4   72   1 D      -       0     / Commanded azimuth.
+   ELEVATIO    1 D   DEGREES  s  0    0   4   80   1 D      -       0     / Commanded elevation angle.
+/*           (UNIPOPS- and site-specific- keywords)
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / NRAO UNIPOPS GENERAL keywords follow.
+   SAVENUM     1 I      -     l  0    0   1  112   1 D      -       0     / Scan index number (used by UNIPOPS).
+   NORECORD    1 I      -     l  0    0   1  120   1 D      -       0     / Number of indiv. rec. for this scan.
+   RECORDID    1 I      -     l  0    0   1  128   1 D      -       0     / Record ID of this data
+   UXPNT       1 E   DEGREES  l  0    0   2   16   1 D     STD      0     / User x pointing correction.
+   UYPNT       1 E   DEGREES  l  0    0   2   24   1 D     STD      0     / User Y pointing correction.
+   PTCON1      1 E   DEGREES  l  0    0   2   32   1 D     MTD      0     / Pointing constant 1.
+   PTCON2      1 E   DEGREES  l  0    0   2   40   1 D     MTD      0     / Pointing constant 2.
+   PTCON3      1 E   DEGREES  l  0    0   2   48   1 D     MTD      0     / Pointing constant 3.
+   PTCON4      1 E   DEGREES  l  0    0   2   56   1 D     MTD      0     / Pointing constant 4.
+   ORIENT      1 E   DEGREES  l  0    0   2   64   1 D      -       0     / Box orientation, east of north.
+   FOCUSR      1 E    METERS  l  0    0   2   72   1 D     mmTM     0     / Radial box focus
+   FOCUSV      1 E    METERS  k  0    0   2   80   1 D     mmTM     0     / N-S box focus.
+   FOCUSH      1 E    METERS  k  0    0   2   88   1 D     mmTM     0     / E-W box focus.
+   NCHAN       1 E      -     l  0    0   3   24   1 D      -       0     / Number of channels for this frontend.
+   NSWVAR      1 I      -     l  0    0   3   32   1 D      -       0     / Number of switching variables.
+   NPHASE      1 I      -     l  0    0   3   40   1 D      -       0     / Number of phases per cycle.
+   CYCLELEN    1 E   SECONDS  l  0    0   3   48   1 D      -       0     / Cycle Length
+   TSAMPLE     1 E   SECONDS  l  0    0   3   56   1 D      -       0     / Record or Sample Integration Time.
+   PHASEID     1 I      -     l  0    0   3   72   1 D      -       0     / Phase ID for this data.
+   INTTIME     1 E   SECONDS  l  0    0  12  104   1 D      -       0     / Duration time of scan.
+   XSOURCE     1 D   DEGREES  l  0    0   4    8   1 D      -       9     / Commanded X position.
+   YSOURCE     1 D   DEGREES  l  0    0   4   16   1 D      -       9     / Commanded Y position.
+   XREF        1 D   DEGREES  k  0    0   4   24   1 D      -       9     / Commanded reference X. 
+   YREF        1 D   DEGREES  k  0    0   4   32   1 D      -       9     / Commanded reference Y. 
+   EPOCRA      1 D   DEGREES  l  0    0   4   40   1 D      -       9     / RA at epoch of EQUINOX.
+   EPOCDEC     1 D   DEGREES  l  0    0   4   48   1 D      -       9     / DEC at epoch of EQUINOX.
+   GLON-ARC    1 D   DEGREES  l  0    0   4   56   1 D      -       9     / Galactic longitude
+   GLAT-ARC    1 D   DEGREES  l  0    0   4   64   1 D      -       9     / Galactic latitude
+   XINDIC      1 D   DEGREES  l  0    0   4   88   1 D      -       9     / Indicated RA
+   YINDIC      1 D   DEGREES  l  0    0   4   96   1 D      -       9     / Indicated Declination.
+   USERORG1    1 D   DEGREES  l  0    0   4  104   1 D      -       9     / User Origin - R.A (1950).
+   USERORG2    1 D   DEGREES  l  0    0   4  112   1 D      -       9     / User Origin - DEC (1950).
+   USERPA      1 D   DEGREES  l  0    0   4  120   1 D      -       9     / User Origin - Coord. sys. Pos.Ang.
+   COORDCD     8 A       -    l  0    0   4  128   8 A      -       9     / Coordinate Type Code.
+   OFFSCAN     1 E       -    l  0    0   7    8   1 D      -       0     / Off scan number  
+   RTSYS       1 E    KELVIN  l  0    0  12   56   1 D      -       0     / Reference System Temp.
+   TSOURCE     1 E    KELVIN  l  0    0  12   64   1 D      -       0     / Antenna temp of Source
+   TRMS        1 E    KELVIN  l  0    0  12   72   1 D      -       0     / RMS of mean source temperature. 
+   SPN         1 E      -     l  0    0  12  120   1 D      -       0     / Starting point number.
+   TAUH2O      1 E      -     l  0    0  12  128   1 D      -       0     / Model H2O Opacity.
+   NSTACK      1 E      -     l  0    0  13    0   1 D      -       0     / Number of scans stacked.
+   FSCAN       1 E      -     l  0    0  13    8   1 D      -       0     / First scan number in stack.
+   LSCAN       1 E      -     l  0    0  13   16   1 D      -       0     / Last scan number in stack.
+/*
+   COMMENT     0 A      -     k  0    0   0    0   0 A      -      -2     / The following are NRAO Kitt-Peak-specific.
+   XPOINT      1 E   DEGREES  k  0    0   2    0   1 D     STD      0     / X-coordinate pointing correction.
+   YPOINT      1 E   DEGREES  k  0    0   2    8   1 D     STD      0     / Y-coordinate pointing correction.
+   PTMODEL     8 A      -     k  0    0   2   96   8 A      -       0     / Pointing model
+   CL11TYPE    8 A      -     k  0    0   3   64   8 A      -       0     / Class 11 type
+   REFRAC      1 E      -     k  0    0   5   24   1 D      -       0     / Index of refraction.
+   MH2O        1 E   METERS   k  0    0   5   40   1 D    mmTM      0     / Atmospheric H2O vapor column height.
+   SCANANG     1 E   DEGREES  k  0    0   6    0   1 D      -       0     / Scan angle wrt FRAME code.
+   XZERO       1 E   DEGREES  k  0    0   6    8   1 D      -       0     / X at map ref. zero.
+   YZERO       1 E   DEGREES  k  0    0   6   16   1 D      -       0     / Y at map ref. zero.
+   DELTAX      1 E   DEGREES  k  0    0   6   24   1 D     STD      0     / X size of cell mapping grid.  
+   DELTAY      1 E   DEGREES  k  0    0   6   32   1 D     STD      0     / Y size of cell mapping grid.  
+   NGPTS       1 I       -    k  0    0   6   40   1 D      -       0     / Total number of grid cells in map.
+   NXPTS       1 I       -    k  0    0   6   48   1 D      -       0     / Number of X grid points.
+   NYPTS       1 I       -    k  0    0   6   56   1 D      -       0     / Number of Y grid points.
+   XCELL0      1 E       -    k  0    0   6   64   1 D      -       0     / Starting X grid cell.
+   YCELL0      1 E       -    k  0    0   6   72   1 D      -       0     / Starting Y grid cell.
+   FRAMECOD    8 A       -    k  0    0   6   80   8 A      -       0     / Frame code: {POLR|CART}{STEP|SCAN}
+   BADCHV      1 E       -    k  0    0   7   16   1 D      -       0     / Tant assigned to defective scans.
+   TYPECAL     8 A       -    k  0    0   7   48   8 A      -       0     / Type of calibration.
+   SYNFREQ     1 D     HZ     k  0    0   9    0   1 D    MHZTHZ    0     / Synthesizer frequency.
+   LOFACT      1 E      -     k  0    0   9    8   1 D      -       0     / LO factor.
+   HARMONIC    1 E      -     k  0    0   9   16   1 D      -       0     / Which harmonic used for LO.
+   LOIF        1 E     HZ     k  0    0   9   24   1 D    MHZTHZ    0     / Value of LO IF.
+   FIRSTIF     1 E     HZ     k  0    0   9   32   1 D    MHZTHZ    0     / Value of First IF.
+   RAZOFF      1 E   DEGREES  k  0    0   9   40   1 D     STD      0     / Reference Azimuth offset.
+   RELOFF      1 E   DEGREES  k  0    0   9   48   1 D     STD      0     / Reference Elevation offset.
+   BMTHROW     1 E   DEGREES  k  0    0   9   56   1 D     STD      0     / Beam Throw.
+   BMORENT     1 E   DEGREES  k  0    0   9   64   1 D     STD      0     / Beam Orientation.
+   OBSTOL      1 E   DEGREES  k  0    0   9   80   1 D     STD      0     / Pointing Tolerance.
+   SIDEBAND    1 I      -     k  0    0   9   88   1 D      -       0     / Sideband, 2=USB, 3=LSB.
+   WL          1 E   METERS   k  0    0   9   96   1 D    mmTM      0     / Focus parameter.
+   GAINS       1 E      -     k  0    0   9  104   1 D      -       0     / Scan number of calibration scan.
+   PBEAM1      1 E   DEGREES  k  0    0   9  112   1 D     STD      0     / Offset of plus beam.
+   PBEAM2      1 E   DEGREES  k  0    0   9  120   1 D     STD      0     / Offset of plus beam.
+   MBEAM1      1 E   DEGREES  k  0    0   9  128   1 D     STD      0     / Offset of minus beam.
+   MBEAM2      1 E   DEGREES  k  0    0   9  136   1 D     STD      0     / Offset of minus beam.
+   SROFF1      1 E   DEGREES  k  0    0   9  144   1 D     STD      0     / RA/DEC offsets.
+   SROFF2      1 E   DEGREES  k  0    0   9  152   1 D     STD      0     / RA/DEC offsets.
+   SROFF3      1 E   DEGREES  k  0    0   9  160   1 D     STD      0     / RA/DEC offsets.
+   SROFF4      1 E   DEGREES  k  0    0   9  168   1 D     STD      0     / RA/DEC offsets.
+   FOFFSIG     1 D     HZ     k  0    0   9  176   1 D    MHZTHZ    0     / Frequency offset, signal
+   FOFFREF1    1 D     HZ     k  0    0   9  184   1 D    MHZTHZ    0     / Frequency offset, reference 1
+   FOFFREF2    1 D     HZ     k  0    0   9  192   1 D    MHZTHZ    0     / Frequency offset, reference 2
+   REDUCCOM   80 A      -     k  0    0  10    0  80 A      -       0     / Observer's comments on data reduction.
+   VARVALUE    1 D      -     k  0    0  11    0   1 D      -       0     / Value of a single switch state.
+   VARDESCR    8 A      -     k  0    0  11    8   8 A      -       0     / Descriptor of the switching variable.
+   PHASETAB    8 A      -     k  0    0  11   16   8 A      -       0     / Phase Table.
+   NSWVARF     1 I      -     t  0    0  11    0   1 D      -       0     / Number of fast switching variables
+   NSWCYC      1 I      -     t  0    0  11    8   1 D      -       0     / Number of slow switching cycles
+   NSWCYCF     1 I      -     t  0    0  11   16   1 D      -       0     / Number of fast switching cycles
+   NPHASEF     1 I      -     t  0    0  11   24   1 D      -       0     / Number of phases per fast cycle
+   CYCLENF     1 E   SECONDS  t  0    0  11   32   1 D      -       0     / Length of fast cycle
+   SAMPTIMF    1 E   SECONDS  t  0    0  11   40   1 D      -       0     / Length of fast phase
+   VARVAL01    1 D      -     t  0    0  11   48   1 D      -       0     / Variable value
+   VARDES01    8 A      -     t  0    0  11   56   8 A      -       0     / Variable descriptor
+   PHASTB01   32 A      -     t  0    0  11   64  32 A      -       0     / Phase Table
+   VARVAL02    1 D      -     t  0    0  11   96   1 D      -       0     / Variable value
+   VARDES02    8 A      -     t  0    0  11  104   8 A      -       0     / Variable descriptor
+   PHASTB02   32 A      -     t  0    0  11  112  32 A      -       0     / Phase Table
+   VARVAL03    1 D      -     t  0    0  11  144   1 D      -       0     / Variable value
+   VARDES03    8 A      -     t  0    0  11  152   8 A      -       0     / Variable descriptor
+   PHASTB03   32 A      -     t  0    0  11  160  32 A      -       0     / Phase Table
+   VARVAL04    1 D      -     t  0    0  11  192   1 D      -       0     / Variable value
+   VARDES04    8 A      -     t  0    0  11  200   8 A      -       0     / Variable descriptor
+   PHASTB04   32 A      -     t  0    0  11  208  32 A      -       0     / Phase Table
+   VARVAL05    1 D      -     t  0    0  11  240   1 D      -       0     / Variable value
+   VARDES05    8 A      -     t  0    0  11  248   8 A      -       0     / Variable descriptor
+   PHASTB05   32 A      -     t  0    0  11  256  32 A      -       0     / Phase Table
+   DSF         1 E      -     k  0    0  12    8   1 D      -      11     / Data Scale Factor - 12m continuum only.
+   NT          1 I      -     k  0    0  12   16   1 D      -      12     / Noise Tube flag - 12m continuum only.
+   TH20        1 E    KELVIN  k  0    0  12  136   1 D      -       0     / Model H2O temperature.
+   TAUO2       1 E      -     k  0    0  12  144   1 D      -       0     / Model O2 opacity.
+   TO2         1 E    KELVIN  k  0    0  12  152   1 D      -       0     / Model O2 temperature.
+   POLARCOD    8 A      -     k  0    0  12  160   8 A      -       0     / Rcvr polarization code: {RC|LC|LIN}{ang}
+   RXINFO     16 A      -     k  0    0  12  176  16 A      -       0     / Receiver info.
+   LAMP        1 E      -     k  0    0  13   24   1 D      -       0     / Reduced line amplitude.
+   LWID        1 E      -     k  0    0  13   32   1 D      -       0     / Reduced line width.
+   ILI         1 E      -     k  0    0  13   40   1 D      -       0     / Integrated line intensity.
+   DRMS        1 E      -     k  0    0  13   48   1 D      -       0     / RMS noise level in reduced scan.
+/*
+   COMMENT     0 A       -    g  0    0   0    0   0 A      -      -2     / The following are NRAO-Green-Bank-specific keywords.
+   DELTAXR     1 E   DEG/SEC  g  0    0   6   24   1 D     STD      0     / X-rate of position scanning.  
+   DELTAYR     1 E   DEG/SEC  g  0    0   6   32   1 D     STD      0     / Y-rate of position scanning.  
+   L1          1 D      HZ    g  0    0   9    0   1 D    MHZTHZ    0     / LO ref frequency.
+   L1F1        1 D      HZ    g  0    0   9    8   1 D    MHZTHZ    0     / LO ref frequency.
+   L1F2        1 D      HZ    g  0    0   9   16   1 D    MHZTHZ    0     / LO ref frequency.
+   L2          1 D      HZ    g  0    0   9   24   1 D    MHZTHZ    0     / LO ref frequency.
+   L2F1        1 D      HZ    g  0    0   9   32   1 D    MHZTHZ    0     / LO ref frequency.
+   L2F2        1 D      HZ    g  0    0   9   40   1 D    MHZTHZ    0     / LO ref frequency.
+   LA          1 E      HZ    g  0    0   9   48   1 D    MHZTHZ    0     / LO settings.
+   LB          1 E      HZ    g  0    0   9   56   1 D    MHZTHZ    0     / LO settings.
+   LC          1 E      HZ    g  0    0   9   64   1 D    MHZTHZ    0     / LO settings.
+   LD          1 E      HZ    g  0    0   9   72   1 D    MHZTHZ    0     / LO settings.
+   LEVCORR     1 E    VOLTS   g  0    0   9   80   1 D      -       0     / Level Correction.
+   PTFUDGE1    1 E   DEGREES  g  0    0   9   88   1 D     MTD      0     / User's RA Pointing "fudge".
+   PTFUDGE2    1 E   DEGREES  g  0    0   9   96   1 D     MTD      0     / User's DEC Pointing "fudge".
+   RHO         1 E   DEGREES  g  0    0   9  104   1 D      -       0     / Feed offset rotation.
+   THETA       1 E   DEGREES  g  0    0   9  112   1 D      -       0     / Feed offset, lateral.
+   CFFORM     24 A      -     g  0    0   9  120  24 A      -       0     / Center Frequency Formula.
+   COMMENT     0 A      -     -  0    0   0    0   0 A      -      -2     / Here is the data matrix.
+   SERIES  16384 E      -     c  0    0  -1   -1   1 E      -      20     / Observed Data Series
+END
+/*                                                                   012345678901234567890123456789012345678901234567890*/
+/* Format for Main File FITS header */
+/* 45678901234567890123456789012345678901234567890123456789012345678901234567890 */
+SIMPLE  =                    T      / File conforms to FITS standards.
+BITPIX  =                    8      /                                          
+NAXIS   =                    0      / No image data array present.        
+EXTEND  =                    T      / Standard table extensions follow.    
+BLOCKED =                    T      / Tape block may be 1-10 times 2880 bytes.
+ORIGIN  = '%18s              '      / Written by the UNIPOPS u2f utility
+DATE    = '%18s              '      / Date this file was written.       
+COMMENT    Single dish data from NRAO-UNIPOPS. 
+END                
+
+/* Format for the single dish TABLE HEADER */    
+/* 45678901234567890123456789012345678901234567890123456789012345678901234567890 */
+XTENSION= 'BINTABLE'                / FITS binary table.                   
+BITPIX  =                    8      / Binary data.                             
+NAXIS   =                    2      / Table is a Matrix.                      
+NAXIS1  =                %5d        / Width of table in bytes.                
+NAXIS2  =                %5d        / Number of entries (rows) in Table.      
+PCOUNT  =                    0      / No Random Parameters.                  
+GCOUNT  =                    1      / Only one group.                             
+TFIELDS =                %5d        / Number of fields in each row.           
+EXTNAME = 'UNIPOPS SNGLE DISH'      / Table format type.     
+EXTVER  =                    3      / Version number of Table. (14Feb92)  
+NMATRIX =                    1      / No.matrixes following SD convention.     
+           / The following global keywords apply, at least, to the first scan.
+TELESCOP= '%18s              '      / Designation of Telescope.
+OBJECT  = '%18s              '      / Name of observed object.
+OBSERVER= '%18s              '      / Name of observer.
+DATE-OBS= '%18s              '      / UT date of observation.
+DATAMAX =         %12.4e            / Max spectral value (K) - %17s
+DATAMIN =         %12.4e            / Min spectral value (K) - %17s
+           / The following defines the data matrix.
+MAXIS   =                 %4d       / No. axes in data matrix.
+END       
+/* the remaining table column info is filled in here from the above 
+/* translation table.
+

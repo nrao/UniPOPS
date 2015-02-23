@@ -1,0 +1,39 @@
+General Single-Dish-Data (SDD) Format
+-------------------------------------
+
+The following topics describe the contents of the scan header and how
+to both get and set values within the header.
+
+The contents of the scan header are broken up into the following
+classes:
+
+	Class 1 :  Basic Information 
+	Class 2 :  Pointing 
+	Class 3 :  Observing Parameters 
+	Class 4 :  Positions 
+	Class 5 :  Environment 
+	Class 6 :  Map Parameters 
+	Class 7 :  Data Parameters 
+	Class 8 :  Engineering Parameters
+	Class 9 :  Telescope Dependent Parameters 
+	Class 10:  Open Parameters (Data Reduction) 
+	Class 11:  Phase Block 
+	Class 12:  Descriptor Block for Receiver Channel 
+	Class 13:  Reduction Parameters
+
+The contents of a matrix and cube header are described under:
+
+	Class-Matrix-Cube
+
+For an alphabetical listing of keywords used to set and get header
+values, see:
+
+	Keywords
+
+For a description on how to set and get header values, see:
+
+	Set-Get-Header
+
+For a description of the contents of the individual classes, see the
+help file for the class you are interested in.
+

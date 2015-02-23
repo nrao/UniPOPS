@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'HOLFITFOC:  For holographic data reduction.  Fits an error'
+PRINT 'pattern due to focus and pointing offsets to Matrix 0.'
+PRINT 'Matrices 0 and 1 are overwritten with the residuals and'
+PRINT 'the error pattern.  Syntax: HOLFITFOC(nyq,dishd,focus)'
+PRINT ' '

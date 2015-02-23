@@ -1,0 +1,45 @@
+       	(REGULAR VERB)
+
+	ENDEDIT is used to end a session of editing of a procedure with
+	the POPSEDIT verb.  The POPSEDIT verb puts UniPOPS into compile
+	mode (indicated by a change to the ':' prompt) so that you can
+	edit an already-compiled procedure.  ENDEDIT indicates that you
+	are done editing the procedure and it returns UniPOPS to
+	execute mode, which is indicated by the return of the caret (>)
+	prompt or the value of the PROMPT adverb if it has been set.
+
+	ENDEDIT can be used only in procedures and must be the only verb 
+	on the input line.  All POPSEDIT sessions must be concluded with 
+	an ENDEDIT.
+
+	We strongly recommend that you do not use POPSEDIT to change a 
+	PROCEDURE but that you use EDIT followed by a BATCH.
+
+	EXAMPLES:
+
+	.   To remove line 3 from PROCEDURE BLAH;
+
+		POPSEDIT BLAH 3
+		ENDEDIT
+
+	.   To add 2 lines between lines 5 and 6 in PROCEDURE YYY;
+ 
+		POPSEDIT YYY 5.5
+		PRINT 'TEST 1'
+		PRINT 'TEST 2'
+		ENDEDIT
+
+	.   To replace line 3 and add 1 line between new line 3 and old
+	    line 4 in PROCEDURE GGG;
+
+		POPSEDIT GGG 3
+		PRINT 'NEW LINE 3'
+		PRINT 'EXTRA LINE'
+		ENDEDIT
+
+	 .   To replace line 4 in PROCEDURE XXX;
+
+		POPSEDIT XXX 4
+		PRINT 'NEW LINE 4'
+		ENDEDIT
+	

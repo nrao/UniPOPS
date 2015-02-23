@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'STAT:  (POINTER) Indicates the summary of the STATUS array'
+PRINT 'for TELL.'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TYPETIP:  (ADVERB) Flag in SOLVETIP determining the type of'
+PRINT 'solution used.'
+PRINT ' '

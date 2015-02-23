@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'KSCANS:  (POINTER) Indicates keep data file for TELL,'
+PRINT 'SUMMARY, SELECT, CHNGFILE and Z_CHNGFIL.'
+PRINT ' '

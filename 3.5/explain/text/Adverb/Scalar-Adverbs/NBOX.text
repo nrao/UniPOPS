@@ -1,0 +1,19 @@
+	(SCALAR ADVERB)
+
+	NBOX specifies the number of channels to be averaged together
+	by BOXCAR.  The user may change NBOX to any other positive odd
+	valued integer up to a maximum value of 11.
+
+	NBOX is used by : BOXCAR
+
+	No verbs change NBOX.
+
+	The initial value of NBOX is 3.
+
+	EXAMPLE :
+
+	You want to average seven channels together for the purpose of
+	smoothing your data.  Before calling BOXCAR, specify :
+
+		NBOX = 7.
+		BOXCAR

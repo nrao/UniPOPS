@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'VMARK:  (ARRAY-12) Velocities in km/s (LINE), or positions'
+PRINT 'relative to scan start in deg (CONDAR), where SHOW draws'
+PRINT 'vertical lines.  X-axis values where LABEL will draw'
+PRINT 'vertical lines.'
+PRINT ' '

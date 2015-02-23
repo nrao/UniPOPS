@@ -1,0 +1,32 @@
+	(SCALAR ADVERB)
+
+	FIXC, FIXH, and FIXHW are used as flags or switches by the verb
+	GAUSS.
+
+	FIXC, FIXH, and FIXHW are used by : GAUSS
+
+	No verbs change FIXC, FIXH, or FIXHW.
+
+	If FIXC, FIXH, or FIXHW is FALSE (-1), GAUSS will treat the
+	corresponding parameter (CENTER, HEIGHT, and HWIDTH respectively)
+	as a free parameter when fitting Gaussians to the data.
+
+	If FIXC, FIXH, or FIXHW is TRUE (+1), GAUSS will hold the
+	corresponding parameter fixed when fitting Gaussings to the data.
+
+	Initial values for FIXC, FIXH, and FIXHW are FALSE (-1).
+
+	All three cannot be equal to TRUE at the same time.  
+
+	See documentation for related adverbs FIXRELC, FIXRELH, and
+	FIXRELHW.
+
+	EXAMPLE :
+
+	If you want to fit a Gaussian with center at channel 79, specify :
+
+		CENTER = 79
+		FIXC = TRUE	     FIXC = TRUE will fix all the center
+				     values if  you are fitting more than
+ 				     one Gaussian.
+		GAUSS

@@ -1,0 +1,455 @@
+Addition of Local Symbols
+-------------------------
+
+The following describe some new additions to UniPOPS that we have
+recently made.  The description is rather lengthy because of the
+important nature of the changes and because we want to be complete and
+make sure that all users of the system will know how the changes will
+affect how they can use the program.
+
+The following feature has been added:
+
+   You can now create variables that are local to a particular procedure
+	or, as in the past, that are global and, therefore, are known both
+	outside of and inside all procedures. 
+
+Here is the user's notes on the above new feature.
+
+==========================================
+
+General Rules:
+
+All symbols, even those in procedures,  must be declared before they are 
+first used.  In the past, global scalar adverbs would be created for you 
+whenever you were entering a procedure a typed a symbol that did not 
+already exist.  The recent changes protect you from accidently creating
+adverbs whenever you make a typing mistake in a procedure definition.
+
+To create a global symbol when you are NOT compiling a procedure, use
+the SCALAR, ARRAY, STRING, ALIAS, or POINTER commands.  In the past,
+you have not have the ability to create global symbols outside of
+procedures.
+
+To create a local symbol when you ARE compiling a procedure, include
+the SCALAR, ARRAY, STRING, ALIAS, or POINTER declaration command within
+the definition of the procedure (i.e., somewhere between the PROC and
+FINISH lines and before the symbol is first used).  Until now, these
+symbols were global and available outside of procedures.  Now they are
+LOCAL and available only within the procedure that declares them.  The
+changes should isolate usage of variables from one procedure to another
+(i.e., the adverb J in one procedure need not be the same adverb J in
+any other procedure.)
+
+To create a global symbol while you are compiling a procedure, use the
+GLOBAL command followed by a SCALAR, ARRAY, STRING, ALIAS, or POINTER
+commands within the definition of the procedure.  GLOBAL never existed
+until now but it performs the same function as the old, simpler syntax
+performed.
+
+More than one adverb or alias can be created with the same SCALAR,
+ARRAY, STRING, ALIAS, and POINTER commands.  [This is NOT a new feature
+but the way we handle these lines in the program ensures fewer possible
+mistakes on the part of the user.]  The complete declarations are
+scanned for errors before any adverb or alias is created.  If any error
+occurs, no new symbol is created.  This is different than what existed
+before in that symbols sometimes were created even though some of the
+declarations contained errors.  For example, with all of the old
+programs, ARRAY N1(5) BASELINE(10) G1(13) would have created an N1 but
+died on BASELINE and G1 would not be created.  Worse yet, ARRAY
+A1(1.23e34 to BASELINE) would have produced a SCALAR adverb, not an
+ARRAY, by the name of A1 before it caught the errors in the dimension
+statement.
+
+Two new symbol types have been created:  POINTER and ALIAS.  A POINTER
+adverb is a scalar adverb that is assigned a value when it is created
+but whose value you cannot change.  ALIAS creates a new symbol which
+performs the same function as an existing PROCEDURE or VERB -- useful
+if you want to change the name of something that already exists.
+
+If you call a procedure twice, all local symbols will have the same
+values they did at the conclusion of the first call (more on this below).
+Local adverbs either start out with a value of zero or blanks, in the case
+of strings.
+
+You cannot POPSEDIT any line in a procedure that contains a SCALAR,
+ARRAY, POINTER, STRING, ALIAS, or GLOBAL declaration.  For a host of
+reasons, we highly recommend that you use disk files for storing and
+changing procedures instead of using POPSEDIT (see the manual for a
+discussion on the EDIT and BATCH commands).
+
+SCRATCH can now be used to remove not only user-defined procedures but
+any user-defined global symbol.  The syntax for usage of SCRATCH is:
+SCRATCH <name> where <name> is the name of the global symbol you are
+attempting to remove.
+
+------------------------------------------
+
+Examples and discussion of usage of SCALAR
+
+	scalar A1
+	scalar A1 A2 A3
+	scalar A1,A2,A3
+
+	During immediate execution mode, the following rules apply:
+
+	a) No commands must precede or follow the scalar definition
+	(i.e., it must be the only command on the input line).
+
+	b) If any of the desired adverb names already exist as a scalar
+	adverb, a new adverb is NOT created (i.e., SCALAR A1, BDROP
+	will create A1 but will ignore the BDROP since it is a scalar
+	and already exists).
+
+	c) If any of the names exists but is not scalar, you will get
+	an error message and NO adverbs  will be created.  That is,
+	SCALAR I1 BASELINE will produce an error and I1 will NOT be
+	created.
+
+	d) If any of the names are identical, no adverbs will be
+	created and you will be given an error message (e.g., 
+	SCALAR A1 A2 A1 will produce and error and A1 and A2 will NOT
+	be created).
+
+	During compilation mode, the following rules apply:
+
+	a)  same as a) above
+
+	b)  None of the symbols must already exists.  That is, 
+	SCALAR A1 BDROP will produce an error and local variable A1
+	will not be created.
+
+	c) & d) same as above
+
+----------------------------------------
+
+Examples and discussion of usage of ARRAY
+
+	array A1(dimensions)
+	array A1(dims) A2(dimensions) A3(dimensions)
+	array A1(dims), A2(dimensions), A3(dimensions)
+
+	where examples of the syntax for dimensions are:
+
+		(10)
+		(3 5)
+		(-10 to 20)
+		(10, 20 5)
+		(1 TO 10, 1 TO 20, -5 TO 0) 
+
+	During immediate execution mode, the following rules apply:
+
+	a) No commands must precede or follow the array definition
+	(i.e., it must be the only command on the input line).
+
+	b) If any of the desired adverb names already exist as an array
+	adverb that has the same dimensions as those specified, a new
+	adverb is NOT created (i.e., ARRAY A1(10), NREGION(32) will
+	create A1 but will ignore the NREGION since it is already an
+	array of dimension 32).  If any of the desired adverb names
+	already exist as an array adverb but if it has different
+	dimensions than those specified, an error is generated and no
+	new adverb is created. (i.e., ARRAY A1(10), NREGION(5) will NOT
+	create A1 and will generate an error message since NREGION
+	has a dimension of 32, not 5.)
+
+	c) If any of the names exists but is not an array, you will get
+	an error message and NO adverbs  will be created.  That is,
+	ARRAY I1(5) BASELINE(10) will produce an error and I1 will NOT
+	be created.
+
+	d) If any of the names are identical, no adverbs will be created
+	and you will be given an error message (e.g., ARRAY A1(10) A2(5) A1(10)
+	will produce and error and A1 and A2 will NOT be created).
+
+	During compilation mode, the following rules apply:
+
+	a)  same as a) above
+
+	b)  None of the symbols must already exists.  That is, 
+	ARRAY A1(10) NREGION(32) will produce an error and local variable A1
+	will not be created.
+
+	c) & d) same as above
+
+------------------------------------------
+
+Examples and discussion of usage of POINTER
+
+	pointer A1 1.234
+	pointer A1 1.234 A2 15 A3 17
+	pointer A1 1.234, A2 15, A3 17
+
+	During immediate execution mode, the following rules apply:
+
+	a) No commands must precede or follow the pointer definition
+	(i.e., it must be the only command on the input line).
+
+	b) If any of the desired adverb names already exist as a
+	pointer adverb with the same desired value, a new adverb is NOT
+	created (i.e., POINTER A1 15 will not generate an error message
+	if A1 is already a POINTER with a value of 15 but it will
+	produce an error if A1 is a pointer whose value is NOT 15.)
+
+	c) If any of the names exists but are not pointers, you will
+	get an error message and NO adverbs  will be created.  That is,
+	POINTER I1 1 BASELINE 4 will produce an error and I1 will NOT
+	be created.
+
+	d) If any of the names are identical, no adverbs will be created
+	and you will be given an error message (e.g., POINTER A1 1 A2 2 A1 1
+	will produce and error and A1 and A2 will NOT be created).
+
+	e) The value you can assign to a POINTER adverb must be real
+	valued (i.e., not a string).
+
+	During compilation mode, the following rules apply:
+
+	a)  same as a) above
+
+	b)  None of the symbols must already exists.  That is, 
+	POINTER A1 1 will always produce an error if A1 already exists.
+
+	c), d), & e) same as above
+
+------------------------------------------
+
+Examples and discussion of usage of STRING
+
+	string*4 A1 
+	string A1 A2 A3 
+	string*60 A1, A2, A3 
+
+	The size of the string must be a multiple of 4 and lie between 4
+	and 60.  If you do not specify a size, the string will have a length
+	of 4 characters.
+
+	During immediate execution mode, the following rules apply:
+
+	a) No commands must precede or follow the string definition (i.e., it
+	must be the only command on the input line).  
+
+	b) If any of the desired adverb names already exist as a string
+	adverb with the same desired size, a new adverb is NOT created
+	(i.e., STRING*16 A1 XTITLE will not generate an error message
+	if A1 or XTITLE are already strings with a length of 16 chars.
+	but it will produce an error if A1 or XTITLE are a string
+	whose length is NOT 16.)
+
+	c) If any of the names exists but are not strings, you will get an
+	error message and NO adverbs  will be created.  That is, 
+	STRING I1 BASELINE will produce an error and I1 will NOT be created.
+
+	d) If any of the names are identical, no adverbs will be created
+	and you will be given an error message (e.g., STRING A1 A2 A1
+	will produce and error and A1 and A2 will NOT be created).
+
+	During compilation mode, the following rules apply:
+
+	a)  same as a) above
+
+	b)  None of the symbols must already exists.  That is, 
+	STRING A1 will always produce an error if A1 already exists.
+
+	c) & d) same as above
+
+------------------------------------------
+
+Examples and discussion of usage of ALIAS
+
+	alias A1 BASELINE
+	alias A1 BASELINE A2 BSHAPE A3 XX
+	alias A1 BASELINE, A2 BSHAPE, A3 XX
+
+	During immediate execution mode, the following rules apply:
+
+	a) No commands must precede or follow the alias definition (i.e., it
+	must be the only command on the input line).  
+
+	b) If any of the desired names already exist as an
+	alias that points to the same verb or procedure, a new ALIAS is
+	not created (i.e., ALIAS A1 XX will not generate an error message
+	if A1 is already an alias for XX but it will produce
+	an error if A1 is an alias to something else.)
+
+	c) If any of the names exists but are not aliases, you will get an
+	error message and NO aliases  will be created.  That is, 
+	ALIAS I1 XX BDROP BASELINE  will produce an error and I1 will
+	NOT be created.
+
+	d) If any of the names are identical, no alias will be created
+	and you will be given an error message (e.g., ALIAS A1 XX A2 YY A1 XX
+	will produce and error and A1 and A2 will NOT be created).
+
+	e) You can only make an alias for a VERB or a PROCEDURE.  That is,
+	ALIAS A1 BDROP will produce an error message.
+
+	During compilation mode, the following rules apply:
+
+	a)  same as a) above
+
+	b)  None of the symbols must already exists.  That is, 
+	ALIAS A1 BASELINE will always produce an error if A1 already exists.
+
+	c), d), and e) same as above.
+
+------------------------------------------
+
+Examples and discussion of usage of GLOBAL
+
+	global scalar a1 a2
+	global array a1(10)
+	global string*54 blah
+	global pointer rad 57.295
+	global alias b baseline
+
+	a) GLOBAL can only be used while compiling a procedure and it must
+	be followed by a legal SCALAR, ARRAY, STRING, POINTER, or ALIAS
+	declaration.  
+
+	b) All of the rules for creating a local variable/alias while
+	in compilation mode apply to the adverbs/aliases that GLOBAL
+	will create except that the resulting adverb/alias will be a
+	global instead of a local.
+
+----------------------------------------
+
+Example of a session which creates local and global adverbs:
+
+	Assuming that you are in immediate execution mode, the
+	following lines:
+
+	> scalar sc1, sc2, sc3
+	> array a1(10), a2(20 to 25, -3 to -1)
+	> pointer rad 57.295 pi 3.1415
+	> alias b baseline
+	> string*12 s1, s2
+
+	create global scalar adverbs sc1, sc2, and sc3; arrays a1 and a2;
+	two pointers (rad and pi), an alias for baseline, and two strings.
+
+	The following assigns values to these new global adverbs
+
+	> sc1=10
+	> sc2=20
+	> sc3=30
+	> a1=34; a2=45
+	> s1='123456789012'
+	> s2='abcdefghijkl'
+
+	and we can look at the contents of these adverbs and aliases with:
+
+	> ? sc1, sc2, sc3, a1, a2, rad, pi, s1, s2
+	> list b
+
+	Typing:
+
+	> b
+
+	will execute the baseline command.
+
+	Now, let us create a procedure that uses local adverbs.  We are
+	also going to make some mistakes on purpose to show you what
+	happens and why it happens.
+
+	> proc tst(lc0)    <- creates procedure tst and local scalar adverb lc0
+	: scalar sc1       <- This generates an error message since sc1 already
+				exists (we created it above).
+	: scalar lc1, lc2  <- Creates two new local scalar adverbs
+	: array a1(10)     <- Another mistake; a1 exists already
+	: array la1(10)    <- Creates local array la1
+	: global scalar gc3 gc4  <- Create two global scalars GC3 and GC3
+	: global array a1(10)    <- Another mistake since A1 already exists
+				(even though it is a global)
+	: string*24 ls1, ls2     <- Two local 24 character strings are created
+	: pointer hello 1.234    <- A local pointer called HELLO is given the value
+				of 1.234
+	: alias p print		 <- A local alias P is shorthand for PRINT 
+
+	: p sc1, sc2, sc3, a1, a2, rad, pi, s1, s2  <- Prints out above
+							global adverbs
+	: lc1=1; lc2=2*lc1
+	: a1(5)=999
+	: la1=15; la1(5)=25
+	: gc3=12; gc4=gc3**2
+	: ls1='123456'; ls2=ls1  <- Assigns values to both local and global
+					 symbols
+
+	: p sc1, sc2, sc3, a1, a2, rad, pi, s1, s2  
+	: p lc0, lc1, lc2, la1, gc3, gc4, hello, ls1, ls2  <- prints out both 
+						local and globals
+	: return
+	: finish
+
+
+	You can now run TST and see what happens
+
+	> TST (4)
+
+		Lots of printing
+
+	> p sc1		<- produces an error since P is a local symbol in				TST and doesn't exist outside of TST.
+
+	> ? lc1		<- Also an error since LC1 is only local to TST
+
+	> ? sc1		<- Works since SC1 is a global
+
+
+	Here is an example of the GAUSSFIT procedure for fitting multiple
+	Gaussians.  It uses 4 local symbols and a few already-existing
+	global symbols.
+
+	proc gaussfit(gauss_num)
+	# Sets up parameters for fitting GAUSS_NUM gaussians to the contents
+	# of array (0)
+	#
+	scalar gauss_i, gauss_a, gauss_b
+	#
+	ngauss= gauss_num
+	for gauss_i=1 to ngauss
+	   print 'Click on Max'
+	   center(gauss_i)=ccur
+	   print 'Click on Half widths'
+	   gauss_a=ccur; gauss_b=ccur; hwidth(gauss_i)=abs(gauss_a - gauss_b)
+	   end
+	return
+	finish
+
+----------------------------------------------------
+
+What happens to local adverb values between calls to procedures?
+
+	Consider the following procedure:
+
+	> proc gg
+	: scalar a3
+	: print  a3
+	: a3 = (a3+1)**2
+	: return
+	: finish
+
+	This is what you will get when you run GG multiple times
+
+	> gg
+		0.00000
+	> gg 
+		1.00000
+	> gg
+		4.00000
+	> gg
+		9.00000
+
+	This retaining of local symbol values is identical to how C and
+	f77 perform on most, if not all, machines.
+	
+
+===============================================================
+
+All of these changes have been put through as many tests as we could
+imagine.  We tried some rather large sledge hammers on the code to try
+to break it; no bugs are known to exist.  Please don't hesitate to
+report any problems to either Ron Maddalena or Bob Garwood.
+
+Ron & Bob
+
+
+

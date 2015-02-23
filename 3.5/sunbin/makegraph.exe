@@ -1,0 +1,31 @@
+#! /bin/csh -f
+#
+# @(#)makegraph.exe.sh	5.1 06/22/94
+#
+# Opens a graphics window for Unipops; creates necessary FIFO so that
+# process running in graphics window can talk with UniPOPS
+#
+# usage: makegraph.exe IN_FIFO OUT_FIFO PID U_TYPE W_TYPE
+#   where IN_FIFO = file name for input FIFO
+#        OUT_FIFO = file name for output FIFO
+#             PID = PID of parent (unipops) to pass to checkup.exe
+#          U_TYPE = UniPOPS type: L for Line, C for Continuum
+#          W_TYPE = window manager type, S for suncore, X for X11
+#
+if ($#argv != 5) then
+    echo 'MAKEGRAPH: Bad parms' $argv > /dev/console
+    exit(-1)
+endif
+#
+if (-e $1) rm $1 
+if ($status != 0) exit($status)
+if (-e $2) rm $2
+if ($status != 0) exit($status)
+/etc/mknod $1 p
+if ($status != 0) exit($status)
+/etc/mknod $2 p
+if ($status != 0) exit($status)
+#
+makegraph2.exe $1 $2 $3 $4 $5 &
+#
+ 

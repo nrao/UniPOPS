@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'SCLEAR:  Effectively will destroy the accumulation of scans'
+PRINT 'which may be in progress.  Clears all former use of ACCUM.'
+PRINT 'Clears the internal array of scan number/ASHIFT pairs set'
+PRINT 'by SHIFT and displayed by LISTSHIFT.'
+PRINT ' '

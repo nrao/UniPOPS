@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'SHIFT:  Shifts the data in Array (0) by the no. of channels'
+PRINT 'specified by ASHIFT.  Stores the scan number and ASHIFT in'
+PRINT 'internal array that can be listed by LISTSHIFT.'
+PRINT ' '
+PRINT 'ASHIFT=',ASHIFT
+PRINT ' ' 

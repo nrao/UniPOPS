@@ -1,0 +1,38 @@
+      	(PSEUDO VERB)
+
+	Syntax:    STORE page-number  
+
+	STORE copies the program's core memory space into the disk
+	memory file.  It does not change the present state of core; it
+	merely makes a copy of memory for later retrieval using
+	RESTORE.  All procedure definitions, adverbs, and their values
+	are stored.  The user must specify a page number which can be
+	1, 2, or 3.
+
+	STORE can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by STORE.
+
+	EXAMPLES:
+
+	The procedures presently defined in your work space need to be
+	preserved for later use.  Before EXIT, pick a number between 1
+	and 3, say 2, and specify;
+
+		STORE 2
+
+	Now in disk page 2 there is a copy of the procedure definition
+	space exactly like that in program memory.  To restore the
+	memory space, use the RESTORE 2 command.
+
+	You have things set up almost exactly the way you want them, but
+	there a couple of minor changes you would like to try.  Store
+	the current state to any available page (say 1, for example):
+
+		STORE 1
+
+	Now, you can make some changes and when you don't like what
+	you have done, you can easily go back to the earlier state
+	using RESTORE 1.
+

@@ -1,0 +1,150 @@
+	(REGULAR VERB)
+
+	SYNTAX:  SETPAGE(xlo, xhi, ylo, yhi)
+
+	SETPAGE redefines the region on the graphics screen where
+	displays will next go.  It is very useful if you want to draw
+	multiple spectra, contour plots, etc. on the same screen.
+
+	The full screen boundaries are 1 to 1024 pixels in X and 1 to
+	800 pixels in Y.
+
+	To set the screen region, call SETPAGE with parameters for the
+	lower and upper x-axis pixel and the lower and upper y-axis
+	pixel.  That is, to plot within pixels 100-500 in X and 400-800
+	in Y, type:  SETPAGE(100,500,400,800).
+
+	The pointer adverb DEFAULT can be used as any of the 4 arguments
+	to return the corresponding boundary to its default value.
+
+	If you place many plots on the same page, you may want to
+	eliminate all documentation by setting the SLABEL adverb to 
+	a value of 0.
+
+	The plot boundaries set by SETPAGE affect all data displays
+	and routines which use the results of the last display
+	(FLAG, FCUR, GDISPLAY, GPARTS, etc.)
+
+	SETPAGE also sets the default character size proportional to
+	the area specified in the call to SETPAGE.
+
+	ADVERB SET:
+
+	  STATUS(7)    Present character size (in points) as determined
+		       by the last call to CHARSIZE, RSTPAGE, or
+		       SETPAGE.
+
+	  STATUS(25)   Lowest x-axis pixel number for drawing to the
+		       graphics screen as determined by the last call
+		       to SETPAGE or RSTPAGE.
+
+	  STATUS(26)   Highest x-axis pixel number for drawing to the
+		       graphics screen as determined by the last call
+		       to SETPAGE or RSTPAGE.
+
+	  STATUS(27)   Lowest y-axis pixel number for drawing to the
+		       graphics screen as determined by the last call
+		       to SETPAGE or RSTPAGE.
+
+	  STATUS(28)   Highest y-axis pixel number for drawing to the
+		       graphics screen as determined by the last call
+		       to SETPAGE or RSTPAGE.
+
+
+	EXAMPLE:
+
+	.  You want to have multiple plots on a page so you use SETPAGE to
+	   set up plot boundaries.
+
+		SETPAGE(100,200,100,200)
+		SLABEL=0; SHOW
+		SETPAGE(300,500,500,800)
+		PLOT
+
+	   Now, you want to go back to the full page display so you type:
+
+		RSTPAGE SLABEL=1; SHOW
+
+	.  By judicious setting of page limits, you can produce a
+	   display with spectra positioned on the screen according to
+	   where the telescope was pointing when the observation was
+	   taken.  For example, the following procedures will plot
+	   a spectral line map in this fashion.
+
+	   PROC ARRANGE(XSIZE, YSIZE, XPIXPERDEG, YPIXPERDEG, XCENTER, YCENTER)
+	   # Places multiple spectra on one page according the position
+	   # of observations
+	   #
+	   SCALAR RAD, X_ARR, Y_ARR
+	   RAD = 45 / ATAN(1)
+	   X_ARR = (H0(XSOURCE)-XCENTER)*XPIXPERDEG/COS(H0(YSOURCE)/RAD) + 512
+	   Y_ARR = (H0(YSOURCE)-YCENTER)*YPIXPERDEG + 400
+	   # XPIX... and YPIX are the number of pixels per degree on the
+	   # sky in both the X and Y coord         
+	   #
+	   SETPAGE(X_ARR-XSIZE, X_ARR+XSIZE, Y_ARR-YSIZE, Y_ARR+YSIZE)
+	   # XSIZE and YSIZE are the number of pixels in X and Y directions
+	   # that each spectra will take.
+	   #
+	   SHOW
+	   RETURN
+	   FINISH
+
+	   PROC ARRLOOP(NX, NY, DELTAX, DELTAY)
+	   # Plots spectral-line 'tile' map.  
+	   # Assumes the central position is the first scan in ASTACK.
+	   # NX, NY = number of scans you want to plot in the X and Y    
+	   #	directions on the screen
+	   # DELTAX, DELTAY = Number of arcminutes between observations in   
+	   #	the X and Y directions.
+	   #
+	   SCALAR XPIXPERDEG, YPIXPERDEG, XSIZE, YSIZE, XCENTER, YCENTER, I_ARRL
+	   #
+	   PAGE SLABEL=0
+	   #
+	   XSIZE=512/NX; YSIZE=400/NY
+	   XPIXPERDEG = 2*XSIZE/(DELTAX/60)
+	   YPIXPERDEG = 2*YSIZE/(DELTAY/60)
+	   # Calculate size of each tiled spectra in pixels and the number
+	   # of pixels per arc degree.
+	   #
+	   GETSCAN ASTACK(1)
+	   # get the center scan
+	   #
+	   PLACE(1,20) CHAR(H0(OBJECT),16)
+	   GRAPHICS PLACE(0,750) TITLE CRT
+	   # Label the graph
+	   #
+	   XCENTER = H0(XSOURCE)
+	   YCENTER = H0(YSOURCE)
+	   # Set up center coords
+	   #
+	   ARRANGE(XSIZE, YSIZE, XPIXPERDEG, YPIXPERDEG, XCENTER, YCENTER)
+	   HOLDY
+	   FOR I_ARRL = 2 TO ACOUNT
+	      GETSCAN ASTACK(I_ARRL) 
+	      ARRANGE(XSIZE, YSIZE, XPIXPERDEG, YPIXPERDEG, XCENTER, YCENTER)
+	      END
+	   # plot up the 5 spectra
+	   #
+	   RSTPAGE FREEY CRT SLABEL=2
+	   # Reset default plot parameters
+	   #
+	   RETURN
+	   FINISH
+
+
+	To use this procedure, type something like :
+
+	   ADDSTACK(500,504,1)
+	   # Scans in 5 point map -- center is 500
+	   ARRLOOP(3,3,11.2,11.2)
+	   # 3 plots in X and Y directions
+	   # Scans are separated on the sky by 11.2 arcmin in X and Y
+	   # Produces the display
+	
+	
+	You want to have the X limits at 256 and 512 but leave the
+	Y limits at their default setting:
+
+		SETPAGE(256, 512, DEFAULT, DEFAULT)

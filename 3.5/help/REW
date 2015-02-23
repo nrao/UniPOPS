@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'REW:  (POINTER) Indicates you want to open the file with'
+PRINT 'FOPEN at the start of the file.'
+PRINT ' '

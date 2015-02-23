@@ -1,0 +1,34 @@
+	(STRING ADVERB of length 4 characters)
+
+	S_MODE specifies the telescope mode of the observations to be
+	SELECTed.  This corresponds to the last 4 characters of the
+	OBSMODE header parameter (the first 4 being either LINE or
+	CONT).
+
+	The match must be exact (no wild cards); however, case is
+	ignored.
+
+	If S_MODE is all spaces (i.e. S_MODE = "    ") then selection
+	will not depend on the value of the observing mode.
+
+	S_MODE is used by : SELECT
+
+	No verbs change S_MODE.
+
+	The initial value of S_MODE is blanks.
+
+	EXAMPLE :
+
+	To select all scans with mode FQSW (frequency switched),
+	specify:
+
+		S_MODE = "FQSW"
+
+	or
+
+	        S_MODE = "fqsw"
+
+	To select all scans regardless of observing mode, specify:
+
+		S_MODE = " "
+

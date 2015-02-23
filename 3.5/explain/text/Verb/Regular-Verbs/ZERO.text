@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	ZERO, which works only for data taken with the 12-meter
+C-	telescope, computes the zero levels of the digital back-end data
+C-	in Array (0) and calculates and displays the RMS of these zero
+C-	levels.  The data is scaled by:
+C-
+C-		exp[atmospheric zenith opacity / sin(elevation) ]
+C-
+C-	where the opacity and elevation are those stored in the TAUH20
+C-	and EL header parameter in Array (0).
+C-
+C-	No adverbs are used by ZERO.
+C-
+C-	ADVERBS SET:
+C-
+C-	  CALVAL	Set to its initial value of 0.
+C-
+C-	  VRMS		The RMS found by ZERO.  Initial value is 0.
+C-
+C-
+C-	EXAMPLE:
+C-
+C-	You have a continuum observation taken with the 12-meter 
+C-	and its digital back-end.  To calculate the zero levels, type:
+C-
+C-		ZERO
+C-
+C-	and something like the following will appear:
+C-
+C-		ZERO RMS=    1.2345
+C-
+C-	and the adverb VRMS will have its value changed to 1.2345.
+C-
+C------------------------- Continuum ------------------------------------
+

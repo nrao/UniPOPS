@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MFILL:  Attempts to interpolate values for undefined pixels'
+PRINT 'in Matrix (0).  Syntax:  MFILL(distance)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

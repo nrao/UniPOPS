@@ -1,0 +1,23 @@
+	SPTIP fits a log-linearized sky tipping scan using SOLVETIP.
+	See the documentation for SOLVETIP and the listing of
+	the SPTIP procedure for more insight.
+
+	Syntax: SPTIP(scan_number)
+
+	File name: sptip.prc
+
+	This procedure is often invoked from the following two procedures:
+
+	SPTIP1(scan_number) calls SPTIP after ensuring that the
+	subscan number is 1 (i.e. if you want to reduce scan 723 and
+	you type SPTIP1(723), this is equivalent to SPTIP(723.01)).
+
+	File name: sptip1.prc
+
+	SPTIP2(scan_number) calls SPTIP after ensuring that the
+	subscan number is 2 (i.e. if you want to reduce scan 723 and
+	you type SPTIP2(723), this is equivalent to SPTIP(723.02)).
+
+	File name: sptip2.prc
+
+	All of these procedures are included in CSETUP.12meter

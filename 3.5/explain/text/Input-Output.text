@@ -1,0 +1,125 @@
+	UniPOPS has some facilities for creating, reading from, and 
+	writing to files.  There are three kinds of files that UniPOPS
+	can work with: text, data (SDD), and FITS files.
+
+
+Data Files 
+----------
+
+     .  The user can query, change, and create what files the program
+	can currently access using the following verbs:
+
+	CHNGFILE	CHNGONLINE	CHNGPRJ		CHNGVER
+	FILES		OLFILES		Z_CHNGFIL
+
+     .  The following verbs will summarize for the user the contents
+	of the data (SDD) files that the program presently has access
+	to.
+
+	CHECK		SUMMARY		TELL		
+
+FITS Files
+----------
+
+     .  The user can convert to SD-FITS (single-dish FITS binary table)
+	from SDD or from SDD to SD-FITS using the following utilities:
+
+	uni2fits	fits2uni
+
+     .  The user can read two-dimensional FITS image files into
+	an internal matrix or write out the contents of an internal
+	matrix to a two-dimensional FITS image file using the following
+	verbs:
+
+	MREAD		MWRITE
+
+     .  The user can read header and data values from a three-dimensional
+	FITS image (cube) using the following verbs:
+
+	CD0		CH0		READCUBE
+
+     .  The user can create a FITS cube from an SDD file using the
+	following utility:
+
+	cube.exe
+
+
+Text Files
+----------
+
+     .  The user can turn on and off writing any desired text to a file
+	known as the "printout" file by using the following:
+
+	CRT		PRINT		PRINTER	
+
+     .  One can change the format used by PRINT with:
+
+	PRNTFMT
+
+     .  The following command allows the program to accept a text file
+	containing UniPOPS commands
+
+	BATCH
+
+     .  One can create and edit text files with the following command:
+
+	EDIT
+
+     .  The following commands deal with performing input and output to
+	arbitrary text files:
+
+	FCLOSE		FOPEN		FPRINT		FREAD
+	FREWIND		FSTATUS
+
+
+Internal Input and Output
+-------------------------
+
+	UniPOPS allows writing to and from character strings (internal
+	input and output) with:
+
+	SPRINT		SREAD
+
+
+Hardcopies
+----------
+
+     .  The following verbs produce hard copies of text files:
+
+	LASER		OUTPUT				
+
+     .  The user can dump the contents of their present text or graphics
+	screen to a printer using the following commands:
+
+	COPYOFF		COPYON		GCOPY		TCOPY
+
+
+Listings of Files and Directories
+---------------------------------
+
+     .  The contents of any text file can be listed on the CRT using
+	the following:
+
+	TYPE 
+
+     .  The contents of directories can be produced on the CRT by using:
+
+	DIR		PRCDIR
+
+
+Scrolling of Text Screen
+------------------------
+
+     .  The text screen can be set up so that it will lock whenever the
+	screen is full of text be using the following:
+
+	FULLOFF		FULLON	
+
+
+Command Logging
+---------------			
+
+     .  You can generate a log of all the commands you type into
+	UniPOPS by using the following verbs:
+
+	LOGOFF		LOGON

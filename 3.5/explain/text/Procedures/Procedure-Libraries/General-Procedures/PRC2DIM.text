@@ -1,0 +1,30 @@
+	PRC2DIM is really just a template that you should consider
+	editing so that XYGRID does what you want it to do.
+
+	This is a function procedure that reduces the contents of
+	Array (0) to a single value and returns that value to the
+	stack.
+
+	Syntax: PRC2DIM
+
+	This is what the standard version of PRC2DIM looks like:
+
+	procedure prc2dim
+	#   This is a template you should edit to use with xygrid to grid some
+	#   value associated with each scan.  This should return the value for
+	#   the scan in array 0.
+	#   This example returns the peak value.
+	peak
+	return height(1)
+	finish
+
+	If you use this procedure and XYGRID without modification, you
+	will get a map of peak intensity.
+
+	If you modify PRC2DIM, you should not alter the syntax (it takes
+	no arguments) and it should a return a value.
+
+
+	File name: prc2dim.prc
+
+	This procedure is included in maps.plib

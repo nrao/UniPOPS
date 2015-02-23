@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'HEIGHT: (ARRAY-24) Gaussian heights found by GAUSS or PEAK.'
+PRINT ' '

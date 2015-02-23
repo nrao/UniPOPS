@@ -1,0 +1,34 @@
+	(SCALAR ADVERB)
+
+	Y_MIN and Y_MAX specify the range in a source's Y coordinate
+	used by the SELECT verb.  The units are decimal degrees.
+
+	Scans will be SELECTed if they have an Y-coordinate within the
+	range specified by Y_MIN through Y_MAX, inclusive.
+
+	If Y_MIN is set to the DEFAULT value, there is no lower limit
+	to the range.  Similarly, if Y_MAX is set to the DEFAULT value,
+	there is no upper limit to the range.
+
+	Y_MIN and Y_MAX are used by : SELECT
+
+	No verbs change Y_MIN or Y_MAX.
+
+	Initial values of Y_MIN and Y_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans having Y-coordinates greater than or equal
+	to -2 degrees 13 minutes, specify:
+
+		Y_MIN = -2.2167; Y_MAX = DEFAULT
+
+	To select all scans having Y-coordinates less than or equal to
+	-2 degrees 40 minutes, specify:
+
+		Y_MIN = DEFAULT; Y_MAX = -2.6667
+
+	To select all scans with Y-coordinates between -2 degrees 40
+	minutes and -2 degrees 13 minutes, inclusive, specify:
+
+		Y_MIN = -2.2167; Y_MAX = -2.6667

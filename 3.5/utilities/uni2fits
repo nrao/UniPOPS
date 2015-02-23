@@ -1,0 +1,339 @@
+#!/bin/csh -f
+#
+# @(#)uni2fits.sh	5.4 10/04/96
+#
+#******************************************************************
+# UNI2FITS -                                                      *
+# Script to convert UniPOPS line or continuum data to FITS tape.  *
+#  UNIPOPS version:  F. Ghigo, Dec. 1990                          *
+#  The user is asked for inputs, which are passed to u2f.         *
+#  Appropriate tape handling commands, mt and dd, are issued.     *
+#******************************************************************
+# UNIPOPS update ver.1.0 : 3 July, 1991                           *
+#  ver 1.2: 26 Aug 1991 - replace "stripindex" calls with equiv.  *
+#          call to dd.  and convert to C-shell.                   *
+#  ver 1.3: 27 April, 1992: fix bugs and use non-rewind tape dev  *
+#******************************************************************
+echo "Starting uni2fits ver 1.3 "
+echo "So you want to write UniPOPS data to FITS tape eh?"
+echo " (to abort this dialog, type CNTRL-C)"
+#******************************************************************
+#  Select Tape or File here.                                      *
+#******************************************************************
+echo " ";
+echo -n "Do you want output file on disk(D) or tape(T)? [default=D]: "
+set tod = $<
+set tod=`echo $tod | tr "[a-z]" "[A-Z]"`;
+switch($tod)
+  case "D" :
+              breaksw
+  case "T" :  
+              breaksw
+  default  :
+              set tod = "D"
+              echo "Using default ($tod)."
+endsw
+if ( $tod == "D" ) then
+  set trepeat=0;
+  while ($trepeat == 0)
+    echo -n "Please enter name of output FITS file: "
+    set outfile = $<
+    if ($outfile != "") then
+      if ( -e $outfile)  then
+        echo -n "File $outfile exists.  ok to delete? (y/n) "
+        set response = $<
+        set response = `echo $response | tr "[a-z]" "[A-Z]"`
+        switch($response)
+          case "Y*"  :
+             echo "Will delete $outfile \!"
+             set trepeat=1
+             breaksw
+          default :  set trepeat=0;;
+        endsw
+      else
+       set trepeat=1
+      endif
+    endif
+  end  
+  echo "Output file will be: $outfile ";
+else
+   set trepeat=0;
+   while ($trepeat == 0)
+     if (`isSolaris` == "YES") then
+	echo -n "Please enter tape drive unit number: /dev/rmt/"
+        set tapedev = $<
+        if ($tapedev != "") then
+           set trepeat = 1
+           set tapedev = rmt/$tapedev
+	   set nrtapedev = ${tapedev}bn
+        endif
+     else
+  	echo -n " Please type tape drive device name: /dev/"
+     	set tapedev = $<
+     	if ( $tapedev != "") then
+       	   set trepeat=1
+	   set nrtapedev = n${tapedev}
+     	endif
+      endif
+   end
+#******************************************************************
+#  Select blocking factor here.  - no choice !!                   *
+#******************************************************************
+   set blocksize="28800";
+endif
+#******************************************************************
+# Make sure tape starts at the beginning.                         *
+#******************************************************************
+if($tod == "T") then
+  mt -f /dev/$tapedev rew
+endif
+#******************************************************************
+#  Start loop - repeat for more than one file.                    *
+#******************************************************************
+set qrepeat=0;
+while ($qrepeat == 0)
+echo " ";
+#******************************************************************
+#  Ask whether line or continuum data.                            *
+#******************************************************************
+echo -n "Choose line or continuum (L, C) [default=L]: "
+set loc = $<
+set loc=`echo $loc | tr "[a-z]" "[A-Z]"`;
+switch($loc)
+  case "L" :
+             breaksw
+  case "C" :
+             breaksw
+  default : 
+     echo "Using default (L)"
+     set loc="L"
+endsw
+echo " ";
+#******************************************************************
+# If LINE, ask whether axis 1 is velocity or frequency.           *
+#******************************************************************
+set vof = " "
+if ( $loc == "L" ) then
+echo -n "Label scan axis as Frequency(F) or Velocity(V) [default=F]: "
+set vof = $< 
+set vof=`echo $vof | tr "[a-z]" "[A-Z]"`;
+switch($vof)
+  case "V" :
+             set vof = "-v"
+             breaksw
+  case "F" :
+             set vof = "-f"
+             breaksw
+  default :
+             echo "Using default (Freq)"
+             set vof="-f"
+endsw
+endif
+echo " ";
+#******************************************************************
+#  User selects input file here.                                  *
+#******************************************************************
+set frepeat=0;
+while ($frepeat == 0)
+echo -n "Please type input UniPOPS file name: ";
+set infile = $<
+#                               check that file name has >0 chars 
+if ($infile != "")  then
+#                               check that file exists
+   if (-e $infile) then
+#                               check that file is readable
+      if (-r $infile)  then
+#                               check that file is not empty.
+         if (! -z $infile) then
+            set frepeat=1
+         else
+            echo "File $infile is empty."
+         endif
+      else
+        echo "No permission to read $infile"
+      endif
+   else
+     echo "File $infile does not exist."
+   endif
+else
+ echo "Try again (or CNTRL-C to quit)"    # file name bad
+endif
+end  
+#******************************************************************
+#  User selects scan number range here.                           *
+#******************************************************************
+echo -n "Do you want to choose a scan number range? (y or n) ";
+set response = $<
+set response = `echo $response | tr "[a-z]" "[A-Z]"`
+switch($response)
+  case "Y*" :
+          echo -n "Type first scan number: ";
+          set scan1 = $<
+          if ($scan1 != "") then
+             set noscan = 0 
+            else
+             set noscan = 1           # <cr> selects all scans
+          endif
+          echo -n "Type last scan number: ";
+          set scan2 = $<
+          if ( $scan2 != "" ) then
+             if ($scan2 < $scan1) then
+               set scan2 = $scan1
+             endif
+            else
+             set scan2 = $scan1;      # <cr> makes scan2=scan1
+          endif
+          breaksw
+  default : 
+            set noscan=1
+endsw
+#******************************************************************
+#  User may skip files on the tape before writing new data        *
+#******************************************************************
+if ( $tod == "T" ) then
+echo -n "Do you want to skip any files on the tape? (y or n) ";
+set response = $<
+set response = `echo $response | tr "[a-z]" "[A-Z]"`
+switch ($response)
+  case "Y*" :
+          echo -n " How many files? "
+          set numtoskip = $<
+          if ($numtoskip == "0" || $numtoskip == " ") then
+             set noskip=1
+             set numtoskip=0
+            else
+             set noskip=0
+          endif
+          breaksw
+  default : 
+            set noskip=1
+            set numtoskip=0
+endsw
+endif
+#******************************************************************
+#  Review the Choices and ask for confirmation.                   *
+#******************************************************************
+echo "--------------------------------------------------------";
+if ( $tod == "T" ) then
+  echo "Ready to make FITS tape on /dev/$tapedev "
+  echo " Will skip $numtoskip files on tape."; 
+else
+  echo "Ready to make FITS file, name = $outfile";
+endif
+if ($noscan == 0) then
+   echo " Will use $loc scans $scan1 to $scan2 from $infile."
+else
+   echo " Will use all $loc scans from $infile."
+endif
+echo -n " is this ok? (type Y to proceed) ";
+set response = $<
+set response = `echo $response | tr "[a-z]" "[A-Z]"`
+switch($response)
+  case "Y*" :
+          echo " "
+          breaksw
+  default  :
+             echo "Please type 'uni2fits' to start again\!"
+             exit 0 
+endsw
+#****************************************************************
+#  Skip files on the tape if desired.                           *       
+#****************************************************************
+if ( $tod == "T" ) then
+  if ($numtoskip != 0) then
+     echo "mt -f /dev/$nrtapedev fsf $numtoskip"
+     mt -f /dev/$nrtapedev fsf $numtoskip          # Skip files here.
+  endif
+endif
+#****************************************************************
+#  Finally, issue the commands to convert the file.             *       
+#  "stripindex" is accomplished by the "set bb = ..." and       *
+#  first dd commands below.                                     *
+#      the set bb is common to all options, do it first         *
+#****************************************************************
+echo "Getting initial information from UniPOPS file."
+set bb = `bootstrap $infile 512 LONG`
+#		check to see if its new I*4 or old I*2 index 
+if ( $bb[10] != 1 ) then
+#		its old type, redo the set bb
+   set bb = `bootstrap $infile 512 SHORT`
+   set typesdd = $bb[8]
+   set recsize = $bb[4]
+   set indrec = $bb[2]
+else
+#		new type, just set the values
+   set typesdd = $bb[9]
+   set recsize = $bb[4]
+   set indrec = $bb[2]
+endif
+#		bail out if SDD is in RECORDS format
+if ( $typesdd != 0 ) then
+   echo "Input SDD file is in RECORDS format... Terminating"
+   exit 0
+endif
+#
+if ($noscan == 0) then
+#     preview the file
+  echo " "
+  echo "Previewing the UniPOPS file."
+  set preview = `dd if=$infile bs=$recsize skip=$indrec | u2f -${loc} $vof -s $scan1 $scan2 -prev`
+  set maxrecs = $preview[4]
+  set maxWscan = $preview[2]
+  echo " "
+  echo "Converting the data to FITS."
+  if ( $tod == "T" ) then
+#    dd strips the index from the UNIPOPS file
+      dd if=$infile bs=$recsize skip=$indrec \
+              | u2f -${loc}$ $vof -s $scan1 $scan2 \
+                    -n $maxrecs -t $maxWscan \
+              | dd of=/dev/$nrtapedev obs=$blocksize
+  else
+      dd if=$infile bs=$recsize skip=$indrec \
+            | u2f -$loc $vof -s $scan1 $scan2 \
+                  -n $maxrecs -t $maxWscan > $outfile
+  endif
+else
+#     preview the file
+  echo " "
+  echo "Previewing the UniPOPS file."
+  set preview = `dd if=$infile bs=$recsize skip=$indrec | u2f -${loc} $vof -prev`
+  set maxrecs = $preview[4]
+  set maxWscan = $preview[2]
+  echo " "
+  echo "Converting the data to FITS."
+  if ( $tod == "T" ) then
+    dd if=$infile bs=$recsize skip=$indrec \
+         | u2f -${loc} $vof -n $maxrecs -t $maxWscan \
+         | dd of=/dev/$nrtapedev obs=$blocksize
+  else
+       dd if=$infile bs=$recsize skip=$indrec \
+           | u2f -$loc $vof -n $maxrecs -t $maxWscan > $outfile
+  endif
+endif
+#******************************************************************
+# See if the user wants to add another FITS file to the tape.     *
+#******************************************************************
+echo " ";
+if ( $tod == "T" ) then
+  echo -n "Do you want to add another file to the tape? (y/n) "
+  set response = $<
+  set response = `echo $response | tr "[a-z]" "[A-Z]"`
+  switch($response)
+    case "Y*" : 
+                 echo " "
+                 breaksw
+    default :
+            echo "Writing double EOF on tape." 
+            echo "mt -f /dev/$nrtapedev eof 2";  # all done: finish tape stuff
+            mt -f /dev/$nrtapedev eof 2;         # add double EOF to tape
+            echo "Rewinding tape...";
+            echo "mt -f /dev/$tapedev rew";
+            mt -f /dev/$tapedev rew;           # Rewind tape.
+            set qrepeat=1;
+  endsw
+else
+set qrepeat=1
+endif
+end 
+echo "FITS writing complete."
+

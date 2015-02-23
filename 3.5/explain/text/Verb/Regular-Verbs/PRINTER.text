@@ -1,0 +1,34 @@
+	(REGULAR VERB)
+
+	PRINTER is used to direct the program's text output to the
+	'printout' disk file.  This file can then be printed on the
+	attached printer using OUTPUT.  At any time, the user can
+	switch back to displaying on the text screen or the graphics
+	screen with the commands, CRT or GRAPHICS, respectively.  CRT
+	is the default.
+
+	ADVERBS SET:
+
+	
+	STATUS(14) : Specifies where the program is trying to send text
+		     output and is determined by the CRT and PRINTER
+		     commands.
+
+		     Values: 6 = standard (crt) output; 8 = printout file
+
+	STATUS(17) : Whether or not text output is going to the
+		     graphics screen and is determined by the last
+		     GRAPHICS or CRT command.
+
+		     Values: 1 (or TRUE) if GRAPHICS is in effect; -1
+		     (or FALSE) if CRT or PRINTER is in effect.
+
+	No adverbs are used by PRINTER.
+
+	EXAMPLE:
+
+		 PRINTER	Directs output to printer
+		 TABLE		Lists spectral values in Array (0) to
+					the 'printout' file
+		 CRT		redirects output to text screen
+ 	

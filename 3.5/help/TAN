@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TAN:  (FUNCTION) Returns the tangent of the given parameter'
+print '(in radians).'
+PRINT ' '

@@ -1,0 +1,38 @@
+	(SCALAR ADVERB)
+
+	X_MIN and X_MAX specify the range in a source's X coordinate
+	used by the SELECT verb.  The units are decimal degrees.
+
+	Scans will be SELECTed if they have an X-coordinate within the
+	range specified by X_MIN through X_MAX, inclusive.
+
+	If X_MIN is set to the DEFAULT value, there is no lower limit
+	to the range.  Similarly, if X_MAX is set to the DEFAULT value,
+	there is no upper limit to the range.
+
+	X_MIN and X_MAX are used by : SELECT
+
+	No verbs change X_MIN or X_MAX.
+
+	Initial values of X_MIN and X_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans having X-coordinates greater than or equal
+	to 18 hours 25 minutes, specify:
+
+		X_MIN = 276.25; X_MAX = DEFAULT
+
+	[Note: 18h 25m = 276.25 degrees.]
+
+	To select all scans having X-coordinates less than or equal to
+	18 hours 41 minutes, specify:
+
+		X_MIN = DEFAULT; X_MAX = 280.25
+
+	[Note: 18h 41m = 280.25 degrees.]
+
+	To select all scans with X-coordinates between 18 hours 25
+	minutes and 18 hours 41 minutes, inclusive, specify:
+
+		X_MIN = 276.25; X_MAX = 280.25

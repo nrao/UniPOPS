@@ -1,0 +1,362 @@
+11. The Stack -- Why, When, How
+-------------------------------
+
+Often, it is desired to cycle around many scans, performing the same
+operation, such as ACCUMing, displaying and scaling, on each of them.
+If the scan numbers are consecutive, or are spaced by a constant
+increment, then a FOR-loop, in either `execute mode' or a procedure,
+can be used to achieve one's ends. However, if the scan numbers are
+more randomly distributed, things would not be so simple, were it not
+for the presence of THE STACK.
+
+The stack is actually an internal array of 5120 elements. The numbers
+of the scans you wish to cycle over are entered into the stack using
+either of the verbs ADDSTACK or ASTACK. A scalar adverb ACOUNT keeps 
+count of the total number of scans entered on the stack. A FOR-loop can 
+now be used to access the scans through the internal-array verb ASTACK. 
+For example, to list the header parameters of a series of scans, type,
+
+	>SCALAR IZ
+	>FOR IZ = 1 TO ACOUNT; GET ASTACK(IZ); HEADER; END
+
+The mechanisms for manipulating and using the stack will now be
+described in detail.
+
+NOTE : The stack can be used as a temporary array to contain any set
+of numbers. They need not be only scan numbers.  For example, if you
+are going to be manipulating data stored in the `save' file, you could
+use the stack to store save-bin numbers.  For example:
+
+	>SCALAR IZ
+	>FOR IZ = 1 TO ACOUNT; NSAVE=ASTACK(IZ); RECALL; HEADER; END
+
+
+11.1 Putting Scan Numbers on the Stack
+--------------------------------------
+
+To place a series of scan numbers into the stack, the verb ADDSTACK is 
+used.  ADDSTACK takes three arguments, namely the numbers of the first 
+and last scans in a series to be added to the stack, and the increment 
+between each of the scan numbers. The scans numbers are placed on the 
+top of the stack, and the adverb ACOUNT, containing the total number of 
+scans on the stack, is incremented appropriately. Suppose it is desired 
+to add scans 600 to 620, 700, 710, 720, and 903 to the existing contents
+of the stack, type,
+
+	>ADDSTACK(600, 620, 1)
+	>ADDSTACK(700, 720, 10)
+	>ADDSTACK(903, 903, 1)
+
+The value of ACOUNT will be incremented by 25.
+
+
+If you want to change a scan number in an already-allocated location in
+the stack, then use the internal-array verb ASTACK, which takes a
+location in the stack as its argument, in a direct assignment
+statement. (See the next section to find how to list the contents of
+the stack.) For example, if you wish to change the 34-th location in
+the stack to the value 4210, type,
+
+	>ASTACK(34) = 4210
+	
+Of course, ASTACK can also be used to place a number on the top of the
+stack as follows,
+
+	>ACOUNT = ACOUNT + 1
+	>ASTACK(ACOUNT) =  7000
+
+NOTE : Neither ADDSTACK nor ASTACK check whether data actually exist for 
+any scan number they enter on the stack !
+
+
+11.2 Listing the Contents of the Stack
+--------------------------------------
+
+To find out which scan numbers are currently entered on the stack, the
+verb TELL STACK should be used to list the ACOUNT scan numbers on the
+stack, i.e.,
+
+	>TELL STACK
+
+
+11.3 Emptying the Stack
+-----------------------
+
+If you wish to clear all scan numbers from the stack, and set ACOUNT to
+zero, use the verb EMPTY by typing,
+
+	>EMPTY
+
+11.4 Deleting a Scan Number from the Stack
+------------------------------------------
+
+If you want to remove a scan from the stack, then use the verb DELETE
+for this. DELETE takes as argument the number of the scan to be
+removed. Suppose you choose to remove the entry for scan 609 from the
+stack, then type,
+
+	>DELETE(609)
+
+The adverb ACOUNT will be decremented by one, if an entry with the
+value 609 is found.
+
+
+11.5 The Power of the Stack
+---------------------------
+
+The contents of the stack are accessed via the internal-array verb
+ASTACK, which takes a location in the stack as argument, and in this
+case returns the scan number held in that location. As an example of
+how to put these building blocks together, and use the full power of
+the stack, suppose that you wish to check out scans 600 - 620, 700,
+710, 720 and 903 using SHOW. From this, you decide that scans 610 - 614
+are of inferior quality and should be discarded, while the rest of the
+scans should be averaged, and this average displayed.  This could be
+achieved as follows,
+
+	>SCALAR I_I
+	>EMPTY
+	>ADDSTACK(600,620,1)
+	>ADDSTACK(700,720,10)
+	>ADDSTACK(903,903,1)
+	>FOR I_I = 1 TO ACOUNT; GET ASTACK(I_I); PAGE SHOW\
+	 PAUSE(30); END
+	>FOR I_I = 610 TO 614; DELETE I_I; END
+	>SCLEAR
+	>FOR I_I = 1 TO ACOUNT; GET ASTACK(I_I) ACCUM; END
+	>AVE
+	>PAGE SHOW
+
+11.6 Selecting Sets of Scans
+----------------------------
+
+Much manual effort can often be saved if it is possible to select a set
+of scans from your total database, all of which meet a particular set
+of criteria. The UniPOPS verb SELECT enables you to do just this,
+leaving the scan numbers of the selected data on the stack.  The new
+stack entries will begin at location ACOUNT + 1 in the stack, and
+ACOUNT will be set to the new top-of-the-stack position on completion.
+SELECT always takes an attribute, which currently can be INFO, ONDATA,
+OFFDATA, KSCANS, SSCANS, or RSCANS (for Green Bank individual records
+data). 
+
+11.6.1 SELECT INFO
+------------------
+
+SELECT INFO displays the current selection criteria, which on entry to
+UniPOPS should look something like the following for LINE,
+
+---------------------------------------------------------------------
+ 
+SELECT INFO : Status of adverbs used by SELECT verb.
+ 
+  Object : All Objects (S_OBJECT)
+  Mode   : All modes (S_MODE)
+  Program: LINE
+ 
+       Field             From            To                Adverbs
+ 
+  Scan Number           DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+  Subscan Number        DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+  Source X Position     DEFAULT        DEFAULT      X_MIN, X_MAX
+  Source Y Position     DEFAULT        DEFAULT      Y_MIN, Y_MAX
+  (decimal degrees
+  LST (hours)           DEFAULT        DEFAULT      LST_MIN, LST_MAX
+  Univ. Time Date       DEFAULT        DEFAULT      UT_MIN, UT_MAX
+  (years)
+  Rest Freq. (MHz)      DEFAULT        DEFAULT      F_MIN, F_MAX
+  Bandwidth (MHz)       DEFAULT        DEFAULT      BW_MIN, BW_MAX
+ 
+  Additions to ASTACK will begin at location    1 (ACOUNT + 1)
+  Additions will not be sorted (S_SORT)
+
+------------------------------------------------------------------------
+
+Or the following for CONDAR,
+
+------------------------------------------------------------------------ 
+
+  SELECT INFO : Status of adverbs used by SELECT verb.
+ 
+    Object : All Objects (S_OBJECT)
+    Mode   : All modes (S_MODE)
+    Program: CONT
+ 
+          Field             From            To                Adverbs
+ 
+    Scan Number            DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+    Subscan Number         DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+    Source X Position      DEFAULT        DEFAULT      X_MIN, X_MAX
+    Source Y Position      DEFAULT        DEFAULT      Y_MIN, Y_MAX
+    (decimal degrees)
+    LST (hours)            DEFAULT        DEFAULT      LST_MIN, LST_MAX
+    Univ. Time Date        DEFAULT        DEFAULT      UT_MIN, UT_MAX
+    (years)
+    Rate ("/s)             DEFAULT        DEFAULT      RATE_MIN, RATE_MAX
+    Int. Time (s)          DEFAULT        DEFAULT      IT_MIN, IT_MAX
+ 
+    Additions to ASTACK will begin at location    1 (ACOUNT + 1)
+    Additions will not be sorted (S_SORT)
+ 
+-------------------------------------------------------------------------
+
+The single-valued object and mode (see below) criteria are set via the
+16- and 4-character adverbs, S_OBJECT and S_MODE. The initial defaults
+for these are blank strings, which signify `all objects' and `all
+modes', respectively. They can be set to various values as follows,
+
+	>S_OBJECT = '3C454.3'
+	>S_OBJECT = ' '
+	>S_MODE = 'TLPW'
+	>S_MODE = ' '
+
+The available modes at present include:
+
+	 "    " = All Modes	
+	 "PS  " = Position Switched
+	 "APS " = Absolute Position Switched
+	 "FS  "	= Frequency Switched
+	 "BSP "	= Beam-Switch + Position-Switch
+	 "TPON"	= Total Power On
+	 "TPOF"	= Total Power Off
+	 "ATP "	= Absolute Total Power
+	 "PSM " = Position Switched Map
+	 "APM "	= Absolute Position Switched Map
+	 "FSM "	= Frequency Switched Map
+	 "TPMO" = Total Power Map On
+	 "TPMF"	= Total Power Map Off
+	 "DRF " = Drift Map
+	 "PCAL"	= Position Calibrate
+	 "BCAL"	= Beam Calibrate
+	 "BLNK"	= Blanking
+	 "SEQ "	= Sequence
+	 "FIVE"	= Five Point
+	 "MAP "	= Continuum Map
+	 "FOC "	= Focalize
+	 "NSFC" = North-South Focalize
+	 "TTIP"	= Total Power Tip
+	 "STIP" = Switched Power Tip
+	 "DON "	= Continuum On
+	 "CAL "	= Calibration
+	 "FSPS"	= Freq-Switch + Position-Switch
+	 "BSPS"	= Beam-Switch + Position-Switch",
+	 "ZERO"	= Zero Check
+	 "TLPW"	= Total Power
+	 "FQSW"	= Frequency Switched
+	 "NOCL"	= No Calibration
+	 "PLCL"	= Pulse Cal
+	 "ONOF"	= Continuum On-Off Scan
+	 "BMSW" = Nutation
+	 "PSSW" = Position-Switched, Tucson, old
+	 "DRFT" = Continuum Drift Scans, Tucson
+	 "OTF"  = On-the-fly, Tucson
+         "PSPZ" = Position switched, polarizer, Tucson
+
+New modes are constantly being added.
+
+The other criteria are defined by pairs of adverbs (see the middle
+section of the above table) which define lower and upper limits for
+each selection item. For example, if you wanted to select all scan
+numbers from 2000 through 2343, then type,
+
+	>SCAN_MIN = 2000; SCAN_MAX = 2343
+
+The default values for each range are those to give `all-inclusive'
+selection, i.e. for LST it would be all possible hours, while for scan
+numbers, it would all available data.
+
+NOTE : Selection by rest frequency and bandwidth is only possible in
+       LINE, while selection by rate and integration time is only
+       possible in CONDAR.
+
+
+11.6.2 SELECT ONDATA, SELECT OFFDATA, SELECT KSCANS, SELECT SSCANS,
+-------------------------------------------------------------------
+       and SELECT RSCANS
+       -----------------
+
+To select the appropriate set of scans, you invoke SELECT with the
+attribute ONDATA for the scans in the `on-line data' file, OFFDATA for
+the `off-line' file, KSCANS for the 'keep' file, SSCANS for the `save' 
+file or RSCANS for the Green Bank `individual records' data (both
+on-line and off-line forms).  On completion, the scan numbers in the 
+set will be added to those already on the stack.  If the adverb S_SORT is 
+set to 0, the added scan numbers will not be sorted before being placed 
+on the stack, while if S_SORT is set to -1 or +1, the scan numbers will 
+be placed on the stack sorted in descending or ascending order, 
+respectively.
+
+As an example, suppose that for a spectral line database you wanted the
+stack to contain just the numbers of the scans in the `on-line data'
+file meeting the following criteria,
+
+	i) Source = W49A.
+       ii) Total-power mode of observing.
+      iii) No restriction on scan numbers.
+       iv) Observation positions in the range,
+	    19h 7m 40s < RA < 19h 08m 00s ; 9deg 00' < Dec < 9deg 03'.
+	v) All LST's.
+       vi) Observations made in 1989 and 90.  
+      vii) Frequencies between 1400 and 1440 MHz.
+     viii) All bandwidths.
+       ix) All the numbers in the stack to be sorted in ascending
+	   order. 
+
+To obtain this, assuming nothing about the existing settings of
+the select adverbs, type,
+
+	>EMPTY
+	># First clear the stack.
+	>
+	>S_OBJECT = 'W49A'
+	>S_MODE = 'TLPW'
+	>SCAN_MIN = DEFAULT; SCAN_MAX = DEFAULT
+	>FEED_MIN = DEFAULT; FEED_MAX = DEFAULT
+	>X_MIN =286.916666667 ; X_MAX = 287.0
+	># R.A.'s turned into degrees.
+	>
+	>Y_MIN = +9.00000; Y_MIN = +9.05000
+	>LST_MIN = DEFAULT; LST_MAX = DEFAULT
+	>UT_MIN = 1989.00; UT_MAX = 1990.99999
+	>F_MIN = 1400.00; F_MAX = 1440.00
+	>BW_MIN = DEFAULT; BW_MAX = DEFAULT
+	># Last of the criteria.
+	>
+	>S_SORT = +1
+	># Sort the selected scan numbers in ascending order.
+	>
+	>SELECT INFO
+	># Check the criteria got entered correctly.
+	>
+	>SELECT ONDATA
+	># Enter the selected scans into the stack.	
+	>
+	>TELL STACK
+	># See what scan numbers have been selected.
+
+The criteria could be filled more conveniently using a procedure
+(Chapter 13) to prompt you for the values. The SELECT INFO command
+should show the following,
+ 
+SELECT INFO : Status of adverbs used by SELECT verb.
+ 
+  Object : "W49A            " (S_OBJECT)
+  Mode   : "TLPW" (S_MODE) Total Power
+  Program: LINE
+ 
+        Field             From            To                Adverbs
+ 
+  Scan Number            DEFAULT        DEFAULT      SCAN_MIN, SCAN_MAX
+  Subscan Number         DEFAULT        DEFAULT      FEED_MIN, FEED_MAX
+  Source X Position    286.9167         287.0000     X_MIN, X_MAX
+  Source Y Position    9.000000         9.050000     Y_MIN, Y_MAX
+  (decimal degrees)
+  LST (hours)            DEFAULT        DEFAULT      LST_MIN, LST_MAX
+  Univ. Time Date      1989.000         1991.000     UT_MIN, UT_MAX
+  (years)
+  Rest Freq. (MHz)     1400.000         1440.000     F_MIN, F_MAX
+  Bandwidth (MHz)        DEFAULT        DEFAULT      BW_MIN, BW_MAX
+
+  Additions to ASTACK will begin at location    1 (ACOUNT + 1)
+  Additions will be sorted in ascending order (S_SORT)
+

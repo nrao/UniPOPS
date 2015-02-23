@@ -1,0 +1,20 @@
+	(REGULAR VERB)
+
+	RLINE sets the plotting mode for RESHOW display to LINE.
+
+	ADVERB SET:
+	    
+	STATUS(4)    Type of RESHOW plots as determined by the last
+		     RLINE, RHIST, or RPOINTS command.  
+
+		     Values: 0 = line; 1 = histogram; 2 = points
+
+	EXAMPLE:
+
+	You have been plotting on the graphics screen using the
+	HISTOGRAM mode and want to see the display in LINE mode, so
+	specify:
+
+		RLINE RESHOW
+         
+         

@@ -1,0 +1,253 @@
+#if CKBK
+A-1 Adverbs (Scalar)
+--------------------
+#end
+
+ACOUNT:   No. of scan numbers in the stack array.
+
+ASHIFT:   Assigned a value by FSHIFT or VSHIFT and/or used by SHIFT.
+
+BBASE:	  Channels to use for baseline fitting at start of data,
+          after taking into account the value of BDROP.
+
+BDROP:    Number of channels to be ignored at start of data.
+
+BGAUSS:   Channel number at which to begin fitting Gaussians.
+
+BMARK:    If set TRUE, SHOW will draw baseline boxes, else not.
+
+BMOMENT:  Starting channel number for MOMENT & GMEASURE.
+
+BSCAN:    Lower limit on scan numbers for SUMMARY.
+
+BW_MAX:   Maximum Bandwidth (MHz) for SELECT, (LINE only).
+
+BW_MIN:   Minimum Bandwidth (MHz) for SELECT, (LINE only).
+
+CALVAL:   Mean calibration value for 12-m digital backend.	
+
+CCLICK:   Set by CLICK to the channel number for a SHOW display,
+	  to the x-axis value for a PLOT display and to the
+	  x-cell number for a 2-dimensional plot.
+
+CLIPMAX:  Maximum y-axis value for CLIP.
+
+CLIPMIN:  Minimum y-axis value for CLIP.
+
+CROSSFLG: Determines what information CROSSHAIR displays.
+
+CUTOFF:   Y-value above which SPIKE sets bad channels.
+
+DCPCT:    The % of data points that PCBASE will make negative.
+
+DEFMODE:  Indicates how blanked/undefined values are treated by
+	  verbs which combine two arrays or matrices or two
+	  separate parts of one array.
+
+EBASE:    Channels at end of data to use for baseline fitting,
+          after taking into account the value of EDROP.
+
+EDROP:    Number of channels at end of data to be ignored.
+
+EGAUSS:   Channel number at which to end fitting Gaussians.
+
+EMOMENT:  Final channel number for MOMENT & GMEASURE.
+
+ERRCODE:  The number of the last detected error.
+
+ESCAN:    Upper limit on scan numbers for SUMMARY.
+
+ETA:	  Warm spillover efficiency for SOLVETIP.
+
+ETAFREE:  Flag in SOLVETIP that determines whether to solve for ETA.
+
+FACT:  	  The amount by which to SCALE or BIAS data.
+
+FCLICK:   Set by CLICK to the frequency relative to the band center
+	  (LINE, SHOW display) or the time relative to the beginning
+	  of the scan in seconds (CONDAR, SHOW display) or the
+	  y-axis value (2-d plot).
+
+FEED_MAX: Highest feed number for SELECT.
+
+FEED_MIN: Lowest feed number for SELECT.
+
+FIXC:     If FALSE, GAUSS  optimizes the initial guesses in CENTER;
+	  else, GAUSS leaves the values in CENTER unchanged.
+
+FIXH:     If FALSE, then GAUSS will try to find better estimates to the
+	  guesses in HEIGHT; else, GAUSS will assume the values in
+	  HEIGHT are not to be changed.
+
+FIXHW:    If FALSE, GAUSS optimizes the initial guesses in HWIDTH;
+	  else, GAUSS leaves the values in HWIDTH unchanged.
+
+FIXRELC:  If TRUE, then GAUSS will try to find better estimates to the
+	  relative CENTERs.
+
+FIXRELH:  If TRUE, then GAUSS will try to find  better estimates to the
+	  relative HEIGHTs.
+	  
+FIXRELHW: If TRUE, then GAUSS will try to find  better estimates to the
+	  relative HWIDTHs.
+
+FR:(TUC)  Amount of reference frequency switch (MHz), (LINE Prog only).
+
+FS:(TUC)  Amount of signal frequency switch (MHz), (LINE Prog only).
+
+FTM:	  Ratio of atmospheric to ambient temperatures for SOLVETIP.
+
+FTSBR:    Ratio of warm spillover to ambient temperatures for
+	  SOLVETIP.
+
+F_MAX:    Highest rest frequency (MHz) for SELECT, (LINE only).
+
+F_MIN:    Lowest rest frequency (MHz) for SELECT, (LINE only).
+
+IT_MAX:   Highest integration time (seconds) for SELECT, (CONDAR only).
+
+IT_MIN:   Lowest integration time (seconds) for SELECT, (CONDAR only).
+
+KPROTECT: If TRUE, KEEP will not overwrite scans in the
+	  "keep" file ; else, KEEP may overwrite scans.
+
+LST_MAX:  Highest Local Sidereal Time for SELECT.
+
+LST_MIN:  Lowest Local Sidereal Time for SELECT.
+
+MCLICK:   Set by CLICK to the z-value for a 2-d plot.
+
+MDBOX:    No. of channels over which "running-median" intensities 
+	  are calculated and then removed by MDBASE.
+
+MRATIO:   Map ratio for two-dimensional displays.
+
+MXMAX:    Maximum cell (or pixel) number along the x-axis of Matrix (0) 
+	  that is to be processed.
+
+MXMIN:    Minimum cell (or pixel) number along the x-axis of Matrix (0) 
+	  that is to be processed.
+
+MYMAX:    Maximum cell (or pixel) number along the y-axis of Matrix (0) 
+	  that is to be processed.
+
+MYMIN:    Minimum cell (or pixel) number along the y-axis of Matrix (0) 
+	  that is to be processed.
+
+NBOX:  	  Boxcar filter size (must be odd and <= 11).
+
+NEWRES:   Resolution to which CHNGRES smoothes data (channels).
+
+NFIT: 	  Order of polynomial baseline (range: 0 - 12).
+
+NGAUSS:   Number of Gaussians to fit.
+
+NITER:    Maximum number of iterations for Gaussian fit.
+
+NSAVE:    "Save" file location to RECALL or SAVE.
+
+N_N:  	  internal UniPOPS adverb -- user should not change or
+	  refer to N_N.
+
+OSHIFT:   No of channels by which RAP has overlapped a
+	  frequency-switched spectrum, (LINE Prog only).
+
+PFLAG:    If FALSE, DOC prints a title line; else DOC does not.
+
+RATE_MAX: Highest slew rate ("/s) for SELECT, (CONDAR only).
+
+RATE_MIN: Lowest slew rate ("/s) for SELECT, (CONDAR only).
+
+RAMPERR:  One sigma error of RAMPLTDE (set by RIPPLE, RSHAPE)..
+
+RAMPLTDE: Amplitude of sinusoidal baseline fit.
+
+RFIXAMP:  Flag used by RIPPLE and RSHAPE to determine if RAMPLTDE
+	  should be fitted for and what initial guess to use.
+
+RFIXPER:  Flag used by RIPPLE and RSHAPE to determine if RPERIOD
+	  should be fitted for.
+
+RFIXPHA:  Flag used by RIPPLE and RSHAPE to determine if RPHASE
+	  should be fitted for and what initial guess to use.
+
+RPERIOD:  No of channels in one wavelength for sinusoidal
+	  baseline fit.
+
+RPERERR:  One sigma error of RPERIOD (set by RIPPLE, RSHAPE)..
+
+RPHASE:   Phase of sinusoidal baseline fit.
+
+RPHAERR:  One sigma error of RPHASE (set by RIPPLE, RSHAPE)..
+
+SCAN_MAX: Highest scan number for SELECT.
+
+SCAN_MIN: Lowest scan number for SELECT.
+
+SLABEL:   Dictates how to label a plot.
+
+SPROTECT: If TRUE, then SAVE will not overwrite scans in the
+	  "save" file; else, SAVE may overwrite scans.
+
+S_SORT:   Flag which tells SELECT how you want to sort scan numbers;
+	  if >= 1, scan numbers assorted in ascending value; if <=
+	  -1, scans numbers assorted in descending order; if = 0,
+	  no sorting will be done.
+
+TAU0:     First estimate of zenith optical depth for use in SOLVETIP.
+
+TCLICK:   Set by CLICK to the y-axis value (SHOW, PLOT displays) or
+	  the y-cell number (2-d display).
+
+TRCVR:    Receiver temperature for use in SOLVETIP.
+
+TVANE:    Ambient temperature (vane temperature) for use in SOLVETIP.
+
+TYPETIP:  Flag in SOLVETIP determining the type of solution used. 
+
+UT_MAX:   Highest Universal Time for SELECT.
+
+UT_MIN:   Lowest Universal Time for SELECT.
+
+VCLICK:   Set by CLICK to the velocity in km/s (LINE, SHOW display) or
+	  the position relative to the start of the scan in degrees
+	  (CONDAR, SHOW display) or the x-axis value (2-d display).
+
+VRMS:  	  The results of the RMS verb.
+
+WEIGHT:   Weight factor used by SUM.
+
+XCLICK:   Set by CLICK to the x-pixel number (screen coordinates).
+
+XLOGP:    If TRUE, PLOT uses logarithmic x-axis; else linear
+	  axis used.
+
+XMAXP:    Maximum x-value for a PLOT display.
+
+XMINP:    Minimum x-value for a PLOT display.
+
+X_MAX:    Highest source x-position for SELECT.
+
+X_MIN:    Lowest source x-position for SELECT.
+
+YCLICK:   Set by CLICK to the y-pixel number (screen coordinates).
+
+YINCR:    Sets the increment between y tick marks in SHOW.
+
+YLOGP:    If TRUE, PLOT uses logarithmic x-axis; else linear
+	  axis used.
+
+YMAXP:    Maximum y-value for a PLOT display.
+
+YMIN:     Determines the lower y limit of SHOW.
+
+YMINP:    Minimum y-value for a PLOT display.
+
+Y_MAX:    Highest source y-position for SELECT.
+
+Y_MIN:    Lowest source y-position for SELECT.
+
+ZLINE:    SHOW, PLOT, or LABEL draws Y=0 axis if TRUE; else not.
+#if CKBK
+
+#end

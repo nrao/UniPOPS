@@ -1,0 +1,32 @@
+	(REGULAR VERB)
+
+	HOLDY flags the verb SHOW to use the y-axis scaling that was
+	last used.  Once HOLDY has been used, the y-axis scaling will
+	remain fixed until FREEY is specified or the adverb YMIN is set
+	to its default value of -9999, which restores automatic
+	scaling, or until a new scaling is specified with the verb
+	YRANGE or by setting YMIN and YINCR with assignment
+	statements.
+
+	No adverbs are used by HOLDY.
+
+	ADVERBS SET:
+
+	  YMIN          The minimum temperature to appear on the
+			SHOW graph.  HOLDY sets YMIN to -9x10^5.  SHOW
+			sets it own y-axis scaling if YMIN is equal to
+			its default value of -9999.
+
+	EXAMPLE:
+
+	You want to compare four scans of different sources.  To do this most
+	easily, you want to get all the scans plotted to the same scale.  
+	Specify;
+
+			GET 520 PAGE SHOW
+			HOLDY
+			GET 536 PAGE SHOW
+			GET 552 PAGE SHOW
+			GET 510 PAGE SHOW
+			FREEY
+ 

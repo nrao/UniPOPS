@@ -1,0 +1,42 @@
+#! /bin/csh -f
+# @(#)more.exe.sh	5.1 06/22/94
+# POPS utility for listing the contents of a file.
+#
+unset noglob
+if ($#argv < 1) then
+  echo -n 'Enter names of the files you want to list: '
+  set filename = $<
+else
+  set filename = ($argv)
+endif
+# Use supplied filename or ask for one.
+#
+foreach file ($filename)
+if (! -f $file || -z $file) then
+    echo $file": Cannot find file or file is not printable or file is empty"
+#   Make sure that user input is legit
+#
+else
+    echo '------------' $file '---------------' >> /tmp/more.$$
+    cat $file >> /tmp/more.$$
+endif
+end
+#
+if (-f /tmp/more.$$) then
+    if ($?WINDOW_PARENT || $?DISPLAY) then
+      if ($?WINDOW_PARENT) then
+        exec cmdtool -WL "TYPE" -Wl "TYPE" \
+	      -WI ${popsdir}sunbin/more.icon ${popsdir}sunbin/prcdir.exe \
+		/tmp/more.$$ &
+      else
+	exec xterm -j -sb -wf -sl 1000 -title "TYPE" -n "TYPE" \
+		-e ${popsdir}sunbin/prcdir.exe /tmp/more.$$ &
+      endif
+    else
+      exec prcdir.exe /tmp/more.$$
+    endif
+#   Use cndtool to display file, if in a window environment, else
+#   just display the file using more.
+#
+endif
+#

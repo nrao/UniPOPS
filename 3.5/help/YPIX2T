@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'YPIX2T:  (FUNCTION) Returns the t-value (temperature for'
+print 'SHOW, y-axis value for PLOT, y-cell number for 2-dim'
+print 'display) corresponding to the given y-pixel value valid'
+print 'for the last plot generated.'
+print 'Syntax: t-value=C2XPIX(y-pixel)'
+PRINT ' '

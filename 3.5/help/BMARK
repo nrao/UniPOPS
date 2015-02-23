@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BMARK:  (ADVERB) If set equal to TRUE, SHOW will draw'
+PRINT 'baseline boxes, else SHOW will not.'
+PRINT ' '

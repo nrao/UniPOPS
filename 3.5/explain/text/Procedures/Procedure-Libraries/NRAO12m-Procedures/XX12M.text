@@ -1,0 +1,17 @@
+	The XX procedure found in the file xx12m.prc is a slightly
+	smarter version of the standard XX procedure found in
+	xx.prc.
+
+	This version assumes that if data from the NRAO 12M is found
+	in both Array(3) and Array(4) and that the last display 
+	involved two spectra, then when the user typed XX, he or
+	she really meant to type CBOTH to get the two-up display
+	they had last time.
+
+	If any of the above things are not true, the normal 
+	PAGE;SHOW behavior of XX is used.
+
+	File name: xx12m.prc
+
+	This procedure is included in place of xx.prc by LSETUP.12meter
+	

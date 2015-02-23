@@ -1,0 +1,25 @@
+	ADD is a simple procedure that adds a range of numbers to the
+	end of the ASTACK array using an increment of 1 over the
+	range of numbers.
+
+	Syntax:  ADD(first, last)
+
+	This is equivalent to ADDSTACK(first, last, 1)
+
+	File name: add.prc
+
+	This procedure is included in LSETUP.12meter and CSETUP.12meter.
+
+	No adverbs are used by ADD.
+
+	Adverb set : ACOUNT
+
+	EXAMPLE:
+
+	You want to add scans numbers from 124 through 137 with an
+	increment of 1 to the end of the ASTACK array.
+
+	You type:
+
+	ADD(124,137)
+

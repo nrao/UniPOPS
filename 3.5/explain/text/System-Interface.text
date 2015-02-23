@@ -1,0 +1,25 @@
+	Various commands have been provided so that the user can
+	interact with the computer's disk and operating system.
+
+     .  The following verbs deal with manipulating and listing disk
+	files and directories:
+
+	CHNGFILE	CHNGONLINE	CHNGPRJ		CHNGVER
+	DIR		FILES		PRCDIR		OLFILES
+	TYPE		Z_CHNGFIL
+
+     .  The following verbs deal with issuing system commands or
+	finding out about system commands
+
+	SYSHELP		SYSTEM		Z_SYSTEM		
+
+     .  The following are for producing hardcopies of text files or
+	of screen dumps.
+
+	COPYOFF		COPYON		CRT		GCOPY
+	LASER		OUTPUT		PRINTER		TCOPY
+
+     .  The following are for creating and editing text files and
+	having UniPops read those files.
+
+	BATCH		EDIT				

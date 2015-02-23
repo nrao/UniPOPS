@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CHAR:  Draws the specified character string on the graphics'
+PRINT 'screen at the location last specified by PLACE.'
+PRINT 'Syntax: CHAR("Hello World")'
+PRINT ' '

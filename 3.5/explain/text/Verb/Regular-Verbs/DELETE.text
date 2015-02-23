@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+        Syntax:    DELETE scan-number 
+
+	DELETE deletes the designated scan number from the internal
+	array ASTACK (if it exists there), and reduces the value of
+	ACOUNT by one.
+
+	No adverbs are used by DELETE.
+
+	ADVERBS SET:
+
+	   ACOUNT       The counter containing the # of scans in the
+			stack.  It is incremented appropriately by
+			ADDSTACK.  Initial value is 0.
+
+	EXAMPLE:
+
+	The ASTACK currently has scans numbers 512-536 in it, but you
+	want to delete scan number 524.  Type
+
+		DELETE 524
+

@@ -1,0 +1,231 @@
+What is a Pointer Adverb?
+-------------------------
+
+	Pointers are adverbs whose values cannot be changed by the user
+	and which are used as flags for certain verbs to alter the
+	action of the verb.  The value of a pointer is a floating-point
+	value.  You can list all available keyword and pointer adverbs
+	by typing:  HELP POINTER.
+
+	The following briefly summarizes the qualities of a pointer
+	adverb.  For more general details about adverbs, see either
+	the "Adverbs" section of the Reference Manual or EXPLAIN
+	documentation.
+
+
+Creation of Pointers
+--------------------
+
+	User-defined pointers can be created with the POINTER verb (see
+	POINTER).  Once you create a pointer, you cannot change its
+	value from that with which you created it.
+
+
+Usages of Pointer Adverbs
+-------------------------
+
+	The usual usage of a pointer follows the following syntax:
+
+		verb-name  pointer
+
+	or
+
+		verb-name(pointers)
+
+	and some examples are:
+
+		TELL DISK
+		SUMMARY DSCANS
+		HELP VERB
+		SELECT INFO
+		SAXIS(CHANNEL,VELRADI)
+
+	You can also query the value of a pointer by typing, for example,
+	PRINT DSCANS.  You can also use the value of a pointer adverb in
+	any expression.  For example, if you create a pointer called
+	PI that contains the value of PI, then you could type
+	something like the following:
+
+		RPERIOD = RPARM(2)/(2*PI)
+
+	Like other adverbs, you can use pointers to pass values to verbs
+	or procedures.
+
+
+List of Built-in Pointers
+-------------------------
+
+	The following is the list of built-in pointers and what verbs
+	you should use them with:
+
+#if RFRNC
+
+		    Table 4.4.1  Built-in Pointer Adverbs
+#else
+		    	    Built-in Pointer Adverbs
+#end
+	-------------------------------------------------------------------
+	Pointer:	Used by:			Represents:
+	-------------------------------------------------------------------
+	ACCMD		TELL			   Internal ACUUM array
+	ADVERB		HELP			   List of adverbs
+	ALIAS		HELP			   List of Aliases
+	ARRAY		HELP			   List of Arrays
+	CHANNEL		SAXIS			   Channel number
+	CONTYPE		CHNGONLINE CHNGVER	   Continuum data
+	CON_VER		CHHGONLINE CHNGVER         Continuum file version
+	DISK		TELL  SUMMARY		   All data files
+	DSCANS		TELL  SUMMARY  SELECT	   On- and Off-line data file
+			  and CHNGFILE                Off-line data file only.
+	EOF		FOPEN			   Position at end of file
+	FBTYPE		CHNGONLINE CHNGVER 	   Filter-Bank data
+	FB_VER		CHNGONLINE CHNGVER	   Filter-Bank file version
+	FREQIRST	SAXIS			   Image rest frequency
+	FREQISKY	SAXIS			   Image sky frequency
+	FREQOFF		SAXIS			   Frequency offset
+	FREQRST		SAXIS			   Rest frequency
+	FREQSKY		SAXIS			   Sky frequency
+	GSCANS		TELL  SUMMARY  SELECT	   Gains scans
+			  and CHNGFILE
+	HCTYPE		CHNGONLINE CHNGVER	   Hybrid Spectrometer data
+	HC_VER		CHNGONLINE CHNGVER	   Hybrid Spec. file version
+	INFO		SELECT			   Parameter list
+	KSCANS		TELL  SUMMARY  SELECT      Keep scans
+			  and CHNGFILE
+	LOGFILE		CHNGFILE		   File for command logging
+	NEW		FOPEN			   File must NOT already exist
+	OFFDATA		TELL  SUMMARY  SELECT      Off-line data
+	OLD		FOPEN			   File must already exist
+	ONDATA		TELL  SUMMARY  SELECT	   On-line data
+	POINTER		HELP			   List of Pointers or Keywords
+	POS_OFF		SAXIS			   Position offset
+	POSX		SAXIS			   X position
+	POSY		SAXIS			   Y position
+	POSXOFF		SAXIS			   X position offset
+	POSYOFF		SAXIS			   Y position offset
+	PRINTFILE	CHNGFILE		   File for captured output.
+	PROC		HELP			   List of procedures
+	PROCEDURE	HELP			   List of procedures
+	REW		FOPEN			   Rewind file
+	RO		FOPEN			   Read only permission
+	RSCANS		TELL  SUMMARY  SELECT      Individual records scans
+			  and CHNGFILE
+	RW		FOPEN			   Read and Write permission
+	SAMPLE		SAXIS			   Sample numbers
+	SCALAR		HELP			   List of scalars
+	SCR		FOPEN			   Open file as a scratch file
+	SSCANS		TELL  SUMMARY  SELECT      Save scans
+			  and CHNGFILE
+	STACK		TELL			   Internal ASTACK array
+	STAT		TELL			   Status array
+	STRING		HELP			   List of string adverbs
+	TIMELST		SAXIS			   LST
+	TIMEOFF		SAXIS			   Time offset
+	TIMEUT		SAXIS			   UT
+	UNK		FOPEN			   File existence unknown
+	VERB		HELP			   List of verbs
+	VELHEAD		SAXIS			   Header velocity
+	VELLINR		SAXIS			   Linear velocity
+	VELOPTI		SAXIS			   Optical velocity
+	VELRADI		SAXIS			   Radio velocity
+	VELRELT		SAXIS			   Relativistic velocity
+	WO		FOPEN			   Write only permission
+	--------------------------------------------------------------------
+
+
+
+
+	The following pointers are used by CHNGONLINE:
+
+		HCTYPE		FBTYPE
+
+	The following pointers are used by CHNGVER:
+
+		CONTYPE		FBTYPE		HCTYPE				
+
+	HC_VER, CON_VER, and FB_VER will have their values changed by
+	the CHNGONLINE or CHNGVER verbs.  These pointer adverbs contain
+	the version number of the currently accessible on-line data
+	files for the various 12-m backends.
+
+	The following pointers are used by CHNGFILE:
+
+		DSCANS		GSCANS		KSCANS		LOGFILE
+		PRINTFILE	RSCANS		SSCANS
+
+	The following pointers are used by TELL:
+
+		ACCMD		DISK		DSCANS		GSCANS
+		KSCANS		OFFDATA		ONDATA		SSCANS
+		STACK		RSCANS		STAT
+				
+	The following pointers are used by SUMMARY:
+
+		DSCANS		GSCANS		KSCANS 		OFFDATA
+		ONDATA		SSCANS		RSCANS
+
+	The following pointers are used by SELECT:
+
+		DSCANS		INFO		OFFDATA		ONDATA
+		SSCANS 		KSCANS		RSCANS
+
+	The following pointers are used by FOPEN:
+
+		EOF		NEW		OLD		REW
+		RO		RW		SCR		UNK
+		WO		
+
+	The following pointers are used by SAXIS:
+
+		CHANNEL		FREQIRST	FREQISKY	FREQOFF
+		FREQRST		FREQSKY		POS_OFF		POSX
+		POSY		POSXOFF		POSYOFF		SAMPLE
+		TIMELST		TIMEOFF		TIMEUT		VELHEAD
+		VELLINR		VELOPTI		VELRADI		VELRELT
+
+	The following pointers are used by HELP:
+
+		ADVERB		ALIAS		ARRAY		POINTER
+		PROC		PROCEDURE	SCALAR		STRING
+		VERB	
+
+	Also, HELP will take as a pointer the name of any verb or
+	adverb (e.g., HELP BASELINE, HELP GREGION).
+
+	Please see the TELL, SUMMARY, HELP, CHNGONLINE, SAXIS, FOPEN,
+	CHNGVER SELECT, or CHNGFILE documentation for more details.
+
+
+Note-worthy Built-in Pointers
+-----------------------------
+
+	Two special pointers, TRUE and FALSE, have the values of 'true'
+	(equivalent to +1) and 'false' (equivalent to -1), respectively, 
+	and are used in mathematical or logical expressions.  Some
+	examples of their use are:
+
+		X_1 = TRUE
+		IF Z ~= FALSE THEN ....
+
+	The special pointer DEFAULT has a machine dependent value (which,
+	for a computer using IEEE representations for numbers, is the
+	IEEE representation of Infinity) and is used to assign default
+	values to a certain set of adverbs.  Some examples of its use are:
+
+		HMARK = DEFAULT
+		X_MIN = DEFAULT
+		IF I = DEFAULT THEN ....
+		CHARSIZE(DEFAULT)	<- returns the character size to
+					   its default value.
+
+	Other verbs which currently recognize DEFAULT as a legal
+	value (which returns some quantity to its default value)
+	are:
+
+		CHARSIZE	COLOR		LINETYPE	MRANGE
+		SAXIS		SETPAGE		XRANGE
+
+	The special pointer VERS has a value which equals the program's
+	version number.  For example, to print out the program's version
+	number, type: PRINT VERS
+

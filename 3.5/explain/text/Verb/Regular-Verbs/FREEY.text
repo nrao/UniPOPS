@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+	FREEY returns control of the y-axis scaling to the verb SHOW.
+	You use FREEY to restore automatic y-axis scaling after it has
+	been overridden by either the verb HOLDY, or by setting the
+	values of the adverbs YMIN and YINCR with the verb YRANGE or
+	through assignment statements.
+
+	No adverbs are used by FREEY.
+
+	ADVERBS SET:
+
+	  YMIN          The minimum temperature to appear on the
+			graph.  FREEY sets YMIN to -9999.  SHOW sets
+			its own y-axis scaling if YMIN is equal to
+			-9999 but not less than to -9x10^9.
+
+	EXAMPLE:
+
+	You have been using temperature scales set by YMIN and YINCR
+	for graphic displays and now want automatic scaling, specify:
+
+			FREEY PAGE SHOW

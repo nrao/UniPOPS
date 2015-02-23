@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'SYNFREQ:  (HEADER-TUC) Synthesizer frequency (MHz).'
+PRINT ' '

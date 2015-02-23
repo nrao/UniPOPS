@@ -1,0 +1,29 @@
+	(SCALAR ADVERB)
+
+	KPROTECT is used to protect data in the 'keep' file from being
+	overwritten or to allow the user to overwrite data in the 'keep'
+	file.
+
+	If KPROTECT is set to TRUE (+1), KEEP will refuse to store
+	a scan in the 'keep' file which has the same scan number as one
+	already present in the file.  However, such a scan could take
+
+	If KPROTECT is set to FALSE (-1), KEEP will replace the data
+	already in the file with the current data (i.e. overwrite the
+	previously stored data).
+
+	KPROTECT is used by : KEEP
+
+	No verbs change KPROTECT.
+
+	The initial value of KPROTECT is TRUE (+1).
+
+	EXAMPLE :
+
+	You realize that you have stored a corrupted version of scan 1000
+	in your 'keep' file.  To overwrite this with a correct copy, you 
+	type :
+
+		KPROTECT = FALSE
+		GET 1000
+		KEEP

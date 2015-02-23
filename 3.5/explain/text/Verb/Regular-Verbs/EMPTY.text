@@ -1,0 +1,19 @@
+	(REGULAR VERB)
+
+	EMPTY will delete all entries from the internal ASTACK array
+	and reset the stack counter, ACOUNT, to zero.
+
+	No adverbs are used by EMPTY.
+
+	ADVERBS SET:
+
+	   ACOUNT       The stack counter containing the # of scans in
+			the stack.  The initial value is 0.
+
+	EXAMPLE:
+
+	You have just stacked a group of scans and now wish to clear
+	ASTACK.  Type:
+
+		EMPTY
+

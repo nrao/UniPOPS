@@ -1,0 +1,31 @@
+	Syntax:  GAUSSFIT (num_gauss)
+
+	GAUSSFIT uses the cursor to provide GAUSS initial gausses for
+	BGAUSS, EGAUSS, HEIGHT and HWIDTH for num_gauss Gaussians.
+
+	You will be told to click the cross hair at the channels of the
+	start and end of the region to fit, the center of the num_gauss
+	Gaussians as well as the FWHM points.
+
+	Note that num_gauss must be > 0 but < 13.
+
+	File name: gaussfit.prc
+
+	No adverbs are used by GAUSSFIT.
+
+	ADVERBS SET:
+
+	   CENTER	HWIDTH		NGAUSS		BGAUSS
+	   EGAUSS
+
+	GAUSSFIT uses Array (0); it assumes that a previous SHOW command
+	has been issued.
+
+	EXAMPLE:
+
+	You want to fit 6 Gaussians to the current data so type:
+
+		GAUSSFIT(6); GAUSS; GDISPLAY
+
+	to enter initial guesses, fit the Gaussians, and then display
+	them.

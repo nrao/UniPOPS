@@ -1,0 +1,32 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	For 12-m data, you should give TAU0 the best-known value for
+C-	the atmospheric zenith opacity that you want method 3 of 
+C-	SOLVETIP to use.  If you supply a value less than or equal to
+C-	zero for TAU0, method 3 will first estimate the opacity using 
+C-	a linear fit before proceeding with the non-linear.
+C-
+C-	For Green Bank data, SOLVETIP sets TAU0 to the fitted value 
+C-	of the atmospheric opacity.
+C-
+C-	TAU0 is used by : SOLVETIP (method 3, Tucson data)
+C-
+C-	TAU0 is set by : SOLVETIP (Green bank data)
+C-
+C-	The initial value of TAU0 is 0.
+C-
+C-	EXAMPLE :
+C-
+C-      .  You want to use algorithm 1 for fitting a model to your
+C-	   sky-tip data from the 12-m telescope, and you think the
+C-	   atmospheric attenuation is 0.15,  so you type :
+C-
+C-		TYPETIP = 1; TAU0 = 0.15; SOLVETIP
+C-
+C-      .  You want to reduce your Green Bank tipping scan and find out
+C-	   what it believes the atmospheric opacity is, so you type:
+C-
+C-		SOLVETIP; PRINT TAU0
+C-
+C-------------------------- Continuum --------------------------------

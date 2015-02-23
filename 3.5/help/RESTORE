@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RESTORE:  (PSEUDO) Restores the procedures, adverbs, etc.'
+PRINT 'from the specified STORE bin.  Syntax: RESTORE bin_number'
+PRINT ' '

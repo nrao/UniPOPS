@@ -1,0 +1,42 @@
+	(REGULAR VERB)
+
+	PLUS adds the data in Array (1) to the data in Array (0)
+	and places the results in Array (0).  No weighting or
+	averaging is performed on the data (see ACCUM and SUM).
+
+	ADVERBS USED:
+	
+	  DEFMODE : Indicates how undefined data values (IEEE Inf) are
+		    treated.  
+
+		If DEFMODE is FALSE, the result will have an undefined 
+		   data value at any channel where EITHER of the values 
+		   in the input arrays are undefined.
+
+		If DEFMODE is TRUE, the result will have an undefined 
+		   data value at any channel where BOTH of the values 
+		   in the input arrays are undefined.  If only one value 
+		   is undefined at a channel, the result at that channel
+		   will be as if the undefined value were zero.
+
+		The initial value is FALSE.
+
+        EXAMPLES:
+
+	.   To add scan 710 and off-source scan 712, and
+	    display the result, specify:
+
+        	OFF 712 ON 710 PLUS PAGE SHOW
+
+	.   To get the same result using GET rather than ON and OFF,
+	    specify:
+
+		GET 712; COPY (0,1)
+		GET 710 PLUS PAGE SHOW
+
+	.   Another way of using PLUS to accomplish the same thing,
+	    specify:
+
+		GET1 712; GET0 710 PLUS PAGE SHOW
+
+

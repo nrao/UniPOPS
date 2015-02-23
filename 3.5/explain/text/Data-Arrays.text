@@ -1,0 +1,510 @@
+#if CKBK
+#def SCT E-
+#def DSH --
+Appendix E : Data Arrays and Associated Verbs
+---------------------------------------------
+#else
+#def SCT 
+#def DSH 
+#end
+To add flexibility to data processing, UniPOPS has ten internal
+one-dimensional arrays (numbered from 0 through 9), four internal
+two-dimensional matrices (numbered from 0 through 3), and a single
+three-dimensional cube.  Each array, matrix, and cube consists of a
+header section, containing both floating-point numbers and character
+strings, and a data section containing floating-point values.  The
+header parameters are used for describing what is in the data section.
+Most of the parameters only make sense if the data were taken with a
+radio telescope.  Some are specific to an individual NRAO telescope.
+
+Various UniPOPS commands (verbs) alter, summarize, or use the contents
+of the header and data sections of the arrays, matrices, or cubes.
+Below, we document how you may use the arrays, matrices, or cubes to
+perform many kinds of data processing.
+
+
+SCT1  Use of the One-Dimensional Arrays
+DSH------------------------------------
+
+The basic use of the ten internal data arrays is for storing data and
+associated header parameters which describe the data.  For example, the
+UniPOPS command GET retrieves a scan from disk or on-line data and stores 
+both the header information and data in Array (0).  If anything is already 
+in Array (0), GET will overwrite it with the new scan.
+
+Many UniPOPS verbs leave all ten arrays unaltered but are provided for
+making mathematical calculations, preparing and maintaining procedures
+and disk files, talking to the operating system, performing graphical
+functions, etc.  However, other verbs make use of at least some of the
+ten arrays.
+
+Some UniPOPS verbs use the data in certain arrays but do not modify any
+of the arrays, while others use certain arrays and change either these
+or other arrays.  A further set of verbs only work if sufficient and
+correct header information is provided.  In many cases, the data and
+header should be that produced by a radio telescope.  Some verbs are
+specific to NRAO telescopes and will not work for data taken with other
+telescopes. These may also work differently depending upon which NRAO
+telescope took the data.
+
+Most UniPOPS verbs do not make extensive use of the header and require
+only a minimum of header information.  In fact, some verbs like
+BASELINE and GAUSS do not care what the data is or where it came from.
+Others will act differently if certain header information is available,
+compared to when that required information is absent.  Other verbs only
+care about header parameters and neither use nor change the data
+values.
+
+The following table lists all UniPOPS verbs which either use or modify
+the contents on any of the data arrays. No other verbs use any of the
+arrays.  A `u' indicates that the verb uses information from the
+indicated array, a `c' indicates that that verb changes the contents of
+the specified array, a `u/c' indicates that the verb both uses and
+changes the contents of the specified array, while a `[u]' indicates
+that the verb may or may not use the contents of the specified array.
+An `X' in the `Diff' column indicates that the verb acts differently if
+the data in the array doesn't contain appropriate values for certain
+header parameters.  An `X' in the `Scan' column denotes verbs which
+will only work if the array contains data and header provided by a
+radio telescope.  An `X' in the `NRAO' column indicates verbs which
+require that the arrays contain both data and header provided by an
+NRAO telescope.
+
+
+#if CKBK
+
+   Table E-1.1 : Verbs Which Use or Alter One-Dimensional Data Arrays
+#else
+   	Verbs Which Use or Alter One-Dimensional Data Arrays
+#end
+-----------------------------------------------------------------------------
+		|  Arrays Used or Changed  |       Restrictions	      |
+		|  ______________________  |       ____________	      |
+Verb name	|			   |			      | Notes
+		|  0  |  1  |  2  |  Other |  Diff. |  NRAO  |  Scan  | 
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+ACCUM		|  u                       |                      X   |  
+AVE		|  c                       |                          |
+AVG		| u/c                      |             X            |
+AVGD		| u/c                      |             X            |
+BASELINE	| u/c                      |                          |
+BIAS		| u/c                      |                          |
+BMODEL		|  c                       |                          |
+BOXCAR		| u/c                      |                          |
+BSHAPE		|  u                       |                          |
+CALDBE		| u/c                      |             X            |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+CGET		|  c                       |                          |
+CGGET           |                    c     |                          |
+CHANTOX		|  u                       |                          |   1
+CHNGRES		| u/c                      |                          |
+CLIP		| u/c                      |                          |
+CONVFCN		| u/c    u                 |                          |   
+COPY		|                          |                          |   2
+CROSSFCN	| u/c    u                 |                          |   
+CROSSHAIR	|  u                       |    X                     |   3
+D0		| u/c                      |                          |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+D1		|       u/c                |                          |
+D2		|             u/c          |                          |
+D3 through D9	|                    u/c   |                          |
+DCBASE		| u/c                      |                          |
+DECNVLV		| u/c    u                 |                          |   
+DIFF		| u/c    u                 |                          |   
+DIVIDE		| u/c    u                 |                          |
+DOC		|  u                       |             X            |
+FCUR		|  u                       |                      X   |
+FFT		| u/c    c                 |                          |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+FIXDBE		| u/c                      |             X            |
+FLAG		|  u                       |    X                     |   5
+FSHIFT		|  u                       |                      X   |   
+GAUSS		|  u                       |                          |
+GDISPLAY	|  u                       |    X                     |   4
+GET		|  c                       |                          |
+GET0		|  c                       |                          |
+GET1		|        c                 |                          |
+GET2		|             c            |                          |
+GET3 through	|                     c    |                          |
+   GET9		|                          |                          |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+GETCOL          |  c                       |                          |
+GETIR           |  c                       |             X            |
+GETOTF          |  c                       |             X            |
+GETROW          |  c                       |                          |
+GGET            |                     c    |                          | 
+GMEASURE	|  u                       |    X                     |   4
+GMODEL		|  c                       |                          |
+GPARTS		|  u                       |    X                     |   4
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+
+#if CKBK
+   Table E-1.1 : Verbs Which Use or Alter One-Dimensional Data Arrays (Cont.)
+#else
+   	Verbs Which Use or Alter One-Dimensional Data Arrays (Cont.)
+#end
+-----------------------------------------------------------------------------
+		|  Arrays Used or Changed  |       Restrictions	      |
+		|  ______________________  |       ____________	      |
+Verb name	|			   |			      | Notes
+		|  0  |  1  |  2  |  Other |  Diff. |  NRAO  |  Scan  | 
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+H0		| u/c                      |                          |
+H1		|       u/c                |                          |
+H2		|             u/c          |                          |
+H3 through H9	|                    u/c   |                          |
+HANNING		| u/c                      |                          |
+HEADER		|  u                       |             X            |
+IFFT		| u/c   u/c                |                          |
+INVERT		| u/c                      |                          |
+KEEP		|  u                       |                      X   |
+KGET		|  c                       |                          |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+MDBASE		| u/c                      |                          |   
+MINUS		| u/c    u                 |                          |   
+MOMENT		|  u                       |    X                     |   4
+MOVE		|                          |                          |   6
+MULTIPLY	| u/c    u                 |                          |   
+OFF		|        c                 |                          |
+ON		|  c                       |                          |
+ONS		|  u                       |             X            |
+OSB		| u/c                      |             X            |   
+PCBASE		| u/c                      |                          |   
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+PDOC		|  u                       |             X            |
+PEAK		|  u                       |    X                     |   4
+PLOT		|  u     u                 |                          |
+PLUS		| u/c    u                 |                          |   
+POWSPEC		| u/c    u                 |                          |
+PUTCOL          |  u                       |                          |
+PUTROW          |  u                       |                          |
+RAP		| u/c                      |             X            |
+RECALL		|  c                       |                          |
+REMOVE		|                          |                          |   7
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+REPLACE		| u/c                      |                          |
+RESHOW		|  u                       |                          |
+RESIDUAL	| u/c                      |                          |
+RIPPLE		| u/c                      |                          |
+RMODEL		|  c                       |                          |
+RMS		|  u                       |                          |
+RSHAPE		|  u                       |                          |
+SAVE		|  u                       |                      X   |
+SCALE		| u/c                      |                          |
+SEDITS		| u/c                      |             X            |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+SHIFT		|  c                       |                          |
+SHOW		|  u                       |    X        X            |   1
+SMOOTH		| u/c                      |                          |
+SOLVETIP	|  u                       |             X            |
+SPIKE		| u/c                      |                          |
+SUM		|  u                       |                          | 
+SWITCHED	| u/c                      |             X            |
+TABLE		|  u                       |    X                     |   4
+TELL ACCMD	|  u                       |             X            |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+
+#if CKBK
+   Table E-1.1 : Verbs Which Use or Alter One-Dimensional Data Arrays (Cont.)
+#else
+   	Verbs Which Use or Alter One-Dimensional Data Arrays (Cont.)
+#end
+-----------------------------------------------------------------------------
+		|  Arrays Used or Changed  |       Restrictions	      |
+		|  ______________________  |       ____________	      |
+Verb name	|			   |			      | Notes
+		|  0  |  1  |  2  |  Other |  Diff. |  NRAO  |  Scan  | 
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+TEMP		|  u     u    [u]          |                      X   |   8
+TEMPS		|  u                       |             X            |
+THUMB		|  u                       |             X            |
+TITLE		|  u                       |             X            |
+TOTALPWR	| u/c                      |             X            |
+VCUR		|  u                       |                      X   |
+VSHIFT		|  u                       |                      X   |   
+XRANGE		|  u                       |    X                     |   5
+XTOCHAN		|  u                       |                          |   1
+YRANGE		|  u                       |    X                     |   
+ZERO		| u/c                      |             X            |
+----------------|-----|-----|-----|--------|--------|--------|--------|------
+
+Note 1.  If data and header are from a radio telescope, x-axis values
+	 are in the units set by the last FV, FC, FF, VV, VC, VF, CF,
+	 CC, CV verbs and the plot will be labeled with other important
+	 header information.  If not from a radio telescope, x-axis
+	 values will be channel numbers and no other header information
+	 will be displayed.
+Note 2.  Uses any of the 10 arrays.  Changes any of the remaining 9
+	 arrays.
+L------------------------------ Spectral Line -------------------------------
+L- Note 3.  Frequency and velocity  will not be displayed if the header
+L-	    is not complete and correct (i.e., not taken with a radio
+L-	    telescope).
+L- Note 4.  If possible (i.e., header and data provided by a radio
+L-	    telescope), the displayed velocities  correspond to that
+L-	    derived from channel number, frequency resolution, observed
+L-	    and rest frequencies, and definition of Doppler shift.  If
+L-	    the information is not all available, velocities are
+L-	    derived from channel number and channel velocity width.  If
+L-	    these parameters are not available, channel numbers are
+L-	    displayed.
+L------------------------------ Spectral Line -------------------------------
+
+C------------------------------ Continuum -----------------------------------
+C- Note 3.  Position and time will not be displayed if the header is
+C-	    not complete and correct (i.e., not taken with a radio
+C-	    telescope).
+C- Note 4.  If possible (i.e., header and data provided by a radio
+C-	    telescope), the displayed positions correspond to that
+C-	    derived from channel number and either rate of telescope
+C-	    motion or step size between samples.  If these parameters
+C-	    are not available, channel numbers are displayed.
+C------------------------------ Continuum -----------------------------------
+
+Note 5.  If data and header are from a radio telescope, arguments to
+	 verb are in the units of the lower x-axis (as set by the FV,
+	 FC, FF, VV, VC, VF, CF, CC, CV verbs).  If not from a radio
+	 telescope, arguments are in channel numbers.
+Note 6.  Uses one of the 10 arrays, changes that array and one of the
+	 other 9 arrays.
+Note 7.  Uses and changes any one of the 10 arrays.  
+Note 8 . Array (3) is used for Tucson data only.
+
+
+SCT2  Use of the Two-Dimensional Arrays (Matrices)
+DSH-----------------------------------------------
+
+The basic use of the four 2-dimensional arrays (matrices) is for
+storing data and any header parameters which describe the data.  For
+example, the UniPOPS command MREAD retrieves a FITS file from disk and
+stores both the header information and data in Matrix (0).  If anything
+is already in Matrix (0), MREAD will overwrite it with the new data and
+header.
+
+Many UniPOPS verbs leave all four matrices unaltered but are provided
+for making mathematical calculations, preparing and maintaining
+procedures and disk files, talking to the operating system, performing
+graphical functions, etc.  However, other verbs make use of at least
+some of the matrices.
+
+Some UniPOPS verbs use the data in certain matrices but do not modify
+any of the matrices, while others use certain matrices and change
+either these or other matrices.
+
+Most UniPOPS verbs do not make extensive use of the header and require
+only a minimum of header information.  Other verbs only care about
+header parameters and neither use nor change the data values.
+
+The following table lists all UniPOPS verbs which either use or modify
+the contents on any of the data matrices. No other verbs use any of the
+matrices.  A `u' indicates that the verb uses information from the
+indicated matrix, a `c' indicates that that verb changes the contents
+of the specified matrix, a `u/c' indicates that the verb both uses and
+changes the contents of the specified matrix, while a `[u]' indicates
+that the verb may or may not use the contents of the specified matrix.
+
+#if CKBK
+
+   Table E-2.1 : Verbs Which Use or Alter Two-Dimensional Data Matrices
+#else
+   	Verbs Which Use or Alter Two-Dimensional Data Matrices
+#end
+	-----------------------------------------------------
+			|  Matrices Used or Changed  |
+			|  ________________________  |
+	Verb name	|			     | Notes
+			|   0  |   1  |   2  |   3   | 
+	----------------|------|------|------|-------|-------
+	AUTOLEV		|   u			     |
+	CCUR		|   u			     |
+	CONTOUR		|   u			     |
+	EQHISTLEV       |   u                        |
+	FCUR		|   u			     |
+	FLAG		|   u			     |
+	FUNCLEV		|   u                        |
+	GETCOL          |   u                        |
+	GETROW          |   u                        |
+	HLFTNE		|   u			     |
+	----------------|------|------|------|-------|-------
+	HOLFITFOC	|   u/c	   c		     |
+	HOLWINDOW	|   u/c	  u/c		     |
+	LABEL		|   u			     |
+	MBIAS		|   u/c                      |
+	MBLANK		|			     |  1   
+	MCOPY		|			     |  2
+	MCUR		|   u			     |
+	MD0		|  u/c			     |
+	MD1		|         u/c                |
+	MD2		|                u/c	     |
+	----------------|------|------|------|-------|-------
+	MD3		|                       u/c  |
+	MDIVIDE         |  u/c     u                 |
+	MFFT		|  u/c	  u/c		     |
+	MFILL		|  u/c			     |
+	MH0		|  u/c			     |
+	MH1		|         u/c		     |
+	MH2		|                u/c	     |
+	MH3		|                       u/c  |
+	MHEADER		|   u			     |
+	MIFFT		|  u/c	  u/c		     |
+	----------------|------|------|------|-------|-------
+	MINIT		|			     |  1
+	MLIMITS		|   u			     |
+	MMINUS          |  u/c     u                 |
+	MMOVE		|			     |  3
+	MMULTIPLY       |  u/c     u                 |
+	MPLUS           |  u/c     u                 |
+	MRANGE		|   u			     |
+	MREAD		|   c			     |
+	MREMOVE		|			     |	1
+	MSCALE		|  u/c			     |
+	----------------|------|------|------|-------|-------
+	MSMOOTH		|  u/c			     |
+	MTABLE		|   u			     |
+	MWRITE		|   u			     |
+	PLOTDOTS	|   u			     |
+	PUTCOL		|  u/c			     |
+	PUTROW		|  u/c			     |
+	QCONTOUR	|   u			     |
+	RASTER          |   u			     |
+	ROTATE		|  u/c			     |
+	SETLEV		|   u 			     |
+	----------------|------|------|------|-------|-------
+	SLICE		|   c			     |
+	TCUR		|   u			     |
+	VCUR		|   u			     |
+	----------------|------|------|------|-------|-------
+	Note 1. Uses and changes any one of the four matrices.
+
+	Note 2. Uses any of the four matrices.  Changes any of the
+		remaining three matrices.
+
+	Note 3. Uses one of the four matrices, changes that matrix and
+		one of the other three matrices.
+
+
+SCT3  Use of the Three-Dimensional Array (Cube)
+DSH----------------------------------------------
+
+The basic use of the 3-dimensional array (cube) is for retrieving data 
+from cubes and any header parameters which describe the data.  For example, 
+the UniPOPS command READCUBE opens a FITS file on disk, stores
+the header information and makes the data available for use in UniPOPS from
+the cube found in the file.  If another data cube has been accessed
+using READCUBE, that file is closed before the new file is opened.
+The data cube is read-only from within UniPOPS.
+
+The following verbs use the contents of the cube:
+
+	CD0		CH0		CHEADER			SLICE
+
+The following verb changes the apparent contents of the cube (by closing
+the file containing the current contents and opening the new file) :
+
+	READCUBE
+
+
+SCT4 Format
+DSH--------
+
+The format of the data arrays mimics the SDD disk file format (See
+Appendix G of the Cookbook).  The user need not know exactly what that
+format is, but only needs to know how to find, use, and change the
+value of any header parameter or data value (see Sections 9.3, 9.4 and
+9.5 of the Cookbook).
+
+The format of the matrices and cube is that of FITS image files.
+
+
+SCT5 Finding and Changing Header Parameters and Data Values
+DSH--------------------------------------------------------
+
+The most general utilities for picking up values from the header and
+data sections of the arrays are the internal-array verbs H0 through H9,
+and D0 through D9.  These same verbs allow you to change header and
+data values within the arrays.
+
+Similarly, MH0 through MH3 and MD0 through MD3 allow you to retrieve or
+change the header values for the matrices.
+
+CH0 and CD0 allow you to retrieve header information and data from the
+data cube but, unlike the above mentioned verbs, CANNOT be used to
+change this information within the cube.
+
+
+SCT6 Examples of Creating Arbitrary Data Arrays and Matrices
+DSH---------------------------------------------------------
+
+One powerful capability of UniPOPS is the ability to process data that
+may not have been produced by a radio telescope.
+
+	One-Dimensional Array Example:
+	------------------------------
+
+	You may want to plot the angle of the Sun above the horizon as
+	a function of LST.  The verb PLOT (see Section 6.8) plots Array
+	(0) against Array (1), so you want the values of LST to be the
+	data in Array (1) and the elevations of the Sun to be the data
+	in Array (0).  Suppose you have 5 pairs of values for
+	elevations and LST's.  There are many ways you could get this
+	information into UniPOPS but all are a variation of the
+	following set of commands:
+
+	>REMOVE (0)
+	>REMOVE (1)   
+	># Deletes the contents of Arrays (0) and (1)
+	>#
+	>H0(NOINT) = 5
+	>H1(NOINT) = 5
+	># Sets the number of data points in Arrays to 5
+	>#
+	>D0(1) = 0.0
+	>D0(2) = 10.0
+	>D0(3) = 20.0
+	>D0(4) = 30.0
+	>D0(5) = 40.0
+	># Sets the first 5 data values in Array (0) to the elev.
+	># of the Sun.
+	>D1(1) = 12.34
+	>D1(2) = 13.56
+	>D1(3) = 14.72
+	>D1(4) = 15.95
+	>D1(5) = 17.23
+	># Sets the first 5 data values in Array (1) to LST
+	>#
+	>PLOT
+	>#  Plots the elev. vs. LST
+
+	Of course, it would be better to use a procedure were there
+	more than a handful of such data values.
+
+	After placing the arbitrary data into the respective arrays,
+	they can be processed using any of the commands in the first
+	table above which do not have an `X' in the `Scan' or `NRAO'
+	columns (e.g., GAUSS, BASELINE, etc.).
+
+
+
+	Two-Dimensional Matrix Example:
+	-------------------------------
+
+	You want to plot a two-dimensional matrix of random numbers.
+	To do this, you could type:
+
+	>MREMOVE(0)
+	># Removed the contents of Matrix (0).
+	>#
+	>MH0(MNAXIS1) = 64
+	>MH0(MNAXIS2) = 32
+	># Assigns x and y dimensions to the matrix.
+	>#
+	>SCALAR I, J
+	># Creates scalar adverbs needed for the next step.
+	>#
+	>FOR I = 1 TO MH0(MNAXIS1); FOR J = 1 TO MH0(MNAXIS2); \
+	 MD0(I,J)=RAND; END; END
+	># Assigns values to the matrix -- note use of continuation back slash.
+	>#
+	>AUTOLEV(5); QCONTOUR
+	># Sets up 5 contour levels and contours the random numbers.
+	

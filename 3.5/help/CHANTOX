@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CHANTOX:  (FUNCTION) Returns the x-value, in units of the'
+PRINT 'present lower x-axis, that corresponds to the given channel'
+PRINT 'number.'
+PRINT ' '

@@ -1,0 +1,18 @@
+	(SCALAR ADVERB)
+
+	ZLINE is used as a switch or flag.  If ZLINE = TRUE (+1), a
+	horizontal line is drawn at Y equal to zero.  If ZLINE = FALSE
+	(-1), then the line is not drawn.
+
+	ZLINE is used by : LABEL	PLOT	     SHOW             
+
+	No verbs change ZLINE.
+
+	The initial value of ZLINE is FALSE.
+
+	EXAMPLE :
+
+		ZLINE = TRUE     the next SHOW will draw a zero line at
+				 zero intensity.
+
+

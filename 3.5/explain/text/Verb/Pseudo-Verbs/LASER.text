@@ -1,0 +1,31 @@
+	(PSEUDO VERB)
+
+	Syntax:    LASER filename
+		   LASER
+
+	LASER prints ASCII files on the printer from within UniPOPS.
+	If you do not supply a file name, you will be asked to supply
+	one.  Wild cards are excepted for file names.
+
+	LASER can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by LASER.
+
+	NOTE:  Make sure the file you are attempting to print out is a
+	text file and NOT a binary file.
+
+	EXAMPLE:
+
+	.  To print the contents of a file named blah on the attached
+	   laser printer, type:
+
+		 LASER blah	
+
+	.  Or, type :
+
+		 LASER
+
+	   and UniPOPS will prompt for the names of the files to
+	   print.
+

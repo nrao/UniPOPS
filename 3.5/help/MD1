@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MD1:  (INTERNAL-ARRAY) Returns/sets value of given data '
+PRINT 'point in Matrix (1).  Syntax:  MD1(x1,x2)'
+PRINT ' '

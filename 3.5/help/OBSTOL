@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'OBSTOL:  (HEADER-TUC) Observing tolerance (arcsec).'
+PRINT ' '

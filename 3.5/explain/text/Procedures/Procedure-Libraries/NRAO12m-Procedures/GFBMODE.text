@@ -1,0 +1,41 @@
+	GFBMODE is used to determine the mode (parallel or series) of
+	the filter bank data contained in Array (2).  Since this
+	is where the gains data is kept, this procedure is used by
+	procedures that process gains scans to determine the mode of
+	that data.
+
+	Syntax: GFBMODE(answer)
+
+	The dummy adverb, answer, is set by GFBMODE to be 1 if the data
+	is series filter bank data and 2 for parallel filter bank data.
+
+	This procedure is not usually used directly.  It is used by
+	GDISP12M and GCDISP12M.
+
+	File name : gfbmode.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Example:
+
+	Within the procedure GDISP12M, the following occurs (some
+	details have been omitted from this example):
+
+	scalar fscan, nchan
+	gget(fscan)
+	gfbmode(nchan)
+	if nchan = 2; then
+	   copy(2,3)
+	   gget(addfeed(fscan, 1))
+	   copy(2,4)
+           cboth
+        else
+	   copy(2,0)
+           page; show
+        end
+
+	In this manner, GDISP12M can determine if CBOTH needs to be
+	used to display the parallel data side by side or if only
+	a single spectrum needs to be displayed for series data.
+	ADDFEED and CBOTH are procedures, see the documentation for more 
+	information.

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ONS:  (CONTINUUM) Draws a plus sign at the location of on'
+PRINT 'positions in an On-Off continuum scan.'
+PRINT ' '

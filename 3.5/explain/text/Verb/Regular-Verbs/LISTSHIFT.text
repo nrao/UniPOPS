@@ -1,0 +1,9 @@
+	(REGULAR VERB)
+
+	LISTSHIFT lists the contents of the internal array that contains
+	the (scan number, ASHIFT) pairs set by SHIFT.  Up to the last 5120
+        pairs since the last SCLEAR are saved.  The ASHIFTs are in units 
+	of channels.
+
+	No ADVERBS are set or used by LISTSHIFT.
+

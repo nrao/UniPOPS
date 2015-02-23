@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CORIGIN:  (HEADER-CUBE) Character string describing place'
+PRINT 'of origin of the data in the Cube (8 characters).'
+PRINT ' '

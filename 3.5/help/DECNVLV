@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DECNVLV:  Deconvoles the data in Array 0 with the data in'
+PRINT 'Array 1 and places the results into Array 0.'
+PRINT ' '

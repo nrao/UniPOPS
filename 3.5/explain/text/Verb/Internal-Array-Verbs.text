@@ -1,0 +1,81 @@
+	The very few internal-array verbs in UniPOPS are:
+
+		ASTACK	CD0	CH0	D0	D1	D2	D3
+		D4	D5	D6	D7	D8	D9	H0
+		H1	H2	H3	H4	H5	H6	H7
+		H8	H9	MD0	MD1	MD2	MD3	MH0
+		MH1	MH2	MH3 
+
+	The functions of these verbs are:
+
+	. ASTACK		For setting or retrieving the values of
+				the internal ASTACK array.  Requires
+				one argument.
+
+	. CD0			For retrieving the values of the data
+				in internal three-dimensional data
+				cube.  This is read-only, values can not
+				be set within UniPOPS.  Requires
+				three arguments.
+
+	. CH0			For retrieving the values of the header
+				parameters of the internal 
+				three-dimensional data cube.  This is
+				read-only, values can not be set within
+				UniPOPS.  Requires one argument.
+
+	. D0 through D9		For setting or retrieving the values of
+				the data in internal one-dimensional
+				data Arrays (0) through (9).  Requires
+				one argument.
+
+	. H0 through H9		For setting or retrieving the values of
+				the header parameters of the internal
+				one-dimensional data Arrays (0) 
+				through (9).  Requires one argument.
+
+	. MD0 through MD3	For setting or retrieving the values of
+				the data in internal two-dimensional
+				data Matrices (0) through (3).
+				Requires two arguments.
+
+	. MH0 through MH3	For setting or retrieving the values of
+				the header parameters of the internal
+				two-dimensional data Matrices (0)
+				through (3). Requires one argument.
+
+	Internal-Array verbs are restricted in their usage in 
+	comparison to array adverbs in that they cannot appear without
+	their arguments.
+
+	For example, array adverbs can be assigned values with one
+	of the following:
+
+		NREGION = 32
+
+		(all elements of NREGION are assigned a value of 32).
+
+		READ NREGION
+
+		(you will be prompted to input a value for all elements
+		of NREGION).
+
+	Array adverbs can also appear in a PRINT statement as follows:
+
+		PRINT NREGION
+
+		(all elements of NREGION will be printed).
+
+	Internal-Array verbs, on the other hand, can only be printed
+	or assigned values with statements like the following:
+
+		PRINT MD0(1,3)
+		D0(I) = 32
+
+	They also can not appear in READ statements!
+
+	That is, the following are illegal:
+
+		MH0 = 34
+		READ D0(1)
+		PRINT MD0

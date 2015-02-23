@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MREAD:  Reads the specified two-dimensional FITS image file'
+PRINT 'from disk into Matrix (0).  Syntax:  MREAD(filename)'
+PRINT ' '
+PRINT 'MXMIN, MXMAX=',MXMIN, MXMAX
+PRINT 'MYMIN, MYMAX=',MYMIN, MYMAX
+PRINT ' ' 

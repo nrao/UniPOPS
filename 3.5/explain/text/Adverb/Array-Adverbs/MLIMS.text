@@ -1,0 +1,22 @@
+	(ARRAY ADVERB of 2 by 5 elements)
+
+	MLIMS is set by MLIMITS.  The 2x5 values correspond to
+	the values that MLIMITS prints out.  MLIMITS displays
+	two lines of five numbers.  The 2x5 values in MLIMS are
+	set so that, for example, the 3rd number on the second
+	line displayed by MLIMITS is stored in MLIMS(2,3).
+
+	No verbs use MLIMS.
+
+	Here is the full description of each location of MLIMS:
+
+	MLIMS(1,1)	=	Maximum value in the matrix.
+	     (1,2)	=	X-coordinate of the maximum value.
+	     (1,3)	= 	Y-coordinate of the maximum value.
+	     (1,4)	=	X-pixel of the maximum value.
+	     (1,5)	= 	Y-pixel of the maximum value.
+	MLIMS(2,1)	=	Minimum value in the matrix.
+	     (2,2)	=	X-coordinate of the minimum value.
+	     (2,3)	=	Y-coordinate of the minimum value.
+	     (2,4)	=	X-pixel of the minimum value.
+	     (2,5)	=	Y-pixel of the minimum value.

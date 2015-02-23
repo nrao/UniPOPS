@@ -1,0 +1,42 @@
+	(SCALAR ADVERB)
+
+	MXMIN and MXMAX are used to set the x-axis limits of the next
+	two-dimensional display.  The units of MXMIN and MXMAX are cell
+	numbers.
+
+	MXMIN and MXMAX are used by : 
+
+                AUTOLEV    CONTOUR    EQHISTLEV FUNCLEV   HLFTNE
+                MFILL      MLIMITS    MSMOOTH   MTABLE    PLOTDOTS   
+                QCONTOUR   RASTER
+
+	MXMIN and MXMAX are set by : MRANGE   ROTATE
+
+	The initial values of MXMIN and MXMAX are 0, which implies the
+	entire matrix.
+
+	If the values of MXMIN or MXMAX are outside of the limits of
+	the matrix, the above routines will internally assume a virtual
+	value for MXMIN and MXMAX of 1 and the size of the matrix,
+	respectively.
+
+	EXAMPLE :
+
+	You have a 512 by 200 matrix you are about to contour plot but
+	you are only interested in plotting the region which extends
+	from cell (20,34) to cell (512,190).  To limit the plot, type:
+
+		MXMIN = 20
+		MXMAX = 512
+		MYMIN = 34
+		MYMAX = 190
+
+	and now you can contour plot this section of the matrix.
+
+	You now want the complete x-axis range of the matrix so you
+	type in values for MXMIN and MXMAX that are beyond the limits
+	of the matrix. That is :
+
+		MXMIN=0; MXMAX=10000
+
+	Alternatively, setting both to zero accomplishes the same thing.

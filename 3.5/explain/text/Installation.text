@@ -1,0 +1,1761 @@
+
+                   Installation Guide for the UniPOPS Package
+
+
+For assistance, contact:	
+				 
+Bob Garwood			 
+e-mail:	bgarwood@nrao.edu
+address: 520 Edgemont Road, Charlottesville, VA 22903-2475
+phone: 804-296-0235
+Fax: 804-296-0278
+
+Contents:
+
+   1.0 Overview.
+   2.0 Hardware, OS, Compiler, and Software Requirements.
+       2.1 SunOS versus Solaris
+   3.0 Extracting UniPOPS from Tape or Tar File.
+       3.1 Untaring the Distribution Tape or Files.
+       3.2 UniPOPS Directory Structure.
+   4.0 Setting Up and Making UniPOPS.
+       4.1 Editing a Controlling Script.
+       4.2 Making UniPOPS.
+   5.0 Local Modifications.
+       5.1 Environmental Variables
+       5.2 Modifying $popsdir/sys.unipops/prepare.unipops.
+           5.2.1 Modifying Other $popsdir/sys.unipops Files.
+           5.2.2 Modifying User's Existing Setup ("dot") Files
+       5.3 Printers
+       5.4 Editors
+       5.5 Symbolic Link to "old".
+       5.6 Modifying Utility Scripts.
+       5.7 Adding Messages and News Items.
+    6.0 Preparing a Directory in which UniPOPS is to be Run.
+       6.1 Automatically Preparing a Home Directory.
+       6.2 Preparing Directories other than a Home Directory.
+       6.3 Running and Testing UniPOPS.
+    7.0 Documentation.
+       7.1 Cookbook.
+       7.2 Reference Manual.
+    8.0 Known Problems.
+    9.0 Cleaning Up.
+   10.0 Submitting Comments, Suggestions, Bug Reports.
+   11.0 Release Schedule.
+
+        Checklist for Installing and Running UniPOPS.
+      Changes in UniPOPS Version 3.5
+      Changes in UniPOPS Version 3.4.1.
+      New Features in UniPOPS Version 3.4.
+      New Features in UniPOPS Version 3.3.
+
+1.0 Overview.
+-------------
+
+   UniPOPS is a suite of programs and utilities for reducing data from
+NRAO single dish telescopes (although with only small modifications,
+data from other single dish telescopes and similar instruments could be
+reduced using UniPOPS).  The primary reduction programs, 'line' and
+'condar', use the People-Oriented Parsing Service (POPS) as the command
+line interpreter (distantly related to the AIPS POPS interpreter as
+well as other POPS interpreters).  "Uni" in UniPOPS signifies that this
+package is a unification of the analysis packages that existed in Green
+Bank, Tucson, and Charlottesville.  For a more thorough description of
+UniPOPS see "A Description of UniPOPS -- A Data-Analysis System for
+NRAO Single-Dish Telescopes" by Ronald J. Maddalena (last revised 
+May 27, 1994).
+
+  This document outlines the basic steps in installing UniPOPS.
+Significant Unix knowledge is assumed.  At some point, you will need to
+edit some of the UniPOPS files.  A checklist follows the installation
+instruction to help you through the various steps.  The installation
+instructions include descriptions of some rarely necessary steps and
+encountered problems; we have indented these sections of the
+instructions so as to make them obvious.
+
+   The full installation takes roughly 28 Mbytes in addition to the
+size of the tar file, if it exists on disk (compressed: 2.4 Mbytes,
+compressed using gzip: 1.6 Mb, uncompressed 9.3 Mbytes).
+
+2.0 Hardware, OS, Compiler, and Software Requirements.
+------------------------------------------------------
+
+   UniPOPS currently only works on Sun workstations running either
+SunOS or Solaris.  Each new Sun OS and fortran compiler has caused
+some problems for UniPOPS.  Within NRAO, UniPOPS is running on Suns
+using OS 5.5 and 5.6 (Solaris 2.5 and 2.6), Sun WorkShop compilers 4.2
+(both fortran and cc) and Openwindows.  Other compiler and OS
+combinations will probably cause problems for UniPOPS installation.
+There is no port to other flavors of unix than Suns (i.e. there is
+no Linux port) nor is one expected given the limited expected lifetime
+of UniPOPS. If problems occur at any point in the installation, do not hesitate to
+contact Bob Garwood at the above addresses.  As of May 1992, we no
+longer have any Sun 3's running UniPOPS.  Consequently, we can not
+promise that UniPOPS will continue to run on Sun 3's although we will
+attempt to help sites with Sun 3's reporting problems.  The last known
+Sun 3 installation was version 3.1 installed in April 1994.  We no longer
+have an Sun's running an OS prior to Solaris so we can not promise that
+UniPOPS will run under any OS but Solaris.
+
+   UniPOPS can display graphics on the console using any flavor of X11
+window managers (within NRAO it is used with the openlook window
+manager (olwm), motif (mwm), and the twm window manager) as well as
+using Sun's now unsupported suncore library and sunview window manager
+(under SunOS only).  The X11 graphics window uses only Xlib, so it
+should compile and run with any X11 server.  For the suncore/sunview
+graphics screen, the suncore libraries must be installed and you must
+be using SunOS.  The default Makefile will compile graphics display
+programs for both window managers.  If you only have one or only want
+to compile the program for one of these window managers, the necessary
+modifications are described later in this document.  The X11 graphics
+screen is vastly superior to the suncore screen and we strongly
+recommend use of an X window manager.  We can no longer test the now very
+ancient suncore libraries and display.
+
+   For installations using the suncore/sunview window manager, as of
+SunOS 4.0, the suncore libraries are found in /usr/old, reflecting the
+fact that they are no longer supported by Sun.  They are completely
+missing from SunOS 4.1.2. We have found that for Sparc stations, the
+OS 4.0.3 versions of these libraries work more reliably than the later
+versions.  If you are using OS 4.1 or later, we suggest that you
+locate earlier versions of these libraries [write to Bob Garwood for
+suggestions].  As stated above, these libraries are not available
+under Solaris - your only display option at that point is X.
+
+   In addition to using X11 or suncore to display graphics on the
+console, UniPOPS can display graphics on terminals that understand
+Tektronix commands.  The following hardcopy devices are supported: qms
+laser printer in quic mode, qms laser printer in tektronix mode, any
+postscript printer and an HPGL printer/plotter.  UniPOPS can read and
+write data from 1/2 inch, Exabyte, DAT, or 1/4 inch Cartridge tapes.
+
+   UniPOPS uses shared memory in a number of instances.  This requires
+that the System V IPC options be used in the kernel configuration
+file.  UniPOPS will compile but NOT run without turning on these
+options.  For Solaris installations, these are always present, for
+SunOS installations, you need to verify that they are present.  Check
+to make sure that your kernel was made with these options (See Sun's
+System and Network Administration Manual, Chapter 9):
+
+	options IPCMESSAGE     #  System V IPC message facility
+	options IPCSEMAPHORE   #  System V IPC semaphore facility
+	options IPCSHMEM       #  System V IPC shared-memory facility
+
+2.1 SunOS versus Solaris
+
+   We have not worked out a reasonable scheme where a single installation 
+can support Solaris and SunOS users in any transparent fashion.  If you need 
+to support SunOS and Solaris installations at the same time, you will need two 
+completely separate installations (completely separate directory trees).  Follow 
+this installation document completely for each installation.
+
+3.0 Extracting UniPOPS from Tape or Tar File.
+---------------------------------------------
+
+   UniPOPS can be installed at any node in a directory tree.  Within
+NRAO, UniPOPS is installed in a separate account.  Users, within their
+own accounts, set a few environment variables as outlined below and
+reduce data in their own directories.
+
+   Throughout the following, substitute for <yourpath> the name of the
+directory in which you are installing UniPOPS and substitute for
+<directory> the name of the directory from which someone wants to run
+UniPOPS.
+
+
+3.1 Untaring the Distribution Tape or Files.
+--------------------------------------------
+
+Change directory to where you wish to place UniPOPS.
+
+   % cd <yourpath>
+
+WARNING:  The sub-directory 3.5, if it exists, will be altered by the
+following step.
+
+   Depending upon how you received the UniPOPS distribution files, you
+should perform one of the following steps:
+
+(1) From an uncompressed tar file:
+
+   % tar xvf 3.5.tar
+
+(2) From a compressed tar file:
+
+   % zcat 3.5.tar.Z | tar xvfB -
+
+(3) From a gzip compressed tar file:
+
+   % gunzip -c 3.5.tar.gz | tar xvfB -
+
+
+3.2 UniPOPS Directory Structure.
+--------------------------------
+
+  This is a quick overview of the directory structure that should exist
+after untaring the package.
+
+  The top directory is called 3.5, where 3.5 is the version number of
+this distribution of UniPOPS.
+
+   In 3.5 you will find the following directories:
+
+   source : the source code for the main UniPOPS programs.
+
+   includes: include files used in source
+
+   utilities: source code and scripts for useful utilities as well as,
+	    after installation, the executables for these utilities.
+
+   sunbin: the main Makefile for UniPOPS and most of the shell scripts
+	    used by the user as well as the non-utility executables.
+
+   xwindows: the X11 graphics interface.
+
+   sunview: the sunview/suncore graphics interface.
+
+   fonts: the fonts used by the sunview and xwindows graphics interface.
+
+   sys.unipops: some suggested "dot" files for users.
+
+   explain: detailed explain files and the source code for reading,
+	    displaying and maintaining them.
+
+   help: short help files
+
+   procedures: procedures libraries.
+
+   [cl]comments: user comments deposited by the REPORT facility.
+
+   [cl]messages: messages you can leave for users (see below).
+
+   [cl]news: general news items you can leave for users (see below).
+
+4.0 Setting Up and Making UniPOPS.
+----------------------------------
+
+   The popsdir environmental variable must be set in order to 'make'
+UniPOPS.  It's value must be the absolute (not relative) path name of
+the 3.5 directory.
+
+  For example, if UniPOPS is installed in the <yourpath> directory,
+then for the c-shell type:
+
+   % setenv popsdir <yourpath>/3.5/
+
+or for a Bourne-like shell (sh, bash, ksh, etc.) type:
+
+   % export popsdir=<yourpath>/3.5/
+
+NOTE:  The final slash is required.
+
+   The fortran and c compilers (f77 and cc) must be in a directory in 
+your path.  On Solaris systems, they are likely found in /opt/SUNWspro/bin.  
+On SunOS systems they are most likely found in /usr/lang.
+
+   The make command must also be in your path.  Under Solaris, it is 
+in /usr/ccs/bin while Under SunOS, it is likely found in /usr/bin/make.
+
+   In the installation, you will be editing some UniPOPS files.
+Remember which files you have edited.  We suggest that you copy any
+locally edited files to a non-UniPOPS location for safekeeping.  This
+should make installation of future versions easier (you will know which
+files you changed in the old version) as well as make it easier for us
+to tell which files you've altered should you ask us to help you out
+with any problems.
+
+
+4.1 Editing a Controlling Script.
+---------------------------------
+
+   The master Makefile in $popsdir/sunbin is a monster.  A smaller
+shell script, makelocal, is used to control the behavior of this
+monster.  Copy makelocal to some other file name (e.g., makemysystem)
+and edit it as appropriate and as outlined below for your system.
+Type the following:
+
+   % cd $popsdir/sunbin
+
+   [move to the sunbin area]
+
+   % cp makelocal makemysystem
+
+   [copy makelocal to some other file for editing].
+
+   % chmod +x makemysystem
+
+   [make makemysystem executable]
+
+   % vi makemysystem
+
+   [edit the makemysystem file.  Obviously you can use any editor that you
+    are familiar with; vi is used above as an example only]
+
+   The makelocal file is heavily commented to help you set the values
+appropriate for your system.   The following comments are best
+understood while looking at a copy of makelocal (and possibly the man
+pages for your C and f77 compilers). The current default values
+work, unedited, within NRAO.
+
+   Optimization at the -O2 level should be safe.  The most recent (with
+Solaris) C and Fortran compilers now uses -xO[1234] to indicate
+optimization level, while previous version used -O[1234].  There are
+therefor two flags, one each for the Fortran and C optimization
+levels.  Optimization at higher levels (3 and 4) may work, but has not
+been tested.
+
+   Sun's compilers have an optional flag, -xlibmil (-libmil in earlier
+versions) which, when used, directs the compiler to use the
+appropriate in-line math functions for your architecture.  Check
+the man pages for f77 and cc to see if this is an option for the
+compilers available on your system.  Alternatively, you may need to
+look in /opt/SUNWspro, /usr/lang, or /usr/lib (or wherever your
+libraries are found) to find the f77 in-line math library, libm.il,
+and explicitly set these values in makemysystem.
+
+   Use the DIEEEHACK options if using Fortran 1.4 on a sun3, this will
+not be needed by most installations (and has not been recently tested).
+It is very unlikely that any users now use this flag.
+
+   The LOCALMAILLIST variable should be set to the mailing address of a
+local person.  This is used to construct the comments.exe script which
+is used by the UniPOPS REPORT facility to mail comments to the UniPOPS
+programming staff as well as any locally defined persons.
+LOCALMAILLIST can have more than one address.
+
+   The value of USEX and USESUNVIEW determine which display parts are
+compiled (X11 if USEX is TRUE, sunview if USESUNVIEW is TRUE, note
+that BOTH may be true). If you only want to compile the X11 and omit
+the sunview dependent parts of UniPOPS, set USEX to TRUE and
+USESUNVIEW to FALSE.  If you want to compile the sunview and omit the
+X11 dependent parts of UniPOPS, set USEX to FALSE and USESUNVIEW to TRUE.
+The default is to only compile the X11 display library.
+
+   NOTE: UniPOPS attempts to determine your chosen window type
+   (sunview or X), by looking first at the value of the DISPLAY
+   environment variable.  If it is set, X is assumed, otherwise if the
+   value of the TERM environment variable starts with 'sun', sunview is
+   assumed, and finally, if the program can not make either of these
+   assumptions, the user is asked which graphics type to use.  It is
+   clearly possible, then, for the program to assume the wrong graphics
+   type or for a user to select the wrong graphics type, although in
+   practice it is not likely.
+
+
+4.2 Making UniPOPS.
+-------------------
+
+   With makemysystem edited, type:
+
+   % cd $popsdir/sunbin
+   % makemysystem links
+
+   [this makes sure that certain symbolic links are correct] [You will
+   see an error message: "sccs: cannot open SCCS" which should be
+   followed by "*** Error code 1 (ignored)".  This is fine and can
+   safely be ignored.]
+
+   % makemysystem cvall
+
+   [If you have any problems and you don't know why give us a call or send 
+    e-mail.  If you have a problem and you fix it, send us an e-mail message 
+    so we can warn others about it in future releases.]
+
+   The cvall target will compile only the non-online-data versions of
+the programs (i.e. you can not access the on-line data at either the
+12-meter or the 140-foot telescope using anything compiled with the
+cvall target).  It is probably adequate for most non-NRAO
+installation.  However, you may wish to have remote access to current
+data from the 140-foot telescope in Green Bank.  You need special
+permission from the Green Bank staff to do this, contact Ron
+Maddalena, rmaddale@nrao.edu or 304-456-2207.  To compile the programs
+necessary for remote Green Bank data access, type:
+
+   % cd $popsdir/sunbin
+   % makemysystem gball
+
+    There is currently no remote access for 12-meter data so you should
+not need to compile tucline.exe or tuccondar.exe, the 12-m on-line
+specific versions of UniPOPS.
+
+5.0 Local Modifications.
+------------------------
+
+   You will need to tailor UniPOPS to your own computer system.  For
+example, UniPOPS uses a number of environment variables and shell
+scripts (mostly C-Shell scripts), some of which will need to be
+modified.  UniPOPS knowledge of printers is kept in a printers data
+base file that needs to be updated to reflect your configuration of
+printers.  You may want to modify and use the suite of "dot" files in
+the $sunbin/sys.unipops directory.
+
+   The environment variables which MUST be set before using the program
+are described below.  [These are also described in Appendix M of the
+UniPOPS Cookbook.]  Also described are some suggested modifications to
+some scripts and "dot" files, found in sys.unipops, should you choose
+to use these.  Even if you decide not to use the suggested "dot" files,
+it is worthwhile to examine them to see one way an environment can be
+prepared for UniPOPS use.
+
+   NOTE: As should be obvious from the "dot" files as well as most of
+   the UniPOPS shell scripts, NRAO UniPOPS accounts have traditionally
+   used the csh shell.  The descriptions below are therefore generally
+   only valid for csh users.  Users of other shells can contact Bob
+   Garwood for any advice.
+
+5.1 Environmental Variables
+---------------------------
+
+   A number of environment variables must be properly set in order for
+anyone to run UniPOPS. These variables are described in Appendix M of
+the UniPOPS Cookbook.  They include:
+
+popsversion - the version of UniPOPS you want to run.  For this
+   release, its value should be either 3.5 or old.
+
+popsdir - the absolute (not relative) path name of the 3.5 directory.
+   This should ideally be constructed using popsversion.  For example,
+   if UniPOPS is installed at the top level of an account named unipops
+   then "setenv popsdir ~unipops/$popsversion/" should correctly set
+   popsdir for the c-shell.  popsdir must end in a trailing "/".
+
+popsproc1 and popsproc2 - the path names of any two directories
+   containing POPS procedures.  The UniPOPS BATCH verb is used to read
+   in procedures or other UniPOPS commands as if they had been entered
+   from the keyboard.  The BATCH verb searches for the indicated text
+   file in the directory that the UniPOPS program was started from,
+   popsproc1, and popsproc2 (in that order).  In addition, the EDIT
+   verb will search for files in these same directories in the same
+   order.  It is recommended that at one of these (usually popsproc1)
+   be set to ${popsdir}procedures in order that the user can find the
+   standard set of procedures which are distributed with UniPOPS.
+
+popseditor - controls the editor that is used when you edit procedures
+   from within UniPOPS.   Use whatever text editor you are most
+   comfortably with and is available on your system.  The value of this
+   string must match one found in edit2.exe (see Section 5.4 of this
+   document).
+
+popsprinter - if set, UniPOPS assumes that this is the name of the
+   printer you wish to use for hardcopy.  This variable should match an
+   entry in the printers file (see Section 5.3).  If not set or if it
+   does not match an entry in the printers file, the user is shown the
+   list of available printers and asked to choose one.  Setting this
+   variable eliminates one question at startup.
+
+path -- must include ${popsdir}sunbin and ${popsdir}utilities.
+
+   To set the environment variables in a user's account, you have a
+choice of modifying and using setup ("dot") files provided by us in the
+sys.unipops directory or modifying "dot" files that already exist in
+the user's account.  You should perform step 5.2 and either steps 5.2.1
+or 5.2.2.
+
+5.2 Modifying $popsdir/sys.unipops/prepare.unipops.
+---------------------------------------------------
+
+   The $popsdir/sys.unipops/prepare.unipops shell script prepares the
+directory from which it is run for using UniPOPS.  The script creates a
+~/.unipops file which contains the definitions of most of the required
+environment variables.  It also calls $popsdir/sunbin/mkfiles.unipops
+which creates the files that UniPOPS needs in order to run (memory
+files, and empty data and log files).
+
+   At some point prepare.unipops 'sources' the file
+`domainname`.prepare.unipops if it exists in the $popsdir/sys.unipops
+directory  (i.e. if your domainname is astro.edu, prepare.unipops will
+look for the file astro.edu.prepare.unipops in the $popsdir/sys.unipops
+directory).   You should create and modify your own
+`domainname`.prepare.unipops file with the following:
+
+   % cd $popsdir/sys.unipops
+
+   [ Move to the directory. ]
+
+   % cp cv.prepare.unipops `domainname`.prepare.unipops
+
+   [ copies a model file for you to alter. ]
+
+   % vi `domainname`.prepare.unipops
+ 
+   [ or use the editor of your choice. ]
+
+The file may contains a list of editors and window managers.  You should
+add (or subtract) to the lists any editors or window managers you have
+(or don't have).  Look at prepare.unipops for additional examples
+as well as the several `domainname`.prepare.unipops files that 
+exist for each of the NRAO domainnames where unipops is installed.
+You should also read the NOTE at the end of the section 5.2.1.
+
+
+5.2.1 Modifying Other $popsdir/sys.unipops Files.
+-------------------------------------------------
+
+   The remaining files in the $popsdir/sys.unipops directory should be
+considered as suggestions of what a UniPOPS user should use for "dot"
+files.  You may elect not to use these "dot" files, in which case you
+should skip to step 5.2.2.
+
+   It is important at this point, if you chose to use these default
+"dot" files, to examine all the files in the $popsdir/sys.unipops
+directory and correctly modify them.  You should then copy the "dot"
+files into the root directory of everyone who wants to use UniPOPS.
+There are examples of "dot" files using the c-shell as well as ones
+that use the bash shell.
+
+   NOTE: The "dot" files in $popsdir/sys.unipops (.login, .cshrc, etc)
+   often reference larger files in the same directory.  It is suggested
+   that each user of UniPOPS copy the base "dot" files (.login, .cshrc,
+   etc) to their own directory leaving the larger files in
+   sys.unipops.  This allows you to maintain one set of files that all
+   users use.  However, for small or personal installation, this is
+   probably not necessary.
+
+   NOTE: In each of the files in the sys.unipops directory, environment
+   variables are built up by assuming that UniPOPS is installed in an
+   account named unipops.  If this is NOT the case, you will want to
+   change ALL occurrences of ~unipops in these files to the appropriate
+   path name for the root of this installation.  That is, change all
+   occurrences of "~unipops" to "<yourpath>".  The files also assume
+   that users will want to run UniPOPS from their home directories.
+
+
+
+5.2.2 Modifying User's Existing Setup ("dot") Files
+---------------------------------------------------
+
+  If you do not use the files in the sys.unipops directory (i.e., you
+skipped step 5.2.1), then you will have to modify the .login (or
+equivalent) files in the accounts of anyone who wants to run UniPOPS.
+The additions to a .login file should look like the following
+(additions to the startup files for other shells are similar):
+
+	setenv popsversion old
+	# The version of UniPOPS you want to use; old, by definition,
+	# is always the same as the latest release if you maintain
+	# the symbolic link as described elsewhere (see Section 5.5 below).
+
+	setenv popsdir <yourpath>/$popsversion/
+	# The final slash is required
+
+	setenv popsprinter postscript
+	# Choices are:  whatever is the name of a printer in the 
+	# $popsdir/sunbin/printer file (see Section 5.3).
+
+	if (-e ~/.unipops) then
+      		source ~/.unipops
+   	else
+      		$popsdir/sys.unipops/prepare.unipops
+      		source ~/.unipops
+  	endif
+	# Needed if the users wants to prepare their home directory
+	# for running UniPOPS.  If you will not be using prepare.unipops or
+        # .unipops then you need to accomplish in the .login file what
+        # prepare.unipops does.  mkfiles.unipops can be used to put the
+        # files unipops requires into a directory (see Sections 6.0 and 6.1).
+
+The remaining environmental variables are set by the .unipops file,
+produced by the prepare.unipops script (see 5.2 above), whenever you
+log in.
+
+The basic idea is simple, at some time during startup the environment
+variables described in Section 5.1 are set.  Any way you choose to do
+that is fine.
+
+    IMPORTANT NOTE: Some .login files contain an "interactive shell
+only" section.  This is generally indicated by an "exit" at some point
+in the middle of the .login file.  A non-interactive shell will exit
+the .login file at this point.  The above modifications to your .login
+file MUST appear before ANY possible exit from your .login file.
+Placing them at the end of the .login file may not be sufficient.  If
+you see error messages about things like "mess.exe" not found when you
+first start up UniPOPS, it is likely that the above modifications were
+placed after some exit in your .login file.  Move them up before any
+possible exit from the .login file.
+
+5.3 Printers
+cd $------------
+
+    The information that UniPOPS needs on all printers that
+you want UniPOPS to use must be located in a file name "printers" in
+the $popsdir/sunbin directory.  There is a heavily commented file,
+printers.example, that you should find in $popsdir/sunbin as well as
+the printers file that is currently in use in Charlottesville,
+printers.cv.  The simplest way to create a printers file appropriate
+for your installation is to copy the example file to "printers" and
+then edit the copy.
+
+	% cd $popsdir/sunbin
+	% cp printers.example printers
+	% vi printers
+
+The comments in printers.example and these instructions should be
+sufficient to create one for your use.   These are the basic rules:
+
+Lines having a hash mark, #, at ANY place within the line are
+completely ignored.
+
+Each separate printer or mode of a printer must have a separate line in
+the printers file.
+
+Each entry has five fields, you must supply values for the first three
+fields while the last two fields may be empty.  Fields are separated by
+a colon ":".  The field are, in order, printer name, printer type,
+print command, text filter, and description.  There must be no white
+space in the first 2 fields.  Only the first entry in the file for a
+given printer name will ever be used.  Printer names must be less than
+16 characters.
+
+So much for the rules, here are the explanations for each field:
+
+printer name - this is the name by which users of UniPOPS will select
+	that printer.  Users should set the popsprinter environment
+	variable (see Section 5.1) to this name if they want to use
+	this printer.  If popsprinter is not set or its match is not
+	found in the printers file, users will be shown a list of
+	printer names and descriptions and asked to choose a printer.
+	This name is the name they will be shown.  It need not be the
+	name of a printer that the lpr command recognizes, but it
+	probably will create less confusion for users if you use the
+	same name.
+
+printer type - this must be one of the following:
+
+		postscript, qms, quic, hpgl, text, or none.
+
+	The "text" type indicates that the printer is not capable of
+	any graphics.
+
+	Type "none" is a special entry that is used when the user
+	indicates that no output graphics device should be used.  The
+	print command associated with a "none" type should be those
+	required for formatting and printing simple ASCII text.
+
+	Note: The type "none" is used by the EXPLAIN facility to
+	generate hard copies of a specific topic.  It MUST be present
+	in your printers file in order to select the "P" option from
+	within EXPLAIN.  See the printers.cv file for an example.
+
+	The meanings of the other possible printer types should be
+	obvious.  If you are not sure if your printer is one of these
+	types, contact Bob Garwood.
+
+print command - This should be a set of Unix commands that expect
+	standard input and send the result to the printer.  It is
+	guaranteed that this command is the last command in a
+	pipeline.
+
+text filter - This is a filter that expects standard input and
+	generates standard output (which is then fed to the print
+	command you entered in the previous field).  The text filter
+	should translate text into an appropriate format for printing
+	via the print command.  This field can be left blank.
+
+Description - this is a simple description of the printer (location,
+	type, etc) that is shown to users who have not set the
+	popsprinter environmental variable (see 5.1 and 5.2) to a
+	printer name found in the printers file.
+
+There are several examples in printers.example that should aid you.
+These examples include ways you can set up a "printer" that captures
+postscript output to a file (useful if you want to keep that plot
+around on disk for other uses).
+
+New printers can easily be added to this file as they become
+available.  Users can use different printers of the same type as they
+please (in past versions, all users of a specific type of printer were
+forced to use the same printer for any given installation).  But users
+must restart the program any time they wish to change printers.
+
+   NOTE: It is also possible to print to a remote printer.  We use this
+   at the 12-meter to enable remote observers to have hardcopy
+   magically appear at their own printer while running UniPOPS at the
+   12-meter.  Here is one way to accomplish this.  The appropriate
+   entry in the printers file for printing to a postscript file is:
+
+	remote:postscript:remote.printer:lwf:Remote printing shell script
+
+   The key here is that the print command is "remote.printer" which is
+   a shell script.  This script might look like the following:
+
+	#!/bin/csh -f
+	cat - > remote.ps.$$
+	scp remote.ps.$$ username@hostname:remote.ps.$$
+	ssh -l username hostname lpr -Pprinter_name -r -s remote.ps.$$
+	/bin/rm -f remote.ps.$$
+
+   This captures the output to a file, remote.ps.$$ and uses scp to
+   copy that file to 'username' at 'hostname'(you would change those as
+   appropriate).  It uses ssh to log on to the remote host and print
+   that file, giving instructions to lpr to remove the file when it has
+   finished.  Finally, it removes the local copy of the output.
+   Additionally, you could use echo to display a message announcing the
+   successful completion of the remote printing and you could do
+   additional error checking not shown here.
+
+   This example uses the secure shell (ssh and scp) to interact with
+   the remote host.  See your local system support staff for more
+   information on the secure shell if you need to use this ability.
+
+5.4 Editors
+-----------
+
+   The edit2.exe script may need to be modified.   Within edit2.exe
+(found in the $popsdir/sunbin directory) is a list of available editors
+divided into those that use the window environment and those that
+don't.  You may need to edit this file if you have editors that you
+like that we don't have or if we have editors that you don't have.
+These are the only editors that the UniPOPS EDIT command will
+recognize.  If a user sets the popseditor environment variable (see
+5.1), it must match an editor found in this file.  Note that this list
+of editors is a completely separate list from that found in
+prepare.unipops (see 5.2).  It is your responsibility to ensure that
+both lists are the same.
+
+5.5 Symbolic Link to "old".
+---------------------------
+
+   In order to make the transition between versions of the program as
+painless as possible, we suggest that you maintain a symbolic link in
+the root UniPOPS directory between old and the most recent version of
+UniPOPS.
+
+   % cd <yourpath>
+
+   [Change directories to the top of the UniPOPS path, where you have
+    just installed this version]
+
+   If you have an older version of UniPOPS, you probably have an
+existing old symbolic link.  This must first be removed.
+
+    % rm old
+    % ln -s 3.5 old
+ 
+    [make a new symbolic link from old pointing to 3.5]
+
+    This allows users to maintain their "dot" files with path and
+environment variables referencing "old" rather than any specific
+version of UniPOPS.  Simply changing where old points to will
+automatically provide these users with the most recent version of the
+program without having to remember to change anything in their "dot"
+files.
+
+
+5.6 Modifying Utility Scripts.
+------------------------------
+
+   The tape-reading utilities are located in the $popsdir/utilities
+directory and may need to be modified.  Their names all start off with
+the characters cvt. These are utilities for conversions between older
+tape formats formerly in use in Green Bank and the UniPOPS SDD format.
+cvt.disk-disk does not require any changes but cvt.tape-disk and
+cvt.disk-tape, and cvt.tele-recs may require changes.  cvt.tape-disk.cv
+and cvt.disk-tape.cv illustrate how alterations were made to use remote
+tape drives using the unix rsh facility.  cvt.tele-recs is used to
+convert 140-ft archive tapes to individual record SDD files.  If that
+conversion is not likely to be used at your installation, you should
+not waste your time modifying cvt.tele-recs.  Similarly, cvt.disk-tape
+and cvt.tape-disk all convert older Green Bank data formats to and from
+tape.  Again, if you do not expect to need to convert old (non-SDD)
+data from tape to disk or from disk to tape, then do not waste your
+time modifying these utilities.
+
+
+5.7 Adding Messages and News Items.
+-----------------------------------
+
+   UniPOPS has a messages and news facility (controlled by messages.exe
+and news.exe in the $popsdir/sunbin directory).  The primary difference
+between messages and news is that a user can chose to read, or not to
+read, news items when the program starts and messages are simply shown
+to the user without any option to skip them.  There are separate
+directory trees for line and condar of each type.
+
+   messages: In the $popsdir/cmessages or $popsdir/lmessages
+      directories you can leave two text files, named startup and
+      motd, whose contents are always displayed, if they exist.
+      Messages can also be left in the following subdirectories,
+      AlwaysAll, Always_username, OnceAll, and Once_username where
+      username is a specific users username (i.e.  Always_bgarwood, or
+      Once_rmaddale, etc).  Messages in Always* are always displayed
+      (like startup and motd) while messages in Once* are only display
+      once for each recipient.
+
+   news: In the $popsdir/cnews and $popsdir/lnews directories. Similar
+	to messages (no startup or motd).
+
+6.0 Preparing a directory in which UniPOPS is to be Run.
+--------------------------------------------------------
+
+  Each user should have their own directory from which to run UniPOPS
+and each directory should be prepared for running UniPOPS.  UniPOPS
+locks the current directory while it is running (condar and line may be
+running at the same time for any one user) so subsequent users will
+know if someone else is running UniPOPS in the same directory.
+
+   NOTE: There are a few reasons for locking the directory.  First, the
+   MEMORY and RECOVER file are used to store the environment of the
+   program for later retrieval.  If two users were to use the program
+   at the same time from the same subdirectory, confusion might result
+   if the users attempted to save the state of the program at different
+   times.  Confusion might also result if simultaneous users access the
+   same data (save and keep) files.
+
+   Although not recommended, multiple users from the same subdirectory
+is not a problem for UniPOPS and the program will function normally.
+Careful, coordinated users should be able to safely ignore the LOCK
+file at startup.  However, before more than one user can start the
+program from the same directory it is necessary to first either delete
+or ignore the LOCK file that was created when the first user started
+the program.  The UniPOPS startup dialogue will offer users the option
+of deleting or ignoring existing LOCK files.
+
+   The users should consider the merits and perils of running two
+simultaneous UniPOPS sessions in the same directory.  The recommended
+alternative is to prepare a separate subdirectory for each user
+(thereby assuring the uniqueness of the MEMORY and RECOVER files) and
+sharing the data files using the FILES verb and the relative path names
+of the data files.  Preparing a directory entails creating a set of
+files in the directory.  A directory needs to be prepared only once
+(unless the user accidentally or purposely deletes the files required
+by UniPOPS).
+
+
+6.1 Automatically Preparing a Home Directory.
+---------------------------------------------
+
+  If you have chosen to use the provided "dot" files or otherwise
+invoke the prepare.unipops script, the preparation of the user's home
+directory is automatic.
+
+  The script prepare.unipops should ask some questions and will put a
+number of files in the user's home directory.  The files are:
+
+         L and C (line and continuum) versions of:
+
+            CMDLOG - if command login is turned on, commands will be appended
+                     to this file - default is no command logging.
+            PRINTOUT -  output can be appended to this file, default is to
+                     send all output to the window/terminal.
+            MEMORY - the default memory file.
+            DATA, KEEP, SAVE - empty data, keep and save files.
+
+   NOTE: UniPOPS is now sufficiently smart that even if all of the
+   above files are absent from the user's home directory, appropriate
+   questions will be asked of the user to generate these files.  Only
+   the MEMORY file need be present for UniPOPS to run.  The
+   $popsdir/prepare.unipops script creates the additional files as a
+   convenience to the novice user of the program.
+
+  In your home directory, a file by the name of .unipops will also have
+been created.  Examine this file to make sure that environment
+variables are set correctly.
+
+
+6.2. Preparing Directories other than a Home Directory.
+-------------------------------------------------------
+
+   You can also prepare any directory for use by UniPOPS.  To prepare a
+directory other than a user's home directory, issue the following
+commands:
+
+      % cd <directory>
+	
+      [cd to the directory from which you wish to run UniPOPS.]
+
+If the environmental variables are not properly set, type:
+
+   % source ~/.unipops
+
+Then:
+
+      % mkfiles.unipops
+
+      [Creates the necessary files in that directory.  The files should
+       be the same as those listed in Section 6.1.]
+
+
+6.3.  Running and Testing UniPOPS.
+----------------------------------
+
+  Unless you have made arrangements with the staff in Green Bank, you
+will not be allowed to remotely access on-line data from the 140-ft.
+If you have permission, then you can use the gbline or gbcondar
+versions of UniPOPS.  Remote access of on-line 12-m data is currently
+impossible.  To use UniPOPS for data you have placed on your local
+computer system, type cvline or cvcondar.  The Cookbook is quite
+helpful in getting started and using the program.  See especially
+Chapter 2.  For example:
+
+   Move to the directory from which you want to run UniPOPS
+
+   % cd <directory>
+
+If the environmental variables are not properly set by your "dot" files
+then type:
+
+   % source ~/.unipops
+
+in order pick up the values.  Then start up the desired program.  For
+example:
+
+   % cvline	(or cvcondar, gbline, or gbcondar)
+
+     The program will start up and display any existing messages and
+     news items.  If NOT running in a windows environment, you will be
+     asked what type of graphics output you wish (useful if you are
+     running from tektronix  or tektronix compatible terminal).  If the
+     popsprinter environmental variable is not set you will be asked
+     for the name of your printer.
+
+     If you are running gbline or gbcondar, you will be asked for your
+     project code; enter your project code as assigned by the Green
+     Bank staff and you will be told if you have authority to access
+     that project's data.  If you are not running gbline or gbcondar,
+     you will not be asked for a project code.
+
+     You will be shown a list of default files that will be used by
+     UniPOPS for data storage and input or output.  The empty files
+     created by prepare.unipops should be shown on this screen.  To
+     change these files, use the CHNGFILE verb after the program has
+     started.  See the Cookbook for more complete details.
+
+     Any unipops commands in your SETUP file (LSETUP or CSETUP for
+     condar or line) will be executed.   This happens "silently" so you
+     won't see any of the actual commands [although you will see any
+     error messages].  Long SETUP files, such as the default 12m setup
+     file, LSETUP.12meter found in $popsdir/procedures, can take quite
+     a while to execute.
+
+     When all of the files are opened and the SETUP file has finished,
+     you will get a "Line >" or "Condar >" prompt.  That is the POPS
+     interpreter prompt.  A graphics icon should have appeared, if
+     running in a windows environment, at some point during this stage
+     (open it to make sure it is there).
+
+     If you have an SDD data file, you should use the CHNGFILE file to
+     attach the data file to the program.  For example, if you file is
+     named MyDataFile then the following command, typed at the UniPOPS
+     prompt (indicated here by a ">") will attach that file as the
+     off-line data file (which is read-only):
+
+	> CHNGFILE CHANGE DSCANS MyDataFile
+
+     You should then try getting some data into the program (using
+     GET), displaying the data (using SHOW) and making a hard copy of
+     the graphics screen (using GCOPY).  You may also choose to use the
+     REPORT verb to make sure that the address you used in
+     LOCALMAILLIST works and that copies are also sent to the UniPOPS
+     address here in Charlottesville (this is a good opportunity to let
+     us know that you have successfully installed UniPOPS).
+
+7.0 Documentation.
+------------------
+
+   Documentation in UniPOPS consists of a set of on-line help files, a
+subset of which is a Cookbook and Reference Manual.  To print out
+either the Cookbook or Reference Manual, you must first edit a special
+Makefile called Makeman found in the $popsdir/sunbin directory and then
+run 'make' on that file.
+
+   To edit the file:
+
+	% cd $popsdir/sunbin
+	% vi Makeman
+
+You should only need to modify the variables FRMTR, PRNTR, ADDPAGE,
+TFRMTR, and PGSZ in the Makeman file.  See the comments in Makeman for
+details.
+
+   NOTE: You should be aware that the ASCII files that comprise the
+   Cookbook and Reference Manual are set up with our printer in mind
+   (using the settings you find in Makeman).  Specifically, if the
+   number of lines per page, 70, is altered you will find that page
+   breaks sometimes occur at awkward places.
+
+   NOTE: The provided Makeman file uses a freely available filter named
+   lwf to produce postscript output.  lwf is nice because it allows for
+   printing two manual pages on one physical page.  The manuals are
+   optimized to look "nice" when printed using lwf and the existing,
+   unedited Makeman file.  lwf is available via anonymous ftp from the
+   uunet archive (ftp.uu.net).  You do not need lwf to print out either
+   manual but we suggest you obtain and use it.
+
+7.1 Cookbook.
+-------------
+   
+   You can elect to receive a copy of the Cookbook from NRAO via mail.
+However, you may wish to print out a hard copy (its large, nearly 300
+pages if printed with one manual page per printed page).  Once you have
+edited the Makeman file in $popsdir/sunbin, you should run 'make' on the
+file:
+
+	% cd $popsdir/sunbin
+	% make -f Makeman cookbook
+
+The Cookbook has not changed from the version that accompanied version 3.3.
+
+7.2 Reference Manual.
+---------------------
+
+   The Reference Manual is available as explain documentation from
+within the program.  Because of its size and the fact that all of the
+contents of the Reference Manual are available on-line, we do not
+distribute paper copies of the Reference Manual.  Should you chose to
+print it out, be warned that it currently numbers over 750 pages.  To
+print out the Reference Manual, you should make sure printer has a lot of
+paper available and:
+
+	% cd $popsdir/sunbin
+	% make -f Makeman reference
+
+8.0 Known Problems.
+-------------------
+
+   Do not hesitate to ask us for help.
+
+   There are two very annoying problems that you may encounter.  The
+first is the most painful, but only applies to sunview users [yet
+another reason to use an X11 window manager].  Occasionally, the entire
+console will lock up.  Nothing you type will have any effect on any
+window (although the cursor will continue to track the mouse movements
+and things going on in any windows will appear to be functioning
+normally).  We believe this to be a problem with suncore graphics and
+is a Sun bug.  We accidentally stumbled upon a work around that seems
+to unlock the console.  Simply press the "L1" or "Stop" function key
+(usually the key in the upper left corner of the keyboard).  Wait a
+couple of seconds and you should begin to see all of the keyboard and
+mouse events that were never recognized suddenly take effect.  Its
+probably a good idea at that stage to assess any damage that may have
+been done by those delayed events.
+
+   If the above work around does not help, the only recourse you have
+is the following:  find some other way to log into your machine (i.e.
+via another workstation or terminal).  Using the unix ps command,
+identify all graphics.exe processes.  Kill these graphics.exe processes
+(with the Unix kill command) one at a time until control is returned to
+your console (you should see the graphics window[s] go away one at a
+time until, suddenly, all of those key strokes you entered that never
+produced any response occur).  Now that control has been returned to
+the console, new graphics windows should automatically appear and you
+can return to your data reduction.
+
+   A related problem, and one that can also happen with the X11
+graphics screen, is that when graphics.exe dies or is killed, shared
+memory may be left around.  Eventually this will cause the program to
+not function (it probably won't open the graphics screen).  To check on
+the existence of shared memory, use the unix ipcs command and to remove
+residual shared memory use the unix ipcrm command.  See the Unix manual
+for a discussion of ipcs and ipcrm commands.
+
+
+9.0 Cleaning Up.
+----------------
+
+   There is no simple way to eliminate things that are not needed once
+the program has been compiled.  The bulk of any savings from
+eliminating unneeded things can be achieve by eliminating the source
+code and the compiled object files in the source and utilities
+directories.  In order for us to help you out with any problems, we
+need to have these files present.  However, if you do need to save as
+much space as you can, you can remove the contents of the source,
+includes, and the subdirectories under utilities: utilities/conversion,
+utilities/diskfiles, utilities/fits, utilities/helpfiles,
+utilities/cube, utilities/point, utilities/vlbcl, utilities/vlbfo.
+Rather than simply deleting them, it might be better to archive them to
+tape so that, in the event of a problem, then can be restored to disk
+so that we can help you fix the problem.
+
+10.0 Submitting Comments, Suggestions, Bug Reports.
+---------------------------------------------------
+
+   As mentioned above, the easiest way to report a bug in the program
+is to use the REPORT verb from within UniPOPS.  This requires that
+unipops-comments@nrao.edu is understood as a valid e-mail address by
+your machine and that this address appears in comments.exe.  Please use
+REPORT not only to report bugs but also to suggest how we might improve
+the look and feel of the program (especially things like header fields
+displayed with the HEADER verb, the way SUMMARY looks, etc.).
+
+   Finally, we would like to collect any POPS procedures which you have
+found useful during your data reduction and which might prove useful to
+someone else.  You can send them either to unipops-comments@nrao.edu or
+Bob Garwood at the above addresses.  Try and make them as well
+documented as possible and to include some documentation that we can
+include as an EXPLAIN page for your submission.  Thanks.
+
+11.0 Release Schedule.
+----------------------
+
+   Development of UniPOPS is frozen.  The only changes to UniPOPS is
+to fix existing bugs.  In the future UniPOPS will be replaced by
+AIPS++.
+
+
+Checklist for Installing and Running UniPOPS
+--------------------------------------------
+
+[ ]  Extract UniPOPS from the tar tape or file using one of the 
+	methods described in Section 3.1.
+
+[ ]  Set up an environmental variable, popsdir, with the following
+	command:
+
+		setenv popsdir <yourpath>/3.5/
+
+[ ]  Create and edit your local copy of the file
+
+		$popsdir/sunbin/makemysystem
+
+	using the file $pospdir/sunbin/makelocal as a model and as described
+	in Section 4.1
+
+[ ]  Make UniPOPS by typing:
+
+		cd $popsdir/sunbin
+		makemysystem links
+		makemysystem cvall
+
+	and, maybe, typing:
+
+		makemysystem gball
+
+[ ]  Create and modify the `domainname`.prepare.unipops file in the
+	$popsdir/sys.unipops directory as outlined in Section 5.2.
+
+[ ]  Examine and modify the files in the $popsdir/sys.unipops directory
+	as outlined in Section 5.2.1 or modify the user's "dot" files
+	as outlined in Section 5.2.2.
+
+[ ]  Create a printers file for your installation by editing the
+     	example printers file:
+
+		cd $popsdir/sunbin
+		cp printers.example printers
+		vi printers      (or use the editor of your choice)
+
+[ ]  Edit the $popsdir/sunbin/edit2.exe file if necessary.
+
+[ ]  Create the symbolic link called 'old' by typing:
+
+		cd <yourpath>
+		rm old
+		ln -s 3.5 old
+
+[ ]  Modify the following files in the $popsdir/utilities directory if
+	necessary:
+
+		cvt.tape-disk	cvt.disk-tape	cvt.tele-recs
+
+	using the following files as models:
+
+		cvt.tape-disk	cvt.disk-tape	cvt.tape-disk.cv	
+		cvt.disk-tape.cv
+
+[ ]  Add any site dependent messages or news items as described
+	in Section 5.7.
+
+[ ]  If you want to print out the documentation, first edit the file:
+
+		$popsdir/sunbin/Makeman
+
+	and then print out the documentation using the commands
+	described in Sections 7.1 or 7.2.
+
+     This ends the installation of the program.
+
+[ ]  To run UniPOPS, each user must either use the "dot" files in
+     directory $popsdir/sys.unipops or modify their .login file as
+     described in Section 5.2.2
+
+[ ]  Each user must prepare the directory in which he or she wants to
+     run UniPOPS.
+
+	If the directory is their home directory, then their .login
+	file can do the 'preparing' for them as described in Section
+	6.1.
+
+	If it is a directory other than their home directory, or if
+	they want to do the 'preparing' by hand, then they should
+	follow the steps outlined in Section 6.2.
+
+[ ]  To start up UniPOPS, refer to Chapter 2 of the Cookbook or try the
+	instructions in Section 6.3 of this document.
+
+[ ]  Perform any clean-up that you want to as described in Section 9.0
+
+Changes in UniPOPS Version 3.5
+------------------------------------
+The following documents changes to UniPOPS since version 3.4.1.
+
+I. Maximum size of data changed.
+
+The data arrays may now contain up to 16384 elements (up from 10240 in 
+previous versions).  This was done to accommodate the 12m spectrometer.
+No further increases are expected.
+
+This change means that existing personal [LC]RECOVER and [LC]MEMORY files will
+need to be remade when this version is first used.  You will be prompted
+to do that the first time you start up this version of UniPOPS.  If you
+need to extract any of the contents from the old versions of these files,
+you must do so using the previous version of UniPOPS before those files
+are removed and recreated.
+
+II. UNDOOFF is now the default state.
+
+UNDO is a verb which tries to undo up to the last 2 command lines.  This
+only works if UNDOON was in effect when those lines were typed..  Previously, 
+UNDOON was the default state.  UNDO works by making a copy of the entire internal 
+contents before each command line is executed.  Two such copies are always
+kept.  With the increased size of the data arrays, the amount of time
+needed to make such a copy is now noticeable.  An informal survey of users
+indicated that few if any users ever use the UNDO verb.  Therefor, it
+was decided to make UNDOOFF the default state.  UNDO will have no effect
+in that state.  If you expect to use UNDO, you must now first type
+UNDOON to turn this capability on.
+
+III. Year displays changed to 4 digits.
+
+This is the only known Y2K bug in UniPOPS.  Several display screens
+(e.g. SHOW) display a date.  Previously, only two digits were displayed
+for these dates.  Now, 4 digits are display on all such output.
+
+
+Changes in UniPOPS Version 3.4.1.
+------------------------------------
+The following document changes to UniPOPS since version 3.4.
+
+I. FITS year-2000 DATExxxx agreement support.
+
+The most significant change is that UniPOPS now fully supports
+the FITS year-2000 DATExxxx agreement.  UniPOPS FITS readers
+(fits2uni/f2u, MREAD, READCUBE ,and the cube.exe utility)
+now correctly interpret DATE fields in the new format
+as well as the old format.  Beginning in 1999, the current
+UniPOPS FITS writers (uni2fits/u2f, MWRITE, and the
+cube.exe utility) will begin writing all DATE strings
+in the new format in compliance with the agreement.
+
+
+II. Bug fixes.
+
+A. FITS related bugs.  MWRITE and cube.exe have been writing
+the DATE out with the days and months fields reversed.  This
+has been fixed and the readers should correctly recognize 
+these past mistakes in files produced by UniPOPS when 
+re-reading these files.  The UniPOPS handling of the
+BLANK keyword was not as according to valid FITS and was
+also not internally consistent.  This has been fixed.
+
+B. Other minor bugs.  A few other minor bugs have been
+fixed including the following:
+    o There were cases where a constant could be assigned a
+	new value in the interpreter.
+    o GPARTS was not lifting the "pen" between displays of
+	multiple Gaussians
+    o There was an unnecessary check that CENTER had positive
+	values for Gaussians.
+    o Some scripts were changed to behave better under Solaris.
+
+
+
+
+New Features in UniPOPS Version 3.4.
+------------------------------------
+
+The following documents significant changes which have been made to
+the system since the printing of Version 3.3 of the Cookbook.
+
+I. Support for the Solaris operating system (SunOS 5.3).
+
+With version 3.4, UniPOPS should now compile and run under the Solaris
+operating system as well as the older SunOS operating system.  Please
+report any problems under Solaris to the UniPOPS support staff by
+using the REPORT verb in UniPOPS or sending e-mail to
+unipops-comments@nrao.edu
+
+II. New GETPOLZ verb for use at the 12-m
+
+The GETPOLZ verb was introduced to access data from the polarizer
+at the 12-m. It can currently only access filter bank data from
+the on-line data file.  This is still an experimental verb and
+its use may change in the future.
+
+III. BADCH improvements
+
+BADCH is used at the 12-m to indicate bad channels in data
+displayed on the graphics screen.  BADCH has been improved so
+that you can indicate bad channels in either spectrum of a 
+two-up display (i.e. two spectra displayed side-by-side).  
+Previously, you were limited to one spectrum at a time, even
+when both were displayed.
+
+IV. u2f and uni2fits enhancement
+
+A preview option has been added to u2f (use the -prev flag).
+This previews the file and returns arguments that one can then 
+use to invoke u2f in its "real-time" mode.  This mode writes the
+data to the FITS file without using any temporary file.
+
+Most users use uni2fits, the front end to u2f.  Uni2fits has
+been changed to use the preview option of u2f.  Users will notice
+a "previewing file" notice.  Users will also notice the improved
+speed of file conversion.  Previously, a temporary file was 
+created that was large enough to hold the largest scan that 
+UniPOPS allows - 16384 channels.  After the data was written
+to this temporary file, that file was transfered to the final
+FITS file with the unnecessary space removed.  This led to
+large temporary files and long execution speeds.  The preview
+argument to u2f provides the information necessary to 
+remove the need for a temporary file.
+
+V. FITS Matix and Cube
+ 
+The verbs and utilities that read FITS matrices and cubes have been
+improved to allow the following values of BITPIX: 8, 16, 32, -32, 64.
+
+New Features in UniPOPS Version 3.3.
+------------------------------------
+
+The following documents significant changes which have been made to the
+system since the printing of Version 3.1 of the Cookbook.  There was no
+external release of Version 3.2.
+
+I. Data Format Changes.
+
+The UniPOPS data format, SDD - Single Dish Data, was changed.  The new
+data format was implemented during the Fall of 1993.  The change
+involved the bootstrap and index portions of the format.  Most of the
+16-bit integers were replaced with 32-bit integers.  Some
+reorganization of the fields in an index entry also occurred.  A
+description of the new format and the old format can be found in
+Appendix G of the UniPOPS Cookbook and Section 2.7 of the UniPOPS
+Reference Manual.  This information is also available through the
+EXPLAIN verb under the topic name "SDD".
+
+The primary advantage of switching to the new format is that files are
+now capable of holding more scans.  We have also added a utility,
+expandsdd, that will allow you to expand the index of an existing SDD
+file.  Previously, when the index capacity was reached, your only
+option was to create a new file with a larger index (if you were not
+already at the maximum allowable size in the old format) and tediously
+copy the file scan by scan.  The new expandsdd utility eliminates this
+problem.
+
+This version (and all future version of UniPOPS) can read both the new
+format as well as the old format of SDD files transparently to the
+user.  However, access rates are slightly faster for files using the
+new SDD format.  You can use the makeindex.exe utility to remake the
+index of an SDD file in the new format.  Simply type the following at a
+Unix prompt for each file you wish to convert:
+
+	makeindex.exe file_name
+
+where "file_name" is the actual name of the file.
+
+There is a new flavor of SDD file, the individual records SDD file.
+This flavor is used to hold Green Bank individual records data (it may
+be expanded in the future to hold 12-meter individual record data).
+The new flavor is indicated by a 1 in the "Type of SDD file" field in
+the bootstrap record of an SDD file (normal SDD files have a zero in
+this field).  See the SDD documentation for more information on this
+bootstrap change.  This flavor of SDD file can only be attached as an
+RSCANS file (file type 5) with the CHNGFILE verb.   Individual records
+files are read only.  They can be accessed using the new GETIR verb
+(which also accesses any on-line individual records information).
+SUMMARY and SELECT can also be used to summarize and select this type
+of data using the RSCANS pointer as the argument.  The new utility
+cvt.tele-recs will convert a telescope archive tape from the 140-ft
+into an individual records SDD file.
+
+There are 3 new SDD header words that have been added since version
+3.1.  These are:
+
+	NORECORD   -  The number of "records" for this scan number.
+		      Where "records" refers to the number of
+		      individual records for Green Bank individual
+		      record data or the number of on-the-fly spectra
+		      in this single row of an on-the-fly map (Tucson
+		      OTF spectral line mode data).
+
+	RECORDID   -  The specific record number corresponding to this
+		      data where a record has the same meaning as
+		      described above.
+
+	PHASEID    -  The specific phase number corresponding to this
+		      data.  This is only used by individual records
+		      data.
+
+The FITS image reader (MREAD) and writer (MWRITE) as well as the cube
+reader (READCUBE) and writer (cube.exe) all now understand the FITS
+keyword EQUINOX.  This is intended to hold the equinox of the
+coordinate system used in the FITS image or cube.  The value of that
+FITS keyword is stored in the matrix header word MEQUINOX or the cube
+header word CEQUINOX.  In addition, the matrix header word MOBJECT and
+the cube header word COBJECT can now hold up to 16 characters (any
+additional characters found in an input FITS file are ignored).
+
+
+
+II. Multi-plot Cursor
+
+If you plot multiple graphs on the same screen with, for example,
+RASTER, SHOW, PLOT, etc., all cross hair and cursor verbs (CROSSHAIR,
+CLICK, MCUR, FCUR, CCUR, etc.) will return appropriate values for any
+of the plots.  Just call the desired cursor routine, center the cursor
+within the plot for which you want information, move it to the feature
+of interest, and click away.  The following restrictions apply:
+
+(a) Although you can plot an indefinite number of plots on the same
+page, you'll only be able to use the cursor routines on any of the last
+64 plots.  If this proves to be too severe a limitation, let us know
+since it would be simple for us to raise this limit in a future
+release.
+
+(b) If you overlap plots, the cursor routines will return the values
+for the first drawn plot.
+
+(c) MCUR (and the MCLICK adverb set by CLICK) will only return a value
+if you pick a matrix plot and if it is the last plot that you have
+drawn to the screen.  Likewise, CROSSHAIR will only return the value of
+the matrix at the location at which you click if and only if the matrix
+you are clicking on was the last thing that you plotted.
+
+(d) Routines like BSHOW, RSHOW, GPARTS, GDISPLAY, and GMEASURE will
+only work on the last drawn plot, which must have been a SHOW or RESHOW
+plot.
+
+(e) FLAG and FULLGRID will only work on the last drawn plot, regardless
+of its type.
+
+(f) LABEL will only work on the last drawn plot, which must have been a
+2-D plot (RASTER, CONTOUR, HLFTNE, etc.).
+
+
+
+III. New Verbs.
+
+The following verbs have been added.  Some information summarizing
+these new verbs follows this listing.  See the EXPLAIN on-line help
+facility and the new 3.3 version of the Cookbook for details.
+
+	CLICK		C2XPIX		DATE		EXEC
+	EQHISTLEV	FNAME		FUNCLEV		GETCOL
+	GETIR		GETOTF		GETROW		INT
+	MBIAS		MDIVIDE		MMINUS		MMULTIPLY
+	MPLUS		MSCALE		PUTCOL		PUTROW
+	TIME		T2YPIX		XPIX2C		YPIX2T
+
+CLICK lets you use the graphics cursor to set seven new adverbs with
+the single click of the left or right mouse button.  These seven
+adverbs (CCLICK, FCLICK, MCLICK, TCLICK, VCLICK, XCLICK, and YCLICK)
+correspond to the values that would have been returned using the cursor
+function verbs (CCUR, FCUR, MCUR, TCUR, VCUR, XCUR, and YCUR).  For
+example, suppose you wish to put the location of the peak of a feature
+and the magnitude of that peak into adverbs.  Previously, this would
+have required a use of CCUR (to return the channel number of the peak
+of the feature) and TCUR (to return the height of the peak).  Now, a
+single use of CLICK would set CCLICK and TCLICK (and the other 5
+adverbs) to values appropriate to that position (you would then use
+CCLICK and TCLICK as the values you needed).
+
+C2XPIX, XPIX2C, T2YPIX and YPIX2C are function verbs that convert the
+argument from one coordinate system to another.  The XPIX and YPIX
+coordinate system refers to the x and y pixel coordinates of the
+graphics screen while the C and T refers to the x and y coordinates of
+the data being plotted.  C2XPIX converts a c-value (channel number for
+SHOW, x-axis value for PLOT, and x-cell number for a matrix display)
+into the corresponding x-pixel value of the graphics window.  XPIX2C
+converts an x-pixel value into a c-value.  T2YPIX converts a t-value
+(temperature or y-axis value for SHOW, y-axis value for PLOT, and
+y-cell number for a matrix display) into the corresponding y-pixel
+value of the graphics window.  YPIX2T convert an y-pixel value into a
+t-value.
+
+DATE and TIME are function verbs that return the current system date
+and time as strings.  For example, PRINT TIME would print out the
+current system time.
+
+EXEC is a new verb that takes a string argument, which can consist of
+any valid POPS commands, and executes the contents of the string.  The
+real power of this verb is that it can be used within a procedure to
+execute a string of POPS commands.  Since this string can be a global
+string adverb which can vary between executions of the procedure that
+uses EXEC, you can alter the behavior of that procedure on-the-fly
+(i.e. without having to recompile the procedure).
+
+EQHISTLEV and FUNCLEV are new ways to help you set the LEVS array for
+use by the 2-D display verbs.  EQHISTLEV allows you to set an equal
+histogram display (equal number of points between each contour level)
+while FUNCLEV allows you to set the ratio of the number of points
+between each contour level for all contour levels (i.e. you can control
+the ratio in effect at each level through the use of the new FLEVS
+array adverb).
+
+FNAME is a function verb that returns the file name of the indicated
+file unit number, which must already be opened.  Files are either
+opened by calls to FOPEN or through CHNGFILE (i.e. this will also
+return the name of the basic files controlled by CHNGFILE).
+
+GETCOL, GETROW, PUTCOL and PUTROW are verbs which transfer data between
+Matrix (0) and Array (0).  GETCOL takes the indicated column of Matrix
+(0) and places it in Array (0) while GETROW does the same for the
+indicated row of Matrix (0).  PUTCOL and PUTROW transfer data values in
+the other direction.
+
+GETIR is the verb used to fetch the indicated individual record and
+phase for a given scan from both the on-line and off-line individual
+records data.  This form of data, which is described briefly above, is
+currently only available for Green Bank data.
+
+GETOTF is used to fetch a specific spectra from a 12-meter spectral
+line on-the-fly scan or mapping row.  Further analysis of OTF scans is
+done with a procedure or a stand alone program.  You should consult
+the 12-meter staff for the latest developments.
+
+INT is a new synonym for the function verb IFIX.
+
+MBIAS, MSCALE, MPLUS, MMINUS, MMULTIPLY, and MDIVIDE are the matrix
+equivalents of the verbs BIAS, SCALE, PLUS, MINUS, MULTIPLY, and
+DIVIDE.  BIAS and SCALE work on Matrix (0) while the other four verbs
+combine Matrix (1) and Matrix (0) and leave the result in Matrix (0).
+
+
+IV. Altered Verbs
+
+The behavior or syntax of the following commands has changed.  As with
+the new verbs, you should consult the on-line EXPLAIN documentation or
+the new Cookbook.
+
+	ACCUM		BATCH		BSHOW		CHNGFILE
+	CROSSHAIR	DIFF		DIVIDE		EDIT
+	GDISPLAY	GPARTS		LINETYPE	MINUS
+	MLIMITS		MULTIPLY	PLUS		RAP
+	RESHOW		RIPPLE		RSHOW		SUM
+	TELL
+
+ACCUM, RAP, SUM, PLUS, MINUS, DIFF, MULTIPLY, and DIVIDE have all been
+changed to use the new DEFMODE adverb (also used by the new verbs
+MPLUS, MMINUS, MMULTIPLY, and MDIVIDE).  DEFMODE indicates how these
+verbs, which combine values from two arrays, two locations in the same
+array, or two matrices, should deal with undefined or otherwise invalid
+data values.  The default value of DEFMODE is FALSE.  When DEFMODE is
+FALSE, the verbs put an undefined value at any location where either of
+the input values at that location are undefined.  If DEFMODE is TRUE
+then the verbs will put an undefined value at any location where both
+of the input values are undefined and will put some real value there
+when only one of the input values are undefined.  For the specific
+behavior when DEFMODE is TRUE, you should consult the documentation for
+each verb.
+
+BATCH has been changed in two ways.  It now informs you of the filename
+it is reading.  Since BATCH searches in your current directory as well
+as up to two additional directories, the feature is useful if you need
+to know what file is being read by BATCH.  BATCH also deals with errors
+during compilation of a procedure (known as edit mode) which often
+occur while a procedure is being debugged in a more graceful way.
+Previously, you were simply left in edit mode and had to type FINISH to
+return to the normal execute mode.  Now, when BATCH detects that an
+error has occurred during compilation, BATCH will supply FINISH for
+you.  You should always be returned to execute mode whenever BATCH
+finishes, even after an error.
+
+BSHOW, GDISPLAY, GPARTS, RESHOW, and RSHOW now use the current line
+type setting (set by LINETYPE) in addition to the other verbs that also
+use the current line type setting: PLOT, SHOW, VCTR and the 2-D display
+verbs.
+
+The codes for line thickness used as input to LINETYPE and CONLINE
+values were change to allow one to have labeled, thin contour lines
+with no dashes and no tick marks.  The new line thickness codes are:
+
+	0,1 - Thin (DEFAULT)
+	2   - Slightly thick
+	3   - Medium thick
+	4   - Thick
+	5   - Very thick
+
+CROSSHAIR was changed to use the new CROSSFLG adverb.  CROSSHAIR can
+display up to 5 values at each location when a mouse button is
+clicked.  CROSSFLG controls which of those 5 values are actually
+displayed.  You can now limit the amount of information to the values
+you are interested in so that the screen does not become as cluttered
+as fast as it would if all 5 values were always displayed.
+
+CHNGFILE is now somewhat easer to use.  New pointer adverbs exists for
+all file types and you only need to type in the minimum number of
+characters to distinguish the argument for the second and third
+arguments.  For example, suppose you want to attach the existing file
+MySaveFile as the `save' file.  Previously you would have typed:
+
+	> CHNGFILE CHANGE 3 MySaveFile
+
+Now, you can type:
+
+	> CHNGFILE CH SSCANS MySaveFile
+
+where CH is recognized as being CHANGE (since the only possible
+alternatives are CHANGE, CREATE, and SUBTRACT) and SSCANS is a pointer
+adverb having the value of 3.  The new pointer adverbs (e.g SSCANS) may
+be simpler to remember than their values (in this case 3).
+
+EDIT, as before, will search for a specified file from the current
+directory and, but, now, if EDIT cannot find the file there, EDIT will
+then look at the $popsproc1 or $popsproc2 directories (see Section
+5.1).  If the file is found in the $popsproc1 or $popsproc2 directory,
+EDIT will copy the file to the current directory and allow you to edit
+the file.  This feature makes it simple to edit and alter any of the
+standard procedures distributed with UniPOPS.  Simply type "EDIT
+filename", where filename is the name of the file containing the
+standard procedure (now given in the documentation for that procedure)
+and a copy of that file will be placed in your current directory for
+you to edit.  As before, if no file of that name exists in the current
+directory or in the $popsproc1 and $popsproc2 directories, a new, empty
+file will be created for you to edit in the current directory.
+
+MLIMITS now sets the array adverb MLIMS to the values that it finds.
+See the documentation for a description of what each element of MLIMS
+corresponds to.
+
+RIPPLE has been completely rewritten to be more robust.  The adverbs,
+RPERIOD, RAMPLTDE, and RPHASE are now used to hold the initial guesses
+for the period, amplitude and phase as well as the fitted results.  The
+errors of the fitted parameters can now be found in RPERERR, RAMPERR,
+and RPHAERR.  The adverbs RFIXPER, RFIXAMP, and RFIXPHA are used to
+control which parameters are held fixed, which are fitted for, and
+which have initial guesses supplied by the user, and which have initial
+guesses determined by the algorithm.  See the documentation on RIPPLE
+for complete details.  The array adverb RPARM is no longer used and has
+been eliminated.
+
+TELL has a new option, TELL STAT which summarizes the contents of the
+STATUS array.
+
+
+V.  MENUS
+
+The MENUS facility has been eliminated.  It relied on a public domain
+package that was only available for sunview and it was seldom, if ever,
+used.
+
+VI.  Procedures
+
+There are quite a number of new procedures, too many to mention here.
+Many of these are provided to users of the 12-meter (and are specific
+to that telescope).  A few are specific to users of the 140-ft.  You
+should consult the documentation for more information.  In the
+following short table, the word in the first column is the topic name
+that you should give to EXPLAIN to learn more about that topic and a
+short description of that topic is given in the second column.  This is
+not a complete list, only a list of the more interesting topics.
+
+		topic name		description
+                ----------              -----------
+		Procedures              The top level topic.  You can
+					start here to get to all of the
+					other information on
+					procedures.
+
+		Procedure-Libraries     Information on the procedures
+					that are supplied with
+					UniPOPS.
+
+		General-Procedures      Information on all of the
+					procedures intended for general
+					use.
+
+		GreenBank-Procedures    Information on procedures
+					specific to data from a Green
+					Bank telescope.
+
+		NRAO12m-Procedures      Information on procedures
+					specific to data from the NRAO
+					12-meter.
+
+		Mapping                 A set of procedures useful in
+					making 2-D maps and 3-D cubes
+					from 1-D data.
+
+		cubeinput.prc           One of the "mapping"
+					procedures.  It is a "front
+					end" to the cube.exe utility
+					that makes it easier to convert
+					a `save' file into a FITS
+					cube.
+
+		Tiles                   A set of procedures useful for
+					producing tiled displays, where
+					individual spectra are
+					displayed as tiles on the
+					graphics screen in relation to
+					their relative position on the
+					sky.
+
+		LSETUP.12meter          The standard procedures used to
+					reduce spectral line data at
+					the 12-meter.
+
+		CSETUP.12meter          The standard procedures used to
+					reduce continuum data at the
+					12-meter.
+
+VII. New Utilities
+
+The following utilities are new in version 3.3:
+
+	makeoldindex.exe	makeoldrecindex.exe	makerecindex.exe
+	expandsdd		mergesdd
+	pdfl2sdd
+	cvt.tele-recs
+
+The makeoldindex.exe, makeoldrecindex.exe, and makerecindex.exe
+utilities are related to the makindex.exe which is used to rebuild the
+index of an SDD file.  The makerecindex.exe utility will rebuild the
+index of an individual records SDD file.  The makeoldindex.exe and
+makeoldrecindex.exe utilities will rebuild the index in the old, pre
+version 3.3, format of SDD file (which may be necessary if you need to
+use an older version of UniPOPS or if you have some software of your
+own that can currently only read the original SDD format).  The current
+version of UniPOPS can read both the new and old formats transparently
+to the user (although access rates will be slightly faster for the new
+format).  The makeindex.exe utility can always be use to convert an old
+format index into a new format index.
+
+The expandsdd program allows you to expand the size of the index area
+of an existing SDD file so that you can store more data in it.  The
+syntax of this utility is:
+
+	expandsdd file_name size
+
+where file_name is the name of the SDD file and size is the number of
+scans that you want file_name to be able to hold after expansion.
+NOTE: expandsdd replaces the current file with a new file having the
+data of the old file and a new index.  Since it is possible that an
+undetected error may occur during expansion, it is a good idea if you
+make a copy of the original file before using expandsdd to protect your
+data in case of a problem.
+
+You should use the mergesdd program to combine two SDD files into a
+third, new SDD file.  The syntax of this utility is:
+
+	mergesdd input_file_1 input_file_2 new_SDD_file
+
+where input_file_1 and input_file_2 are the names of the two existing
+SDD files that you wish to merge and new_SDD_file is the name of the
+new SDD file that you want to create having the contents of the first
+two files.  There is no risk of the input files being overwritten.  The
+output file must not exist prior to using mergesdd.  If it does exist,
+mergesdd will exit without doing any work.
+
+The pdfl2sdd utility replaces the cvtpdfl2sdd.exe utility and is used
+to convert from the old 12-meter pdfl format to the UniPOPS SDD
+format.  Its syntax is simply:
+
+	pdfl2sdd pdfl_file new_SDD_file
+
+where pdfl_file is the name of the pdfl file and new_SDD_file is the
+name of the new SDD file that will hold the converted data.
+
+cvt.tele-recs is a new utility that is similar in use to
+cvt.tape-disk.  It converts an archive telescope tape from the 140-ft
+into an individual records format SDD file.

@@ -1,0 +1,74 @@
+	(REGULAR VERB)
+
+	PUTCOL, GETCOL, PUTROW, and GETROW put and get rows and
+	columns to/from Matrix (0) from/to Array (0).
+
+	Syntax:
+		PUTCOL(n)
+		GETCOL(n)
+		PUTROW(n)
+		GETROW(n)
+
+	PUTCOL(n) takes the contents of Array (0) and tries to place 
+		  the data into column n of Matrix (0).
+	PUTROW(n) takes the contents of Array (0) and tries to place
+		  the data into row n of Matrix (0).
+
+	If Array (0) has more points than Matrix (0) will hold,
+	the extra data points in Array (0) will be ignored (i.e.
+	not placed in Matrix (0)).  In other words, Array (0)
+	element 1 is placed into Matrix (0) row/column element 1,
+	element 2 is placed into row/column element 2, etc, until
+	either all of the elements in Array (0) have been placed
+	into Matrix (0) or the limit on Matrix (0) in that
+	direction (row or column) has been reached.  If Array (0)
+	has fewer data points than the column or row of 
+	Matrix (0), blank values are padded into the matrix.
+	Undefined values in Array (0) (equivalent to the value of
+	the DEFAULT adverb, which is equivalent to IEEE Inf)
+	are translated to the blank value appropriate for Matrix (0).
+
+	GETCOL(n) takes column n of Matrix (0) and tries to place
+		  the data into Array (0).
+	GETROW(n) takes row n of Matrix (0) and tries to place the
+		  data into Array (0).
+
+	If Array (0) has fewer points than the column/row of
+	Matrix (0), the extra data points are ignored (i.e. not
+	placed in Array (0)).  If Array (0) has more points than
+	the column/row of Matrix (0), the extra points are
+	padded with the DEFAULT value (IEEE Inf).
+
+	No adverbs are used of set by these verbs.
+
+	EXAMPLES:
+
+	- You want to put the current contents of Array (0) into the
+	  row number 4 of Matrix (0), the header for Matrix (0) has 
+	  already been set:
+
+		PUTROW(4)
+
+	- You have a position-velocity Matrix in Matrix (0) with the
+	  x-axis being position and the y-axis being velocity, you want
+	  to extract the spectra at the position corresponding to 
+	  x-cell 12:
+
+	  First, set up the header of Array (0):
+
+		REMOVE(0)		  <- remove current contents
+		H0(NOINT) = MH0(MNAXIS2)  <- set number of channels
+		H0(OBJECT)= MH0(MOBJECT)  <- set object name
+		H0(DELTAX)= MH0(MDELT2)   <- set channel increment
+		H0(REFPT) = MH0(MPIX2)    <- set channel reference value
+		H0(X0)    = MH0(MRVAL2)   <- set channel reference value
+
+	
+	  And then get the appropriate column :
+
+		GETCOL(12)
+
+	  Note that you may wish to set additional values in Array (0)
+	  as appropriate.
+	
+

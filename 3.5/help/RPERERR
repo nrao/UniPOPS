@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RPERERR:  (ADVERB) The error in the fitted sinusoidal'
+PRINT 'baseline period in number of channels.'
+PRINT ' '

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'VV:  (LINE) Sets both the lower and upper x-axis to '
+PRINT 'velocities for SHOW.'
+PRINT ' '
+PRINT 'VV:  (CONTINUUM) Sets both the lower and upper x-axis to '
+PRINT 'positions for SHOW.'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TAU0:  (ADVERB) First estimate of zenith optical depth for'
+PRINT 'use in SOLVETIP.'
+PRINT ' '

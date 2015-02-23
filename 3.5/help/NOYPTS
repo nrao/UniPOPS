@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'NOYPTS:  (HEADER-TUC) Number of y coordinate points in map.'
+PRINT ' '

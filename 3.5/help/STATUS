@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'STATUS:  (ARRAY-32) An array of flags which determine the'
+PRINT 'status of the program.'
+PRINT ' '

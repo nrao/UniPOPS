@@ -1,0 +1,275 @@
+#if XPLN
+	This is the table of contents for the reference manual
+
+#end
+Table of Contents
+-----------------
+
+1. Introduction -- How to Use this Manual
+
+	1.1 Who is the Reference Manual for?
+
+	1.2 What You Should Know Before Using the Reference Manual
+
+	1.3 The Structure of the Reference Manual
+
+	1.4 How to Use the Reference Manual
+
+	1.5 Conventions Used Throughout the Reference Manual
+
+2. More on.....
+
+	2.1 More on : Help Facilities
+
+		The HELP Facility
+		The EXPLAIN Facility
+		The IDENTIFY Facility
+		The SYSHELP Facility
+		The WHATIS Facility
+		The REPORT Facility
+
+	2.2 More on : Command Syntax
+
+		Command Prompts
+		Command Line and Input Lines
+		Operators and Operands (Better Known as Verbs and
+			Adverbs)
+		Contents of Command Line
+		Command Arguments
+		Names of Operators and Operands
+		Special Characters
+		Control Characters
+
+	2.3 More on : Command Modes
+
+		Execute Mode
+		Compile Mode
+		Input Mode
+		Example
+
+	2.4 More on : Memory
+
+		Memory Usage
+		Clearing or Resetting Memory
+		Exceeding Memory Limits
+		Storing and Restoring Memory to and from Disk
+		Scratching Items from Memory
+		Compressing Memory
+
+	2.5 More on : Procedure Writing
+
+		Creating a Procedure
+		Procedure Name
+		First Line in a Procedure Definition
+		Dummy Parameter Lists
+		Dummy Parameter Names
+		Passing Adverb values to Procedures NOT through
+			Argument Lists
+		Contents of Procedures
+		Procedure Writing Style
+		Regular Procedures and Function Procedures
+		Recursive Calls to Procedures
+		Installing Procedures
+		Listing Procedures
+		Editing a Procedure
+		Destroying Procedures
+
+	2.6 More on : Conditionals and Loops
+
+		Conditional Statements
+		Loops
+
+	2.7 More on : Data, Disk, and Tape Formats
+
+		140-ft Telescope Tape
+		GB-ASCII
+		IEEE-Keep
+		Modcomp-Keep
+		PC-Pops Format
+		SDD File Format
+		Modcomp Binary Representation
+		IEEE Binary Representation
+		
+3. Cross Reference
+
+	3.1 Cross Reference : Data Access
+
+		One-Dimensional (Scan) Data Access
+		Multi-Dimensional Arrays Data Access
+
+	3.2 Cross Reference : Data Analysis
+
+		One-Dimensional Array Analysis
+		Multi-Dimensional Array Analysis
+
+	3.3 Cross Reference : Data Display
+
+		Verbs for Displaying Data
+		Verbs for Modifying Displays
+		Verbs and Functions for Interacting with a Display
+		Adverbs which Modify Displays
+
+	3.4 Cross Reference : Data Documentation
+
+		One-Dimensional Data
+		Multi-Dimensional Data
+
+	3.5 Cross Reference : Input and Output
+
+		Data Files 
+		FITS Files
+		Text Files
+		Internal Input and Output
+		Hardcopies
+		Listings of Files and Directories
+		Scrolling of Text Screen
+		Command Logging
+
+	3.6 Cross Reference : System Interface
+
+	3.7 Cross Reference : Interpretor
+
+		Procedure Writing
+		Conditional and Loops
+		Creation of User-Defined Aliases and Adverbs
+		Memory Usage
+		Debug and Help Facilities
+		Math and Logical Expressions
+		Miscellaneous Features
+
+4. Adverb Dictionary
+
+	4.1 Adverbs : Types, Creation, and Uses
+
+	4.2 Array Adverbs : Dictionary
+
+	4.3 Keyword Adverbs : Dictionary
+
+	4.4 Pointer Adverbs : Dictionary
+
+	4.5 Scalar Adverbs : Dictionary
+
+	4.6 String Adverbs : Dictionary
+
+5. Verb Dictionary
+
+	5.1 Verbs : Types and Uses
+
+	5.2 Internal-Array Verbs : Dictionary
+
+	5.3 Function Verbs : Dictionary
+
+	5.4 Pseudo Verbs : Dictionary
+
+	5.5 Regular Verbs : Dictionary
+
+6. Procedure Dictionary
+
+	6.1 Procedure Libraries
+	
+	6.2 General Procedures : Dictionary
+
+	6.2 Green Bank Procedures : Dictionary
+
+	6.4 NRAO 12-meter Procedures : Dictionary
+
+7. Utilities Dictionary
+
+8. General Index
+
+============================================================================
+
+List of Tables
+--------------
+
+	Table 1.4.1 : How to Use the Reference Manual
+
+	Table 2.1.1 : Usages of the HELP Facility
+
+	Table 2.1.2 : Usages of the IDENTIFY Facility
+
+	Table 2.2.1 : Prompt Characters
+
+	Table 2.2.2 : Types of UniPOPS Operands
+
+	Table 2.2.3 : Types of UniPOPS Operators
+
+	Table 2.2.4 : Special Symbols
+
+	Table 2.2.5 : Control Sequences
+
+	Table 2.3.1 : Prompt Characters
+
+	Table 2.7.1 : Data Conversion Possibilities
+ 
+        Table 2.7.2 : Data Conversion Utilities
+
+        Table 2.7.3 : SDD File Utilities
+
+	Table 2.7.4 : 140-ft Telescope Tape: Continuum Records
+
+	Table 2.7.5 : 140-ft Telescope Tape: Continuum Data Sub-Blocks
+
+	Table 2.7.6 : 140-ft Telescope Tape: Spectral-Line Records
+
+	Table 2.7.7 : GB ASCII: Spectral-Line Scans
+
+	Table 2.7.8 : GB ASCII: Continuum Scans
+
+	Table 2.7.9 : IEEE Keep: Continuum Scans
+
+	Table 2.7.10 : IEEE Keep: Spectra-Line Scans
+
+	Table 2.7.11 : Modcomp Keep: Continuum Scans
+
+	Table 2.7.12 : Modcomp Keep: Spectral-Line Scans
+
+	Table 2.7.13 : PC vs. IEEE Binary
+
+	Table 2.7.14 : PC-Pops Index File Structure
+
+	Table 2.7.15 : SDD Bootstrap Structure
+
+	Table 2.7.16 : Old SDD Bootstrap Structure
+
+	Table 2.7.17 : SDD Index-Entry Structure
+
+	Table 2.7.18 : Old SDD Index-Entry Structure
+
+	Table 2.7.19 : SDD Observational-Type Code
+
+	Table 2.7.20 : SDD Preamble Structure
+
+	Table 4.1.1 : Types of Adverbs
+
+	Table 4.3.1 : List of Keyword Adverbs
+
+	Table 4.4.1 : Built-in Pointer Adverbs
+
+	Table 5.1.1 : Types of UniPOPS Verbs
+
+	Table 5.1.2 : Internal-Array Verbs
+
+
+============================================================================
+
+List of Figures
+---------------
+
+	Figure 2.7.1 : SDD File Format
+
+	Figure 2.7.2 : SDD Scan Format
+
+	Figure 2.7.3 : Modcomp Binary : 16 Bit Integer Words
+
+	Figure 2.7.4 : Modcomp Binary : 32 Bit Real Words
+
+	Figure 2.7.5 : Modcomp Binary : 48 Bit Double Precision Words
+
+	Figure 2.7.6 : IEEE Binary : 16 Bit Integer Words
+
+	Figure 2.7.7 : IEEE Binary : 32 Bit Integer Words
+
+	Figure 2.7.8 : IEEE Binary : 32 Bit Real Words
+
+	Figure 2.7.9 : IEEE Binary : 64 Bit Double Precision Words

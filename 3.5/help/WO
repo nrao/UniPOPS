@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'WO:  (POINTER) Indicates you want to open the file with'
+PRINT 'FOPEN with write only privelages.'
+PRINT ' '

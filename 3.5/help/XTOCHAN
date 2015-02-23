@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'XTOCHAN:  (FUNCTION) Returns the channel number that'
+PRINT 'corresponds to the given x-value, which is in units of the'
+PRINT 'present lower x-axis.'
+PRINT ' '

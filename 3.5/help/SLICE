@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'SLICE:  Slices the three-dimensional data cube specified by'
+PRINT 'READCUBE and places the slice in Matrix (0).  '
+PRINT 'Syntax: SLICE(face, lower_cell, upper_cell)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

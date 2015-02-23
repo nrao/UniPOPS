@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DISK:  (POINTER) Indicates all data files for TELL and'
+PRINT 'SUMMARY.'
+PRINT ' '

@@ -1,0 +1,32 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-      Calculates the number of channels by which the data
+L-	in Array (0) is offset in velocity from that in internal ACCUM
+L-	array.  The number of channels is stored in adverb ASHIFT
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	Will always set ASHIFT to zero.
+C------------------------- Continuum ------------------------------------
+
+	Note that both Array (0) and internal ACCUM array must contain
+	a scan.
+
+	No adverbs are used by VSHIFT.
+
+	ADVERB SET:
+
+	   ASHIFT :     The number of channels by which the data
+			in Array (0) is out of alignment with that
+			in internal ACCUM array.
+
+	EXAMPLE:
+
+	You want to average scans but they all were taken at different
+	velocities.  You specify:
+
+		VSHIFT SHIFT 
+
+	before using ACCUM or SUM to average the data.
+	

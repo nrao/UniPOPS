@@ -1,0 +1,28 @@
+	(REGULAR VERB)
+
+	Syntax:  MINIT(matrix-num)
+
+	MINIT starts up a question and answer session so that the user
+	can easily set up the header parameters for the specified
+	matrix.  The answers to the asked questions are obvious.  The
+	data and header contents of the specified matrix are
+	overwritten.
+
+	The matrices are numbered from 0 through 3.
+
+	MINIT is useful when you want to create a matrix from scratch.
+
+	No adverbs are used or set by MINIT.
+
+	EXAMPLE:
+
+	You want to plot integrated intensity as a function of
+	RA and DEC.  You must first initialize a Matrix to hold the
+	data.  To provide a matrix with header parameters, type:
+
+		MINIT(0)		Starts up MINIT utility for
+					asking user about the future
+					contents of Matrix (0).
+		MHEADER			Provides a confirmation
+					that you have set things up
+					properly.

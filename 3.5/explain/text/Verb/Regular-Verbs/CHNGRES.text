@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+	CHNGRES smooths the data in Array (0) from its initial
+	resolution to a lower resolution specified by NEWRES.  The
+	routine steps a Gaussian of appropriate FWHM through the
+	existing spectrum and performs a convolution at each position.
+
+L------------------------- Spectral Line --------------------------------
+L-      The frequency resolution, delta velocity, and bandwidth of the
+L-	scan are updated.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-      The integration time, rates, and x-axis step size of the scan
+C-	are updated.
+C------------------------- Continuum ------------------------------------
+
+	ADVERB USED:
+
+	   NEWRES    The desired resolution in channel numbers;
+		     must be > 1..  The initial value is 0.
+
+	No adverbs are set by CHNGRES.
+
+	EXAMPLE:
+
+	You want to average a scan taken at 10 MHz bandwidth with a
+	previous scan taken at 20 MHz bandwidth, which requires
+	changing the frequency resolution. Specify the following:
+
+		 SCLEAR
+		 GET0 12345			Scan taken at 10 MHz.
+		 NEWRES=2			Doubles the data resolution
+		 CHNGRES			to allow averaging data.
+		 ACCUM
+		 GET 12240			Scan taken at 20 MHz.
+		 ACCUM
+		 AVE			

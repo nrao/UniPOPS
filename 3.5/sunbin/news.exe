@@ -1,0 +1,119 @@
+#!  /bin/csh -f 
+# @(#)news.exe.sh	5.1 06/22/94
+# Shell script which dispalys topics for various kinds of messages
+# and then allows one to pick a topic to be displayed.  4 kinds of
+# topics can be listed:
+#
+#   1.  Topics for news items for all recipients; topics are not 
+#	removed from the list even after one reads the news item
+#   2.  Topics geared for a particular recipient; again, topics are
+#	not removed.
+#   3.  Topics for all recipients but which are removed from the list
+#	once the user has read the news item.
+#   4.  Topics for a particular recipient but again are removed once 
+#	the user has read the item.
+#
+#   Usage:  news.exe  <directory>  <filename>
+#   where <directory> = directory in which the various news subdirectories 
+#		can be found.  The directory contain the following 
+#		subdirectories: AlwaysAll OnceAll Always_<name> Once_<name>
+#		(substitute for <name> the login name of all recipients;  
+#		i.e.,  Always_rmaddale, Once_mclark, Always_rmaddale,...)
+#		NOTE:  If a directory exists, it cannot be empty!!
+#		All the names of files in these directories should be unique
+#		and should represent the contents of the files
+#
+#   and where <filename> = the name of a file containing log of news items 
+#		which have not been read yet.  If file doesn't exist,
+#	        one is created and all topics are inserted into file.  
+#		If it does exist, than all news topics which have been
+#		created after that file was last modified are added to the 
+#		file.  It is best to have the file as a hidden file
+#               (i.e., one whose name begins with a dot.)
+#
+#
+if ($#argv >= 2) then
+  set tmpfile=/tmp/${LOGNAME}.news
+  if (-f $tmpfile) rm $tmpfile
+# Temporary files will be called $tmpfile..
+#
+  if (-f $2) then
+   if (-w $2) then
+#    Checks that you can write to $2
+#
+     if (-e $1/OnceAll) find $1/OnceAll -newer $2 \! -type d -print | grep -v SCCS >>! ${tmpfile}E
+     if (-e $1/Once_$LOGNAME) find $1/Once_$LOGNAME \! -type d -newer $2 -print | grep -v SCCS >>! ${tmpfile}E
+     cat ${tmpfile}E >>! $2
+#    If <filename> exists, then check for all news items that have been
+#    created/modified since <filename> was created/modified. Add these items
+#    to <filename>.  
+#
+   else
+     echo "ERROR: Cannot write to file " $2 "... Continuing..."
+   endif
+  else
+#
+   if (-e $1/OnceAll) find $1/OnceAll \! -type d -print | grep -v SCCS >>! $2
+   if (-e $1/Once_$LOGNAME) find $1/Once_$LOGNAME \! -type d -print | grep -v SCCS >>! $2
+#  If filename doesn't exist, display all old messages and create filename
+#
+  endif
+#
+  if (-e $1/AlwaysAll) find $1/AlwaysAll \! -type d -print | grep -v SCCS >>! $tmpfile
+  if (-e $1/Always_$LOGNAME) find $1/Always_$LOGNAME \! -type d -print | grep -v SCCS >>! $tmpfile
+# Puts those news items which are to be always displayed into $tmpfile
+#
+  if (-f $tmpfile) then
+# (i.e., there are news items to list)
+#
+  awk -F/ '{ print $NF }' $2 $tmpfile | sort -u -o ${tmpfile}B
+# Strips out trailing file names, which should be names of news items
+# and stores results into a different $tempfile
+#
+  set c = "garbage"
+# Needs to set C for the first test in the while statement
+#
+#
+  while ($c != "" )
+   if (! -z ${tmpfile}B) then
+     echo " "
+     echo "News Items"
+     echo "----------------"
+     cat ${tmpfile}B
+     echo "----------------"
+     echo -n "Enter the name of the item you want to read or <cr> to quit: "
+     set c = $<
+     echo " "
+#    prints out header, list of news items, and asks for input
+#    for item desired
+#
+     if ($c != "") then
+      egrep -h "(/$c)"$ $2 $tmpfile >! ${tmpfile}A
+      if (! -z ${tmpfile}A) eval `echo more -d ; head -1 ${tmpfile}A`     
+#     prints out desired news item
+#
+      egrep -v "(/$c)"$ $2 >! ${tmpfile}C
+      mv -f ${tmpfile}C $2
+#
+#     Removes news item which have been read from log file
+#
+     endif
+   else
+     rm $tmpfile*
+     exit
+   endif
+  end
+  rm $tmpfile*
+#
+ else
+#
+  exit
+# $tmpfile has not been created (i.e., there are no news items) so exit
+ endif
+#
+else
+ echo "USAGE: <directory> <filename>"
+ echo "<directory> = root directory for news items"
+ echo "<filename> = log file of unread news items"
+endif
+#

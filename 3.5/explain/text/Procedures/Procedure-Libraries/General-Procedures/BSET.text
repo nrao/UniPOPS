@@ -1,0 +1,32 @@
+	BSET allows you to use the cursor to set baseline fitting
+	regions (NREGION).  Regions can be indicated in any order.
+	If overlapping regions are indicated, a warning message
+	is issued.
+
+	Syntax: BSET
+
+	File name: bset.prc
+
+	This procedure is include in LSETUP.12meter.
+
+	No adverbs are used by this procedure.
+
+	Adverbs Set:	NREGION
+
+	Global Adverbs:
+	
+		NSEG :		Set to the number of baseline regions.
+
+
+	Example:
+
+	You want to set 3 regions, you have already displayed the data on 
+	the graphics screen.  You type:
+
+		BSET
+
+	The procedure will then ask you for the number of baseline
+	regions and prompt you to use the cursor to indicate the endpoints
+	of each region.  If any regions overlap, you will be warned.
+	The global adverb NSEG will contain the number of regions
+	that you have just indicated.

@@ -1,0 +1,19 @@
+	(ARRAY ADVERB of 15 elements)
+
+	BPARM is an array which contains the parameters of the
+	Chebyshev polynomial most recently derived in baseline
+	fitting.  BPARM can also be set by the user for use as
+	input to BMODEL or BSHOW.
+
+	BPARM is used by : BMODEL    BSHOW
+
+	BPARM is set by : BASELINE    BSHAPE
+
+	The initial values of BPARM(N) are 0.
+
+	EXAMPLE:
+
+	You have just done a BASELINE and want to see the coefficients
+	of the resulting Chebyshev polynomial so you type:
+
+		PRINT BPARM

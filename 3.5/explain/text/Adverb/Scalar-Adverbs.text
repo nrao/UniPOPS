@@ -1,0 +1,82 @@
+What is a Scalar Adverb?
+------------------------
+
+	Scalar adverbs can be treated like the single-value variables
+	found in  most computer languages.  Examples of built-in scalar
+	adverb  are:  NFIT and BDROP.  For a listing of available
+	scalar adverbs, type: HELP SCALAR.
+
+	The following briefly summarizes the qualities of a scalar
+	adverb.  For more general details about adverbs, see either the
+	"Adverbs" section of the Reference Manual or EXPLAIN
+	documentation.
+
+
+Scalar Values
+-------------
+
+	Scalars can only take floating-point values.  The way each
+	adverb is used determines whether it should be considered an
+	integer, floating-point, or logical variable.  For example,
+	BMARK is assumed by UniPOPS to contain a logical value while
+	NFIT is assumed to contain an integer.
+
+	All built-in adverbs have default or initial values assigned by
+	the system.  The initial value of user-defined scalar is zero.
+
+
+Creation of Scalars
+-------------------
+
+	The user can create their own scalars through the use of the
+	SCALAR verb.  See SCALAR for details on how to create a
+	scalar.
+
+
+Querying the Value of a Scalar
+------------------------------
+
+	You can query the value of an adverb via the PRINT command.
+	'PRINT scalar-name' will print out the value of the specified
+	scalar.  For example, PRINT BDROP.
+
+
+Arguments to Procedures or Verbs
+--------------------------------
+
+	Scalars can be used to pass values to procedures or verbs.
+	For example,  if HHHH is a procedure or verb, typing HHHH(NFIT)
+	will pass the value of NFIT to HHHH.
+
+
+Other Usages of Scalars
+-----------------------
+
+	Some scalars affect the way certain verbs work (e.g., BMARK) --
+	others are used by verbs to store results (e.g.  ASHIFT).
+
+	Scalars can be used in mathematical or logical expressions.
+	For example: X = BDROP - EDROP
+
+	Some scalars are used by verbs to contain flags and should
+	either have the value of TRUE (or 1) or FALSE (or -1).  For
+	example, SPROTECT=TRUE will set the value of scalar adverb
+	SPROTECT to the value of TRUE.  TRUE and FALSE are equivalent
+	to +1 and -1, respectively, so you could type SPROTECT=1
+	instead.
+
+
+Assigning Values to Scalars
+---------------------------
+
+	The user can assign values to scalars in the following fashion:
+
+			scalar_name = value.
+
+	For example, you could type:   BDROP = SIN(2)
+	to assign the sine of 2 to the adverb BDROP.
+
+	You can also use the READ verb to assign values (see READ).
+
+
+

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'SWITCHED:  (CONTINUUM-TUCSON) Computes switched power data'
+PRINT 'from the raw phases in the digital backend scan in the'
+PRINT 'Array 0.'
+PRINT ' '
+PRINT 'CALVAL,VRMS=',CALVAL,VRMS
+PRINT ' ' 

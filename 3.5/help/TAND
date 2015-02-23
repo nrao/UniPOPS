@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TAND:  (PROC-LIBRARY) Returns the tangent of the given'
+PRINT 'parameter (in degrees).'
+PRINT ' '

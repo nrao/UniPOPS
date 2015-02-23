@@ -1,0 +1,41 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-      RATE_MAX and RATE_MIN specify the range in total slew rates
+C-      used by the SELECT verb.  The units are arcseconds per second
+C-      (or, equivalently, arcmin per minute or arcdeg per hour)
+C-      and the values of the adverbs only apply if the data are
+C-	continuum scans.
+C-
+C-	Continuum scans will be SELECTed if they have a slew
+C-	rate within the range specified by RATE_MIN through RATE_MAX,
+C-	inclusive.
+C-
+C-	If RATE_MAX is set to the DEFAULT value, there is no upper limit
+C-	to the range.  Similarly, if RATE_MIN is set to the DEFAULT
+C-	value, there is no lower limit to the range.
+C-
+C-	RATE_MIN and RATE_MAX are used by : SELECT
+C-
+C-	No verbs change RATE_MIN or RATE_MAX.
+C-
+C-	Initial values of RATE_MIN and RATE_MAX are DEFAULT.
+C-
+C-	EXAMPLE :
+C-
+C-      To select all scans having a slew rate of less than 100 arcsec
+C-	per second, specify:  
+C-
+C-		RATE_MAX = 100.0; RATE_MIN = DEFAULT
+C-
+C-      To select all scans having a slew rate greater than 50 arcsec
+C-	per sec., specify: 
+C-
+C-		RATE_MAX = DEFAULT; RATE_MIN = 50.
+C-
+C-      To select all scans with a slew rate between 50 and 100 arcsec
+C-	per sec, specify:
+C-
+C-		RATE_MAX = 100.0; RATE_MIN = 50.
+C-	
+C------------------------- Continuum --------------------------------

@@ -1,0 +1,22 @@
+	(SCALAR ADVERB)
+
+	BMOMENT and EMOMENT specify the region of Array (0) which is
+	used to compute  a moment.  BMOMENT is the first channel of the
+	region and EMOMENT is the last channel of the region.
+
+	BMOMENT and EMOMENT are used by : GMEASURE    MOMENT
+
+	No verbs change BMOMENT or EMOMENT.
+
+	The initial values of BMOMENT and EMOMENT are 0.
+
+	The user must set values for BMOMENT and EMOMENT before using
+	MOMENT and GMEASURE.  The value of EMOMENT must greater than or
+	equal to that of BMOMENT and both must be greater than zero and
+	less than the number of data channels in Array (0).
+
+	EXAMPLE :
+
+	You want to compute a moment for a region, so you specify :
+
+		BMOMENT =  90 ; EMOMENT = 160 ; MOMENT

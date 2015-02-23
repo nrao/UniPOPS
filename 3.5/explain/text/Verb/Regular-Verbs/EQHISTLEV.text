@@ -1,0 +1,39 @@
+	(REGULAR VERB)
+
+	Syntax: EQHISTLEV(min, max, num_levs)
+
+	EQHISTLEV sets the array adverb LEVS so that an equal number
+	of data points occurs between each level (i.e. an equal
+	histogram).  The data points used are those found in the region
+	of Matrix (0) described by MXMIN, MXMAX, MYMIN, and MYMAX.
+
+	min and max are the minimum and maximum levels over which you
+	want to have an equal histogram and num_levs is the number of
+	levels you want.
+
+	You can use the adverb DEFAULT for either or both of min and
+	max, in which case EQHISTLEV will use either or both of
+	the minimum and maximum values in matrix 0.
+
+	num_levs must be positive, and less than or equal to 32.
+
+	ADVERB USED:
+
+        MXMIN, MXMAX    Limits in cell numbers along the x-axis
+                        for which Matrix (0) values will be processed.
+
+        MYMIN, MYMAX    Limits in cell numbers along the y-axis
+                        for which Matrix (0) values will be processed.
+
+	ADVERB SET:
+
+	LEVS		A 32 element array used by CONTOUR, RASTER, 
+			QCONTOUR, HLFTNE, and RASTER.
+
+	EXAMPLE :
+	
+	You want an equal histogram of 12 levels between a value of
+	3.5 and whatever the maximum value in matrix 0 current is:
+
+	> EQHISTLEV(3.5,DEFAULT,12)
+

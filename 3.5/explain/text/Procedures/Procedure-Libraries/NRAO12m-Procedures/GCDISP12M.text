@@ -1,0 +1,40 @@
+	GCDISP12M displays the most recent GAIN scan for the indicated
+	filter bank.
+
+	Syntax: GCDISP12M(fb)
+
+	Short hand procedures:
+
+	G1 is equivalent to GCDISP12M(1)
+
+	G2 is equivalent to GCDISP12M(2)
+
+	The filter bank argument has the same meaning as for DISP12M.  
+	See the documentation for that procedure (as well as GDISP12M)
+	for more details.
+
+	File name: gcdisp12m.prc
+	Note: all of the above procedures are contained in this single file.
+
+	These procedures are included in LSETUP.12meter
+
+	Examples:
+
+	. You want to look at the most recent gain data for filter bank 1:
+
+		GCDISP12M(1)
+            or  G1
+
+	  If the most recent scan was scan 1037, then the data for scan 
+	  1037.01 (and 1037.02 if it is a parallel mode scan) would be 
+	  displayed.
+
+	. You want to look at the most recent gain data for filter bank 2:
+
+		GCDISP12M(2)
+            or  G2
+
+	  If the most recent scan was scan 1037, then the data for scan 
+	  1037.03 (and 1037.04 if it is a parallel mode scan) would be 
+	  displayed.
+	

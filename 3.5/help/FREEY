@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'FREEY:  Allows for the automatic rescaling of the y-axis by'
+PRINT 'the SHOW command.'
+PRINT ' '
+PRINT 'YMIN=',ymin
+print ' '

@@ -1,0 +1,44 @@
+	(REGULAR VERB)
+        	
+	Syntax:    XRANGE (min, max)
+
+L------------------------- Spectral Line --------------------------------
+L-	XRANGE will restrict data processing and display only those
+L-	channels, frequencies, or velocities within the specified
+L-	minimum and maximum values for the currently selected bottom
+L-	x-axis.  To return to the original limits, set BDROP and EDROP
+L-	to 0.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	XRANGE will restrict data processing and display only those
+C-	channels, positions, or time within the specified minimum and
+C-	maximum values for the currently selected bottom x-axis.  To
+C-	return to the original limits, set BDROP and EDROP to 0.
+C------------------------- Continuum ------------------------------------
+
+	To return either limit to its default value, use the pointer
+	adverb DEFAULT as the corresponding argument to XRANGE.
+
+	No adverbs are used by XRANGE.
+
+	ADVERBS SET:
+
+	   BDROP	The number of points at each end of the spectrum
+	   EDROP	which will not be plotted. 
+			Initial values are 0.
+
+	EXAMPLE:
+
+	.   You wish to spread out the region between -150 and -50
+	    km/sec where velocity is the bottom x-axis display, so
+	    specify:
+
+			 XRANGE(-150,-50)
+
+	.   You wish to spread out the region between channels 100 and
+	    250, where channels is the bottom axis display, so
+	    specify:
+
+			 XRANGE(100,250)
+

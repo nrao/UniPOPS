@@ -1,0 +1,25 @@
+	FOCALIZE is used to reduce a 12-m focus scan.  It uses
+	Array(0).  The results are displayed on the graphics screen.
+
+	Syntax: FOCALIZE(scan_number)
+
+	File name: focalize.prc
+
+	This procedure is often invoked through one of the following
+	two procedures:
+
+	FOCA1(scan_number) forces the subscan number of the scan number
+	given as the argument to FOCALIZE to be 1 (i.e.  if scan 45
+	is a focus scan then FOCA1(45) would result in FOCALIZE(45.01)
+	being executed).  Any subscan value present in the argument
+	to FOCA1 is ignored.
+
+	File name: foca1.prc
+
+	FOCA2(scan_number) forces the subscan number of the scan number
+	given as the argument to FOCALIZE to be 2 (i.e.  if scan 45
+	is a focus scan then FOCA2(45) would result in FOCALIZE(45.02)
+	being executed).  Any subscan value present in the argument
+	to FOCA2 is ignored.
+
+	File name: foca2.prc

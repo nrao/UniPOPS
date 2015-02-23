@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+     	Syntax:    MOVE (old-array, new-array)
+
+	MOVE moves data and header from one specified array to another
+	and clears the original array. The arrays are numbered from 0
+	through 9.
+
+	Different verbs expect data to be present in particular arrays
+	for calculations.  See individual verb descriptions for proper
+	placement of data before invoking the verb.
+
+	No adverbs are used or set by MOVE.
+
+	EXAMPLE:
+
+	You have a reduced spectrum in Array(0) and wish to compare
+	this with another scan from disk, so you specify:
+
+		MOVE (0,5)      
+
+	Saves the data of Array (0) before using another GET command
+	for the comparison scan.

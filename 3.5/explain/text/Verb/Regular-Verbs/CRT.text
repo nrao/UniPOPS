@@ -1,0 +1,30 @@
+	(REGULAR VERB)       
+
+	CRT is used to direct text output to the CRT screen.
+
+	CRT is the default print option and remains in effect until
+	changed by the verbs PRINTER or GRAPHICS.
+
+	ADVERBS SET:
+
+	
+	STATUS(14) : Specifies where the program is trying to send text
+		     output and is determined by the CRT and PRINTER
+		     commands.
+
+		     Values: 6 = standard (crt) output; 8 = printout file
+
+	STATUS(17) : Whether or not text output is going to the
+		     graphics screen and is determined by the last
+		     GRAPHICS or CRT command.
+
+		     Values: 1 (or TRUE) if GRAPHICS is in effect; -1
+		     (or FALSE) if CRT is in effect.
+
+	EXAMPLE:
+
+		 PRINTER		Directs text output to the print file
+		 TELL DSCANS		Lists the on-line and off-line data
+					scan numbers in the print file
+		 CRT			Directs text output back to the 
+					text-screen.

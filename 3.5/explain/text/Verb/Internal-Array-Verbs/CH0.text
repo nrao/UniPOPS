@@ -1,0 +1,60 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:    CH0 (header-word)
+
+	CH0 is an internal-array verb which returns a value contained 
+	within the header for the internal three-dimensional array 
+ 	(cube).  You should reference the header values by header keyword 
+	names (see the Keywords documentation for a list of available 
+	keyword adverbs).
+
+	The verb cannot appear to the left of an equal sign since you
+	cannot change the value of the cube's header.
+
+	If the verb appears in an expression or as an argument to a
+	verb or procedure, then the value of the specified header
+	word in the cube header is returned.
+
+	If CH0 is not to the left of an equal sign, and if the argument
+	you supply CH0 is a keyword adverb that refers to a real-valued
+	header parameter, then CH0 will return a floating-point value.
+
+	If CH0 is not to the left of an equal sign, and if the argument
+	you supply CH0 is a keyword adverb that refers to a string
+	header parameter, then CH0 will return a string.
+
+	No adverbs are used or set by CH0.  See the description of
+	internal-array verbs for restrictions on their use.
+
+	EXAMPLES:
+
+	.  For real-valued header parameters:
+
+		PRINT CH0(CNAXIS1)		
+		X = CH0(CDELT2)  
+
+	   Will print the number of x-axis pixels in the cube and
+	   will assign to X the value of the increment between y-axis
+	   pixels.
+
+		X = CH0(CNAXIS1)*CH0(CNAXIS2)*CH0(CNAXIS3)  
+
+	   Assigns to X the value of the total number of cells in the cube.
+
+	.  YOU CANNOT ATTEMP THE FOLLOWING:
+
+		CH0(CDATE) = "01/12/92"
+
+	   since you cannot change the value within the cube.
+
+	.  For string header parameters
+
+		PRINT CH0(CDATE)   
+	
+	   Will print the date contained in the header of Matrix (1).
+		
+		XTITLE = CONCAT('Obj:',CH0(COBJECT))
+
+	   Will assign to XTITLE the concatenation of the string 'Obj:'
+	   with the name of the observed object for the header of
+	   the cube.

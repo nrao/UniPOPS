@@ -1,0 +1,68 @@
+	CBAVG is used to average and display data from all scan numbers 
+	found in the ASTACK array for the indicated filter bank or 
+	subscan number.
+
+	Syntax:  CBAVG(fb)
+
+	Where fb is a filter bank number (1 or 2) or subscan
+	number for hybrid spectrometer data minus 10 (subscan 11 - 10 = 1).
+	For parallel mode filter bank data, subscan numbers .01 and .02
+	(or .03 and .04) would be averaged separately but not combined
+	together.  The results of both are displayed side-by-side in
+	2-up fashion using the CBOTH procedure.
+
+	The mode, parallel versus series, for filter bank data is
+	determined by examining the data for the first scan number in
+	the ASTACK array.
+
+	The type of data (filter bank versus hybrid spectrometer) is
+	set by the last use of the FBDATA or HCDATA procedure.
+	
+	Only the integer part of the scan numbers stored in the ASTACK 
+	array is used.  There is NO check for duplicate scan numbers in 
+	the stack.
+
+	The result is NOT saved to disk.  For series data or hybrid
+	spectrometer data, the result is in Array (0).  For parallel
+	data, the result for the first half (.01 or .03) is in 
+	Array (3) and the second half (.02 or .04) is in Array (4).
+
+	The normal entry point for this procedure is through the
+	two shorthand procedures: C1 and C2.
+
+	C1 is shorthand for CBAVG(1), data from the first filter bank
+	will be averaged (or subscan 11 for hybrid spectrometer data).
+
+	C2 is shorthand for CBAVG(2), data from the second filter bank
+	will be averaged (or subscan 12 for hybrid spectrometer data).
+
+	File name:  cbavg.prc
+
+	Note: The three procedures described here, CBAVG, C1, and C2, are
+	all found in the same file.
+
+	These three procedures are included in LSETUP.12meter
+
+	Example:
+
+	You have data from scans 120 through 140 (excluding scan 134),
+	which you wish to average together and display the result for
+	the second filter bank:
+
+	First, put those values into the stack:
+
+		ADDSTACK(120,140,1)
+		DELETE(134)
+
+	or
+
+		ADD(120,140)
+		DELETE(134)
+
+	Second, run CBAVG or C2:
+
+		CBAVG(2)
+
+	or
+
+		C2

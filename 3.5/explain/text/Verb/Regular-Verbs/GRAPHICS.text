@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+	GRAPHICS is used to direct output to the graphics screen.  The
+	user can switch back at any time to displaying output on the
+	text screen with the CRT command or to the printout file with
+	the PRINTER command.  CRT is the default mode.
+
+	You may want to use PLACE to change where output will be put on
+	the graphics screen.
+
+	No adverbs are used by GRAPHICS.
+
+	ADVERB SET:
+
+	STATUS(17) : Whether or not text output is going to the
+		     graphics screen and is determined by the last
+		     GRAPHICS or CRT command.
+
+		     Values: 1 (or TRUE) if GRAPHICS is in effect; -1
+		     (or FALSE) if CRT is in effect.
+
+	EXAMPLES:
+
+		GRAPHICS
+		PLACE (0,0)                   Will place "virtual" pen
+						at bottom of screen.
+		DOCUMENT THIS IS A COMMENT    Will print THIS IS A COMMENT.
+					        at the bottom of the Graphic 
+					        Screen.
+
+		PLACE (0,300)	       		  Will print "this is another
+		DOCUMENT this is another comment   comment" 300 pixels from
+						   the bottom of the graphics 
+						   screen.
+
+		CRT			      Redirects output to text screen.
+
+	

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'RSTCOLOR:  Resets the default color to white.'
+PRINT ' '

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MBIAS:  Adds the value of the scale factor given as'
+PRINT 'the argument to the data points in Matrix 0 and stores' 
+PRINT 'the result back in Matrix 0.'
+PRINT ' '
+PRINT 'Syntax: MBIAS(sfact)'
+PRINT ' ' 

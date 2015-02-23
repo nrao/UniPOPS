@@ -1,0 +1,122 @@
+	(REGULAR VERB)
+
+	Syntax:  PRNTFMT(format)
+
+	PRNTFMT changes the default format used by PRINT, FPRINT, and
+	SPRINT for printing scalar values to the format specified by
+	the user.
+
+	Format must be a string adverb or constant.  If it is blank,
+	then UniPOPS will revert to using the default format of
+	'1PG15.7.2' else it will attempt to use the contents of the
+	string as the format specification.
+
+	The format specification must follow the rules of Fortran 77
+	for printing out a single floating point value.  Legal format
+	specifications are:
+
+	1PG10.3E2       F10.3           E20.4           10X,F20.3 SP
+	F15.7
+
+	Illegal specifications include:
+
+	3I4             F10.0,/         A14             4L2 F20.3,10x
+
+
+	Only the first 14 characters of the format specification
+	will be used. 
+
+	The allowable format specifications has up to five parts:
+
+	Descriptor
+	----------
+	Used to specify scaling and sign control.  For scaling:
+
+		nP -- Scale control, n = any integer.
+
+	For sign control, choose one of the following:
+
+		SS -- No plus signs printed
+		SP -- Plus signs printed
+		S  -- Same as SS, the system default.
+
+	If you supply more than one P or S descriptor, all but the last
+	will be ignored.  You need not supply a scaling or sign
+	descriptor.
+
+	Format
+	------
+	Used to control how floating point numbers are printed.  Pick
+	one of the following:
+
+		F -- decimal point format 
+		E or D -- exponential format
+		G -- depends upon magnitude of number printed
+		     and will automatically choose between F or E.
+
+
+	Field width
+	----------- 
+	Used to control the number of characters to use for each number
+	printed.
+
+		w -- any positive number indicating the field width.
+			Make sure n is big enough to accommodate the E,
+			G, or D format.
+
+	If you don't specify w, a value of 15 is assumed.
+
+	Number of digits
+	----------------
+	Used to specify either the number of digits to the left of the
+	decimal point or the number of significant digits.
+
+		.d -- a period followed by a positive integer.  For G
+			specification, d is the number of significant
+			digits, for all E, F, and D, w is the number of
+			digits after the decimal point.
+
+	You cannot specify d if you haven't also specified w.  If you
+	don't specify d, a value of 7 is assumed.
+
+  	Number of digits in exponent
+	----------------------------
+	Used with the G, E, or D specifications to indicate how many
+	digits to use for printing exponents.  Choose one of the
+	following:
+
+		.e              Ee
+
+	where e is any positive integer that indicates the number of
+	digits to use in the exponent.
+
+	If you don't specify e, a value of 2 is assumed.  For E, G, and
+	D specifications, the value of w should be > d+4+e.
+
+
+
+	No adverbs are used or changed by PRNTFMT.
+
+	EXAMPLES:
+
+	You want to change the default print format to f4.1 so you
+	type:
+
+		PRNTFMT('F4.1')
+
+	After a while, you want to go back to the default format so you
+	specify:
+
+		PRNTFMT(' ')
+
+	
+	Other examples are:
+
+		PRNTFMT('SP1PG20.8.3')
+
+		PRNTFMT('SSF10')
+
+		STRING*12 FMT
+		FMT = "E"
+		PRNTFMT(FMT)
+

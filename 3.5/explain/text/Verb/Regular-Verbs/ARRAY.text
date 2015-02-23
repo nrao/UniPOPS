@@ -1,0 +1,79 @@
+        (REGULAR VERB)
+
+	Syntax:    ARRAY arrayname1(dim), arrayname2(dim), ....
+	 	   GLOBAL ARRAY arrayname1(dim), arrayname2(dim), ....
+
+	ARRAY creates and allocates the requested space for array
+	adverbs with the specified names.  ARRAY must be the only
+	command on the input line -- no other commands can precede
+	or follow it.
+
+	The names for arrays must follow the conventions for naming
+	adverbs and procedures.  Except for the limits of program
+	memory, the number of dimensions and size of the array are
+	unlimited. The array's dimensions immediately follow the name
+	of the array to be created and are enclosed within a single set
+	of parenthesis.
+
+	More than one array can be defined by a single ARRAY
+	statement.  One dimensional arrays consist of a single
+	dimension which indicates the number of indices in the array.
+	Two, three, and higher dimensional arrays have two, three,
+	etc.  dimensions separated by commas.
+
+	Dimensions can be specified in two manners:
+
+	.  Each dimension can consist of a single positive integer
+	   number, which indicates that the array indices start at 1
+	   and go through the specified number.   For example:  (3),
+	   (25,13), (1024,4,56).
+
+	.  Or, each dimension consists of two integer numbers,
+	   separated by a ' TO ' -- the first number indicates the
+	   lower index of the array and the last the upper index.  The
+	   lower index must be less than the upper and indices may be
+	   less than or equal to zero in this case; the size of the
+	   array is then upper index - lower index + 1.   For example:
+	   (23 to 26), (1 to 5, 6 to 10), (-23 to -20, 0 to 10, -5 to 0).
+
+	If the array is created while in execute mode, the array
+	becomes a global symbol and you can reference it from within
+	execute mode and from within all procedures.  If the array is
+	created while in compile mode (i.e., in a procedure definition)
+	and is proceeded by the word GLOBAL (as in the second example
+	of syntax above), then the array is created as a global symbol
+	and you can reference it within execute mode and all
+	procedures.  If the array is created while in compile mode
+	(i.e., in a procedure definition) and is NOT proceeded by the
+	word GLOBAL, then the array is created as a local symbol and
+	you can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global arrays cannot be redimensioned but they can be scratched
+	(deleted) using the SCRATCH verb.  Local arrays can be
+	scratched by editing the procedure definition which created the
+	array.
+
+	HELP ARRAY will list all of the global arrays (built-in and
+	user-defined) that currently exist.
+
+	NOTE: Array-Math only works for 1-dimensional arrays whose
+	lower index starts at 1 and whose upper index doesn't exceed
+	16384.
+
+	EXAMPLE: 
+
+	.  The following creates two 1 by 10 arrays named XY and XZ.
+
+	   	ARRAY XY(10), XZ(-3 to 6)   
+
+	.  The following creates two 1 by 11 arrays with indices which
+	   run from 15 to 25.
+
+	   	ARRAY ABC (15 to 25)	 
+   
+	.  The following, if included within a procedure definition,
+	   creates a global a 2 by 5 by 4 array.
+
+		GLOBAL ARRAY DEF (13 TO 14,5,-9 TO -6)   	
+

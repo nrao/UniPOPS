@@ -1,0 +1,141 @@
+	(REGULAR VERB)      
+
+	SHOW plots the contents of Array (0) on the graphics screen.
+	The routine also draws and labels the axis with the default as
+	follows:
+
+L------------------------- Spectral Line --------------------------------
+L-		y-axis              antenna temperature
+L-		x-axis (top)        velocity in units defined in the header
+L-		x-axis (bottom)     frequency offset	
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-		y-axis              antenna temperature
+C-		x-axis (top)        position offset
+C-		x-axis (bottom)     time offset	
+C------------------------- Continuum ------------------------------------
+
+	If the data in Array (0) is not that from a scan, then SHOW
+	will use channels as both the upper and lower axis labels.	    	
+
+	SHOW will automatically compute the scaling needed to display
+	the data in Array (0); however, the user may control the
+	scaling by means of the adverbs BDROP, EDROP, YMIN, and YINCR
+	and the verbs FREEY, HOLDY, XRANGE and YRANGE.
+
+	The x-axis labeling can be changed by invoking CV, VC, FV, FC,
+	CF, CC, VF, FF, or VV.  The letters represent the following:
+
+L------------------------- Spectral Line --------------------------------
+L-		C- Channel; V- Velocity; F- Frequency Offset
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-		C- Sample; V- Position Offset; F- Time Offset
+C------------------------- Continuum ------------------------------------
+
+	The first letter will be the label for the bottom x-axis and
+	the second will be the label for the top x-axis.  If the data
+	in Array (0) is not from a scan, the axis labeling will always
+	be equivalent to CC.
+
+	The x-axis labeling can also be altered by the more powerful 
+	SAXIS verb.  See its documentation for details.
+
+	The type of plot can be selected by the user to be in
+	HISTOGRAM, POINTS, or LINE mode by invoking one of these
+	verbs.
+
+	ADVERBS USED:
+
+	  BDROP 	The number of points at each end of each receiver
+	  EDROP 	channel which will not be plotted.
+			The initial values are 0.
+
+	  BMARK		If TRUE (+1), the regions last used to compute a 
+			baseline or RMS will be indicated by boxes.
+			Initial value is FALSE (-1).
+
+	  CMARK(12)     If CMARK(N) is not equal to its default value
+			(-999999), a vertical line will be drawn at
+			channel CMARK(N).
+
+	  TMARK(12)     If TMARK(N) is not equal to its default value
+			(-999999), a horizontal line will be drawn at
+			height, TMARK(N).
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-        VMARK(12)     If VMARK(N) is not equal to its default value
+L-			(-999999), a vertical line will be drawn at the
+L-			velocity VMARK(N).
+L-
+L-	  FMARK(12)     An array containing frequencies (in MHz,
+L-			relative to the center frequency) at which  to
+L-			draw vertical lines when a scan is  displayed.
+L-			The initial values of FMARK(N) are -999999,
+L-			which means that no vertical lines will be
+L-			drawn.
+L-
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	  VMARK(12)     If VMARK(N) is not equal to its default value
+C-			(-999999), a vertical line will be drawn at the
+C-			position, in degrees and relative to start of
+C-			the scan, VMARK(N).
+C-
+C-	  FMARK(12)     An array containing time (in sec., relative to
+C-			the start of scan) at which  to draw vertical
+C-			lines when a scan is  displayed.  The initial
+C-			values of FMARK(N) are -999999, which means
+C-			that no vertical lines will be drawn.
+C-
+C------------------------- Continuum ------------------------------------
+
+	  SLABEL        The value of SLABEL determines the placement of
+			the scan number and source name  on the  SHOW
+			display.  If SLABEL = 1,  the information  is
+			printed at the bottom  of the  SHOW display.
+			You should set SLABEL to 2 for  profile
+			displays where each scan is labeled  with its
+			scan number at the right-most edge of its
+			spectrum.  If SLABEL = 0, no documentation and
+			no tick mark labels will be produced.  The
+			initial value of SLABEL is 1.
+
+	  YMIN  	The minimum temperature that is to appear on graph.
+			The initial values is -9999.
+
+	  YINCR         The specified increment in degrees for y-axis
+			tick marks.  If YMIN is greater than -9999,
+			SHOW will not compute the y-axis scaling, but
+			will use the values specified by YMIN and
+			YINCR.  The initial values is 1.
+
+	  ZLINE         If TRUE (+1), a horizontal line will be drawn
+			at Y=0.  Initial value is FALSE (-1).
+
+
+	ADVERB SET:
+
+	  STATUS(21)    What the last type of plot was.  This is set by
+		        the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		        PLOTDOTS or HLFTNE commands.
+
+		        Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		        HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		        PLOTDOTS.
+
+
+	EXAMPLE:
+
+	After retrieving scan 16730 from disk, specify:
+
+		PAGE SHOW
+
+	to clear the graphics screen and plot the data.
+
+	

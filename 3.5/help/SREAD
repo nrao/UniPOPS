@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'SREAD:  Performs an internal read from the specified string'
+PRINT 'adverb, using the given format, and alters the values of'
+PRINT 'the adverbs in the provided list.'
+PRINT 'Syntax: SREAD(strng,fmt) list'
+PRINT ' '

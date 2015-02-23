@@ -1,0 +1,445 @@
+#if CKBK
+Appendix G : The SDD File Format
+--------------------------------
+#end
+#if RFRNC
+SDD File Format
+---------------
+#end
+
+	The native format of UniPOPS for storing and retrieving data is
+	called SDD.  The file consists of three parts: bootstrap,
+	index, and scans, and is a direct-access file.  The file has
+	the following layout,
+
+#if RFRNC
+		Figure 2.7.1 : SDD File Format
+#else
+			SDD File Format
+#end
+	_________________________________________________________
+	|   BOOTSTRAP
+	|--------------------------------------------------------
+	|   INDEX
+	|
+	|
+	|
+	|
+	|--------------------------------------------------------
+	|   SCANS
+	|
+	|
+	|
+	|
+	|
+	|_________________________________________________________
+
+
+	The binary representation used in an SDD file is that of the
+	IEEE standard.  The checkfile.exe utility will list the
+	contents of the bootstrap and index section of the file while
+	makeindex.exe will reconstruct the index and some of the items
+	in the bootstrap part of the file by looking at the scan
+	section of the file.  The makefile.exe utility will create an
+	empty SDD file with a specified size.
+
+	As of the fall of 1993, a new bootstrap and index format
+	are in use.  All of the primary UniPOPS programs are able to 
+	read both the old and the new forms transparently to the user.
+	The new format primarily involves switching from 16-bit
+	integers to 32-bit integers.  The makeindex.exe utility can be 
+	used to generate a new bootstrap and index for an old-format 
+	SDD file.  The makeoldindex.exe utility can be used to generate 
+	an old-format bootstrap and index.
+
+#if CKBK
+G-1 SDD: Bootstrap
+------------------
+
+#else
+	SDD: Bootstrap
+	--------------
+#end
+	The bootstrap occupies one record.  The structure and contents
+	of the bootstrap record is:
+
+#if RFRNC
+		Table 2.7.15 : SDD Bootstrap Structure
+#else
+			SDD Bootstrap Structure
+#end
+	-------------------------------------------------------------
+	Word Size   Description
+	-------------------------------------------------------------
+	Integer*4:  Number of records in index including the bootstrap
+		  	record.
+	Integer*4:  Number of data records which follow index records.
+	Integer*4:  Bytes per record.
+     	Integer*4:  Number of bytes per index entry.
+      	Integer*4:  Number of index entries already used.
+	Integer*4:  Counter which indicates whether the file has
+		  	been updated.
+	Integer*4   Type of SDD file (0 if data, 1 if individual records)
+	Integer*4   SDD version number (this is version 1)
+      	Integer*4:  Zeros to pad out the record to its full size.
+	-------------------------------------------------------------
+
+#if RFRNC CKBK
+
+#end
+#if RFRNC
+		Table 2.7.16 : Old SDD Bootstrap Structure
+#else
+			Old SDD Bootstrap Structure
+#end
+	-------------------------------------------------------------
+	Word Size   Description
+	-------------------------------------------------------------
+	Integer*2:  Number of records in index including the bootstrap
+		  	record.
+	Integer*2:  Number of data records which follow index records.
+	Integer*2:  Bytes per record.
+     	Integer*2:  Number of bytes per index entry.
+      	Integer*2:  Number of index entries already used.
+	Integer*2:  Counter which indicates whether the file has
+		  	been updated.
+      	Integer*4:  Zeros to pad out the record to its full size.
+	-------------------------------------------------------------
+
+	The actual number of bytes in each record of the file can be
+	different for each file.  Typically, it is 512 bytes per record
+	and all records in the file have the same size.
+
+	Each scan in the scan section of the file is summarized by an
+	entry in the index part of the file.  The bootstrap gives the
+	number of bytes occupied by each index entry and has a minimum
+	value of 64 bytes.  The number of bytes in each record of the
+	file must be evenly divisible by the number of bytes in each
+	index entry.
+
+	As scans are stored in the file, the number of index items
+	already used will give the number of the highest index entry
+	that describes a scan.  It need not be the entry describing the
+	last scan written to the file and not all index entries lower
+	than that one need be filled (i.e., index entries need not be
+	filled sequentially).  This number is zero for an empty SDD
+	file.  Also, as scans are stored in the file, the number of
+	records in the data section of the file is stored in the
+	bootstrap as well.  This entry in the bootstrap is zero for an
+	empty SDD file.
+
+	If there are N-1 index records (so that there are N records in
+	the bootstrap plus index), and if each index entry takes up M
+	bytes, and if the file has L byte records, the number of scans
+	which can be stored in the file will be:  (N-1)*L / M.
+	Typically, N is 129 or 513, so the number of scans which can be
+	stored in an SDD format is 1024 or 4096.  The number of records
+	in the index thus dictates the maximum number of scans which
+	the index can describe and the limit on how many scans can be
+	stored in a file.  When an SDD file is created (with the
+	makefile.exe utility), the user can specify the maximum number
+	of scans which the file will contain.  The expandsdd
+	utility can be used to expand the index size of an existing
+	SDD file.  The mergesdd utility can be used to merge two
+	SDD files into one SDD file.
+
+	The new bootstrap can be differentiated from the old format
+	by assuming the new format and looking for a 1 at the 
+	eighth 32-bit integer.  If that value is 0, then it must be
+	the old 16-bit integer format.  If that value is neither
+	1 or 0 then there must be a problem with the file.
+	Individual records data (indicated by a 1 in the seventh
+	32-bit integer location) is currently only available for
+	Green Bank data.
+
+
+#if RFRNC CKBK
+
+#end
+#if CKBK
+G-2 SDD: Index
+--------------
+
+#else
+	SDD: Index
+	----------
+#end
+	One index entry describes one scan in the scan section of the
+	file.  Each index entry occupies the number of bytes given in
+	the bootstrap.  The number of index entries depends upon the
+	number of records in the index, the number of bytes per record,
+	and the number of bytes per index entry.  In most cases, there
+	will be something like 1024 or 4096 index entries.
+
+	Each index entry must contain at least 64 bytes of the
+	following information:
+
+#if RFRNC
+		Table 2.7.17 : SDD Index-Entry Structure
+#else
+			SDD Index Entry Structure
+#end
+	-------------------------------------------------------------
+	Word Size   Description
+	-------------------------------------------------------------
+	Integer*4:    Starting record number for the scan about to be
+		      described in the index.
+	Integer*4:    Last record number for that scan.
+	Real*4:	      Horizontal Coordinate in degrees.
+	Real*4:       Vertical Coordinate in degrees.
+	Character*16: Source name.
+	Real*4:	      Scan number.
+	Real*4:       For spectral-line scans, the frequency resolution
+			in MHz.
+		      For continuum scans, the slew rate of the
+			telescope in degrees/sec.
+	Real*8:       For spectral-line scans, the rest frequency of
+			the observation in MHz.  
+		      For continuum scans, the integration time per
+		      	point.
+	Real*4:       LST in hours.
+	Real*4:       UT date in YYYY.MMDD format.
+	Integer*2:    Observing mode (Coded).
+	Integer*2:    (Record_number*64 + Phase_number)
+	Integer*2:    Position Code. 
+	Integer*2:    Zeros for padding out index item to the number
+		      	of bytes in each index entry.
+	-------------------------------------------------------------
+
+#if RFRNC
+		Table 2.7.18 : Old SDD Index-Entry Structure
+#else
+			Old SDD Index Entry Structure
+#end
+	-------------------------------------------------------------
+	Word Size   Description
+	-------------------------------------------------------------
+	Integer*2:    Starting record number for the scan about to be
+		      described in the index.
+	Integer*2:    Last record number for that scan.
+	Integer*2:    Magic number indicating format of the data.
+	Integer*2:    Position Code. 
+	Real*4:	      Horizontal Coordinate in degrees.
+	Real*4:       Vertical Coordinate in degrees.
+	Character*16: Source name.
+	Real*4:	      Scan number.
+	Real*4:       For spectral-line scans, the frequency resolution
+			in MHz.
+		      For continuum scans, the slew rate of the
+			telescope in degrees/sec.
+	Real*8:       For spectral-line scans, the rest frequency of
+			the observation in MHz.  
+		      For continuum scans, the integration time per
+		      	point.
+	Real*4:       LST in hours.
+	Real*4:       UT date in YYYY.MMDD format.
+	Integer*2:    Observing mode (Coded).
+	Integer*2:    (Record_number*64 + Phase_number)
+	Integer*2:    Zeros for padding out index item to the number
+		      	of bytes in each index entry.
+	-------------------------------------------------------------
+#if RFRNC CKBK
+
+#end
+	Notes for the current SDD format and the old SDD format:  
+
+	(1) Scans need not be written in sequential order in the index, 
+	    nor do they need to be written sequentially in the data 
+	    section.  The index entry used depends upon how the scan is 
+	    stored in the file.  For example, the KEEP verb in UniPOPS 
+	    will try to store scans into the file sequentially.  SAVE, 
+	    on the other hand, tries to write scans sequentially to the 
+	    data section of the file but will use an index entry whose 
+	    location in the file is determined by the value of the 
+	    adverb NSAVE.
+
+	(2) The scan described by the index entry is stored starting 
+	    in the given record number of the file; the last record in 
+	    that scan is also given.  For example, if index plus bootstrap 
+	    occupies 129 records and the scan you are about to write to 
+	    the file occupies 4 records, then the starting and stopping 
+	    record numbers could be 130 and 133 respectively.
+
+	(3) Magic number describes the format of the data in the data
+	    section of the file.  1=IEEE KEEP, 2=SDD(version 1)
+	    This exists only in the old SDD format index.
+
+	(4) Position code indicates what coordinate system is used to
+	    give positions in the index entry. 1=Galactic (LII,BII); 
+	    2= 1950 RA,DEC; 3=EPOCH RA,DEC; 4=Mean RA,DEC at start of 
+	    scan; 5=Apparent RA,DEC; 6=Apparent HA,DEC; 7=1950 Ecliptic; 
+	    8=EPOCH Ecliptic; 9 Mean Ecliptic at start of scan;
+	    10=Apparent Ecliptic; 11=Az,El; 12=User defined; 
+	    13=2000 RA,DEC; 14=Indicated RA,DEC
+
+	(5) For individual records SDD file (see the information on
+	    the bootstrap, currently only Green Bank data can be
+	    in an individual records file), the record number and
+	    phase number are combined in the index as shown above.
+	    For normal data files, this field is ignored but should be
+	    set to -1.
+
+	(6)  Observing mode indicates the type of observation which
+	     took the scan.  The mode is coded as follows:  
+
+		Continuum = type_code + 256
+		Spectral-Line = type_code + 512
+
+	     The possible type_codes, and what they represent (as of
+	     the data this document was prepared), are:
+
+#if RFRNC CKBK
+
+#end
+#if RFRNC
+		Table 2.7.19 : SDD Observational-Type Code
+#else
+			SDD Observational Type Code
+#end
+	    -------------------------------------------------------------
+	    Type_Code   Short Form	Description
+	    -------------------------------------------------------------
+	    0		    		No mode present
+	    1		PS  		Position Switched
+	    2		APS 		Absolute Position Switched
+	    3		FS  		Frequency Switched
+	    4		BSP 		Beam_Switch + Position_Switch
+	    5		TPON		Total Power On
+	    6		TPOF		Total Power Off
+	    7		ATP 		Absolute Total Power
+	    8		PSM  		Position Switched Map
+	    9		APM 		Absolute Position Switched Map
+	    10		FSM 		Frequency Switched Map
+	    11		TPMO		Total Power Map On
+	    12		TPMF		Total Power Map Off
+	    13		DRF  		Drift Map
+	    14		PCAL		Position Calibrate
+	    15		BCAL		Beam Calibrate
+	    16		BLNK		Blanking
+	    17		SEQ 		Sequence
+	    18		FIVE		Five Point
+	    19		MAP 		Continuum Map
+	    20		FOC 		Focalize
+	    21		NSFC		North-South Focalize
+	    22		TTIP		Total Power Tip
+	    23		STIP 		Switched Power Tip
+	    24		DON 		Continuum On
+	    25		CAL 		Calibration
+	    26		FSPS		Freq Switch + Position Switch
+	    27		BSPS		Beam Switch + Position Switch
+	    28		ZERO		Zero Check
+	    29		TLPW		Total Power
+	    30		FQSW		Frequency Switched
+	    31		NOCL		No Calibration
+	    32		PLCL		Pulse Cal
+	    33		ONOF		Continuum On-Off Scan
+	    34		BMSW 		Nutation
+	    35     	PSSW 		Position Switched, Tucson, old
+            36          DRFT		Continuum Drift Scans, Tucson
+            37          OTF             On-the-fly, Tucson
+	    38          SON             See Tucson for an explanation
+	    39          SOF             See Tucson for an explanation
+	    40          QK5             See Tucson for an explanation
+	    41          QK5A            See Tucson for an explanation
+	    42          PSS1            PS flip or PS-1 mode, Tucson
+	    43          VLBI            VLBI, Tucson
+	    44          PZC             See Tucson for an explanation
+	    45          CPZM            See Tucson for an explanation
+	    46          PSPZ            PS - polarization, Tucson
+	    47          CPZ1            See Tucson for an explanation
+	    48          CPZ2            See Tucson for an explanation
+	    -------------------------------------------------------------
+	    Note: The short form of the modes is that which makes up
+	    part of the OBSMODE header word stored within the header of
+	    the SDD scan.
+
+
+#if CKBK
+G-3 SDD: Scan Format
+--------------------
+
+#else
+	SDD: Scan Format
+	----------------
+#end
+	The scans section of the file usually has zero length when it
+	is created.  In principle, the scans section of the file can be
+	of various formats (as described by the index entry of each
+	scan).  Usually, however, the format of the data will be SDD
+	version 1.  This section is the same for both the old and
+	new SDD bootstrap and index formats.
+
+	Each scan in the data section can occupy more than one record.
+	If the scan doesn't fill a record, the record is padded with
+	zeros.
+
+	Records may be empty within the data section.  Empty records
+	are created when UniPOPS tries to overwrite a scan in the file
+	with one that takes up less space.  Also, if the scan to be
+	written occupies more records than the scan to be overwritten,
+	the new scan is usually tacked onto the end of the file and the
+	old scan is overwritten with zeros.  Thus, SDD files can have
+	holes in them.
+
+	If the stored scan is in SDD (version 1) format, the scan has
+	the following graphical format,
+
+#if RFRNC
+		Figure 2.7.2 : SDD Scan Format
+#else
+			SDD Scan Format
+#end
+	_________________________________________________________
+	|   PREAMBLE
+	|--------------------------------------------------------
+	|   HEADER-Class 1
+	|	  -Class 2
+	|	  -Class 3
+	|	  .........
+	|	  ......... 
+	|	  -Class 15
+	|--------------------------------------------------------
+	|   DATA
+	|
+	|
+	|
+	|
+	|
+	|_________________________________________________________
+
+
+	The preamble describes the locations in the header where the various
+	classes begin and end, as well as the number of classes present.  Its
+	structure is,
+
+#if RFRNC
+		Table 2.7.20 : SDD Preamble Structure
+#else
+			SDD Preamble Structure
+#end
+	    -------------------------------------------------------------
+	    Word Size   Description
+	    -------------------------------------------------------------
+	    Integer*2	Number of classes
+	    Integer*2	Starting Real*8 word for classes  (15)
+	    -------------------------------------------------------------
+
+	Up to 15 classes of header words can exist in the header.  A
+	minimum of 13 are needed.  Each class describes a particular
+	aspect of the scan (pointing, mapping, etc).  Each class must
+	contain a minimum amount of information. This minimum amount
+	must be in a certain format and must follow prescribed
+	conventions.  Extra information may exist in each class after
+	the minimum information is provided.  Each entry in each class
+	occupies a multiple of 8 bytes.  The memo, dated October 21,
+	1986 and entitled "Single Dish FITS tape", by Betty Stobie and
+	Lorrie Morgan contains a lengthier, though sometimes
+	out-of-date discussion of the uses of the various classes.  
+
+	The data section contains the data values.  The format, and
+	information on what the data structure is like, is stored in
+	the header.  UniPOPS dictates an upper limit of 16384 data
+	points but the SDD file format has no real limits.
+#if RFRNC CKBK
+
+#end

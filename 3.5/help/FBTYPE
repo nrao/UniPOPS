@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FBTYPE:  (LINE-POINTER) Indicates 12-m filter-bank data for '
+print 'CHNGONLINE, and CHNGVER.'
+PRINT ' '

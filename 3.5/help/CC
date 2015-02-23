@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CC:  Sets both the lower and upper x-axis to channel'
+PRINT 'numbers for SHOW'
+PRINT ' '

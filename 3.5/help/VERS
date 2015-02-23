@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'VERS:  (POINTER) Contains the version number of the'
+PRINT 'program.'
+PRINT ' '

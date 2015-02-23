@@ -1,0 +1,46 @@
+	XYMATRIX sets up Matrix (0) to hold data from the first
+	MAXNSAVE save bins of the current save file in an
+	x-y position grid.  Any contents of Matrix (0) are
+	overwritten and lost.
+
+	Syntax: XYMATRIX(dx, dy)
+
+	dx and dy are the increment in the x and y-position between pixels
+	on the sky (in arc seconds).  The x-position is from the XSOURCE
+	header word and the y-position is from the YSOURCE header word.
+
+	MAXNSAVE is a global adverb that must be set prior to
+	using this procedure (e.g. via PRCSTK or by hand).
+
+	The coordinate system for the two axes of Matrix (0) will
+	be chosen based on the value of the COORDCD header word of the 
+	NSAVE=1 scan.
+
+	If H0(COORDCD) is "GALACTIC" then the axes of the matrix will have 
+	coordinate labels "GLON" and "GLAT".  If the last 4 characters
+	of H0(COORDCD) for NSAVE=1 are "RADC" then the coordinate labels 
+	will be "RA" and "DEC" otherwise the coordinate labels will be 
+	"X-AXIS" and "Y-AXIS".
+
+	It is intended that the use of XYMATRIX be followed by the
+	use of XYGRID to grid the same data.
+
+	File name: xymatrix.prc
+
+	This procedure is included in maps.plib
+
+	Example:
+
+	You have a save file with data from NSAVE=1 through 
+	NSAVE=120 and you want to make an x-y position map.
+	The data are separated in X by 30 arc seconds an in
+	Y by 20 arc seconds.
+	
+
+		> MAXNSAVE=120
+		> XYMATRIX(30, 20)
+		> XYGRID
+
+	Note that XYGRID uses PRC2DIM to convert the data for each
+	spectrum into a single value that can be placed in a pixel in
+	Matrix (0).

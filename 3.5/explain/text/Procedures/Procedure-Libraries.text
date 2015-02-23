@@ -1,0 +1,45 @@
+	The computer staff has provided libraries of procedures which
+	any user can have access to.  These procedures are documented
+	below.
+
+	One installs a procedure from a library file by using the BATCH
+	command.  The syntax would be:   BATCH  <file-name>
+
+	The file-name appropriate for a particular procedure or 
+	library of procedures is indicated in the documentation for
+	that procedure.  The documentation is divided into procedures
+	of general interest and procedures of interest to users of a
+	specific telescope.  Users of the NRAO 12-meter are provided 
+	with a large number of procedures while users of the 
+	NRAO 140-foot are typically not provided with any procedures.
+	Although a particular procedure is documented as being of
+	interest to users of a specific telescope, many of these
+	procedures may be interesting to other users.
+
+	A procedure from a library file can be easily edited with
+	the EDIT command.  The syntax is: EDIT <file-name>
+	EDIT will search for the indicated file in the following
+	order: your current directory, the directory indicated by the
+	value of the popsproc1 environment variable (usually this
+	is the standard UniPOPS procedure library that this documentation
+	describes) and finally the value of the popsproc2 environment
+	variable (which may not be set to anything).  <file-name>, if
+	found in another directory, is copied to your current directory
+	and an editor started up.  You can then edit your personal
+	copy of an official procedure.  You man choose to edit one
+	of these procedures if you want to do something similar to what
+	the procedure does, or you want to do what the procedure
+	does, but in a slightly modified fashion.   See the documentation
+	for EDIT for more details.
+
+	The PRCDIR command will list out not only the user's own
+	procedures but also the contents of the system procedure
+	libraries.
+
+	A user can submit their own procedures for consideration for
+	inclusion in the system libraries by sending the procedures,
+	with appropriate documentation, to the computer staff via the
+	REPORT facility.  Only those procedures we consider well
+	written, well documented, and of a general-enough nature will
+	be included in a library.
+

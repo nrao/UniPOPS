@@ -1,0 +1,35 @@
+        (PSEUDO VERB)
+
+	Syntax:    DOCUMENT string
+
+	DOCUMENT writes strings to the current text output device (text
+	screen, graphics screen, or printout file) and is useful for
+	adding comments to the output.  You need not enclose the string
+	in quotation marks.
+
+	If you are directing text output to the graphics screen, you
+	may want to use the PLACE command to alter where the string
+	will be printed before you use DOCUMENT.  The size of the
+	characters drawn on the graphics screen will be determined
+	by the last call to CHARSIZE, SETPAGE, or RSTPAGE.
+
+	DOCUMENT can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by DOCUMENT.
+
+	EXAMPLE:
+
+		GRAPHICS             Text output will go to graphics
+				     screen.
+		PLACE (0,0)          Will position the text at bottom
+				     of screen.
+
+		DOCUMENT THIS IS A COMMENT   
+				     Will print 'THIS IS A COMMENT' at
+				     the bottom of the Graphics Screen.
+
+		CRT		     Redirects output to Text Screen.
+
+
+	

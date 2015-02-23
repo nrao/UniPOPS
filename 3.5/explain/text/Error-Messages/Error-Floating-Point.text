@@ -1,0 +1,48 @@
+#if CKBK
+F-1 Floating-Point Messages
+---------------------------
+
+#end
+Floating-point messages will be displayed after the execution of any
+UniPOPS command line if a floating-point error occurred during the
+execution of the command line.
+
+The form of the error message is machine, operating system, and
+compiler dependent but usually has the form, 
+
+	Warning:  the following IEEE floating-point arithmetic
+	exceptions occurred during execution of the last command:
+
+After this message is printed, you will be given a summary of what
+floating-point errors were detected. In some cases you are also given
+the number of times each type of error occurred.  The types of errors
+that will be displayed include,
+
+	Division by zero
+	Underflow 
+	Overflow 
+	Invalid Operation
+
+Other types of errors are listed by various numbers.  UniPOPS cannot
+ascertain where the error occurred, so you will have to try to work
+that out for yourself.  One of the more common sources of these errors
+is invalid or incorrect header values.
+
+A `division by zero' error occurs if somewhere in the program a number
+is divided by zero. The result of such a calculation is the machine's
+representation of infinity (Inf).
+
+Underflows occur if a calculation produces a number which is smaller
+than that which can be stored using the machine's binary number
+representation. The result of such a calculation is zero.
+
+Overflows occur if a calculation produces a number which is larger than
+that which can be stored using the machine's binary number
+representation. The result of such a calculation is the machine's
+representation of infinity (Inf).
+
+An invalid operation is caused by such things as taking the square root
+or logarithm of a negative number. The result of such a calculation is
+the machine's representation of `Not-A-Number' (NaN).
+
+

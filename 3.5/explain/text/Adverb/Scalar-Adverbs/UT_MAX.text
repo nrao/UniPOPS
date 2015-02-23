@@ -1,0 +1,34 @@
+	(SCALAR ADVERB)
+
+	UT_MIN and UT_MAX specify the range in UT date used by the
+	SELECT verb.  The units are decimal years (YYYY.MMDD).
+
+	Scans will be SELECTed if they have dates within the range
+	specified by UT_MIN through UT_MAX, inclusive.
+
+	If UT_MIN is set to the DEFAULT value, there is no lower limit
+	to the range.  Similarly, if UT_MAX is set to the DEFAULT
+	value, there is no upper limit to the range.
+
+	UT_MIN and UT_MAX are used by : SELECT
+
+	No verbs change UT_MIN or UT_MAX.
+
+	Initial values of UT_MIN and UT_MAX are DEFAULT.
+
+	EXAMPLE :
+
+	To select all scans having UT dates on or after 1992 Jan 14,
+	specify:
+
+		UT_MIN = 1992.0114; UT_MAX = DEFAULT
+
+	To select all scans having UT dates on or before 1992 Jan 31,
+	specify:
+
+		UT_MIN = DEFAULT; UT_MAX = 1992.0131
+
+	To select only those scans with on or between 1992 Jan 14 and
+	Jan 31, specify:
+
+		UT_MIN = 1992.0114; UT_MAX = 1992.0131

@@ -1,0 +1,21 @@
+	(SCALAR ADVERB)
+
+	DEFMODE is used by verbs which combine two arrays or matrices or
+	two separate parts of one array to produce a new array or
+	matrix.  It indicates how blanked/undefined values should be
+	treated.
+
+	If DEFMODE is FALSE, the resulting array/matrix will have
+	blank/undefined values where there are blank/undefined values
+	in EITHER of the original arrays/matrices.
+
+	If DEFMODE is TRUE, the resulting array/matrix will have
+	blank/undefined values where there are blank/undefined
+	values in BOTH of the original arrays/matrices.  If data is
+	blanked in one array/matrix but not the other at the same
+	location, the verb will use the non-blanked value in its
+	calculation for that location.
+
+	The default value is FALSE.
+
+	See the specific verb for any additional caveats.

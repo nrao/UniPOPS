@@ -1,0 +1,26 @@
+	Syntax:  GBTIPPING(scan_num)
+
+	GBTIPPING reduces a Green Bank sky-tip observations (by calling
+	the SOLVETIP verb) and plots the fit on-top of the original
+	data so you can see how good a fit UniPOPS was able to obtain.
+
+	File name: gbtipping.prc
+
+	No adverbs are used by GBTIPPING.
+
+	ADVERBS SET:
+
+		FACT            TAU0            TRCVR	 	HTITLE
+		XTITLE          YMINP 		YMAXP           XMAXP
+		XMINP
+
+	You must provide GBTIPPING with the a scan number (integer
+	value only) of the tipping observation.  GBTIPPING uses Arrays
+	(0) and (1) for holding temporary results.
+
+	EXAMPLE:
+
+	To process tipping scan 1234, type:
+
+		GBTIPPING(1234)
+

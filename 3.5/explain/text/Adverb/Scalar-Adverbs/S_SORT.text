@@ -1,0 +1,25 @@
+	(SCALAR ADVERB)
+
+	S_SORT is a flag used by SELECT to control any sorting of the
+	SELECT additions to ASTACK.
+
+	If S_SORT is greater than or equal to 1 then additions will be
+	sorted in ascending order.  If S_SORT is less than or equal to -1
+	then additions will be sorted in descending order.  If S_SORT is
+	zero, no sorting will be done.
+
+	S_SORT is used by : SELECT
+
+	No verbs change S_SORT.
+
+	The initial value of S_SORT is 0.
+
+	EXAMPLE :
+
+	You plan on using SELECT and want to sort the additions to ASTACK
+	in ascending scan-number order, so you specify:
+
+		S_SORT = 1
+
+	and then issue your SELECT command.
+

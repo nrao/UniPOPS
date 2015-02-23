@@ -1,0 +1,35 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	CALDBE computes the calibration values for each point of a
+C-	digital back-end scan in Array (0).
+C-
+C-	It works only for data taken with the 12-meter telescope.
+C-
+C-	Using the noise tube value and the average calibration value, a
+C-	scale factor  for conversion to a temperature scale (degrees K)
+C-	is computed.  If there is no noise tube, a scale factor is
+C-	computed as calibration temperature divided by the conversion
+C-	factor stored in the header.  Adverb CALVAL is assigned the
+C-	value of the average difference between the number of counts
+C-	between when the calibration source was on and when it was
+C-	off.
+C-
+C-	No adverbs are used by CALDBE.
+C-
+C-	ADVERBS SET:
+C-
+C-	   CALVAL       The number of counts between when the
+C-			calibration source is on and when it is off.
+C-			Initial value is zero.
+C-
+C-	EXAMPLE:
+C-
+C-	You have a calibration scan taken with the 12-meter.  To reduce
+C-	the data, type:
+C-
+C-		CALDBE
+C-
+C------------------------- Continuum ------------------------------------
+

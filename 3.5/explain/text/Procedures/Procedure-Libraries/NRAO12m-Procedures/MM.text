@@ -1,0 +1,39 @@
+	MM displays a "shadow plot" of several continuum scans using
+	SWITCHED to reduce each scan.  It uses BIAS and an indicated
+	offset to display the reduced data of a range of scans on
+	the graphics screen in the same plot, each scan being slightly
+	offset (higher) in the frame from the preceding one.
+
+	Syntax: MM(start_scan, stop_scan, offset)
+
+	offset is the offset in Y between each scan (in the units of
+	the data).  start_scan and stop_scan define the range of
+	scan numbers to display (the scan numbers are incremented by
+	one through the range indicated).
+
+	After GETting each scan, SWITCHED is used to reduce the
+	scan and then an appropriate BIAS is applied to display
+	the scan at the appropriate place in the graphics screen.
+
+	File name: mm.prc
+
+
+	MM is often executed through use of the following two procedures:
+
+	MM1(start_scan, stop_scan, offset)
+
+	This calls MM after first making sure that start_scan and
+	stop_scan both have a subscan number of 1 (i.e. this
+	makes a continuum shadow plot of polization 1).
+
+	File name: mm1.prc
+
+	MM2(start_scan, stop_scan, offset)
+
+	This calls MM after first making sure that start_scan and
+	stop_scan both have a subscan number of 2 (i.e. this
+	makes a continuum shadow plot of polization 2).
+
+	File name: mm2.prc
+
+	All of these procedures are included in CSETUP.12meter

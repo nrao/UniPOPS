@@ -1,0 +1,29 @@
+	(SCALAR ADVERB)
+
+	BDROP and EDROP are the number of channels at each end of the 
+	data array which will be ignored by numerous one-dimensional
+	analysis verbs.
+
+	BDROP and EDROP are used by : 
+
+		BASELINE	BSHAPE		CLIP		DCBASE
+		FFT		IFFT		PCBASE		PEAK
+		POWSPEC		REPLACE		RESHOW		RIPPLE
+		RMS		RSHAPE		SHOW		SPIKE
+		TABLE						
+
+	BDROP and EDROP are set by : XRANGE
+
+	The initial values of BDROP and EDROP are 0.
+
+	Both BDROP and EDROP should be given values > 0 and BDROP+EDROP
+	cannot exceed the number of data channels in Array (0).
+
+	EXAMPLE :
+
+	To get rid of glitches at the ends of your data, specify :
+
+		BDROP = 20		This drops 20 channels at
+		EDROP = 20		each end of the array and
+		PAGE SHOW		SHOW will then plot the data 
+  					without the glitches.

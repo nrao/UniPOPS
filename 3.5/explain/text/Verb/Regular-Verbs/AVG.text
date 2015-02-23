@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	AVG computes the mean source temperature and standard deviation
+C-	of the mean of the analog continuum On-Off data (from the
+C-	standard backend) in Array (0).
+C-
+C-	No adverbs are used or set by AVG.
+C-
+C-	EXAMPLE:
+C-
+C-	You have a continuum On-Off observation.  To process the data,
+C-	type:
+C-
+C-		GET 5000; AVG
+C-
+C-	and the results will be printed on your text screen.
+C-
+C------------------------- Continuum ------------------------------------
+

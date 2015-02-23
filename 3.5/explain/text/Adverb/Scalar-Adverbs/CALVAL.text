@@ -1,0 +1,23 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	CALVAL is for 12-m data only and is where the continuum verbs
+C-	CALDBE, FIXDBE, ZERO, SWITCHED, and TOTALPWR store the value
+C-	of the average 'deflection' for the calibration signal.  The
+C-	units of CALVAL is always counts.
+C-
+C-	CALVAL is not used by any verbs.
+C-
+C-	CALVAL is set by :   CALDBE	FIXDBE	 SWITCHED     TOTALPWR
+C-	   		     ZERO				
+C-
+C-	The initial value for CALVAL is 0.
+C-
+C-	EXAMPLE :
+C-
+C-	You have just run CALDBE and want to find out what the average
+C-	'deflection' was for the calibration signal, so you type:
+C-
+C-		PRINT CALVAL
+C-
+C------------------------- Continuum --------------------------------

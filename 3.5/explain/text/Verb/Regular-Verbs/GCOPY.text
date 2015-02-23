@@ -1,0 +1,28 @@
+	(REGULAR VERB)
+
+	GCOPY creates a hard copy of the text window.  It can be used
+	on a command line or in a procedure.  GCOPY will not produce a
+	hardcopy if the COPYOFF flag is set.
+
+	EXAMPLES:
+
+	.  You have a spectral display on the graphics screen and want
+	   to make a hardcopy on the printer, so specify:
+
+		GCOPY
+
+	.  A procedure can be written to get scans from disk, display
+	   each of them, and make a hardcopy as follows:
+
+		PROCEDURE SEE (SEE_X,SEE_Y)
+		SCALAR SEE_I
+		FOR SEE_I = SEE_X TO SEE_Y
+		   GET SEE_I; PAGE SHOW
+		   GCOPY
+		   END
+		RETURN
+		FINISH
+
+	    Then, to get copies of scans 17830-17840, specify;
+
+		SEE (17830,17840)

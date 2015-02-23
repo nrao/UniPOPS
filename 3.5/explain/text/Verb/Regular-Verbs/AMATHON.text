@@ -1,0 +1,13 @@
+	(REGULAR VERB)
+
+	AMATHON and AMATHOFF are internal UniPOPS verbs which should 
+	NOT be used under any circumstances by the user.
+
+	AMATHON and AMATHOFF are used by the Array-Math constructs to
+	signal where Array-Math begins and ends.
+
+	NEVER type any of these commands.
+
+	No adverbs are used or set by these verbs.
+
+

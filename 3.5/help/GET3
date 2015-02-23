@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'GET3: Retrieves the data and header for the specified scan '
+PRINT 'and feed from the off-line or on-line data files and places '
+PRINT 'them in Array 3.  Syntax: GET3 scan_num.feed_num'
+PRINT ' '

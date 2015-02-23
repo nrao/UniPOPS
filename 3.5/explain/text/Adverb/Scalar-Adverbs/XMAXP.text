@@ -1,0 +1,28 @@
+	(SCALAR ADVERB)
+
+	XMINP and XMAXP are used to set the X scaling of the PLOT
+	verb.  XMINP equals the lowest x-value that will appear on the
+	graph while XMAXP is the highest.
+
+	XMINP and XMAXP is used by :    PLOT
+
+	No verbs change XMINP and XMAXP
+
+	The initial values of XMINP and XMAXP are 0.0.
+
+	If XMINP equals XMAXP then the plot will be automatically
+	scaled in the x direction.  If XMINP is greater than XMAXP then
+	the x-axis will increase to the left on the display else it
+	will increase to the right.
+
+ 	EXAMPLES :
+
+	.   To expand the scale with PLOT, specify;
+
+		XMINP = -1; XMAXP = -100
+
+	.   You followed the directions in example (1) and now
+	    everything is coming out to the same scale. To get back to
+	    automatic scaling, specify :
+
+		XMAXP = XMINP

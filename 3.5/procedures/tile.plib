@@ -1,0 +1,4 @@
+# procedure for plotting multiple spectra by position
+batch tileprep.prc
+batch tileplace.prc
+batch tilesaves.prc

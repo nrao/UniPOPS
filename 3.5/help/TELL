@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'TELL: Lists the scans in the "save", "keep", "gains",'
+PRINT '"record", or offline or online data files.  Will also list'
+PRINT 'the contents of the ASTACK array and the scans averaged'
+PRINT 'together by ACCUM, SUM, and AVE.  It also gives a useful'
+PRINT 'summary of the status of the program using STAT.'
+PRINT 'Syntax:  TELL pointer'
+PRINT ' '

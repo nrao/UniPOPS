@@ -1,0 +1,465 @@
+Appendix K : History Substitution
+---------------------------------
+
+History substitution allows you to build up a new command line out of
+pieces of previous command lines plus any new material you supply.
+This simplifies making spelling corrections and repeating complicated
+commands.  You specify the pieces you want from an old command line by
+describing which previous command line you want to use, which words in
+that command line you want, plus any modifications you want to make to
+those words.  The UniPOPS history facility is modeled very closely
+after the Unix C-Shell history facility and, therefore, anyone who
+knows the C-Shell history facility can use instantly the UniPOPS
+facility.
+
+History substitution can occur anywhere within a command line (i.e.,
+can be embedded between other commands on the command line) and you can
+have multiple substitutions on a single command line.
+
+For more information on history substitution, please see any UNIX
+manual that describes the C-Shell [one of the best is "The UNIX C-Shell
+Field Guide" by Anderson and Anderson (1986, Prentice Hall)].
+
+History substitution consists of an event descriptor followed by
+optional word designators or modifiers.  Various shortcuts are
+available to you for performing the most common kinds of operations.
+Below, we provide numerous examples of how to use the UniPOPS history
+facility plus we list the few minor differences between the history
+substitution facility in UniPOPS and that in the C-Shell.
+
+
+a) Event Designator 
+-------------------
+
+You begin a history substitution anywhere on a command line by placing
+a ! character followed by an event designator that describes which of
+the previous command line you want to repeat.
+
+You signal the end of a history substitution with either a carriage
+return or a trailing blank followed by any other commands you may want
+to include on the same command line.
+
+The event you choose must be from the list of commands stored in your
+history list.  At present, the program will store up to the last 100
+command lines you have entered -- all commands older than the last 100
+cannot be reissued using history substitution.  You may want to use the
+'HISTORY' verb, which lists out the contents of the history list, to
+help you pick the desired event.  An event designator can have any of
+the following formats:
+
+	!!      --  your previous command.
+
+	!n      --  your nth command (cannot exceed limits of history
+			list); !0 is not allowed.  HISTORY provides
+			you with a list whose first column is the
+			number you should use. 
+
+	!-n     --  the nth previous command line (cannot exceed limits
+			of history list).  For example, !-1 is the same
+			as !!; !-2 is the command before the previous
+			one.
+
+	!str    --  most recent command in the history list that starts
+			with the string str.
+
+	!?str?  --  most recent command in the history list that
+			contains the string str.
+
+where n is any positive integer and str is a string with no embedded
+blanks or : characters; str is case sensitive.
+
+
+	Examples:
+	---------
+
+	!!		<- reexecute the previous command.
+
+	!-1		<- same as above.
+
+	!12		<- reexecute the 12th command you have typed.
+
+	!-4		<- reexecute the 4th previous command.
+
+	!BASELINE       <- reexecute last command that started with the
+				string 'baseline'.
+
+	!?GAUSS?        <- reexecute last command that had somewhere in
+				it the string 'GAUSS'.
+
+
+b) Word Designator
+------------------
+
+Following the event designator, you can specify subsets of words from
+the event you have chosen by using a word designator.  A word
+designator need not be present but, if you desire one, it must start
+with a : character followed by a description of the sets of words you
+want from the event.  Only one word designator is allowed per event
+designator.  If you do not include a word designator, the complete
+event (i.e., all words) will be used.
+
+Words are any set of characters in the chosen event that are preceded
+and followed by one or more spaces.  The following characters are all
+considered separate words regardless of whether they are surrounded by
+spaces:
+
+	, ( ) = + - * / > < ~ | & ; ? { } @ ** ~= >= <= 
+
+Words are numbered from left to right starting with zero.  The contents
+of strings are considered a single word.  For example, the event:
+
+	PRINT "Hello There", LEVS(14); BASELINE GAUSS; X=(3**9)/2
+
+contains 20 words which are numbered from 0 through 19 as follows:
+
+		word 0 = PRINT
+		word 1 = "Hello There"
+		word 2 = ,
+		word 3 = LEVS
+	  	word 4 = (
+		word 5 = 14
+		word 6 = )
+		word 7 = ;
+		word 8 = BASELINE
+		word 9 = GAUSS
+		word 10 = ;
+		word 11 = X
+		word 12 = =
+		word 13 = (
+		word 14 = 3
+		word 15 = **
+		word 16 = 9
+		word 17 = )
+		word 18 = /
+		word 19 = 2
+
+
+The optional word designator can have any of the following formats:
+
+	:0      -- first word (word zero).
+
+	:n      -- nth word n (counting from zero; word must exist).
+
+	:$	-- last word.
+
+	:^      -- identical to :1 (error if no second word in line).
+
+	:*      -- words 1 through last (i.e., skipping word 0; error
+			if no second word in line).
+
+	:n-m    -- words n through m (m must be >= n; the specified
+			words must exist in event).
+
+	:n-$    -- words n through last (n must be <= the number of
+			words; the specified words must exist in
+			event).
+
+	:n*     -- same as :n-$ except if n > the number of words,
+			blanks will be used.
+
+	:n-     -- same as n* except omitting the last word (n must be
+			< the number of words; the specified words must
+			exist in event).
+
+	:-m     -- same as 0-m (m must be <= the number of words; the
+			specified words must exist in event).
+
+	:%      -- the word that contains the string from the !?str
+			or !?str? event designator.
+
+where n and m are positive integers.
+
+
+	Examples:
+	---------
+
+	!?HELLO?:7*      <- the seventh through last word in
+			the last command line that somewhere contained
+			the word HELLO.
+
+	!?HELLO?:7-$     <- same as above.
+
+	!!:*	<- reexecute the previous command the first through
+		last words (i.e., skip word 0).
+
+	!!:1-$	<- same as above.
+
+	!?RIN?:%  <- word that contains somewhere the string RIN (for
+			example, PRINT).
+
+
+c) Modifiers
+------------
+
+Following the word designator, or the event designator if you haven't
+used a word designator, you can place one or more modifiers, if you so
+desire.  Modifiers allow you to alter the results of the cumulative
+action of your chosen event designator and optional word designator.  A
+modifier is begun with a : character and is followed by a description
+of the modification you want to make.  More than one modifier is
+allowed per event designator.  The optional modifiers have the
+following formats:
+
+	:P		-- print but do not execute command.
+
+	:S/str1/str2/   -- substitute the first occurrence of str1 with
+			str2; str1 must exist in event.
+
+	:GS/str1/str2/  -- checks whether str1 exists in every word
+			and, if it does, it will substitute in those
+			words the first occurrences of str1 with str2;
+			str1 must exist somewhere in the event.
+
+	:&		-- repeat the previous :S substitution.
+
+	:G&		-- repeat the previous :S substitution to all
+			of the words.
+
+where str1, str2 are strings that can have embedded blanks but no
+embedded '/'characters.  Note that the 'S', 'P', and 'G' can be in
+either upper- or lower-case but the str1 and str2 are case sensitive
+and must follow the case of the original and new strings,
+respectively.
+
+
+d) Special rules for modifiers
+------------------------------
+
+Some special rules apply to the :s/str1/str2/, :gs/str1/str2/, and :p
+modifiers.
+
+     .  If str1 is empty (i.e., you have specified :s//str2/ or
+	:gs//str2/), then the program will use for str1 the string
+	specified in the most recent :s modifier or !?str?  event
+	designator.  The previous string need not come from the current
+	history substitution but can come from an older one.  That is,
+	if you performed the following:
+
+		!?Hello?
+
+	and four lines later (which contained no use of the !?str?, :s,
+	or :gs features) you type:
+
+		!!:s//Goodbye/
+
+	then UniPOPS will assume that you want to replace Hello in the
+	previous command with Goodbye.  Similarly, if you type:
+
+			!34:*:s/1024/2048:s//4096/
+
+	then the first occurrence of 1024 in event 34 will be altered
+	to 2048 and the second occurrence of 1024 will be altered to
+	4096.
+
+    .   If str2 contains the special character &, the value of str1 is
+	substituted for the &.  For example:
+
+		S:/He/& said, &llo there, &nry/
+
+	is equivalent to:
+
+		S:/He/He said, Hello there, Henry/
+
+
+    .   The P modifier tells the program to do all the history
+	substitutions but not to execute the resulting line.  This is
+	extremely useful if you want to check your history substitution
+	before executing it.  With the P modifier, the resulting command
+	line, although not executed, is placed into the history list as
+	your previous command so if the resulting command line looks
+	OK, you need only issue a subsequent !! to reissue the history
+	substitution.  That is, if you type, for example:
+
+		!34:s/DROP/BASE/:p
+
+	and the resulting line looks OK, then to actually execute the
+	line, you can at this point just type !! instead of repeating
+	the full substitution.  The usage of the :p modifier has a side
+	affect you should be aware of -- the history list may not
+	reflect the commands that were actually executed since any
+	history substitutions that have used the :p modifier have
+	placed things in the list but the commands were never
+	executed.
+
+
+	Examples:
+	---------
+
+	!-4:0-4:S/PRINT/READ/:P	<- print out but do not execute the 4th
+				previous command, words zero through 4
+				with the first occurrence of string
+				PRINT substituted by the the word
+				READ.
+
+	!-4:-4:S/PRINT/READ/:P  <- same as above.
+
+	!23:s/HELP/EXPLAIN/	<- reexecute the 23rd command you have
+				typed substituting the word EXPLAIN for
+				the first occurrence of HELP.
+
+e) Shortcuts
+------------
+
+	Various shortcuts are available for your use.  They are:
+
+	!*      <- All the words but word 0 from the previous command.
+		Equivalent to:  !!:* . Can be followed by modifiers.
+
+	!$      <- The last word from the previous command.  Equivalent
+		to:  !!:$ . Can be followed by modifiers.
+
+	!^      <- Word number 1 from the previous command.  Equivalent
+		to !!:^ . Can be followed by modifiers.
+
+	!:      <- Equivalent to !!: and must be followed by a word
+		designator or a modifier.  For example:
+
+				!:-4:p
+
+
+	^str1^str2^   <- Equivalent to !!:s/str1/str2/ and can be 
+		      followed by modifiers.  For example:
+
+		      		^hello^goodbye^
+
+				^1024^256^:p
+
+
+f) Differences between UniPOPS and C-Shell
+------------------------------------------
+
+For those familiar with the C-Shell history facility, here are
+the differences between the history facility in UniPOPS and that in the
+C-Shell.
+
+.       Unlike the C-Shell, the size of the history list is dictated by
+	UniPOPS and is not under the control of the user.
+
+.       Each use of the history facility must be followed by a carriage
+	return or a blank space in UniPOPS.  This is not true of the
+	C-Shell.
+
+.       The second ? in the !?str? is required in all cases in UniPOPS
+	but in some rare cases can be omitted in the C-Shell
+
+.       The list of characters considered words differ between those
+	in UniPOPS and those in the C-Shell simply because of the
+	ability of UniPOPS to handle complicated math expressions.
+
+.       Spaces are allowed in the str1 and str2 of the s/str1/str2/
+	modifier in UniPOPS.  No spaces are allowed in str1 but are
+	allowed in str2 for the C-Shell.
+
+.       The C-Shell only allows lower-case s, p, and g for modifiers
+	but UniPOPS accepts both upper and lower-case modifiers.
+
+.       All modifiers and word designators must start with a ':'
+	in UniPOPS -- C-Shell relaxes this rule in very special cases.
+
+.       The terminal / in the :s/str1/str2/ modifier must exist for
+	UniPOPS but can be eliminated in special cases for the
+	C-Shell.
+
+.       The terminal ^ in the ^str1^str2^ short cut must exist for
+	UniPOPS but can be eliminated in special cases for the
+	C-Shell.
+
+.       The list of UniPOPS modifiers is not as extensive as that
+	in the C-Shell simply because the extra C-Shell modifiers (:h,
+	:r, :e, :t, :q, :x) have no equivalent use in UniPOPS.
+
+.       UniPOPS has no ability to 'escape' characters like the ':' or
+	the '/' or '&' characters used in modifiers.
+
+
+g) Summary
+----------
+
+Using the above explained syntax, command lines that use history
+substitution will look like one the following:
+
+(1) If you do not include a modifier or word designator, the program
+will use the complete, unaltered command line you have specified with
+your event designator.  That is, your command line would look like:
+
+	cmnds1 !<event> cmnds2
+
+or:
+
+	cmnds1 !<event>: cmnds2
+
+[Note: Here, and in the following, cmnds1 and cmnds2 are optional
+commands that precede or follow your desired history substitutions and
+the <...> are the various parts of the history substitution.  Cmnds1 or
+cmnds2 need not exist but, if they do, you must include at least one
+space between the end of the history substitution and cmnds2.]
+
+
+(2) If you do not include a modifier but do include a word designator,
+then the program will use unaltered the words you have specified from
+the event you have specified.  You command line would look like:
+
+	cmnds1 !<event>:<words> cmnds2 .
+
+
+(3) If you specify modifiers but not a word designator, then the
+program will alter the complete command line (specified by the event
+designator) using your desired modifications.  Your command line would
+look like:
+
+	cmnds1 !<event>:<modifier> cmnds2
+or:
+	cmnds1 !<event>::<modifier> cmnds2
+
+
+If you want more than one modifier:
+
+	cmnds1 !<event>:<modifier>:<modifier>:<modifier>... cmnds2
+or:
+	cmnds1 !<event>::<modifier>:<modifier>:<modifier>... cmnds2
+
+
+(4) If you specify modifiers and a word designator, then the program
+will alter the the words you have specified from the event you have
+specified using your desired modifications.  Your command line would
+look like:
+
+	cmnds1 !<event>:<words>:<modifier> cmnds2
+
+or, if you want more than one modifier:
+
+	cmnds1 !<event>:<words>:<modifier>:<modifier>:<modifier>... cmnds2
+
+
+(5) Multiple history substitutions are allowed on a command line.  Your
+command line could, therefore, look like:
+
+	cmnds1 !<history> cmnds2 !<history> cmnds3 !<history> ....
+
+where cmnds1, cmnds2, etc. need not exist and <history> can be any of
+the above formats for history substitution.
+
+
+h) Examples
+-----------
+
+The best way to describe the powers of history substitution is by some
+examples:
+
+	PRINT !123:3-           <- execute the PRINT command using as
+				its list the 3rd through next-to-last
+				last words in the 123rd command line.
+
+	!12 ; PRINT 'hello'; !14:1   <- reexecute command 12, prints
+				     'hello', and reexecute the first
+				     word from command 14.
+
+	!12 ; PRINT 'hello'; !14:^   <- same as above.
+
+	FOR I = 1 TO 23; !15:S/PRINT /EDROP =/:g& ; END  
+
+			<- in the for loop; reexecute command 15 with
+			all the first and second occurrences of 'PRINT '
+			in all words in that event changed into
+			'EDROP ='.
+

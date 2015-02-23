@@ -1,0 +1,25 @@
+	(REGULAR VERB)
+
+	Syntax:    GALTOEQ (longitude, latitude) 	
+
+	GALTOEQ will convert galactic coordinates into equatorial
+	coordinates (epoch 1950.0) and print the results.
+
+	The arguments should follow GALTOEQ and be enclosed in
+	parentheses.
+
+	No adverbs are used or set by GALTOEQ.
+
+	Be wary of longitudes <0 or >360 or latitudes >90 or <-90.
+
+	EXAMPLE:  
+
+	To convert the position of SS433, L=39.694, B= -2.245, from
+	galactic coordinates to equatorial, specify:
+
+		GALTOEQ (39.694, -2.245)
+
+	The equatorial coordinates are printed as:
+
+		19:09:21.3	04:53:53
+

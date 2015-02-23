@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TITLE:  Writes one line of documentation about the scan in'
+PRINT 'Array 0.'
+PRINT ' '

@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'ZERO:  (CONTINUUM-TUCSON) Computes the zero levels of the'
+PRINT 'digital backend data in Array 0.  The RMS of these zero'
+PRINT 'levels is computed and stored in the adverb VRMS.  This'
+PRINT 'number is printed on the CRT screen.'
+PRINT ' '
+PRINT 'CALVAL,VRMS=',CALVAL,VRMS
+PRINT ' ' 

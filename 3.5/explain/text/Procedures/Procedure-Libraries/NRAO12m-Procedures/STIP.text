@@ -1,0 +1,10 @@
+	STIP fits a tipping scan using model 3 of SOLVETIP.
+
+	Syntax: STIP(scan_number)
+
+	See the documentation on SOLVETIP and the listing of this
+	procedure for more insight.
+
+	File name: stip.prc
+
+	This procedure is included in CSETUP.12meter

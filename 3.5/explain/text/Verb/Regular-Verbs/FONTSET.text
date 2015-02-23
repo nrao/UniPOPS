@@ -1,0 +1,75 @@
+	(REGULAR VERB)
+
+	Syntax:	  FONTSET(font_num, spacing)
+
+	FONTSET lets you change the character set (font) used for
+	drawing to the graphics screen and hardcopy devices.  You
+	specify as the first argument which font you want.  The fonts
+	and the values of the first argument must be from the following
+	table:
+
+		------------------------------------------------
+		Font number	Font description
+		------------------------------------------------
+           	1 		Roman Simplex (Default)
+	   	2 		Greek Simplex
+           	3 		Greek Gothic
+	   	4 		Italic Gothic
+	   	5 		English Gothic
+	   	6 		Roman Duplex
+	  	7 		Cyrillic Complex
+	  	8 		Script Complex
+	  	9 		Roman Complex
+	   	10		Italic Complex
+	  	11		Greek Complex
+ 	   	12		Roman Triplex
+	   	13		Italic Triplex
+	   	14		Special Symbols
+	   	15		Script Simplex
+		------------------------------------------------
+
+	You should give the second argument a value of TRUE or FALSE
+	depending upon whether you want, respectively, characters with
+	uniform spacing or characters whose spacing depends upon the
+	character (i.e., an 'i' takes up less space then an 'M'
+	would).  Setting the second argument to FALSE usually produces
+	the most aesthetic results.
+
+	You will need to know what keyboard characters map into
+	characters in these special fonts. The procedure in the example
+	below will provide you with that information.
+
+	At start-up, the default font is font 1 or Roman Simplex with
+	non-uniform spacing.
+
+	Note: Fonts are NOT recoverable from one analysis session to
+	another.
+
+	No adverbs are used or set by FONTSET.
+
+	Examples:
+
+		FONTSET(1, TRUE)  <- default font, uniformly-spaced
+					characters.
+
+		FONTSET(2, FALSE) PLACE(100,100) CHAR 'd(1950)'
+
+			<- Greek simplex, non-uniform spacing.  Places
+			a 'delta(1950)' at pixel (100,100) on the
+			graphics screen.
+
+
+	We've added a procedure to the standard library to help you
+	with the keyboard mapping for any of the fonts.  To use the
+	procedure, type:
+
+		batch 'charsets.prc'
+
+	and, to illustrate the mapping for font 12, type:
+
+		charsets(12)
+
+	If you want a hardcopy of all the fonts, type:
+
+		scalar i for i = 1 to 15; charsets(i) gcopy; end
+

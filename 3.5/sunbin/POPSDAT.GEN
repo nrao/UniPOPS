@@ -1,0 +1,270 @@
+C- POPSDAT stuff specific to both LINE and CONDAR (QUICK, FUNCT, STORES
+C- EDITOR, etc. type of stuff.)
+C- @(#)POPSDAT.GEN	5.1 06/22/94
+C-
+C- QUICK operators
+C-
+C- OMEGA       5   4    1  An internal operator
+,            1   4    1
+(            1   4    2
+)            1   4    3
+=            1   4    4
++            1   4    5
+-            1   4    6
+*            1   4    7
+/            1   4    8
+**           2   4    9
+>            1   4   10
+<            1   4   11
++            1   4   12
+-            1   4   13
+~            1   4   14
+~=           2   4   15
+>=           2   4   16
+<=           2   4   17
+TO           2   4   18
+BY           2   4   19
+=            1   4   20
+|            1   4   21
+&            1   4   22
+;            1   4   23
+FOR          3   4   24
+END          3   4   25
+READ         4   4   26
+PRINT        5   4   27
+?            1   4   27
+RETURN       6   4   28
+C-GETS         4   4   29  An internal operator
+C-RUN          3   4   30  An internal operator
+C-USING        5   4   31  An internal operator
+C-PROTECT      7   4   32  An internal operator
+EXEC         4   4   33
+SPRINT       6   4   34
+SREAD        5   4   35  
+FPRINT       6   4   36
+FREAD        5   4   37  
+C-
+C-  FUNCT; Function-like  operators
+C-  
+SIN          3   4   51
+ASIN         4   4   52
+COS          3   4   53
+ACOS         4   4   54
+TAN          3   4   55
+ATAN         4   4   56
+ATAN2        5   4   57
+SQRT         4   4   58
+LOG          3   4   59
+LOG10        5   4   60
+EXP          3   4   61
+ABS          3   4   62
+IFIX         4   4   63
+INT          3   4   63
+MAX          3   4   64
+MIN          3   4   65
+MOD          3   4   66
+NINT         4   4   67
+SIGN         4   4   68
+DIM          3   4   69
+SINH         4   4   70
+COSH         4   4   71
+TANH         4   4   72
+C-					 Stack function
+ASTACK       6   4   73
+C-                                       Get Data
+D0           2   4   74
+D1           2   4   75
+D2           2   4   76
+D3           2   4   77
+D4           2   4   78
+D5           2   4   79
+D6           2   4   80
+D7           2   4   81
+D8           2   4   82
+D9           2   4   83
+C-					 Get Headers
+H0           2   4   84
+H1           2   4   85
+H2           2   4   86
+H3           2   4   87
+H4           2   4   88
+H5           2   4   89
+H6           2   4   90
+H7           2   4   91
+H8           2   4   92
+H9           2   4   93
+C-					MATRIX operations
+MD0          3   4   94
+MD1          3   4   95
+MD2          3   4   96
+MD3          3   4   97
+C-
+MH0          3   4   98
+MH1          3   4   99
+MH2          3   4  100
+MH3          3   4  101
+C-					CUBE operations
+CD0          3   4  102
+CH0          3   4  103
+C-					String functions
+COMPARE      7   4  104
+LNBLNK       6   4  105
+LENGTH       6   4  106
+CONCAT       6   4  107
+SUBSTR       6   4  108
+INDEX        5   4  109
+C-                                      Data-Array functions
+CHANTOX      7   4  110
+XTOCHAN      7   4  111
+FOPEN        5   4  112
+FNAME        5   4  113
+XPIX2C       6   4  114
+YPIX2T       6   4  115
+C2XPIX       6   4  116
+T2YPIX       6   4  117
+C-
+C-  GENOP; General utility operators 
+C-
+PLACE        5   4  201
+VCTR         4   4  202
+CHAR         4   4  203
+PAGE         4   4  204
+EQTOGAL      7   4  205
+GALTOEQ      7   4  206
+DUMP         4   4  207
+CRT          3   4  208
+PRINTER      7   4  209
+OUTPUT       6   4  210
+TCOPY        5   4  211
+GCOPY        5   4  212
+PAUSE        5   4  213
+ERRON        5   4  214
+ERROFF       6   4  215
+FULLON       6   4  216
+FULLOFF      7   4  217
+GRAPHICS     8   4  218
+C-					 Set Stack 
+C- SETASTACK    9   4  219
+C-                                       Set Data
+C- SETD0        5   4  220
+C- SETD1        5   4  221
+C- SETD2        5   4  222
+C- SETD3        5   4  223
+C- SETD4        5   4  224
+C- SETD5        5   4  225
+C- SETD6        5   4  226
+C- SETD7        5   4  227
+C- SETD8        5   4  228
+C- SETD9        5   4  229
+C-					 Set Headers
+C- SETH0        5   4  230
+C- SETH1        5   4  231
+C- SETH2        5   4  232
+C- SETH3        5   4  233
+C- SETH4        5   4  234
+C- SETH5        5   4  235
+C- SETH6        5   4  236
+C- SETH7        5   4  237
+C- SETH8        5   4  238
+C- SETH9        5   4  239
+C-					MATRIX operations
+C- SETMD0       6   4  240
+C- SETMD1       6   4  241
+C- SETMD2       6   4  242
+C- SETMD3       6   4  243
+C-
+C- SETMH0       6   4  244
+C- SETMH1       6   4  245
+C- SETMH2       6   4  246
+C- SETMH3       6   4  247
+C-					additional common operators
+LOGON        5   4  248
+LOGOFF       6   4  249
+UNDOON       6   4  250
+UNDOOFF      7   4  251
+AMATHON      7   4  252
+AMATHOFF     8   4  253
+Z_SYSTEM     8   4  254
+Z_CHNGFIL    9   4  255
+C-				Z_BATCH turned off for now
+C- Z_BATCH      7   4  256
+C-
+COPYON       6   4  257
+COPYOFF      7   4  258
+DEBUG        5   4  259
+FREWIND      7   4  260
+FCLOSE       6   4  261
+FSTATUS      7   4  262
+PRNTFMT      7   4  263
+FONTSET      7   4  264
+VCHAR        5   4  265
+C-
+C- Run-Time operators
+C-
+ELSE         4   5  300
+THEN         4   5  301
+IF           2   5  302
+WHILE        5   5  303
+C-
+C- PSEUDO operators
+C-
+PROCEDURE    9   5  310
+PROC         4   5  310
+FINISH       6   5  311
+GLOBAL       6   5  312
+ARRAY        5   5  313
+STRING       6   5  314
+SCALAR       6   5  315
+POINTER      7   5  316
+ALIAS        5   5  317
+C-                          
+C- EDITOR operators
+C-
+POPSEDIT     8   5  320
+ENDEDIT      7   5  321
+C-
+C- STORES operators
+C-
+C- STOREPO     7   5  330  An Internal operator
+STORE        5   5  331
+RESTORE      7   5  332
+LIST         4   5  333
+CORE         4   5  334
+SCRATCH      7   5  335
+BATCH        5   5  336
+FILES        5   5  337
+CHNGPRJ      7   5  338
+SYSTEM       6   5  339
+DOCUMENT     8   5  340
+UNDO         4   5  341
+EDIT         4   5  342
+TYPE         4   5  343
+DIR          3   5  344
+SYSHELP      7   5  345
+LASER        5   5  346
+REPORT       6   5  347
+PRCDIR       6   5  348
+C-			MENUS disabled
+C- MENUS        5   5  349
+C- DONEMENU     8   5  350
+C-
+CHNGFILE     8   5  351
+IDENTIFY     8   5  352
+KILLGRPH     8   5  353
+EXIT         4   5  354
+RESTART      7   5  355
+COMPRESS     8   5  356 
+OLFILES      7   5  357
+WHATIS       6   5  358
+CHNGVER      7   5  359
+C-
+C- HELPS operators
+C-
+HELP         4   5  360
+VERB         4   5  361
+ADVERB       6   5  362
+EXPLAIN      7   5  363
+HISTORY      7   5  364
+C- DUMEND      6   5  368  An Internal operator
+C- WHILESETUP 10   5  369  An Internal operator
+C- SUBS        4   5  370  An Internal operator

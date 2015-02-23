@@ -1,0 +1,23 @@
+	(STRING ADVERB of length 8 characters)
+
+	PROMPT determines what your UniPOPS prompt will look like.  You
+	can change the value of PROMPT to whatever you would like your
+	prompt to look like.
+
+	PROMPT is neither used nor set by any verb.
+
+	If you are processing Continuum data, the initial value of
+	PROMPT is 'Condar >'.  If you are processing Spectral Line data,
+	the initial value of PROMPT is 'Line >'.  For 12-m users,
+	the standard suite of procedures attempt to use PROMPT to
+	indicate which on-line data source is currently the
+	default:  'LineF>' for filter-bank data and 'LineH>' for
+	hybrid spectrometer data.
+
+ 	EXAMPLES :
+
+ 	You don't like the default prompt the program gives you, so you
+	type:
+
+		PROMPT = 'WISEGUY>'
+

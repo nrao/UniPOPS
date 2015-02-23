@@ -1,0 +1,12 @@
+	Pseudo verbs must be the only command on the command line; they
+	cannot be used within procedures and can only be used in
+	execute mode.
+
+	Many pseudo verbs deal with system related aspects of UniPOPS
+	and, as such, should be used with extreme caution.  Others 
+	communicate your desires to the operating system.  Others let 
+	you manage the UniPOPS memory space.  Pseudo verbs often require
+	non-standard syntax.
+
+	Please study carefully the documentation for any pseudo verb
+	that you are planning to use.

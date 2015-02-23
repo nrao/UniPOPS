@@ -1,0 +1,29 @@
+#! /bin/csh -f
+# @(#)prcdir.exe.sh	5.1 06/22/94
+# Lists the files given as arguments 
+#
+if ($#argv < 1) exit(0)
+#
+set domore = "Anything."
+if ($?INFANTS) then
+   echo $$ >> $INFANTS
+endif
+while ($domore != "")
+   if (-e $1) then
+	more -d $1
+   	echo " "
+  	echo -n "Enter <cr> to exit, anything else to repeat : "
+   	set domore = $<
+   else
+	echo "Nothing to list"
+   	echo " "
+  	echo -n "Enter <cr> to exit : "
+   	set domore = $<
+ 	set domore = ""
+   endif
+   echo " "
+end
+rm -f $1
+#
+
+

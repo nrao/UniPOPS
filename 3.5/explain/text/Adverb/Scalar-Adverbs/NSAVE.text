@@ -1,0 +1,22 @@
+	(SCALAR ADVERB)
+
+	NSAVE specifies the save-bin in the "save" file into which a
+	scan is to be loaded or from which it is to be retrieved.  The
+	user must select a save bin between 1 and and the maximum
+	value allowed by the current "save" file, before using CHECK, 
+	RECALL or SAVE.
+
+	NSAVE is used by : CHECK    RECALL    SAVE
+
+	No verbs change NSAVE.
+
+	The initial value of NSAVE is 1.
+
+	EXAMPLE :
+
+	You have reduced a scan which you wish to save so that you can
+	show it to your colleague when she returns from coffee.  Thirty
+	four is your favorite number, so you specify :
+
+		NSAVE = 34
+                SAVE

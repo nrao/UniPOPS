@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'POWSPEC:  Calculates the power spectrum of the real data in'
+PRINT 'Array 0 and the imaginary data in Array 1 and stores the'
+PRINT 'results in Array 0.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' ' 

@@ -1,0 +1,30 @@
+	(REGULAR VERB)
+
+	MOMENT calculates the zeroth and first MOMENT for the data in
+	Array(0) over a specified range of channels and stores the
+	results in the array SIZE.  SIZE(1) contains the zeroth moment
+	or area under the curve (in units of the y-axis times that of
+	the lower x-axis).  SIZE(2) contains the first moment or
+	intensity-weighted mean x-value (in units of the lower
+	x-axis).
+
+	You can change the units of the lower x-axis with the following
+	verbs:  CC, CV, CF, FV, FC, FF, VC, VV, VF, ans SAXIS.
+
+	ADVERBS USED:
+        
+	  BMOMENT       First and last channels of the region
+	  EMOMENT       over which the MOMENT is to be calculated.
+			Initial values are 0.
+
+	ADVERBS SET:
+
+	  SIZE(2)       Contains the results of the calculations of
+	 		MOMENT.  Initial values of 0.
+
+	EXAMPLE:
+
+	You want to calculate the area under your data, specify:
+
+		BMOMENT=238; EMOMENT=329; MOMENT
+		PRINT SIZE(1)

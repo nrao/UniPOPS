@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TANH:  (FUNCTION) Returns the hyperbolic tangent of the'
+PRINT 'given parameter (in radians).'
+PRINT ' '

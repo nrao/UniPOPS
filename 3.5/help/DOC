@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'DOC:  Writes one line of documentation about the scan in'
+PRINT 'Array 0; uses PFLAG to determine whether or not to label'
+PRINT 'the documentation.'
+PRINT ' '
+PRINT 'PFLAG=',PFLAG
+PRINT ' ' 

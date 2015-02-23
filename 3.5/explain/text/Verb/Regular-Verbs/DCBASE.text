@@ -1,0 +1,36 @@
+	(REGULAR VERB)
+
+	DCBASE computes the average of data values in Array (0) over a
+	specified range of channels, subtracts this from all values in
+	Array (0), and stores the results in Array (0).  DCBASE is a
+	conservative means of baseline removal since baseline slope is
+	retained.  It is equivalent to BASELINE with NFIT=0.
+
+	ADVERBS USED:
+
+	  BDROP         # of points ignored at beginning of data.
+	  EDROP         # of points ignored at end of data.
+			Initial values are 0.
+
+	  NREGION(32)   Region(s) of data used to compute average
+			value.  Up to 16 regions may be specified.
+			Initial values are 0.
+
+	  BBASE         # of points at each end of data (excluding
+	  EBASE         BDROP and EDROP) used to compute average if
+			NREGION(1)=0.  Initial values are 50.
+
+	No adverbs are set by DCBASE.
+
+	EXAMPLE:
+
+	You want to remove an average baseline computed over part of
+	the displayed data, so specify;
+
+			NREGION(1) = 0
+			BBASE = 123
+			EBASE = 191
+			DCBASE PAGE SHOW
+
+	which will remove the computed baseline but retain the baseline
+	slope.

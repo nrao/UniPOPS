@@ -1,0 +1,18 @@
+	(REGULAR VERB)
+
+	CONVFCN computes a convolution function of the contents of the
+	data in Arrays (0) and (1).  The data in Array (0) is replaced
+	by the results.
+
+	The number of data points in both arrays must be the same.
+
+	No adverbs are used or set by CONVFCN.
+
+	EXAMPLE:
+
+	You have two data arrays you want to convolve, one of which is
+	in Array (0) and the other in Array(1), so you type:
+
+		CONVFCN
+
+

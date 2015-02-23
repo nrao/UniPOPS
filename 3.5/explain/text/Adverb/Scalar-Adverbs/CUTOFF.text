@@ -1,0 +1,19 @@
+	(SCALAR ADVERB)
+
+	CUTOFF is an adverb that specifies the absolute maximum value
+	to be used as the criterion for determining bad channels.
+	You should assign a value to CUTOFF that is greater than 0.
+
+	CUTOFF is used by : SPIKE
+
+	No verbs change CUTOFF.
+
+	The initial value of CUTOFF is +9999.0
+
+	EXAMPLE :
+
+		CUTOFF = 20; SPIKE REPLACE
+
+	will find all data values that exceed 20, place the channel
+	numbers where they occur into array BADPT, and will interpolate
+	values for these channels.

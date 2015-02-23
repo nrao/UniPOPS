@@ -1,0 +1,11 @@
+PRINT ' '
+PRINT 'RAP:  (LINE) Overlaps the data in Array 0 with itself and '
+print 'places the results back into 0, if the scan was taken using'
+PRINT 'frequency switching.  For Tucson data, the user should '
+print 'specify the amount of the frequency shift using FS and FR.'
+print 'RAP assigns to OSHIFT the number of channels corresponding'
+print 'to the amount of the frequency switch.'
+PRINT ' '
+PRINT 'FS,FR,OSHIFT=',FS,FR,OSHIFT
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

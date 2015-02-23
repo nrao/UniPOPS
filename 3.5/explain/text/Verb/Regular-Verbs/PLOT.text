@@ -1,0 +1,126 @@
+	(REGULAR VERB)
+
+	PLOT plots the data contained in Array (0) against that in
+	Array (1).  Array (1) should contain abscissa values and Array
+	(0) ordinate values.  The routine also draws and labels the
+	axis.
+
+	PLOT will automatically compute the x-axis scaling if adverb
+	XMINP equals adverb XMAXP.  The y-axis is automaticly scaled if
+	YMINP equals YMAXP.  If XMINP is not equal to YMINP, then the
+	values of these adverbs will be used as the x-axis limits to
+	the plot.  If XMINP is less than XMAXP, then the x-axis will
+	increase to the right; if XMINP is greater than XMAXP, then the
+	x-axis increases in the opposite direction.  In the same way,
+	YMINP and YMAXP control the y-axis limits of the plot.  If
+	YMINP is less than YMAXP, the y-axis increases upward, else it
+	increases downward.
+
+	The axis will be linear if XLOGP and YLOGP are both set to the
+	value of FALSE (-1).  An appropriate logarithmic axis will be
+	used if either or both XLOGP and YLOGP are set to TRUE (+1).
+
+	The plot will be either a set of points (selected by a previous
+	use of either POINTS or HISTOGRAM) or a series of connected
+	lines (selected by a previous LINE).
+
+	ADVERBS USED:
+
+	   XMINP        Lower x-axis limit of the plot if not equal to
+			XMAXP.  Initial value: 0.
+
+	   XMAXP        Upper x-axis limit of the plot if not equal to
+			XMAXP.  Initial value: 0.
+
+	   YMINP        Same as XMINP and YMINP except they deal with
+	  		the YMAXP y-axis.
+
+	   XLOGP        If TRUE (+1), the x-axis will be drawn using a
+			logarithmic scale.  If FALSE (-1), a linear
+			scale will be used.  XMINP and XMAXP cannot be
+			less than zero if XLOGP is TRUE.  Initial
+			value: FALSE.
+
+	   YLOGP        Same as XLOGP but for the y-axis.
+
+	   CMARK(12)    If CMARK(N) is not equal to its default value
+			(-999999), a vertical line will be drawn at
+			x-axis value CMARK(N).
+
+	   TMARK(12)    If TMARK(N) is not equal to its default value
+			(-999999), a horizontal line will be drawn at
+			y-axis value, TMARK(N).
+
+	   ZLINE        If TRUE (+1), a horizontal line will be drawn
+			at Y=0.  Initial value is FALSE (-1).
+
+	   XTITLE       Character string of 16 characters which will be
+			used as a label for the x-axis.  Initial value
+			is all blanks.
+
+	   YTITLE	Same as XTITLE except for the y-axis label.
+
+	   HTITLE	Character string of 32 characters which will be
+			used an an overall plot label (placed above and
+			centered on the graph).  Initial value is all
+			blanks.
+
+	   SLABEL       If SLABEL = 1 or 2, then the plot will be
+			documented and tick marks will be labeled.  If
+			SLABEL = 0, no documentation or tick mark labels
+			will be generated.  Initial value is 1.
+
+
+	ADVERBS SET:
+
+	  STATUS(21)    What the last type of plot was.  This is set by
+		        the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		        PLOTDOTS or HLFTNE commands.
+
+		        Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		        HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		        PLOTDOTS.
+
+	EXAMPLE:
+
+	   You want to plot Tsys versus 1/cos(Zenith_distance) for a
+	   series of scans.  Use the following procedure:
+
+		PROC TSYSZD (TSYS_I1, TSYS_I2)
+		# Plots TSYS versus 1 / sin(el).  Uses Arrays 0, 1, and 2
+		#
+		SCALAR TSYS_I
+		#
+		# Empties arrays where data will be stored
+		REMOVE(1)
+		REMOVE(0)
+		FOR TSYS_I = TSYS_I1 TO TSYS_I2
+		#
+		#	Go through the list of scans, increment the number
+		#	of data points.
+			H0(NOINT) = H0(NOINT)+1
+			H1(NOINT) = H0(NOINT)
+		#
+		#	Get the scan and place in array 2; store sys. temp.
+		#	from array 2 to array 0; calculate 1/sin(el) and
+		#	store it in array 1.
+			GET2 TSYS_I
+			D0(H0(NOINT)) = H2(STSYS)
+			D1(H0(NOINT)) = 1./SIN(H2(EL)/57.29577951)
+			END
+		#
+		# Finished storing data into Arrays 0 and 1.
+		# Set up plot labels and plot limits (auto-scale -- linear)
+		XTITLE = 'Num. Atmospheres'
+		YTITLE = 'K'
+		HTITLE = 'Tsys versus Num. of Atmospheres'
+		XLOGP = FALSE; YLOGP = FALSE
+		XMINP = XMAXP; YMINP = YMAXP
+		#
+		# We can plot it now.
+		PLOT
+		RETURN
+		FINISH
+
+	   Now issue the following command:  TSYSZD(100,150) and you
+	   will get the desired plot for scans 100 through 150.

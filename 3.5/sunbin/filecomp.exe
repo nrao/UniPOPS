@@ -1,0 +1,19 @@
+#!/bin/csh -f
+#
+# @(#)filecomp.exe.sh	5.1 06/22/94
+# File completion script
+#
+if ($#argv == 2) then
+   rm -f $2
+   set filename = $1
+   touch $2 >& /dev/null
+   if ( $status == 0) then
+      if ( -f $2 ) then
+         echo $1 > $2
+         exit(0)
+      endif
+   endif
+   exit(1)
+endif
+#  	if argv > 2, that probably means a * expanded to too many files
+exit(2)

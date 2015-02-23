@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DESORG:  (HEADER) Coordinates of center of descriptive'
+PRINT 'coordinate system (3 angles in deg.)'
+PRINT ' '

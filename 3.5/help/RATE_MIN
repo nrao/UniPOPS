@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'RATE_MIN:  (ADVERB) Lowest slew rate ("/s) for SELECT.'
+PRINT ' '

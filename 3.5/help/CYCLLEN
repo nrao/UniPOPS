@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'CYCLLEN:  (HEADER) Length of cycle (seconds).'
+PRINT ' '

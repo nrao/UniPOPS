@@ -1,0 +1,222 @@
+
+4. On-line Assistance in UniPOPS
+--------------------------------
+
+UniPOPS is well-provided with on-line help facilities for both UniPOPS
+and UNIX commands.  In addition, it contains a mechanism whereby you
+can let the UniPOPS System Manager and programmers know your comments, 
+suggestions, or complaints about the package.
+
+4.1 The HELP Facility
+---------------------
+
+The HELP facility in UniPOPS permits you to get a short explanation of
+any verb, system adverb or system procedure. If more extensive
+assistance is required, then the EXPLAIN system can be interrogated
+(see Section 4.2). Examples of how to seek assistance on specific verbs
+and adverbs would be,
+
+	>HELP GAUSS
+	>HELP FIXC
+
+The HELP display will also list the adverbs associated with the
+relevant verb and their current values.
+
+The seven HELP commands, 
+
+	>HELP VERB 
+	>HELP ADVERB 
+	>HELP PROCEDURE 
+	>HELP ARRAY 
+	>HELP POINTER 
+	>HELP STRING
+    and >HELP SCALAR
+
+will provide a general description of their attributes, and generate an
+alphabetical list of all verbs, adverbs, procedures, array adverbs,
+pointer adverbs, string adverbs, and scalar adverbs respectively. The
+appropriate lists will also include the names of all user-defined
+procedures and adverbs.  This is extremely useful, for example, if you
+have forgotten the name of the procedure which you defined twenty
+minutes ago !
+
+To get a general explanation of the on-line assistance available in
+UniPOPS, type,
+
+	>HELP
+     or 
+	>HELP HELP
+
+Note that these two instructions bring up a separate window in which to
+display their message. All other HELPs display their information in the
+UniPOPS window from which they were invoked.
+
+
+4.2 The EXPLAIN Facility
+------------------------
+
+The EXPLAIN facility provides you with a much more extensive
+description of any verb, system adverb, and standard procedure.  Using 
+UniPOPS in a 'windowing' environment, the EXPLAIN documentation will 
+appear in its own specially-created window, which will vanish on exit 
+from the EXPLAIN facility. The EXPLAIN window can also be closed to 
+an `icon' and consulted at any time (see Appendix C for details on how 
+to use windows).  Whether in `window mode' or simple `screen mode', the
+explanation will appear in the UNIX "more" format, pausing when the
+screen is full until you strike the space bar to obtain the next page.
+At the end of an explanation, you can request the facility to `back-up'
+through the previously-viewed EXPLAIN topics, select a new topic for
+explanation, print the current topic to your currently selected
+printer or exit the facility by typing the word DONE in the EXPLAIN window.
+
+EXPLAIN is a hyper-text-like help facility, and subtopics suggested for
+further consultation are listed at the end of each display.
+
+Examples of invoking EXPLAIN for verbs or system adverbs would be,
+
+	>EXPLAIN GAUSS
+	>EXPLAIN FIXC
+
+In addition to verbs and adverbs, EXPLAIN files exist for such general
+topics as,
+
+	>EXPLAIN VERB
+	>EXPLAIN SUNWINDOWS
+	>EXPLAIN DATA-DISPLAY
+	>EXPLAIN COMMAND-SYNTAX
+	>EXPLAIN COOKBOOK
+
+A complete list of these general topics can be obtained via,
+
+	>EXPLAIN
+     or 
+	>EXPLAIN HELP
+
+
+4.3 When all else fails !
+-------------------------
+
+Suppose that you do not know the name of a verb or adverb which you
+wish to locate and find out about. All is not yet lost ! What you have
+to do is to think of a `keyword' intimately associated with the topic
+in question, and call the pseudo verb IDENTIFY which will search the
+EXPLAIN files for occurrences of the `keyword'. The syntax of IDENTIFY
+is,
+
+	IDENTIFY [ `keyword' [ `depth' ] ]
+
+If no attributes are present on the command line, IDENTIFY will prompt the
+user for a `keyword' and a `depth'. Alternatively, the `keyword' can be
+included on the command line, as can the `depth' of the search, defined
+as follows,
+
+	0 = A `quick' search of a representative subset of the HELP
+	    library for occurrences of `keyword'. If `keyword' is
+	    included on the command line, but `depth' omitted, depth =
+	    0 is assumed.
+
+	1 = An in-depth search of all the HELP library.  This takes
+	    considerably more time than the `quick search'.
+
+Suppose you wish to find how to `fix the y-scale' of the plot, then
+try typing,
+
+	>IDENTIFY fix
+
+This would suggest looking at the HELP files for FIXC, FIXHW, GAUSS,
+HOLDY and IFIX, from which it should be clear that HOLDY is the prime
+candidate.
+
+4.4 Consulting the UNIX On-line Help Manual
+-------------------------------------------
+
+The user can consult the UNIX help facility, "man", from within
+UniPOPS, to obtain documentation on UNIX commands.  This is achieved
+via the pseudo verb SYSHELP, whose syntax is,
+
+	SYSHELP [ system-command ]
+
+If the optional attribute is omitted, the verb will prompt the user for
+the system-command of interest. A temporary window is opened and the
+appropriate `man-pages' are listed in this. After the message has been
+displayed, typing <CR> will exit the window, while typing anything else
+will redisplay the message.  Suppose, you wish to find out about the
+UNIX directory command `ls', then type,
+
+	>SYSHELP ls
+
+NOTE: Any UNIX command can be used from inside UniPOPS through the
+pseudo verb SYSTEM (see Section 12.2)
+
+
+4.5 Sending Feedback to the UniPOPS System Manager
+--------------------------------------------------
+
+The pseudo verb REPORT can be used to submit a message to the UniPOPS
+System Manager. Such messages could contain comments, bug reports,
+suggestions, common abuse, etc. To send a message, just type,
+
+	>REPORT
+
+and the user will be prompted as to how to proceed. If describing a
+problem, give as much information as possible (i.e. scan numbers,
+observing mode, problem description, etc.)
+
+
+4.6 Information on the Current Status of your UniPOPS Session
+-------------------------------------------------------------
+
+Often you can become confused as to whether your plots will come out
+in `histogram, line or points' mode, how the top and bottom x-axes of
+that plot will be labeled, and whether command-logging (see Section
+15.3) is in effect.  STATUS is a 32-element array adverb containing
+various information  concerning the status of the program.  You can
+determine the value of any particular element in STATUS using the verb
+PRINT, or its pseudonym ?, (see Section 14.5), but DO NOT try to change
+any of the values.  If a user does change a value in STATUS, the new
+value has no effect on the program and the program immediately resets
+the element to its  proper value before any command is executed.  At
+present,  not all of the  32 elements of  STATUS have a meaning, the
+rest being for future use. See Appendix H for the current format of the
+STATUS array.
+
+As an example of the use of STATUS, suppose you want to find out how
+the top and bottom x-axes of your plot will be labeled. As the
+information you require is held in elements STATUS(1) and STATUS(2),
+(see Appendix H), you type,
+
+	>PRINT STATUS(1), STATUS(2)
+
+The two numbers printed will correspond to the current situation and
+can be decoded by consulting Appendix H, or by typing,
+
+	>EXPLAIN STATUS
+
+Use the TELL verb (TELL STAT) to see a summary of the contents of the
+status array in a user-friendly form.
+
+
+4.7 WHATIS Facility
+-------------------
+
+If you encounter a symbol but don't know whether the symbol is an
+adverb, pointer, procedure, etc., you can use the WHATIS pseudo verb
+to find out.  WHATIS must be the only command on the input line and
+must have an argument which is the symbol you are trying to find
+something about.  For example, if you type,
+
+	> WHATIS EDROP
+
+you'll get back:
+
+	EDROP => Scalar Adverb
+
+which indicated EDROP is a scalar adverb.
+
+And, of course:
+
+	> WHATIS WHATIS
+
+will return
+
+	WHATIS => Pseudo Verb

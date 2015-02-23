@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'VCUR:  (FUNCTION) For SHOW, returns velocity in km/s'
+PRINT '(LINE), or position relative to scan start in deg (CONDAR),'
+PRINT 'at location of crosshair.  For 2-d plot, returns x-axis'
+PRINT 'value at the location of crosshair.'
+PRINT ' '

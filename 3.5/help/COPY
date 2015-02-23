@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COPY: Copies data and header from one specified Array to'
+PRINT 'another.  Syntax:  COPY(from, to).'
+PRINT ' '

@@ -1,0 +1,12 @@
+#!  /bin/csh
+#
+#   @(#)pointing.sh	5.2 08/02/94
+#
+# Determines whether to call point or point.rmt
+#
+if (`hostname` == "fahd") then
+   ${popsdir}utilities/point.exe $argv
+else
+   ${popsdir}utilities/point.rmt.exe $argv
+endif
+#

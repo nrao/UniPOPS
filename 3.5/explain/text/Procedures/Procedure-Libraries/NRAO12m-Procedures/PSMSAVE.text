@@ -1,0 +1,20 @@
+	PSMSAVE puts the PSM map indicated by the scan range given 
+	as arguments into the current save file starting at
+	NSAVE=1 and incrementing NSAVE and the scan number by 1 over
+	the range of scan numbers.
+
+	Syntax: PSMSAVE(start, stop)
+
+	Where start and stop are the first and last scans in the PSM
+	map set.
+
+	The procedure will stop if SPROTECT is not FALSE.
+
+	For each scan in the rage, a REPLACE is done (so you must set
+	BADPT first) and a BASELINE is fitted and removed (so you must
+	have the adverbs that BASELINE uses set prior to using
+	PSMSAVE).
+
+	File name: psmsave.prc
+
+	This procedure is included in LSETUP.12meter

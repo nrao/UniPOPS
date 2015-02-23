@@ -1,0 +1,67 @@
+L------------------------- Spectral Line --------------------------------
+L-	(ARRAY ADVERB of 5 elements)
+L-
+L-	GMFRAC is the fraction of the profile peak intensity at 
+L-	which GMEASURE computes various parameters for spiral galaxy 
+L-	spectra.  All values must be > 0 but < 1.
+L-
+L-	GMFRAC is used by : GMEASURE
+L-
+L-	No verbs change GMFRAC.
+L-
+L-	Initial values of GMFRAC(N) are 0.
+L-
+L-	GMEASURE takes an argument which can be up to 5 digits in
+L-	length, each digit represents the method you want GMEASURE to
+L-	use on your data.  Each element of GMFRAC corresponds to the
+L-	corresponding digit in the argument you provide GMEASURE.  The
+L-	value you should supply to an element of GMFRAC depends upon
+L-	the value of the corresponding digit in the argument to
+L-	GMEASURE.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 1, then set
+L-	   GMFRAC(i) = the fraction of the mean flux at which GMEASURE
+L-	   will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 2, then set
+L-	   GMFRAC(i) = the fraction of the peak flux at which GMEASURE
+L-	   will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 3, then set
+L-	   GMFRAC(i) = the fraction of the peak flux of a two-horn
+L-	   profile at which GMEASURE will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 4 or 5, then
+L-	   set GMFRAC(i) =  f1 + 0.1 * f2 + 0.01 * f, where f is the
+L-	   fraction of the peak flux of a two-horn profile at which
+L-	   GMEASURE will measure the profile and f1 and f2 are the
+L-	   fractions of the peak fluxes that will be used to fit a
+L-	   polynomial to the profile.
+L-
+L-	You should study the documentation for GMEASURE for more
+L-	details.
+L-
+L-	EXAMPLE :  
+L-
+L-	If you invoked GMEASURE as follows,
+L-
+L-		GMFRAC = 0.5, 0.2, 0.5, 0.825, 0.915
+L-		GMEASURE(32145)
+L-
+L-	GMEASURE would display the flux integrals, velocities and
+L-	widths, computed for,
+L-
+L-	i) 50 % of the two peaks (Method 3, GMFRAC(1)).  
+L-     ii) 20 % of the peak (Method 2, GMFRAC(2)).
+L-    iii) 50 % of the mean (Method 1, GMFRAC(3)).
+L-     iv) 50 % of the two peaks, with the error estimated from a
+L-	   polynomial fit between 20 and 80 % of the two peaks.
+L-	   (Method 4, GMFRAC(4) = 80 % + 0.1 * 20 % +0.01 * 50 %).
+L-	v) 50 % of the two peaks searched by fitting a polynomial
+L-	   between 10 and 90 % of the two peaks, with the error
+L-	   estimated from the fitted polynomial.  (Method 5, GMFRAC(5)
+L-	   = 90 % + 0.1 * 10 % + 0.01 * 50 %).
+L-
+L------------------------- Spectral Line --------------------------------
+
+

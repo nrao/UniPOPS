@@ -1,0 +1,15 @@
+Class 7 :  Data Parameters                    
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Beam Halfwidth at Half Maximum                | BFWHM    |  R*8   | arcsec
+Off Scan Number                               | OFFSCAN  |  R*8   |
+Bad Channel Value                             | BADCHV   |  R*8   | K
+Velocity Correction                           | RVSYS    |  R*8   | km/sec
+Velocity with respect to Reference            | VELOCITY |  R*8   | km/sec
+Velocity Definition and Reference             | VELDEF   |  C*8   |
+Type of Calibration                           | TYPECAL  |  C*8   |
+#if RFRNC CKBK
+
+
+#end

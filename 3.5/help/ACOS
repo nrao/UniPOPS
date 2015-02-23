@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ACOS:  (FUNCTION) Returns the arc cosine (in radians) of'
+PRINT 'the given parameter.'
+PRINT ' '

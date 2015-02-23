@@ -1,0 +1,207 @@
+C- POPS VERBS - i.e. the stuff in the au routines
+C- @(#)POPSDAT.VERBS	5.2 07/06/94
+C-
+C--------------------------------------------------------------
+C-                                  AU1
+COPY         4   4  400
+MOVE         4   4  401
+REMOVE       6   4  402
+GET0         4   4  403
+GET          3   4  403
+ON           2   4  403
+GET1         4   4  404
+OFF          3   4  404
+GET2         4   4  405
+GET3         4   4  406
+GET4         4   4  407
+GET5         4   4  408
+GET6         4   4  409
+GET7         4   4  410
+GET8         4   4  411
+GET9         4   4  412
+RECALL       6   4  413
+SAVE         4   4  414
+TELL         4   4  415
+CGET         4   4  416
+SUMMARY      7   4  417
+KEEP         4   4  418
+CHECK        5   4  419
+GGET         4   4  420
+CGGET        5   4  421
+CHNGONLINE  10   4  422
+KGET         4   4  423
+C--------------------------------------------------------------
+C-                                  AU2
+ACCUM        5   4  430
+SUM          3   4  431
+AVE          3   4  432
+BOXCAR       6   4  433
+HANNING      7   4  434
+SCALE        5   4  435
+CLIP         4   4  436
+DIFF         4   4  437
+MINUS        5   4  437
+MOMENT       6   4  438
+SMOOTH       6   4  439
+INVERT       6   4  440
+DIVIDE       6   4  441
+SPIKE        5   4  442
+REPLACE      7   4  443
+PEAK         4   4  444
+BIAS         4   4  445
+CHNGRES      7   4  446
+CROSSFCN     8   4  447
+CONVFCN      7   4  448
+DECNVLV      7   4  449
+SHIFT        5   4  450
+FSHIFT       6   4  451
+VSHIFT       6   4  452
+PDOC         4   4  453
+LISTSHIFT    9   4  454
+PLUS         4   4  455
+MULTIPLY     8   4  456
+C--------------------------------------------------------------
+C-                                  AU3
+BASELINE     8   4  460
+BMODEL       6   4  461
+BSHAPE       6   4  462
+DCBASE       6   4  463
+RMS          3   4  464
+BSHOW        5   4  465
+PCBASE       6   4  466
+MDBASE       6   4  467
+C-------------------------------------------------------------
+C-                                  AU4
+CROSSHAIR    9   4  470
+RESHOW       6   4  471
+SHOW         4   4  472
+FLAG         4   4  473
+FULLGRID     8   4  474
+PLOT         4   4  475
+SETPAGE      7   4  476
+RSTPAGE      7   4  477
+COLOR        5   4  478
+LINETYPE     8   4  479
+CHARSIZE     8   4  480
+RSTCOLOR     8   4  481
+CLICK        5   4  482
+C------------------------------------------------------------
+C-                                  AU5
+MTABLE       6   4  485
+MHEADER      7   4  486
+MBLANK       6   4  487
+MCOPY        5   4  488
+MMOVE        5   4  489
+MREMOVE      7   4  490
+MINIT        5   4  491
+MRANGE       6   4  492
+HLFTNE       6   4  493
+LABEL        5   4  494
+SETLEV       6   4  495
+AUTOLEV      7   4  496
+RASTER       6   4  497
+SETCLUT      7   4  498
+CONTOUR      7   4  499
+MREAD        5   4  500
+MWRITE       6   4  501
+READCUBE     8   4  502
+SLICE        5   4  503
+MLIMITS      7   4  504
+QCONTOUR     8   4  505
+CHEADER      7   4  506
+PLOTDOTS     8   4  507
+MSMOOTH      7   4  508
+MFILL        5   4  509
+ROTATE       6   4  510
+MFFT         4   4  511
+MIFFT        5   4  512
+HOLWINDOW    9   4  513
+HOLFITFOC    9   4  514
+EQHISTLEV    9   4  515
+FUNCLEV      7   4  516
+PUTROW       6   4  517
+PUTCOL       6   4  518
+GETROW       6   4  519
+GETCOL       6   4  520
+MPLUS        5   4  521
+MMINUS       6   4  522
+MMULTIPLY    9   4  523
+MDIVIDE      7   4  524
+MSCALE       6   4  525
+MBIAS        5   4  526
+C-----------------------------------------------------------
+C-                                  AU6
+GMODEL       6   4  530
+GPARTS       6   4  531
+RESIDUAL     8   4  532
+GDISPLAY     8   4  533
+GAUSS        5   4  534
+C----------------------------------------------------------
+C-                                  AU7
+FFT          3   4  535
+IFFT         4   4  536
+POWSPEC      7   4  537
+C---------------------------------------------------------
+C-                                  AU8
+HEADER       6   4  540
+TABLE        5   4  541
+ADDSTACK     8   4  542
+DELETE       6   4  543
+EMPTY        5   4  544
+SCLEAR       6   4  545
+TITLE        5   4  546
+DOC          3   4  547
+THUMB        5   4  548
+OSB          3   4  549
+SELECT       6   4  550
+C---------------------------------------------------------
+C-                                  AU9
+RIPPLE       6   4  560
+RMODEL       6   4  561
+RSHAPE       6   4  562
+RSHOW        5   4  563
+C---------------------------------------------------------
+C-                                  AUA
+FV           2   4  570
+VF           2   4  571
+VC           2   4  572
+CV           2   4  573
+FC           2   4  574
+CF           2   4  575
+CC           2   4  576
+FF           2   4  577
+VV           2   4  578
+LINE         4   4  579
+HISTOGRAM    9   4  580
+POINTS       6   4  581
+RLINE        5   4  582
+RHIST        5   4  583
+RPOINTS      7   4  584
+FREEY        5   4  585
+HOLDY        5   4  586
+YRANGE       6   4  587
+XRANGE       6   4  588
+SAXIS        5   4  589
+C---------------------------------------------------------
+#ifdef CONTINUUM
+C-                                  CAUB
+CALDBE       6   4  590
+FIXDBE       6   4  591
+ZERO         4   4  592
+SWITCHED     8   4  593
+TOTALPWR     8   4  594
+AVGD         4   4  595
+ONS          3   4  596
+AVG          3   4  597
+SEDITS       6   4  598
+TEMPS        5   4  599
+SOLVETIP     8   4  600
+#else
+C-				   LAUB
+RAP          3   4  590
+GMEASURE     8   4  591
+TEMP         4   4  592
+GETIR        5   4  593
+GETOTF       6   4  594
+GETPOLZ      7   4  595
+#endif

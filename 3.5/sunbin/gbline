@@ -1,0 +1,21 @@
+#!/bin/csh -f
+#
+#   @(#)gbline.sh	5.2 08/02/94
+#
+# Determines whether to call line or line.rmt
+#
+onintr ERROR
+#
+setenv INFANTS /tmp/Infants.$$
+if (-e $INFANTS) rm -f $INFANTS
+touch $INFANTS
+#
+if (`hostname` == "fahd") then
+   ${popsdir}sunbin/gbline.exe
+else
+   ${popsdir}sunbin/gbline.rmt.exe
+endif
+#
+ERROR:
+${popsdir}sunbin/infantcide $INFANTS
+rm $INFANTS

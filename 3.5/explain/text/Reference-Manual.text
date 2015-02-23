@@ -1,0 +1,13 @@
+	The following make up the parts of the UniPOPS Reference Manual
+	not found elsewhere in the EXPLAIN files.  The EXPLAIN files are
+	the bulk of the Reference Manual.  You can print out a hard copy
+        of the Reference Manual by typing the following Unix commands:
+
+		cd ${popsdir}sunbin
+		make -f Makeman reference
+  
+	Note: the Cookbook is over 700 pages long so keep your printer
+	supplied with paper.  This is probably NOT something you want
+	to print out without thinking about the number of trees that
+	action will consume.
+

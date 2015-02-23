@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'MIFFT:  Takes the inverse FFT of the real data in Matrix 0'
+PRINT 'and the imaginary data in Matrix 1 and places the results'
+PRINT 'back in Matrices 0 and 1.'
+PRINT ' '

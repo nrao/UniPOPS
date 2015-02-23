@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'OLD:  (POINTER) Indicates you want to open an existing file'
+PRINT 'with FOPEN.'
+PRINT ' '

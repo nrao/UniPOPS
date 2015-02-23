@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RPOINTS:  Sets up RESHOW command so that it will plot'
+PRINT 'points for its display.'
+PRINT ' '

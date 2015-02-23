@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'Z_SYSTEM:  Regular verb version of SYSTEM.  SYSTEM is to be'
+PRINT 'preferred.  Syntax:  Z_SYSTEM(string).'
+PRINT ' '

@@ -1,0 +1,43 @@
+	The cvt.tape-disk utility converts data files on tape into a
+	data file on disk.  The acceptable input formats are:  
+
+		PCPOPS
+		IEEE Keep
+		140-ft telescope (archive) format
+		Modcomp Keep
+		Green Bank Ascii
+		SDD
+
+	The output formats can be:
+
+		PCPOPS
+		IEEE Keep
+		Modcomp Keep
+		Green Bank Ascii
+		SDD
+
+	The utility program can be run from within UniPOPS using the
+	SYSTEM command or they can be executed outside of UniPOPS at
+	the Unix prompt.  One should mount the tape before executing
+	the utility.  The kinds of tapes read depends upon the
+	available hardware and not the software  The availability and
+	functionality of this utility is site dependent.
+
+	When you start cvt.tape-disk, you will be asked for the input
+	and output formats as well as input tape drive number (usually
+	posted on the drive itself) and output file names.  The input
+	and output formats need not be different.  If the output file
+	exists, you will be asked whether the old file is to be
+	overwritten or whether the converted data will be appended to
+	the end of the file.
+
+	You will also be asked what records on the input tape are to be
+	converted.  Enter the suggested default values if you want the
+	whole file.  Else, you will need to know what records are to be
+	converted.
+
+	The instructions provided by the program are sufficiently clear
+	that you should have few problems with this utility.
+
+
+

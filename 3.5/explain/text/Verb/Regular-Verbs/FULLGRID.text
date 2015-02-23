@@ -1,0 +1,15 @@
+	(REGULAR VERB) 
+
+	FULLGRID draws a rectangular grid over the current display on
+	the Graphics screen at each tick mark, for both the x-axis and
+	the y-axis.
+
+	EXAMPLE:
+
+	In order to draw a rectangular grid on your current display,
+	specify:
+
+			FULLGRID
+
+	and the grid lines will appear over the plot on the graphics
+	screen.

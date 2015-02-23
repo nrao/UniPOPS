@@ -1,0 +1,50 @@
+	(PSEUDO VERB)
+
+	Syntax: HISTORY
+		HISTORY n
+
+	HISTORY lists up to the last 100 input lines you have typed.
+
+	HISTORY can take a numerical argument (<= 100 and > 0) which is
+	the number of last commands you want listed.  If you don't
+	specify a number, HISTORY will assume 100.
+
+	HISTORY comes in handy with the UniPOPS history facility 
+	for re-executing previous commands.  Input lines from BATCH 
+	files are NOT listed by HISTORY.  If you update the RECOVER
+	file on exit, the current history is preserved and is
+	available when you recover your environment.
+
+	HISTORY can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by HISTORY.
+
+	EXAMPLE:
+
+	You know you want to re-execute a command line you recently
+	typed but you don't want to type in the command again, so you
+	type :
+
+		HISTORY
+
+	which will give a list of the last 100 commands.
+
+		HISTORY 20
+
+	will give a list of the last 20 commands.
+
+	You can re-execute command lines with the ! history commands.
+	The commands include:
+
+		!!, !#, !-#.
+
+	Foe example:
+
+		!5     will re-execute the line labeled by 5 in the
+			HISTORY list.
+		!!     will re-execute the previous command
+		!-3    will re-execute the current line minus three
+			lines 
+		!-1    will re-execute the current line minus one line
+			(same as !!)

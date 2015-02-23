@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'VCHAR:  Draws a character string along a vertical line on'
+PRINT 'the graphics screen.  Syntax:  VCHAR(string,rotate)'
+PRINT ' '

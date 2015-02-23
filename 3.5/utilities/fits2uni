@@ -1,0 +1,195 @@
+#!/bin/sh -f
+#
+#   @(#)fits2uni.sh	5.3 10/04/96
+#
+#******************************************************************
+# FITS2UNI -                                                      *
+# Script to read a FITS tape and convert to Sun UNIPOPS format.   *
+#   Updates:     July 2, 1991                                     *
+#   27 April 1992: Make sure tape is rewound at start, use non-rew*
+#        tape device.                                             *
+#******************************************************************
+echo " "
+echo "So you want to read a FITS file, eh?"
+echo " (to quit this dialog, type CNTRL-C)"
+#******************************************************************
+# Select disk or tape input here.                                 *
+#******************************************************************
+echo "Do you want to read a tape(T), or a disk file(D)? [default=D]: \c"
+read tod;
+tod=`echo $tod | tr "[a-z]" "[A-Z]"`;
+case $tod in
+D) ;;
+T) ;;
+*) tod="D";
+   echo "Using default ($tod).";;
+esac;
+if [ $tod = "D" ] 
+then
+#                          get name of input file
+  frepeat=0;
+  while [ $frepeat -eq 0 ]
+  do
+    echo "Please type name of FITS disk file: \c";
+    read infile;
+#                                       Did he type a file name?
+    if test -n "$infile";  then
+#                                       Does file exist?
+      if test -f "$infile"; then
+#                                       Is file readable?    
+        if test -r "$infile"; then
+#                                       Is file empty?
+          if test -s "$infile"; then
+             frepeat=1
+          else
+             echo "File $infile is empty."
+          fi;
+        else
+          echo "No permission to read $infile"
+        fi;
+      else
+        echo "File $infile does not exist."
+      fi;
+    else
+      echo "Try again (or CNTRL-C to quit)."  # file name bad.
+    fi;
+   done;
+  nscans=`f2u -c < $infile`;
+  echo "File $infile has $nscans scans.";
+#                          Reading from tape.
+else
+   trepeat=0;
+   while test $trepeat -eq 0;
+   do
+     if [ `isSolaris` = "YES" ]; then
+       echo " Please type tape drive unit number: /dev/rmt/\c"
+       read tapedev
+       if test -n "$tapedev"; then
+	 trepeat=1;
+	 tapedev=rmt/$tapedev;
+	 nrtapedev=${tapedev}bn;
+       fi;
+     else
+       echo " Please type tape drive device name: /dev/\c"
+       read tapedev
+       if test -n "$tapedev"; then
+	 trepeat=1;
+	 nrtapedev=n${tapedev};
+       fi;
+     fi;
+   done;
+fi;    # end of if tod=D
+#******************************************************************
+#  User selects output file here.                                 *
+#******************************************************************
+echo " ";
+echo "Type output UNIPOPS file name [default=LDATA]: \c";
+read outfile;
+if test -n "$outfile"; then
+  echo " ";
+else
+   outfile="LDATA";
+   echo "Using default ($outfile).";
+fi;
+if test -f "$outfile"; then   # test if file exists
+   echo "OK to delete present $outfile (Y,N)?? \c"
+   read response;
+   response=`echo $response | tr "[a-z]" "[A-Z]"`;
+   case $response in
+   Y|YE|YES)  rm -f $outfile;;
+   N)  exit 0;;
+   *)  exit 0;;
+   esac;
+fi;
+echo "Type maximum scan capacity for $outfile [default=100]: \c"
+read maxscan;
+if test -n "$maxscan"; then
+  echo " ";
+else
+  maxscan="100";
+  echo "Using default ($maxscan).";
+fi;
+#******************************************************************
+#  User may skip files on the tape before reading a file.         *
+#******************************************************************
+qrepeat=0;
+while test $qrepeat -eq 0;   # repeat for successive tape files.
+do
+if [ $tod = "T" ]
+then
+  echo "Do you want to skip any files on the tape? (y,n)\c";
+  read response;
+  response=`echo $response | tr "[a-z]" "[A-Z]"`;
+  case $response in
+  Y|YE|YES)echo " How many files?\c";
+          read numtoskip;
+          if test -n "$numtoskip"; then
+            noskip=0;
+          else
+            noskip=1;
+            numtoskip=0;
+          fi;;
+  *)        noskip=1;
+          numtoskip=0;;
+  esac;
+#******************************************************************
+#  Review the Choices and ask for confirmation.                   *
+#******************************************************************
+  echo "-----------------------------------------------------";
+  echo "Ready to read FITS tape on /dev/$tapedev"
+  echo "  Will skip $numtoskip files."; 
+  echo " Make sure the tape is loaded in the drive now."
+else
+#                    This is the disk file input case
+  qrepeat=1;      # prevent looping - only one file in disk case.
+  echo "-----------------------------------------------------";
+  echo "Ready to read FITS data from file $infile";
+fi;
+echo "Output will go to $outfile file.";
+echo " is this ok? (type Y to proceed) \c";
+read response;
+response=`echo $response | tr "[a-z]" "[A-Z]"`;
+case $response in
+Y|YE|YES) echo " ";;
+*)        echo "Bye, now!";
+          exit 0 ;;
+esac;
+#******************************************************************
+#  Make the output file index.                                    *
+#******************************************************************
+echo "makeempty.exe $outfile $maxscan"
+      makeempty.exe $outfile $maxscan;
+#******************************************************************
+#  Make the desired command strings, and run the commands.        *
+#******************************************************************
+if [ $tod = "T" ]
+then
+mt -f /dev/$tapedev rew
+if test $numtoskip -ne 0; then
+   echo "mt -f /dev/$nrtapedev fsf $numtoskip"
+     mt -f /dev/$nrtapedev fsf $numtoskip
+fi;
+#
+echo "dd if=/dev/$nrtapedev ibs=28800 obs=2880 | f2u -u >> $outfile";
+    dd if=/dev/$nrtapedev ibs=28800  obs=2880 | f2u -u >> $outfile;
+#******************************************************************
+#  Read more files from tape??                                    *
+#******************************************************************
+echo " "
+echo "Do you want to read another file from the tape? (y/n)\c";
+read response;
+response=`echo $response | tr "[a-z]" "[A-Z]"`;
+case $response in
+Y|YE|YES) echo " ";;
+*)       echo "mt -f /dev/$tapedev rew";
+         echo "Rewinding tape...";
+           mt -f /dev/$tapedev rew;
+          qrepeat=1;;
+esac;
+else          # else of if tod=t
+echo "cat $infile | f2u -u >> $outfile";
+        cat $infile | f2u -u >> $outfile;
+fi;
+done
+echo "makeindex.exe $outfile";
+makeindex.exe $outfile;

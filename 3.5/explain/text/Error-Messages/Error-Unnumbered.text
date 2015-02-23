@@ -1,0 +1,973 @@
+#if CKBK
+
+#def SCT F-3.
+#def DSH ----
+#else
+#def SCT F-3.
+#def DSH ----
+#end
+SCT Unnumbered Errors
+DSH------------------
+
+Unnumbered error messages, in almost every case, are displayed whenever
+an error condition is detected during the starting up, or closing down,
+of the program.  A few are displayed during the execution of UniPOPS.
+They do not have a qualifying number attached.
+
+SCT1 Start-up errors
+DSH-----------------
+
+Start-up error messages are those which may be generated between the
+time you start UniPOPS and when you get the prompt to enter your first
+UniPOPS command.  The order in which the error messages are presented
+below is that in which you may encounter them.  Start-up errors can
+occur due to lockfile problems, difficulty in bringing up a graphics
+window, inability to find on-line data files, problems with the command
+logging, recover, memory, or setup files, or errors in specifying data
+files.
+
+. Lockfile errors
+  ---------------
+
+    Error message:
+
+     "LOCKFILE exists." 
+     "Another user has control of the files in this directory which may"
+     "lead to unpredictable results when files are read from or written to"
+     
+     "Possible user is:"
+     "Obs:<account> Machine:<host> Date/Time: <date> <time>"
+
+     Where <account> and <host> are the computer account and computer name
+     of the user who created the lockfile at the indicated <time> and
+     <date>.  If for some reason that information is not available, you
+     will get the following message:
+
+     "Cannot ascertain who the user is"
+
+     The error message continues:
+
+     "You have the following options:"
+     "   To exit the program, type: 0"
+     "   To remove a leftover LOCKFILE, type: 1"
+     "   To ignore the LOCKFILE, type: 2"
+     "Enter 0, 1, or 2 [ default : 0 ]: "
+
+    Possible causes:
+
+	Users in the same directory will share the same MEMORY and
+	RECOVER files.  The MEMORY file is used at startup to get
+	a pristine copy of the program's memory.  It is also used
+	by the STORE and RESTORE verbs during the execution of
+	the program.  The RECOVER file is used to save the current
+	state of the program at exit and to recover that state
+	at startup.  If more than one person is allowed to use these
+	files, there is the obvious potential that one user will
+	overwrite the state stored in a MEMORY or RECOVER file at
+	the expense of another user.  For this reason, a LOCKFILE
+	is placed in that directory.  This is simply a marker that
+	those files are in use.  There are several reasons why a
+	LOCKFILE might exist in a directory.
+
+	(i) Someone is logged into your account and is using the
+	    current directory to run the analysis program or you
+	    are already running one copy of the program from that
+	    directory.
+
+	(ii) The last time you ran the program in the current
+	     directory it terminated abnormally and wasn't able to
+	     clear the lock file.
+
+	(iii) You have previously logged into another computer,
+	      started the analysis program, and walked away without
+	      exiting the program.
+
+     Possible solutions:
+
+	As stated above, we strongly recommend that only one version
+	of the program be running in a given subdirectory.  However,
+	as is obvious from the possible options given by the error
+	message, we do provide a means for ignoring this recommendation.	
+	Whatever you choose to do, we recommend that you at least
+	understand why that LOCKFILE exists.
+
+        (i) Find out if one of your colleagues is analyzing data at
+	    the same time you are trying to. If so, you can either choose
+	    to wait until he or she is done, or you can ask the other
+	    person to exit the program, or you can choose option (2) to
+	    ignore the LOCKFILE.  If you choose to ignore the LOCKFILE,
+	    be sure and warn the other user (and get their approval)
+	    before proceeding.
+
+	(ii) If you are sure that no one else is using your
+	     account and that therefore the LOCKFILE represents cause
+	     (ii) above, you should choose option (1), removal of the
+	     LOCKFILE.
+
+	(iii) Go back to the first computer, or other instance where you
+	      already running the program and exit that program (and log
+	      off if it is on another computer).
+
+
+	If you choose either option (1) or (2), you will see the following
+	message:
+
+     "WARNING:  This may be very dangerous!!  Proceed at your own risk!!"
+     "Continue (y or n)? [default : n] "
+
+	This is mearly a second chance to rethink your options.  If you
+	answer "n", you will exit the program.
+
+	If you choose option (1) you may see this error:
+
+     "Error in clearing LOCKFILE. Cannot continue!!"
+     "Get help from your local UniPOPS guru!"
+
+	This should never happen, which is why you need to get help
+	to continue.
+
+
+
+
+
+
+.  Graphics Initialization
+   -----------------------
+
+     Error message:
+
+	  "Cannot open graphics screen.... Continuing!"
+
+     Possible Causes:
+
+	  (i) Your computer does not allow for shared memory.
+
+	  (ii) You are not using X or SunView.
+
+	  (iii) You don't have permission to create a file in the
+	        current directory.
+
+     Possible Solutions:
+
+	  (i) Have your system manager reconfigure the UNIX Kernel
+	      to allow for shared memory.
+
+	  (ii) Exit the program, start up X (OpenWindows or any other
+	       X window system) or SunView, and restart the program from 
+	       a CmdTool window.
+
+	 (iii) Exit the program, and use the UNIX `chmod' command to add
+	       read/write privileges to the current directory.
+
+	  (iv) Get help from a UniPOPS guru.
+
+     Error message:
+
+	  "WARNING: printers file does not exist or is corrupt."
+	  "Consult your local UniPOPS guru for help."
+	  "A non-graphics printer will be assumed."
+
+	The UniPOPS printer capability is matched to the local printers
+	through the printers file.  This error message indicates that
+	there is a problem with that file and that you should get help.
+	In the meantime, you will not be able to print out any hardcopies
+	of the graphics screen.
+
+.  On-line data file errors
+   ------------------------
+
+     Error message:
+
+	   "Project code is less than 3 characters!"
+
+     Possible Causes:
+
+	   You have typed in a project code with less than three
+	   characters
+
+     Possible Solutions:
+
+	   Re-enter more characters for the project code.
+
+     --------------
+
+     Error message:
+
+	   "Security file is not available!! 
+	    Contact the telescope's computer staff"
+
+     Possible Causes:
+
+	   (i) There is a problem with the security file.  This
+	   file is completely under the control of the 140-ft
+	   staff.
+
+	   (ii) Your computer cannot access the on-line computer
+	   because of InterNet problems or the on-line computer is down.
+
+     Possible Solutions:
+
+	   (i) Contact the Green Bank computer staff.
+
+     --------------
+
+     Error message:
+
+           "Data with project code <code> cannot be accessed by <name>"
+	   "Try again ...."
+
+     Possible Causes:
+
+	   (i) You have mistyped your project code.
+
+	   (ii) The NRAO Green Bank staff has not added your project code
+	        to the security file, or has done so improperly.
+
+     Possible Solutions:
+
+	   (i) Enter your project code again
+
+	   (ii) <Ctrl-C> out of the program.  Check with the Green 
+		Bank staff concerning your entry in the security file.
+		Have them correct any problems before you restart the
+		program.
+
+     --------------
+
+     Error message:
+
+           "***** WARNING: Online data is not available.  IRTN = <number>"
+
+     Possible Causes:
+
+	   (i) You are using the program away from a telescope and
+	       an on-line data file doesn't exist at your site.
+
+	   (ii) The disk on which the on-line data file resides is
+		unreachable -- Network is down, computer is down, or
+		disk is not mounted.
+
+
+     Possible Solutions:
+
+	   (i) None.
+
+	   (ii) Check with the system manager about the status of the
+		network and the disk and computer on which the on-line
+		file resides.
+
+	   (iii) Exit the program and use the correct program.
+
+     --------------
+
+     Error message:
+
+	   "You have had ten tries... TERMINATING!!"
+
+     Possible Causes:
+
+	   You have entered a project code 10 times but were
+	   unsuccessful each time.  Check above for possible
+	   solutions.
+
+
+.  Command Log-file Errors
+   -----------------------
+
+     Error message:
+
+         "Cannot open command log file <filename>"
+
+     Possible Causes:
+
+	 (i) You don't have permission to create a file in the
+	     current directory.
+
+	 (ii) A file with the wrong permissions and the name of the
+	      log file is in the current directory.
+
+     Possible Solutions:
+
+	 (i) Use the chmod command to add read/write privileges to
+	     the current directory and rerun program.
+
+	 (ii) Do an `ls -l' and see if a file by the name of the log
+	      file exists and has the wrong permissions.  If so, type,
+	      `chmod +rw <name>', where <name> is the name of the file
+	      and rerun program.
+
+     --------------
+
+     Error message:
+
+ 	 "Error while trying to find end of log file <name>"
+
+     Possible Cause:
+
+	 The log file is unreadable by you.
+
+     Possible Solution:
+
+	 Type, `chmod +rw <name>' where <name> is the name of the
+	 file and restart program.
+
+     --------------
+
+     Error message:
+
+	 "Error while trying to write to <logfile>"
+
+     Possible Cause:
+
+	 You do not have permission to write to the log file.
+
+     Possible Solution:
+
+	 Type, `chmod +rw <logfile' where <logfile> is the name of
+	 the file and restart the program.
+
+
+
+.  Recovering or Memory File Errors
+   --------------------------------
+
+      Error message:
+
+	 "***ERROR***  Memory file does not exist!!"
+
+	or
+
+	 "***ERROR***  Memory file has wrong access privileges!!"
+
+     The causes of the above should be obvious.  The program will 
+     then offer you the following possible solution:
+
+     "Do you want to recreate your memory file "
+     "(y or n) ? [ default : n ]: "
+
+     Choosing "n" will exit the program.  In most cases you should
+     choose "y".  However, if you are reasonably sure that your
+     Memory file already exists, you may want to check that you are
+     running the program from the correct subdirectory.  By all
+     means, get help if you are unsure what to do.
+     
+     --------------
+
+     Error message:
+
+	 "***ERROR*** Memory file has an internal problem"
+
+     Possible Cause:
+
+	 The program had some problem reading all of the data that
+	 it expected in the Memory file. 
+
+     Possible Solution:
+
+	 This solution is the same as that offered when the file does
+	 not exist or has the wrong permissions.  You can request that
+	 it be recreated.  See the above description for details.
+
+     --------------
+
+     Error message:
+
+	 "ERROR: Memory file and program are not compatible!!"
+	 "Versions: <memversion> <version>"
+
+     Possible Cause:
+
+	 The value of the version number found in the file does not
+	 match that used when the program was compiled.
+
+     Possible Solution:
+
+	 Unless the previous version of the program (which matches
+	 the version number of the memory file) still exists, there
+	 is little chance that the contents of the memory file
+	 STORE areas can be salvaged.  Contact a UniPOPS guru if have
+	 any questions.  Your probably want to recreate your memory
+	 file following the same procedure outlined above when
+	 the memory file does not exist or has the wrong access
+	 privileges.
+
+     --------------
+
+     Error message:
+
+	 "Cannot delete old memory file and cannot continue!!"
+	 "Get help from your local UniPOPS guru!"
+
+     Possible Cause:
+
+	 This message occurs when you choose to recreate your memory
+	 file.  It means what it says.  
+
+     Possible Solution:
+
+	 Check that you are running the program from the proper 
+	 directory (your own, where you should have privileges to create 
+	 and delete files).  Get help if you need it.
+
+     --------------
+
+     Error message:
+
+	 "Cannot create new memory file and cannot continue!"
+	 "Get help from your local UniPOPS guru!"
+
+     Possible Cause:
+
+	 This message occurs when you choose to recreate your memory
+	 file.  It means what it says.  
+
+     Possible Solution:
+
+	 Check that you are running the program from the proper 
+	 directory (your own, where you should have privileges to create 
+	 and delete files).  Get help if you need it.
+
+     --------------
+
+     Error message:
+
+	 "Recover file has wrong access privileges!!"
+	 "No attempt will be made to recover!"
+
+     Possible Cause:
+
+	 You can not read and/or write to the existing recover file
+	 in this subdirectory.
+
+     Possible Solution:
+
+	 Check that you are running the program from the proper
+	 subdirectory.  If so, try typing `chmod +rw <name>' where
+	 <name> is the name of the recover file (LRECOVER for line and
+	 CRECOVER for condar.  Get help from a local UniPOPS guru if
+	 you have any questions.
+
+     --------------
+
+     Error message:
+
+	 "ERROR: Recovery file and program are not compatible!!"
+	 "Versions: <recover-file version> <program-version>
+	 "No attempt will be made to recover!"
+
+     Possible Causes:
+
+	 Either the program has been updated since you made the recover
+	 file and the revision was such that your old recover file is
+	 now out of date, or you are using a recover file made with a
+	 later version of the program than you are trying to run.
+
+     Possible Solutions:
+
+	 If <recover-file version> is lower then <program-version>
+	 either use an earlier version of the program or continue 
+	 using the program without recovering.
+
+	 If <recover-file version> is higher than <program-version>
+	 either use the later version of the program or continue
+	 using the program without recovering..
+
+     --------------
+
+
+     Error messages:
+
+	 "ERROR: Bad recovery file (NUMCIO): <num-recover> <num-program>
+				or
+	 "ERROR: Bad recovery file (NUMAPPL): <num-recover> <num-program>
+				or
+	 "ERROR: Bad recovery file (NUMLSF): <num-recover> <num-program>
+				or
+	 "ERROR: Bad recovery file (NUMCORE): <num-recover> <num-program>
+
+	 "ERROR: Bad recovery file (NUMKX): <num-recover> <num-program>
+
+	 All followed by:
+
+	 "No attempt will be made to recover!"
+
+     Possible Causes:
+
+	 Internal problem with program or recover file.
+
+     Possible Solutions:
+
+	 If you are unable to recover using the same version of the 
+	 program, then your recover file has somehow become corrupted. 
+	 If so, report the problem (use the REPORT verb or contact
+	 the local UniPOPS guru).
+
+.  Data File Changing/Creating Errors
+   ----------------------------------
+
+     Error message:
+
+	 "CHNGFILE  : Cannot name a file LMEMORY ***"
+			or 
+	 "CHNGFILE  : Cannot name a file CMEMORY ***"
+
+     Possible Causes:
+
+	 You have chosen LMEMORY or CMEMORY as the name of a data
+	 file.  LMEMORY and CMEMORY are a reserved name.
+
+     Possible Solutions:
+
+	 Choose a different file name.
+
+     --------------
+
+     Error message:
+
+	 "CHNGFILE  : Bad file type"
+
+     Possible Causes:
+
+	 You have specified an invalid file type
+
+     Possible Solutions:
+
+	 Make sure that you type in the correct number for file type.
+
+     --------------
+
+     Error message:
+
+	 "CHNGFILE: Trying to attach a file that is not in RECORDS format."
+
+     Possible Cause:
+
+	 You have attempted to attach a non individual records file
+	 as file type RSCANS (5).
+
+     Possible Solutions:
+
+	 Make sure that the file is an individual records file if you
+	 are going to attach it as file type RSCANS (5).
+
+     --------------
+
+     Error message:
+
+	 "CHNGFILE: Cannot attach a RECORDS file as a data file."
+
+     Possible Cause:
+
+	 You have attempted to attach an individual records file 
+	 as something other than file type RSCANS (5).
+
+     Possible Solution:
+
+	 Individual records files can only be attached as file type
+	 RSCANS (5) and can only be accessed using the GETIR verb.
+
+     --------------
+
+     Error message:
+
+	 "CHNGFILE: File by that name doesn't exist or has the wrong "
+	 "access privileges..."
+
+     Possible Causes:
+
+	 You have tried to CHANGE to a file that doesn't exist or have
+	 mistyped the file's name
+
+     Possible Solutions:
+
+	 Check that a file exists by that name or retype the name if
+	 you think you have mistyped it.
+
+     --------------
+
+     Error message:
+
+	 "CHNGFILE: Cannot create file."
+
+     Possible Causes:
+
+	 (i) A file by that name already exists.
+
+	 (ii) The current directory has the wrong access privileges.
+
+     Possible Solutions:
+
+	 (i) If the file exists, either CHANGE to that file or pick a new
+	     file name.
+
+	 (ii) Check the access privileges on the current directory and,
+	      if you don't have read/write privileges, add them with
+	      the chmod command.
+
+     --------------
+
+     Error message:
+
+	 "***ERROR*** Bad command... Try again..."
+			or
+	 "CHNGFILE  : Unrecognized command..."
+
+     Possible Causes:
+
+         You have specified a command that is unrecognizable. 
+
+     Possible Solutions:
+
+	 Retype the command or look at the CHNGFILE documentation.
+
+     --------------
+
+     Error message:
+
+        "CHNGFILE: An impossible error occurred."
+        "Send a report of this error to a UniPOPS guru ... sddopen err no <no.>"
+        "No changes made..."
+				or
+	"CHNGFILE: an unrecognized error was returned by sddopen"
+        "Send a report of this error to a UniPOPS guru ... sddopen err no <no.>"
+
+     Possible Solutions:
+
+	 If you see this error, please inform the computer division immediately.
+
+     --------------
+
+
+     Error message:
+
+         "CHNGFILE: Could not open new file; old file WAS closed"
+
+     Possible Causes:
+
+	 You have typed an illegal file name, the file or directory
+	 has the wrong permissions.
+
+     Possible Solutions:
+
+	 (i) Use the chmod command to add read/write privileges to
+	     the current directory and rerun program.
+
+	 (ii) Do an `ls -l' and see if a file by the name of the log
+	      file exists and has the wrong permissions.  If so, type,
+	      `chmod +rw <name>', where <name> is the name of the file
+	      and rerun program.
+
+     --------------
+
+     Error message:
+
+         "CHNGFILE: Error reading bootstrap or index information "
+         "   -- File may be corrupt"
+         "No changes made..."
+				or
+	 "CHNGFILE: file is in an improper format"
+
+     Possible Causes:
+
+	 For some reason, the index section of a data file is bad.
+	 Possibilities include:  It is not an SDD file or the file may
+	 have become altered by another program.
+
+     Possible Solutions:
+
+	 Look at the output of FILES and, if needed, run the
+	 checkfile.exe utility on the data file, and, as a last resort,
+	 run the makeindex.exe utility on the file.
+
+.  SETUP File Errors
+   -----------------
+
+     Error message:
+
+         "SETUP file can not be added to list of open input devices"
+         "This should not happen, report this problem."
+         "Using default initialization"
+
+     Possible Causes:
+
+	 Something is wrong internally with the program
+
+     Possible Solutions:
+
+	 None.  Please inform the computer division of the problem.
+
+     --------------
+
+     Error message:
+
+         "SETUP file doesn't exist... Using default initialization"
+
+     Possible Causes:
+
+	 A file by the name of SETUP doesn't exist in the current
+	 directory or it can't be read by you.
+
+     Possible Solutions:
+
+	 If it exists, exit the program and use the chmod command to
+	 add read/write access privileges to LSETUP or CSETUP and then
+	 rerun program.  If it doesn't exists, and you want a SETUP
+	 file, exit the program, create the file, and rerun the
+	 program.
+
+     --------------
+
+     Error message:
+
+	 "Error in SETUP file"
+
+     Possible Causes:
+
+	 The SETUP file contains an error of some kind.  Usually, a
+	 syntax error or bad UniPOPS command.  You will be given the
+	 option of continuing to read the file or to abort reading in
+	 the rest of the file.
+
+     Possible Solutions:
+
+	 You can skip the remaining section of the SETUP file or you
+	 can skip the rest of the line in the SETUP file but try to
+	 execute the remaining lines in the file.  You should exit the
+	 program and edit the SETUP file to remove the error.
+
+SCT2 Exiting Errors
+DSH----------------
+
+Errors on exiting the program occur if one uses <Ctrl-C> to try to
+exit, if there is a problem with the lockfile, or if the program has
+trapped an abnormality and is terminating.
+
+     Error message:
+
+         "Ctrl-C Interrupt -- Use EXIT to exit properly"
+
+     Possible Causes:
+
+	 You have hit <Ctrl-C> during the execution of the program.
+	 The command line you typed was interrupted and the program
+	 will ask you for the next command you want to execute.
+	 <Ctrl-C> shouldn't be used to exit the program.  Use the EXIT
+	 command.
+
+     --------------
+
+     Error message:
+
+	 "WARNING: Bad lockfile?!?"
+	 "Someone may be using this directory!!"
+
+     Possible Causes:
+
+	 Something has happened to your lockfile while you have been
+	 runing the program.  The lockfile doesn't belong to your
+	 analysis session.  One of your colleagues may have tried to
+	 use the program in the same directory and may have instructed the
+	 program to remove the lockfile.  You will also get this message
+	 if you instructed the program to ignore the lockfile.
+
+     Possible Solutions:
+
+	 If you were not aware that someone else was using your area,
+	 find out who has been analyzing data at the same time as you
+	 and instruct them that they should not do it any more without
+	 consulting you first.  The integrity of your files and procedures 
+	 cannot be guaranteed if two people analyze data simultaneously 
+	 in the same directory with the same program at the same time
+	 without proper coordination.
+
+     --------------
+
+     Error message:
+
+	 "Abnormal Termination ... Error code <err_code>"
+
+     Possible Causes:
+
+	 The program is terminating from an abnormal error.  <err_code>
+	 will give an indication of where the error occurred.
+
+	    1 = End of standard input
+	    2 = Unable to open graphics window
+	    3 = User has typed in too many bad project codes
+	    4 = Lock file exists
+	    5 = Cannot initialize data files
+	    6 = A <Ctrl-C> interrupt before the program has a chance to 
+	        be fully up and running.
+	    7 = Bad Recovery or Memory file
+	    8 = Error in initializing command logging file.
+
+     Possible Solutions:
+
+	 Fix the indicated problem.  The guidelines above may be of
+	 some help.
+
+SCT3 Other Non-Numbered Error Messages
+DSH-----------------------------------
+
+Other kinds of non-numbered error messages can occur if there is a
+problem with the graphics screen, if you are trying to redefine a
+procedure that already exists, if an error exists in a file that is
+being `BATCH'ed into the program, if a help file contains an error, if
+end-of-file (EOF) has been reached on standard input, if a problem
+occurred during a CHNGFILE or CHNGPRJ command.
+
+.  Graphics screen problems
+   ------------------------
+
+     Error messages:
+
+         "Problem with CLRPAGE during attempted close"
+			or
+         "Problem with CLRPAGE during unlink"
+			or
+         "Problem with CLRPAGE during open"
+         "istat = <error_code>
+         "ioutgrph = <output_unit>
+         "coutgrph = <output_filename>
+			or
+	 "Problem with CLRPAGE during rewind"
+			or
+         "Internal problem with GCOPY"
+			or
+         "Internal problem with TCOPY"
+			or
+	 "Cannot perform TCOPY... Bad file designation"
+
+     Possible Causes:
+
+	 Problem in accessing or modifying the disk files which contain
+	 the hard copy of the current graphics screen.
+
+     Possible Solutions:
+
+	 None.  Report problem to the computer staff immediately.
+
+.  Redefining a Procedure that already exists
+   ------------------------------------------
+
+     Error message:
+
+	 "Procedure already exists...  "
+	 "Do you want to overwrite (y or n)?"
+
+     Possible Causes:
+
+	 Procedure already exists and will be overwritten by the new
+	 definition if things are allowed to continue.
+
+     Possible Solutions:
+
+	 If you want to overwrite the old, just type a `y' and it will
+	 be overwritten.
+
+	 If you don't want it to be overwritten, type a `n'. The
+	 program will be taken out of compile mode and placed into
+	 execute mode (see Section 3.7.1).  If you are `BATCH'ing in
+	 the procedure, you will then be asked whether to continue
+	 reading from the file.  Most often you should say `no' again
+	 since the remaining lines in the file will be interpreted as
+	 UniPOPS commands and will be executed instead of compiled.
+
+.  Error in a BATCH file
+   ---------------------
+
+     Error message:
+
+	 "Error in batch file <file_name>"
+
+     Possible Causes:
+
+	 Any error in a "BATCH"ed file will generate this message.  
+
+.  Help file error
+   ---------------
+
+     Error message:
+
+	 "Internal ERROR in help file ...  Report problem"
+         "Control returns to standard input."
+
+     Possible Causes:
+
+	 An error exists in the help file you are trying to access.
+	 Any error in a help file could generate this message.  You
+	 will be given the option of continuing to read the file or to
+	 abort reading in the rest of the file.
+
+     Possible Solutions:
+
+	 None.  Please report the problem to the computer staff as soon
+	 as possible.
+
+.  End-of-File on standard input
+   -----------------------------
+   
+     Error message:
+
+      	 "END of input file or ERROR on read"
+      	 "TERMINATING...."
+
+     Possible Causes:
+
+	 If you are using pipes or command redirection to provide
+	 UniPOPS with commands, the input pipe has been exhausted or
+	 the EOF has been reached in the input file.
+
+     Possible Solutions:
+
+	 Probably none, if the file or pipe were properly constructed.
+
+.  CHNGPRJ and CHNGFILE Errors
+   ---------------------------
+
+	The error messages, and their causes and solutions, are the
+	same as given above in SCT1 c (On-line data-file errors) and
+	SCT1 f (Data file changing/creating errors).
+
+.  MWRITE errors
+   -------------
+
+     Error message:
+
+	  "File <name> exists....
+	  "Do you want to overwrite (y or n [default = n] )? "
+
+     Possible Causes:
+
+	  You are trying to write a two-dimensional FITS image file as
+	  a disk file whose name agrees with a disk file that already
+	  exists.
+
+     Possible Solutions:
+
+	  Type a `y' if you want the old disk file to be overwritten
+	  by the new; else either type a `n' or a carriage return to
+	  preserve the old file.  
+
+.  SCRATCH errors
+   --------------
+
+     Error message:
+
+	 "The following PROCEDURES/ALIASES use <item>"
+
+		list of procedures or aliases
+
+	 "Cannot SCRATCH <item>
+
+     Possible Causes:
+
+	 You are trying to scratch an adverb, alias, or procedure that
+	 is used in a procedure or alias.
+
+     Possible Solutions:
+
+	 If you want to scratch the item, you must first eliminate all
+	 references to that item either by scratching the procedure or
+	 alias that references that item or by editing the procedure
+	 and removing the reference to the item.

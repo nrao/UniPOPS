@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'AVGD:  (CONTINUUM-TUCSON) Computes the mean source'
+PRINT 'temperature and standard deviation of the mean of the'
+PRINT 'digital backend data in Array 0.'
+PRINT ' '

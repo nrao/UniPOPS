@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'PRNTFMT:  Alters the format used by the PRINT or ? verb for'
+PRINT 'printing out real values.  Syntax:  PRNTFMT(format)'
+PRINT ' '

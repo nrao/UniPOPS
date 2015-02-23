@@ -1,0 +1,82 @@
+	(REGULAR VERB)
+
+	Syntax:  ROTATE( exchange_xy, flip_x, flip_y)
+
+	ROTATE takes the contents of Matrix (0), copies them to
+	Matrix(1), and rotates the matrix placing the results into
+	Matrix (0).
+
+	ROTATE takes three arguments, all of which should have the
+	value of either TRUE (+1) or FALSE (-1).  If the first argument
+	is set to TRUE, then the x- and y-axis of the matrix are
+	interchanged.  Next, if the second argument is TRUE, the
+	direction of the x-axis is inverted.  Last, if the third
+	argument is TRUE, the direction of the y-axis is inverted.
+
+	If the original matrix looks like:
+
+			^
+			|
+		      Y |
+			|_____>
+			   X
+
+	then the eight possible combinations of TRUE and FALSE
+	arguments produces the following rotations:
+
+	(FALSE, FALSE, FALSE)		(FALSE, FALSE, TRUE)
+		
+		^				   X	
+		|				|----->
+     	      Y |  	   		      Y |
+		|----->				|
+		   X				\/
+
+	(FALSE, TRUE, FALSE)		(FALSE, TRUE, TRUE)
+		
+		   ^			        X
+		   |			     <-----|	
+     	           | Y				   | Y
+	     <-----|				   |
+	        X				  \/	   
+
+	(TRUE, FALSE, FALSE)		(TRUE, FALSE, TRUE)
+		
+		^				   Y	
+		|				|----->
+     	      X |  	   		      X |
+		|----->				|
+		   Y				\/
+
+	(TRUE, TRUE, FALSE)		(TRUE, TRUE, TRUE)
+		
+		   ^			        Y
+		   |			     <-----|	
+     	           | X				   | X
+	     <-----|				   |
+	        Y				  \/	   
+
+
+	No adverbs are used by ROTATE.
+
+	ADVERBS SET:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+
+	If Matrix (1) contains something, you may want to MMOVE
+	the matrix to somewhere else before using ROTATE.
+
+	EXAMPLE:
+
+	Your Matrix (0) has an x-axis that increases to the right and
+	you want it to increase to the left, so type:
+
+		ROTATE(FALSE, TRUE, FALSE)
+

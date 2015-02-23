@@ -1,0 +1,5 @@
+
+	Gaussian fitting routines either fit Gaussians to data, produce
+	a model of Gaussians, display Gaussians, or remove Gaussians
+	from the data.
+

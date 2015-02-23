@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'TRUE:  (POINTER) Contains the value of TRUE (+1).'
+PRINT ' '

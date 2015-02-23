@@ -1,0 +1,31 @@
+	The expandsdd utility allows you to make the index of an
+	SDD file larger than it currently is so that the file can
+	be used to store more scans.
+
+	WARNING: expandsdd overwrites your existing file.  If you
+	need the existing file intact or you are worried about possible
+	problems during the expansion that might corrupt your
+	file, make a copy of the file first for safekeeping.
+
+	This utility can be used from within UniPOPS using the SYSTEM
+	command or it can be executed outside of UniPOPS at the
+	Unix prompt.
+
+	To use this utility, type:
+
+		expandsdd sdd_file_name size
+
+	where sdd_file_name is the name of the SDD file in question
+	and size is the number of scans you would like the index
+	to be able to hold.
+
+	Example:
+
+	Your data file MyFile.data is full but you still need to
+	put more data into it.  You know that the current size
+	of MyFile.data is 1024 scans (use checkindex.exe to 
+	determine what the current file size is) and you think 
+	you really need it to hold 1500 scans.  You type:
+
+		expandsdd MyFile.data 1500
+

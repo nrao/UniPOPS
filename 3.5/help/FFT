@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'FFT:  Takes the FFT of the data in Array 0 and stores the'
+PRINT 'real part of the result in Array 0 and the imaginary part'
+PRINT 'in Array 1.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+PRINT ' ' 

@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	AVE divides the accumulated data in internal ACCUM array by the
+	accumulated weighting factor.  The result is left in Array
+	(0).  AVE also clears the accumulator flag and sets WEIGHT
+	to be one (1.0).
+
+	ADVERB SET:
+
+	STATUS(8) :  Number of scans accumulated in internal accum
+		     array and determined by the ACCUM or SUM
+		     commands.
+
+	WEIGHT : set to be 1.0
+
+	EXAMPLE:
+
+	You wish to look at a partial average and then continue
+	accumulating, so specify:
+
+	   SCLEAR
+	   FOR I = 1000 TO 1002; GET I; ACCUM; END
+	   AVE
+	   PAGE SHOW			 (Look at partial average)
+	   ACCUM
+	   FOR I = 1003 TO 1005; GET I; ACCUM; END
+	   AVE PAGE SHOW                 (Look at final average)
+
+	                

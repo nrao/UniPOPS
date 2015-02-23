@@ -1,0 +1,21 @@
+# batch in the useful 2-D procedures
+batch dms.prc
+batch process.prc
+batch sortstk.prc
+batch prcstk.prc
+batch chkavrg.prc
+batch cubeinput.prc
+batch mxx.prc
+batch xymatrix.prc
+batch prc2dim.prc
+batch xygrid.prc
+batch vxmatrix.prc
+batch vxgrid.prc
+batch vymatrix.prc
+batch vygrid.prc
+#    The following are specific uses of xygrid and prc2dim
+batch peak2dim.prc
+batch xypeak.prc
+#
+batch integ2dim.prc
+batch xyinteg.prc

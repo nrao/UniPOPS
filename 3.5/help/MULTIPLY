@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'MULTIPLY:  Multiplies the data in Array 1 with that in '
+PRINT 'Array 0 and places the results in Array 0.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

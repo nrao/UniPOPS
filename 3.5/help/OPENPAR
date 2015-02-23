@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'OPENPAR:  (HEADER-TUC) Open parameter values -- set of ten'
+PRINT '8 character strings.'
+PRINT ' '

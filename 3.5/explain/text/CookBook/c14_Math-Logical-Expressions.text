@@ -1,0 +1,584 @@
+14. Mathematical and Logical Expressions in UniPOPS
+---------------------------------------------------
+
+Mathematical and logical expressions are needed in UniPOPS as,
+
+    i) the right-hand side of adverb assignment statements.
+   ii) arguments in verb and procedure calls.
+  iii) arguments when using the verb PRINT as a calculator.
+
+They can be constructed using operators (mathematical and logical
+operators, internal-array and functions verbs, and function
+procedures), as well as operands (real, logical, and literal constants,
+and array, scalar, pointer, keyword, and string adverbs.)
+
+
+
+14.1 The Operators
+------------------
+
+Operators perform actions on operands.  For example, to assign a value
+of 2.3 to an adverb named D_IND requires the use of two operands (the
+constant 2.3 and the adverb D_IND), plus the assignment operator (=).
+
+
+14.1.1 Mathematical and Logical Operators
+-----------------------------------------
+
+The mathematical operators are :     
+
+	+           Adds the two operands together.
+		    EXAMPLE:   PRINT 3.1475 + 6.2347
+
+		    Or signifies unary plus.  EXAMPLE: X = +1.345
+
+	-           Subtracts the second operand from the first.
+		    EXAMPLE:   PRINT 6.1475 - 3.2347
+
+		    Or signifies unary minus.  EXAMPLE: X = -1.345
+
+	/           Divides the second operand into the first.
+		    EXAMPLE:   X = Y2 / Y1
+
+	*           Multiplies the second operand by the first.
+		    EXAMPLE:   X = Y1 * Y2
+
+	**          Raises the first operand to the power specified by
+		    second operand.  EXAMPLE:   X = Y2**Y1
+
+
+The logical operators are :
+
+	=           If the second operand is equal to the first, the
+		    statement is TRUE (+1); otherwise, it is FALSE
+		    (-1).  EXAMPLE:  IF X = Y THEN ...; ELSE ...; END
+
+	|           Logical OR.  If the first or second operand, or
+		    both, are TRUE (+1), the statement is TRUE (+1);
+		    otherwise, it is FALSE (-1).  
+		    EXAMPLE:  IF X=1. | Y=2. THEN ...; END
+
+	&           Logical AND.  If the first and second operand are
+		    TRUE (+1), the statement is TRUE (+1); otherwise, it
+		    is FALSE (-1).  
+		    EXAMPLE:  IF X > 2 & X < 7 THEN ...; ELSE ...;  END
+
+	>           If the second operand is less than the first, the
+		    statement is TRUE (+1); otherwise, it is FALSE
+		    (-1).  EXAMPLE:  IF X > Y THEN ...; ELSE ...; END
+
+	>=          If the second operand is less than or equal to the
+		    first, the statement is TRUE (+1); otherwise, it is
+		    FALSE (-1).  
+		    EXAMPLE:  IF X >= Y THEN ...; ELSE ...; END
+
+	<           If the second operand is greater than the first,
+		    the statement is TRUE (+1); otherwise, it is FALSE
+		    (-1).  EXAMPLE:  IF X < Y THEN ...; ELSE ...; END
+
+	<=          If the second operand is greater than or equal to
+		    the first, the statement is TRUE (+1); otherwise,
+		    it is FALSE (-1).  
+		    EXAMPLE:  IF X <= Y THEN ...; ELSE ...; END
+
+	~           Logical NOT comparison.  If the one operand is
+		    FALSE, the statement is TRUE (+1); otherwise, it is
+		    FALSE (-1).  
+		    EXAMPLE:  IF ~(X >= 3.4) THEN....; ELSE ...; END
+
+	~=          Logical comparison.  if the first operand doesn't
+		    equal the second, the statement is TRUE (+1);
+		    otherwise, it is FALSE (-1).  
+		    EXAMPLE:  IF X ~= Y THEN ...; ELSE ...; END
+
+
+
+
+Of these, the following are infix operators, (meaning that they should
+be positioned between the two operands that they works on),
+
+ 	*     /     **     =     >     <     >=     <=     ~=     =
+ 	&     |     + (addition)     - (subtraction)
+
+while the following are prefix operators, (meaning that they should be
+positioned before the single operand that they work on),
+
+	  ~     + (unary)     - (unary)
+
+No two operators may be placed back-to-back (e.g., ~> or A+-B).
+Instead, spaces should be used  to separate the operators 
+(i.e., A+ -B).
+
+Examples of valid operator use are,
+
+	X+3     -Y     ~L     L~=B
+
+Examples of invalid operator use are,
+
+	X~3     / 4 5     A+-B
+
+
+
+
+14.1.2 Function and Internal Array Verbs
+----------------------------------------
+
+The function and internal array verbs that can be employed in
+mathematical expressions are,
+
+     i) The standard mathematical function verbs, consisting of the
+	following,
+
+	ABS     ACOS    ASIN    ATAN    ATAN2   COS 	COSH    DIM
+	EXP     IFIX    INT	LOG     LOG10   MAX 	MIN     MOD
+	NINT	RAND    SIGN    SIN     SINH 	SQRT    TAN     TANH
+
+    ii) The graphical cursor verbs, (see Section 6.3),	
+	
+	CCUR    FCUR    MCUR    TCUR 	VCUR    XCUR    YCUR
+
+   iii) The miscellaneous function verbs  CHANTOX and XTOCHAN,
+	(described in Section 9.13) and C2XPIX, XPIX2C, T2YPIX,
+        YPIX2T, DATE, and TIME.
+
+    iv) The following function verbs (described just below) for
+	manipulating character strings,
+
+	COMPARE	 CONCAT	 INDEX	LENGTH	LNBLNK	SUBSTR
+
+     v) The internal array verbs as used for interrogating header and
+	data values for the UniPOPS Arrays, Matrices, and Cubes, (see
+	Sections 9.3, 9.4, 16.1.1 and 16.1.2), and for accessing values
+	in the stack (see Chapter 11).
+
+	ASTACK  CD0  CH0  D0-D9  H0-H9  MD0-MD3  MH0-MH3
+
+    vi) The file manipulation function FOPEN and the file name function 
+	FNAME (see Section 12.5.1).
+
+A function verb is `called' by using the name of the function,
+following this (in parentheses) by the list of arguments that the
+function is to work on, separated by commas.  Some functions require no
+arguments, while others require one or more.
+
+Examples of function calls are,
+
+	ABS(X)     ATAN2(1.2, D)     RAND     COS(3.14/2)
+
+A full list of function verbs, and an explanation of each, is to be
+found in the Synopsis of Appendix A-3.
+
+14.1.3 Manipulating Character Strings
+-------------------------------------
+
+Six function verbs are available for manipulating character
+strings. The values returned by these functions are,
+
+	i) INDEX(string1, string2), LNBLNK(string) and
+	   LENGTH(string) all return an integer value. 
+
+       ii) COMPARE(string1, string2) returns either of the logical
+  	   constants, TRUE or FALSE. 
+
+      iii) CONCAT(string1, string2) and SUBSTR(string, m, n) both
+	   return a new string.
+
+The six character-handling functions are used as follows,
+
+   COMPARE takes two string adverbs as its arguments, and returns TRUE
+	   if their contents are identical, or FALSE otherwise.
+
+   CONCAT takes two strings as its arguments, and returns the string
+   	  which is the concatenation of the two.
+
+   INDEX takes two strings as its argument, and returns the character
+	 position in the first string at which the first occurrence of
+	 the second string occurs.
+
+   LNBLNK takes a single string adverb as its argument, and returns the
+	  character position of the last non-blank character in the
+	  contents of the adverb.
+
+  LENGTH also takes a single string adverb as argument, and returns the
+  	 number of characters in the adverb.
+
+  SUBSTR takes as its argument, a string and two integer values, m and
+	 n.  The sub-string contained in the string argument between
+  	 character locations m and n is returned.
+
+For example, if X_STRING, Y_STRING and Z_STRING are three string
+adverbs, and X and DIFF_STRING are scalar adverbs, these string
+functions could be used as follows,
+
+	   >PRINT COMPARE(X_STRING, Y_STRING)
+	   >X = LNBLNK(X_STRING) - 3
+           >DIFF_STRING = LENGTH(X_STRING) - LENGTH(Y_STRING)
+	   >Z_STRING = CONCAT(X_STRING, Y_STRING)
+	   >X = INDEX('ABCDEFGHIJK', 'DEF')
+	   >PRINT 'Source Name = ', SUBSTR(X_STRING, 5, 12)
+
+
+14.1.4 Function Procedures
+--------------------------
+
+Function procedures are a special type of user-defined procedure which
+act like function verbs in that they can take parameters, and return a
+single value. Their use is identical to that of the built-in function
+verbs described above.  See  Section 13.7 for more details of function
+procedures.  There are no built-in Function procedures, though some may
+exist in procedure libraries.
+
+
+
+14.2 The Operands
+-----------------
+
+Operands are constants (real, logical, or string constants), or
+references to adverbs (scalar, array, string, pointer, or keyword
+adverbs).
+
+14.2.1 Real Constants
+---------------------
+
+A real constant consists of a sign, + (optional) or -, and decimal
+digits (0-9) which express a real number.  This can be a string of
+digits with a decimal point, a string of digits with a decimal point
+followed by an exponent, a string of digits without a decimal point, or
+a string of digits without a decimal point and followed by an
+exponent.  Approximately 7 decimal digits (24 bits) can be represented
+internally and the magnitude of the number must be between 0 and
+3.40282347E+38.
+
+Examples of valid real constants are,
+
+	+0             7.0E+0      9761.25E+1     +7.e3
+	-999.99999     7.0E+03     7e-03         -12.34E-37
+	21.9876543219876543
+
+Examples of invalid real constants are,
+
+	1.E      1.2E113
+
+
+
+14.2.2 Logical Constants
+------------------------
+
+In UniPOPS, logical constants can only have one of two possible values,
+TRUE (+1) and FALSE (-1).  For example, to assign a value of `TRUE' to
+adverb B, type,
+
+	>B = TRUE
+
+
+14.2.3 Literal Constants
+------------------------
+
+Literal constants consist of characters surrounded by either single or
+double quotation marks (' and ")  as in,
+
+	"George"
+	'This is a literal constant'
+
+Up to 60 characters can be used in a literal constant, and upper and
+lower case characters are preserved within the quotation marks.  If you
+use single quotes to begin a literal constant you must use single
+quotes to end it.  If you use double quotes to begin a string, you must
+use double quotes to end it.  To generate a quote within a quote, one
+follows the following rules,
+
+	If one uses single quotes, double quotes can be used within the
+	literal, as in,
+
+  	   >HTITLE = 'He said, "This is the end"'.
+
+	If one uses single quotes and wants a single quote within the
+	literal, two single quotes must be used within the literal.
+	For example,
+
+	   >XTITLE = 'Don''t touch that dial'.
+
+	If one uses double quotes, single quotes can be used within the
+	literal, as in,
+
+	   >HTITLE = "Don't touch that dial".
+
+	If one uses double quotes and wants a double quote within the
+	literal, two double quotes must be used within the literal.
+	For example,
+
+	   >XTITLE = "He said, ""This is the end""".
+
+
+Examples of valid literal constants are:
+
+	"Hello"	    'Ain''t this great'	    "Fred and Ethel's home"
+
+Examples of invalid literal constants are:
+
+	'Hello"	    'Ain't this great'	    "He said, "No" "
+
+ 
+
+14.2.4 References to Adverbs
+---------------------------- 
+
+A reference to a scalar, pointer, keyword, or string adverb is just the
+name of the adverb. A reference to an element of an array adverb is the
+name of the adverb followed by the indices of the desired array element
+enclosed in parentheses and separated by commas.  The only operator
+that can take the name of an array as an operand is the assignment (=)
+operand and the array's name must appear to the left of the =, i.e.,
+
+	>NREGION = 1, 3, 34, 100, 147, 154, 0
+
+Typical examples of references to scalar, pointer, keyword, and string
+adverbs could be,
+
+	BDROP     A     B     CLIPMIN
+
+Examples of references to elements of array adverbs are,
+
+	NREGION(3)     SIZE(2)     YOURARRAY(2,4)
+
+
+14.3 Expressions
+----------------
+
+While UniPOPS understands algebraic, Polish, and reverse Polish
+notation for mathematical and logical expressions, it is best to enter
+expressions in algebraic form, similar to writing an expression in
+FORTRAN or C.  As in FORTRAN and C, it is highly recommended that one
+uses opening and closing parentheses to order and arrange the
+expression.
+
+The precedence of operators determines the order of evaluation. The
+operations with higher precedence are performed first.  Expressions are
+evaluated from left to right for operators with the same precedence.
+Parentheses should be used to specify the order whenever the default
+precedence level is not that desired, or in order to make the
+computation easier to understand.  When parentheses are used, the
+expression contained within the most deeply-nested parentheses (i.e.,
+the innermost pair) is evaluated first.
+
+The only difference between the order of precedence within UniPOPS and
+FORTRAN is that the expression A**B**C is evaluated as (A**B)**C in
+UniPOPS and as A**(B**C) in FORTRAN.
+
+The order of precedence is:
+
+	Level 1:        Expressions within parentheses 
+	Level 2:	Functions 
+	Level 3:        ** 
+	Level 4:        *     /     - (unary)     + (unary) 
+	Level 5:        +     - 
+	Level 6:	>     <     ~=     >=     <=     = (logical) 
+	Level 7:        ~
+	Level 8:        & 
+	Level 9:        | 
+	Level 10:       = (assignment)
+
+Examples of the order of precedence are,
+
+   i) To set the value of adverb X to Y times the square root of the
+      sin of the adverb G, type,
+
+	>X = Y * SQRT(SIN(G)).
+
+  ii) To set the value of L to TRUE if X is greater than Y, and G is
+      not equal to F (and to FALSE if this condition is not true),
+      type,
+
+	>L = (X > Y) & (G ~= F)
+
+      Note that the parentheses are not essential in this case, but aid
+      clarity considerably.
+
+
+14.4 Array Mathematics
+----------------------
+
+UniPOPS allows data manipulation using array mathematics.  Array math
+must be enclosed in braces, i.e., { and }.  The braces delineate where
+array math starts and ends.  Any UniPOPS command may precede the
+opening { and follow the closing }.  Within the { and }, no further {
+or } must appear -- except in literal constants, this restriction includes
+any array math that may be used by any procedure that is executed either
+explicitly or implicitly (i.e. through another procedure) within the 
+initial array math.  To reference all the elements of an array, the user 
+needs to place an @ sign at the end of the array's name.  As an example, 
+NREGION@ refers to all 32 elements of array NREGION.  Within braces, 
+the @ will take on the values of 1 to the maximum dimension of any array 
+within the braces.  If no array is referenced within the braces, the 
+commands within the braces will be executed 16384 times.
+
+Any array with a dimension larger than 16384 will only have its first
+16384 elements worked on.  Only one dimensional arrays can be handled
+whose indices start at one and whose maximum index is less than or
+equal to 16384.
+
+The following examples illustrate the uses of array math,
+
+	>{PRINT 10*NREGION@}  Prints 10 times each element of NREGION.
+			      Equivalent to:
+			      FOR I=1 TO 32; PRINT NREGION(I)*10; END
+
+	>{NREGION@=(@**2)/100}  Sets NREGION(1)=0.01, NREGION(2)=0.04,
+			        NREGION(3)=0.09, etc.  Equivalent to:  
+			        FOR I=1 TO 32;NREGION(I)=(I**2)/100;END
+
+	>A=-32767 
+	>{A=MAX(NREGION@,A)} 
+	>PRINT A
+			       Prints out maximum value in NREGION.
+			       Equivalent to:  
+			       A=-32767
+			       FOR I = 1 TO 32;A=MAX(NREGION(I),A);END 
+			       PRINT A
+
+			       A is a scalar ADVERB.
+  
+	>{D0@  = RAND}      Sets the data values in Array (0) to random
+			    numbers.
+
+	>{D0@ = H1(STSYS)*(D0@-D1@)/D1@}    Equivalent to the Green
+					    Bank version of the verb
+					    TEMP and to:  
+			          FOR I=1 TO H0(NOINT)
+			          D0(I)=H1(STSYS)*(D0(I)-D1(I)/(D1(I))
+			          END
+
+	>{D3@ = SQRT(D0@**2 + D1@**2)}    Takes the power spectrum of
+					  the data in Arrays (1) and
+					  (0) and places the results in
+					  Array (3).  Equivalent to:
+
+				  FOR I=1 TO H0(NOINT)
+				  D3(I)=SQRT(D0(I)**2+D1(I)**2) END
+
+
+14.5 The Verb PRINT
+-------------------
+
+The verb PRINT has the syntax, 
+
+	PRINT list
+
+It prints the values of the list that forms its attribute. The list
+can consist of one or more variables (adverbs), literals, or
+arithmetical or logical expressions. Arrays of more than one dimension
+are printed with the first index varying most rapidly. Literals must be
+enclosed in single or double quotes, though they are printed without
+the quotes. If the list contains arithmetic expressions, the result of
+the expression is printed. This means that this verb can be used as a
+calculator to evaluate complicated expressions, as well as to check the
+values of adverbs.
+
+PRINT has the pseudonym ?.
+
+Examples of the use of PRINT to print literals and adverbs, as well as
+its use as a calculator evaluating arithmetic and logical expressions
+are,
+
+	>PRINT 'Hello !'
+	>? A, B, C, VRMS
+	>PRINT SIZE, 'Bye !', A/2, NREGION
+	>PRINT (A + B - C) ** 3
+	>PRINT X > 4
+
+You can alter the format in which PRINT will print out real-valued
+quantities with the verb PRNTFMT.  PRNTFMT takes as an argument a
+literal string or string adverb that contains a legitimate format
+specification.  The format specification you should specify is the same
+as what you would use in Fortran 77 for printing out a single
+floating-point number.  
+
+The allowable format specifications has up to five parts:
+
+	Descriptor
+	---------
+	Used to specify scaling and sign control.  For scaling:
+
+		nP -- Scale control, n = any integer.
+
+	For sign control, choose one of the following:
+
+		SS -- No plus signs printed
+		SP -- Plus signs printed
+		S  -- Same as SS, the system default.
+
+	If you supply more than one P or S descriptor, all but the last
+	will be ignored.  You need not supply a scaling or sign
+	descriptor.
+
+	Format
+	------
+	Used to control how floating point numbers are printed.  Pick
+	one of the following:
+
+		F -- decimal point format 
+		E or D -- exponential format
+		G -- depends upon magnitude of number printed
+		     and will automatically choose between F or E.
+
+
+	Field width
+	----------- 
+	Used to control the number of characters to use for each number
+	printed.
+
+		w -- any positive number indicating the field width.
+			Make sure n is big enough to accommodate the E,
+			G, or D format.
+
+	If you don't specify w, a value of 15 is assumed.
+
+	Number of digits
+	----------------
+	Used to specify either the number of digits to the left of the
+	decimal point or the number of significant digits.
+
+		.d -- a period followed by a positive integer.  For G
+			specification, d is the number of significant
+			digits, for all E, F, and D, w is the number of
+			digits after the decimal point.
+
+	You cannot specify d if you haven't also specified w.  If you
+	don't specify d, a value of 7 is assumed.
+
+  	Number of digits in exponent
+	----------------------------
+	Used with the G, E, or D specifications to indicate how many
+	digits to use for printing exponents.  Choose one of the
+	following:
+
+		.e              Ee
+
+	where e is any positive integer that indicates the number of
+	digits to use in the exponent.
+
+	If you don't specify e, a value of 2 is assumed.  For E, G, and
+	D specifications, the value of w should be > d+4+e.
+
+
+To create a format specification, you supply a string that contains the
+optional descriptor, a format specifications, and optional field widths
+and number of digits.  Just place the desired parts one right after
+another in the string in the order in which they have been discussed.
+For more details, see the discussion of the FORMAT statement in any
+Fortran 77 manual.
+
+If you supply a blank string to PRNTFMT, the default specification will
+be used (equivalent to SS1PG15.7.2).
+
+For example:
+
+	> PRNTFMT('SP1PG20.8.3')
+
+	> PRNTFMT('SSF10')
+
+	> STRING*12 FMT
+	> FMT = "E"
+	> PRNTFMT(FMT)
+
+	> PRNTFMT("  ")

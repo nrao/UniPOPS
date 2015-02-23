@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	Syntax:    COPY (m,n)
+
+	Allows the user to copy any Array (0 though 9) to any other
+	Array (0 through 9).  The header and data are copied.  The
+	arrays are numbered from 0 through 9.
+
+	Different verbs expect data to be present in particular arrays
+	for calculations.  See individual verb description for proper
+	placement of data before invoking the verb.
+
+	No adverbs are used or set by MOVE.
+
+	EXAMPLE:
+
+		GET 14100		Will load scan 14100 into Array (0)
+		COPY (0,1)		Will copy 14100 to Array (1)
+		GET 14101		Will load scan 14101 into Array (0)
+		TEMP			Forms difference spectra in Array (0)
+

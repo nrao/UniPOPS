@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'S_OBJECT:  (STRING-16) Name of object for SELECT.'
+PRINT ' '

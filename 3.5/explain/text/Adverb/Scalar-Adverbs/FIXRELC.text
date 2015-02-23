@@ -1,0 +1,60 @@
+	(SCALAR ADVERB)
+
+	FIXRELC, FIXRELH, and FIXRELHW are used as flags or switches by
+	the verb GAUSS.
+
+	FIXRELC, FIXRELH, and FIXRELHW are used by : GAUSS
+
+	No verbs change FIXRELC, FIXRELH, or FIXRELHW.
+
+	Initial values for FIXRELC, FIXRELH, and FIXRELHW are FALSE
+	(-1), which indicates to GAUSS that you don't want to hold the
+	RELATIVE values of CENTER, HEIGHT, and HWIDTH constant.  
+
+	If, for example, you set FIXRELC to TRUE, then GAUSS will
+	assume that you want to hold fixed the relative separations
+	between the centers of the Gaussians (stored in CENTER) but
+	that you want to fit the center of the pattern of Gaussians
+	whose centers are stored in CENTER.  This is useful for fitting
+	hyperfine components of a molecular transition for which the
+	relative separations are know between the components but for
+	which you don't know exactly the channels in which the
+	components will fall.  If you set FIXRELC to TRUE you cannot
+	also set FIXC to TRUE.
+
+	If you set FIXRELH to TRUE then GAUSS will hold constant the
+	ratio of the HEIGHT(s) but will fit for an overall scale
+	factor.  (Useful if you think that hyperfine components will
+	have line strengths that follow a known pattern but you don't
+	know the actual absolute intensity of any component).  If you
+	set FIXRELH to TRUE you cannot also set FIXH to TRUE.
+
+	If you set FIXRELHW to TRUE then GAUSS will hold constant the
+	ratio of the HWIDTH(s) but will fit for an overall scale
+	factor.  (Useful if you think that hyperfine components will
+	have line widths that follow a known pattern but you don't know
+	the actual absolute width of any component).  If you set
+	FIXRELHW to TRUE you cannot also set FIXHW to TRUE.
+
+	See documentation for related adverbs FIXC, FIXH, and FIXHW.
+
+	EXAMPLE :
+
+	If you want to fit three Gaussians for a spectral line with
+	multiple components whose centers are known to be seperated by
+	10 channels; you don't know exactly what channel any of the
+	components will fall but you can see or guess that the first
+	componets falls somewhere around channel 134.  You expect all
+	components to have the same line width (~3 channels) but you
+	don't expect any pattern of line strengths:
+
+		BGAUSS = 124; EGAUSS = 164
+		CENTER = 134, 144, 154, DEFAULT
+		HWIDTH = 3, 3, 3, DEFAULT
+		NGAUSS = 3
+		FIXRELC = TRUE	     FIXRELC = TRUE will fix the RELATIVE 
+				     center values.
+		FIXRELHW = TRUE	     FIXRELHW = TRUE will fix the RELATIVE 
+				     half-width values.
+		FIXC=FALSE; FIXHW=FALSE; FIXH=FALSE; FIXRELH=FALSE
+		GAUSS

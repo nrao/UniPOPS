@@ -1,0 +1,34 @@
+	UniPOPS can create and read three types of FITS files.
+
+	1.   SD-FITS format, for storing and transporting individual
+	observations (scans).  The format is useful if you want to
+	retain the individual scan aspect of your observations and you
+	anticipate that you may want to feed the observations back into
+	UniPOPS or another analysis system that understands how to read
+	SD-FITS format files.
+
+	2.  Three-dimensional (cube) FITS image files for storing and
+	transporting a spectral-line map of a region.  The format is
+	useful if you have observed spectral line scans within a
+	rectangular region of sky coordinates and will want to derive
+	such quantities as integrated intensities between two
+	velocities as a function of sky coordinates or plot
+	velocity-position diagrams.  In creating the file, you specify
+	the x and y limits (spatial coordinates) of the limits of the
+	cube as well as the velocity limits.  The file produced is a
+	FITS image file so it can be read into most standard analysis
+	systems like AIPS and IRAF (and back into UniPOPS as well).
+
+	3. Two-dimensional (matrix) FITS image files for storing and
+	transporting two-dimensional images.  The format is useful for
+	any type of data that is best suited to two-dimensional
+	arrays.  The files are produced and read by UniPOPS with the
+	MWRITE and MREAD verbs, respectively.  The file produced by
+	MREAD is a FITS image file so it can be read into most standard
+	analysis systems like AIPS and IRAF (and back into UniPOPS as
+	well).
+
+
+	Please read the following documentation before using the
+	utilities that create or read these files.
+

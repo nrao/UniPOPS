@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'THUMB:  Reports the user''s pointing offsets for the scan in'
+PRINT 'Array 0.'
+PRINT ' '

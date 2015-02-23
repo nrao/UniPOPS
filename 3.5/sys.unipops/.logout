@@ -1,0 +1,7 @@
+#!/bin/csh
+#
+#  @(#).logout	5.1 06/22/94
+#  Default UniPOPS .logout file
+#
+if ( ! $?popsversion ) setenv popsversion 3.5
+source ~unipops/$popsversion/sys.unipops/unipops.logout

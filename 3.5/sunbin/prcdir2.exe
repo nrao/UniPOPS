@@ -1,0 +1,46 @@
+#! /bin/csh -f
+# @(#)prcdir2.exe.sh	5.1 06/22/94
+# Lists the contents of the directories which may contain
+# procedures (i.e., the present directory and those specified
+# by the $popsproc1 and $popsproc2 variables
+#
+# Pops open a window to run prcdir in it if necessary
+#
+echo ' ' >! /tmp/proc.$$
+echo -n 'PRCDIR as of ' >> /tmp/proc.$$
+date >> /tmp/proc.$$
+echo ' ' >> /tmp/proc.$$
+echo '---------' $cwd '------------' >> /tmp/proc.$$ 
+ls *.prc >>& /tmp/proc.$$
+if ($?popsproc1) then
+  if ($popsproc1 != "") then
+    if (-d $popsproc1) then
+       cd $popsproc1
+       echo '---------' $popsproc1 '--------------' >> /tmp/proc.$$ 
+       ls *.prc >>& /tmp/proc.$$
+    endif
+  endif
+endif
+if ($?popsproc2) then
+   if ($popsproc2 != "") then
+   if (-d $popsproc2) then
+       cd $popsproc2
+       echo '---------' $popsproc2 '--------------' >> /tmp/proc.$$ 
+       ls *.prc >>& /tmp/proc.$$
+    endif
+  endif
+endif
+# Make up a file containing list of procedures
+#
+if ($?WINDOW_PARENT || $?DISPLAY) then
+      if ($?WINDOW_PARENT) then
+         exec cmdtool -Wl "PRCDIR" -WL "" -WI ${popsdir}sunbin/prcdir.icon \
+	        ${popsdir}sunbin/prcdir.exe /tmp/proc.$$ &
+      else
+	 exec xterm -j -sb -wf -sl 1000 -title "PRCDIR" -n "PRCDIR"  \
+		-e ${popsdir}sunbin/prcdir.exe /tmp/proc.$$ &
+      endif
+else
+     exec prcdir.exe /tmp/proc.$$
+endif
+

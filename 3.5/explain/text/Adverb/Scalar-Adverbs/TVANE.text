@@ -1,0 +1,22 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-      TVANE specifies, for data from the 12-m telescope, the
+C-	temperature of the chopper wheel or vane that you want method 3
+C-	of SOLVETIP to use.  TVANE should have units of degrees C.
+C-
+C-	TVANE is used by : SOLVETIP (method 3)
+C-
+C-	No verbs set TVANE.
+C-
+C-	The initial value of TVANE is -1.
+C-
+C-	EXAMPLE :
+C-
+C-	You want to use algorithm 3 for fitting a model to your sky-tip
+C-	data from the 12-m telescope, and you think the temperature of
+C-	the chopper wheel is -10 C, so you specify :
+C-
+C-		TYPETIP = 3; TVANE = -10; SOLVETIP
+C-	
+C------------------------- Continuum --------------------------------

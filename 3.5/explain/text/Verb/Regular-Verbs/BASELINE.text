@@ -1,0 +1,42 @@
+	(REGULAR VERB)
+        
+	BASELINE fits and removes a Chebyshev polynomial baseline from
+	data in Array (0).  The coefficients of the fitted polynomial
+	are stored in the array BPARM.  The fit is taken over a range
+	of channels you must specify.
+
+	ADVERBS USED:
+
+	  NFIT          Order of polynomial baseline to be removed.
+			Initial value is 1.
+
+	  BDROP         # points to be ignored at beginning of data.
+	  EDROP         # points to be ignored at end of data.
+			Initial values are 0.
+
+	  NREGION(32)   Region(s) of data where baseline is computed.
+			Up to 16 regions can be assigned.  Initial
+			values of NREGION are 0.
+
+	  BBASE         # points at each end of data (excluding BDROP
+	  EBASE         & EDROP) where baseline is fit if
+			NREGION(1)=0.  Initial values are 50.
+
+	ADVERB SET:
+
+	   BPARM(15)    After fitting, BPARM contains the parameters of
+			the Chebyshev polynomial.  Initial values are
+			0.
+
+	EXAMPLE:
+
+	You want to remove a fifth order baseline from your data, so
+	specify;
+
+			NREGION(1) = 50
+			NREGION(2) = 230
+			NREGION(3) = 330
+			NREGION(4) = 495
+			NFIT = 5
+			BASELINE PAGE SHOW
+

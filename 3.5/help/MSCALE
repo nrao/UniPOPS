@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MSCALE:  Multiplies the data in Matrix 0 by the scale factor'
+PRINT 'given as the argument for this verb.  The result is stored'
+PRINT 'in Matrix 0.'
+PRINT ' '
+PRINT 'Syntax: MSCALE(sfact)'
+PRINT ' ' 

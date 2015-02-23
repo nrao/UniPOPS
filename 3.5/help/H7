@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'H7:  (INTERNAL-ARRAY) Returns/sets the value of the  '
+PRINT 'specified header parameter in Array 7.'
+PRINT ' '

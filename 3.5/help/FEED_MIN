@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'FEED_MIN:  (ADVERB) Lowest feed number for SELECT.'
+PRINT ' '

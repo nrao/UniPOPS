@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EDROP:  (ADVERB) Number of channels at end of data to be'
+PRINT 'ignored.'
+PRINT ' '

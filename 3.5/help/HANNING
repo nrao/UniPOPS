@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'HANNING:  Smooths the data in Array 0 using a Hanning'
+PRINT 'smoothing function.'
+PRINT ' '

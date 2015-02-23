@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MEQUINOX:  (HEADER-MATRIX) The equinox of the reference'
+PRINT 'frame of the celestial coordinates of the matrix.'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RLINE:  Sets up the RESHOW command so that it will use'
+PRINT 'connected lines.'
+PRINT ' '

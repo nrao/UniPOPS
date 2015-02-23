@@ -1,0 +1,17 @@
+#! /bin/csh -f
+# @(#)clearlock.exe.sh	5.1 06/22/94
+# Clears a left over lock file from a previous POPS run
+#
+set noglob
+if ($#argv < 1) then
+   echo 'USAGE: clearlock.exe prog_name (L or C)'
+else
+   if ($1 == l | $1 == L) then
+      rm -f LLOCKFILE
+   else if ($1 == c | $1 == C) then
+      rm -f CLOCKFILE
+   else
+      echo 'USAGE: clearlock.exe prog_name (L or C)'
+   endif
+endif
+

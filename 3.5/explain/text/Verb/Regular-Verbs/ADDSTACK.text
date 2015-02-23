@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	Syntax:   ADDSTACK (first,last,increment)
+
+	ADDSTACK  inserts a series of scans numbers (first to last) 
+        into the ASTACK array using the specified increment.
+
+	No adverbs are used by ADDSTACK.
+
+	ADVERBS SET:
+
+	 ACOUNT           The counter containing the # of scans in the 
+			  stack.  It is incremented by ADDSTACK.
+			  Initial value is 0.
+
+	EXAMPLES:
+
+	.  To add scans 500 through 520 to the stack, specify:
+
+		ADDSTACK (500, 520, 1)
+
+	.  To add every other scan from 500 through 520 to the stack,
+	   specify:
+
+		ADDSTACK (500, 520, 2)
+		PRINT ACOUNT            Will give count of scans
+					on the stack.
+		TELL STACK              Will list the scans in the
+					stack.

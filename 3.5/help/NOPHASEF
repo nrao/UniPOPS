@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NOPHASEF:  (HEADER-TUC) PROTO12M - The number of fast'
+PRINT 'phases per cycle.'
+PRINT ' '

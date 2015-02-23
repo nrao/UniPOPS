@@ -1,0 +1,42 @@
+	The mergesdd utility allows you to merge two SDD files to make
+	a new SDD file having the contents of the two original SDD
+	files.   The original two SDD files are unchanged by this
+	utility.
+
+	This utility can be run from within UniPOPS using the SYSTEM
+	command or it can be executed outside of UniPOPS at the
+	Unix prompt.
+
+	To use this utility, type:
+
+		mergesdd sdd_file_1 sdd_file_2 merged_sdd_file
+
+	where sdd_file_1 and sdd_file_2 are existing SDD files and
+	merged_sdd_file is the new SDD file (which MUST not already
+	exist, if it does, mergesdd will refuse to continue).
+
+	The size of the new output file will be just large enough
+	to hold the data from the two input sdd files.  If you need
+	this file to be larger, use expandsdd.
+
+	To combine more than two files, use mergesdd multiple
+	times, always making sure that the output SDD file at each
+	stage does not already exist.
+
+	A word about NSAVEs and this utility:  it is possible to merge
+	two SDD files that were previously used as SAVE files.  It is
+	therefore likely that the same NSAVE will be in use in both files.
+	In the case of a conflict, the first NSAVE found will be placed
+	as indicated and each subsequent use of the same NSAVE will be 
+	placed in an unused location of the file.  The SAVEBIN header
+	value for those scans will be altered to reflect its new
+	position and a warning message will be issued.  You should
+	be aware of this possibility when merging SDD files.
+
+
+	Example:
+
+	You want to merge to file, My_File and Their_File to produce
+	a new SDD file, Our_file:
+
+		mergesdd My_File Their_File Our_File

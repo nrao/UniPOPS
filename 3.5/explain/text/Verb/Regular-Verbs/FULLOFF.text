@@ -1,0 +1,30 @@
+	(REGULAR VERB)
+
+	FULLOFF puts the text screen in an 'always scroll' mode.  The
+	user can change modes by invoking FULLON which will prevent the
+	text screen from scrolling when it is full of text.
+
+	FULLOFF is the default mode.
+
+	No adverbs are used by FULLOFF.
+
+	ADVERB SET:
+
+	STATUS(10) : Whether scroll-locking is in effect and is set by
+		     the FULLON or FULLOFF commands.
+
+		     Values: 1 (or TRUE) if FULLON is in effect; -1 (or
+		     FALSE) if FULLOFF is in effect.
+
+	EXAMPLE:
+
+	You are expecting a lot of output from the TABLE command, 
+	so you specify:
+
+		FULLON		Causes data to be displayed one page
+		TABLE		at a time.
+
+		FULLOFF		Gets back to the default mode for
+				scroll mode.
+
+

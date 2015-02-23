@@ -1,0 +1,12 @@
+#!/bin/sh
+# @(#)isSolaris.sh	1.1 10/27/94
+#
+#  Script to determine if this Solaris is running
+#  Uses "uname -r" : if the version number is < 5, assume SunOS
+#  echo YES if Solaris, else NO
+#
+ver=`/usr/bin/uname -r | awk -F. '{ print $1 }'`
+if [ $ver -lt 5 ]
+then echo NO
+else echo YES
+fi

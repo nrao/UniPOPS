@@ -1,0 +1,353 @@
+What is an Adverb?
+------------------
+
+	Adverbs are essentially variables which are available for your
+	use during the analysis session.  They are entities that have
+	values (i.e., they are operands, as opposed to operators).
+	UniPOPS comes equipped with a series of built-in adverbs (all
+	of which you can list by typing HELP ADVERB) whose meanings can
+	be clarified by invoking the appropriate EXPLAIN information or
+	by finding their entry in the dictionary section of the
+	Reference Manual.  Users can also create their own adverbs
+	whenever necessary.  Adverbs, along with verbs, provide the
+	major way in which the user gets the program to perform the
+	desired actions.
+
+	Below, we describe the types of adverbs, the way in which they
+	can be created, as well as their uses and how one can assign
+	values to adverbs.
+
+
+Types of Adverbs:
+-----------------
+
+	There are five types of adverbs: 
+
+#if RFRNC
+			Table 4.1.1   Types of Adverbs
+#else
+				Types of Adverbs
+#end
+	--------------------------------------------------------------------
+	Type		Can contain:		  	Examples of builtin
+							       adverbs
+	--------------------------------------------------------------------
+	ARRAYS	   one or more floating-point values   NREGION, LEVS
+	KEYWORDS   single floating-point value	       SCAN, OBSERVER, NOINT
+	POINTERS   single floating-point value	       ONDATA, DISK, SSCANS
+	SCALARS	   single floating-point value	       BDROP, BSCAN, ESCAN
+	STRINGS	   character strings	   	       XTITLE
+	--------------------------------------------------------------------
+
+	Arrays:
+	-------
+	Arrays contain one or more values with no limits (except those
+	of program memory) as to number of dimensions or number of
+	elements; user-defined arrays are created and dimensioned only
+	with the ARRAY verb (see ARRAY).
+
+	Array adverbs share most of the qualities of Internal-Array
+	verbs and you should look at the documentation for these verbs
+	for more details concerning the extra restriction in using
+	Internal-Arrays verbs.
+
+	Keywords:
+	---------
+	Keywords are used for accessing and changing header words
+	within an array, matrix, or data cube.  They are used as
+	arguments to the H0-H9, MH0-MH3, and CH0 verbs.   Unlike
+	scalars, arrays, and strings, the user cannot change the value
+	of keywords.  New, user-defined keywords cannot be created.
+
+	Pointers:
+	---------
+	Pointers are used as flags to verbs such as SUMMARY, TELL, and
+	SELECT; the actions performed by the verb is altered by the
+	pointer.  They are like keywords in that the user cannot change
+	the value of a pointer; the value of a pointer can be any
+	floating-point value.  Some pointers are also keywords (and
+	vice-versa).  User-defined pointers can be created with the
+	POINTER verb (see POINTER).
+
+	Examples of the usage of pointers are:  
+
+		TELL DISK
+		SUMMARY SSCANS
+		SELECT INFO
+
+	Two special adverbs are named TRUE and FALSE and have the
+	values of "true" (equivalent to +1) and "false" (equivalent to
+	-1), respectively.  Another special pointer, named DEFAULT, has
+	a machine dependent value which, for IEEE machines (like Sun
+	Workstations), is the IEEE representation of Infinity.  The
+	special pointer VERS contains the value of the program's
+	version number.
+
+	Scalars:
+	--------
+	Scalars can only contain a single real value; user-defined
+	scalars can be created with the SCALAR verb (see SCALAR).
+
+	Strings:
+	--------
+	Strings can contain any character string. User-defined strings
+	are created with the STRING verb; the length of the string is
+	defined when the string is created and must be a multiple of 4
+	and less than or equal to 60 (see STRING).
+
+
+Adverb Values:
+--------------
+
+	Except for strings, adverbs can only have floating-point
+	values  (approximately 7 decimal digits -- 24 bits -- can be
+	internally represented and the magnitude of the number must be
+	between 0.0 and 3.40282347E+38).  The way each adverb is used
+	determines whether it should be considered an integer, floating
+	point, or logical variable.  For example, NREGION is assumed by
+	UniPOPS to contain integer values, BMARK a logical value, and
+	NEWRES a floating-point value but they all could be assigned
+	any floating-point value.  Thus, assigning a value of 3.45e5 to
+	BMARK may make some sense to you but the verb SHOW may not
+	produce the desired results since it assumes that BMARK has
+	either the value of TRUE (+1) or FALSE (-1).
+
+
+Creation of Adverbs:
+--------------------
+
+	Creating:
+	---------
+	Users  can create  their own scalar, array, pointer and
+	string adverbs but they cannot create new keyword adverbs.  To
+	create an adverb, you must use either the SCALAR, ARRAY,
+	POINTER, or STRING verbs (see the appropriate verb's
+	documentation for details).
+
+	Global versus Local:
+	--------------------
+	If you create an adverb while in execute mode (see
+	Command-Modes), the adverb is a global symbol and can be used
+	and referenced either while in execute mode or by any
+	procedure.  If you create an adverb while compiling a
+	procedure, you have the choice whether to make the adverb local
+	to that procedure or global and available for use in
+	other procedures as well as in execute mode (see GLOBAL 
+	for details).
+
+	[Note:  Global symbols are similar in usage to variables in
+	Fortran common blocks in that all subroutines can use the
+	variable; local symbols, on the other hand, are similar to
+	variables within a Fortran subroutine that are local to that
+	subroutine and only that subroutine can use the variable.]
+
+#if RFRNC
+
+#end
+	Names:
+	------
+	You must follow this convention for naming adverbs when you
+	create one.  The name of adverbs can be up to 10 characters
+	long; lower case and upper case are identical when it comes to
+	the names of adverbs.  The first character in the name must be
+	from the set { A-Z a-z }; all subsequent characters in the name
+	must be from the set { A-Z a-z 0-9 _ }.  The name you pick for
+	a global adverb must not be the same as an existing verb,
+	procedure, or global adverb.  The name you pick for a local
+	adverb can be the same as that of any existing global symbol
+	(i.e. a verb, procedure, alias or global adverb) but cannot 
+	be the same as an existing local adverb.  This ability to
+	rename ALL global symbols (including verbs and procedures) using
+	local adverbs should be used with extreme caution as it can
+	lead to confusing procedures and confused users.
+
+	Initial Values:
+	---------------
+	The initial, default values for newly-created scalar or array
+	adverbs is zero.  The initial, default value for newly-created
+	strings is a string containing all blanks.  When you create a
+	pointer adverb, you will specify the adverbs initial and only
+	value (i.e., once created with a specified value, the value of
+	pointer adverbs cannot be altered, however pointer adverbs
+	can be destroyed using the SCRATCH verb as long as that symbol
+	is not in use in an existing procedure).
+
+
+Uses of adverbs:
+----------------
+
+	Querying the value of an Adverb:
+	--------------------------------
+	The value of an adverb can be queried using the PRINT verb.
+	For example, if you type PRINT BDROP, EDROP the values of BDROP
+	and EDROP will be printed by the program.
+
+	Dummy Parameters in Procedures:
+	-------------------------------
+	Scalar adverbs can be used as dummy parameters in procedures.
+	For example, the following procedure uses two dummy parameters
+	(DUMMY1 and DUMMY2) which are assigned values when the
+	procedure is invoked.
+
+		PROC HHHH(DUMMY1, DUMMY2)
+	        PRINT DUMMY1+DUMMY2 
+		RETURN
+		FINISH
+
+	Arguments Passed to Procedures, Verbs, or Functions:
+	-----------------------------------------------------
+	Scalar adverbs or array elements can be used to pass values to
+	procedures.  For example, using the above procedure,
+	HHHH(BDROP, NREGION(1)) will print out the sum of the value of
+	BDROP and the value of the first element of NREGION.
+
+	Scalar adverbs, array elements, pointers, and keywords can be
+	used to pass values to functions or verbs.  For example,
+	GET(LEVS(ACOUNT)) will tell the verb GET to access the data for
+	the scan whose number is in the ACOUNT element of array LEVS.
+	PRINT SIN(BDROP) will print the sine of the adverb BDROP.  
+	TELL SSCANS, where TELL is a verb and SSCANS is a pointer, will
+	list the contents of the "save" file.
+
+	Unless explicitly made global within the procedure, 
+	arguments to procedures are always local.  Since arguments
+	are passed by value (i.e. the procedure gets a copy of the
+	argument), as long as those values are not explicitly global,
+	procedure writers do not need to worry about altering the
+	value of the argument outside of the procedure by any
+	operations on those values within the procedure.
+
+	Used or Set by Verbs:
+	---------------------
+	Most adverbs affect the way certain verbs operate.  For
+	example, the value of BSCAN affects what the verb SUMMARY will
+	do.  Some of these adverbs are flags, which should contain
+	either the value of TRUE (+1) or FALSE (-1), and either turn on
+	or off certain options for certain verbs.  For example, whether
+	BMARK is TRUE or FALSE will affect the graph produced by SHOW.
+
+	Some adverbs report back the results of certain verbs. For
+	example, MOMENT places its results into the SIZE array which
+	the user can then PRINT in order to see the results.
+
+	Used in Expressions:
+	--------------------
+	Any adverb can be used in mathematical or logical expressions.
+	For example, BSCAN = ESCAN - 100 will assign the value of ESCAN
+	minus 100 to the adverb BSCAN while LOG_TRUE = X1 > 10 will
+	assign the value of TRUE to adverb LOG_TRUE if X1 is greater
+	then 10, else it will assign the value of FALSE to LOG_TRUE.
+	Pointer and keyword adverbs can not appear on the left hand
+	side of assignment.
+
+
+Assigning Values to Scalar, Array, and String adverbs:
+------------------------------------------------------
+
+	The following examples illustrate the ways one can assign
+	values to scalar, array, or string adverbs.  Users cannot
+	assign values to keyword or pointer adverbs.
+
+	EXAMPLES :
+
+	.   To set the value of BDROP, a scalar adverb, the user
+	    can say either,
+
+                    BDROP = 25 
+
+			 or,
+
+ 		    READ BDROP
+		    # 25	
+
+	.   The adverb KPROTECT is a flag that determines whether the
+	    user can write a scan to the  "keep" file  if a scan of the
+	    same number is already present there.  If KPROTECT is set
+	    to  TRUE (+1),  a duplicate scan cannot be written to the
+	    "keep" file.  Thus, to write a second copy of scan 10000 to
+	    the "keep" file, change the flag KPROTECT to FALSE (-1) by,
+
+		KPROTECT = FALSE 
+
+	.   You can set an array as a whole, or element by element.
+	    Suppose you wish to set NREGION to represent two chunks of
+	    the spectrum, this could be done by one of the following methods:
+
+             a) NREGION(1) = 20.
+		NREGION(2) = 60.
+		NREGION(3) = 120.
+		NREGION(4) = 180.
+		NREGION(5) = 0.  
+
+		[Note that the remaining elements of the array remain
+		untouched.]
+
+	    b)  NREGION = 20., 60., 120., 180.
+
+		NOTE that the commas are essential here. Also that the
+		array will be zero filled for all subsequent elements.
+
+	.   To set all of the elements of an array to the same value,
+	    one types, for example:
+
+	        NREGION = 0
+
+	.   If the values to be assigned to the elements of an array
+	    follow some mathematical scheme, one can use Array-Math to
+	    assign values to the array.  For example, to set the values
+	    of LEVS to .1, .2, .3, ..., 3.2, type the following:
+
+	    { LEVS@ = @ / 10 }
+
+	    To assign the values of array VMARK to CMARK, type:
+
+	    { CMARK@ = VMARK@ }
+
+	    To assign random numbers to the elements of GREGION, type:
+
+	    {GREGION@ = RAND}
+
+	.   Strings are set by equating them to literals surrounded by
+	    either single or double quotes, as in,
+
+		XTITLE = 'GEORGE'
+
+		HTITLE = "This is a string"
+
+	    If you used single quotes, you can use double quotes within
+	    the literal as in:    HTITLE = 'He said, "This is the end"'
+
+	    If you used single quotes and want a single quote within
+	    the literal, use two single quotes within the literal.  For
+	    example:  XTITLE = 'Don''t touch that dial'.
+
+	    If you used double quotes, you can use single quotes within
+	    the literal as in:    HTITLE = "Don't touch that dial".
+
+	    If you used double quotes and want a double quote within
+	    the literal, use two double quotes within the literal.  For
+	    example:  XTITLE = "He said, ""This is the end""".
+
+
+	.   To assign any built-in scalar or array adverb its default
+	    or initial value, you just type:  adverb_name = DEFAULT.
+	    For example:
+
+		NREGION = DEFAULT
+
+	     will assign to all elements of array NREGION its default
+	     value.
+
+		LEVS = 1, 2, 3, 4, DEFAULT
+
+	     will assign LEVS(5) its default value.  Similarly,
+
+		YMIN = DEFAULT 
+
+	     will assign to scalar YMIN its default value.
+
+	     The default value for strings adverbs is blanks so, to
+	     assign string HTITLE its default value, type:
+
+		HTITLE = " "		or		HTITLE = ' '
+

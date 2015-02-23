@@ -1,0 +1,32 @@
+        (PSEUDO VERB)
+
+	Syntax:    SYSHELP system-command
+		   SYSHELP
+
+	SYSHELP will use the computer system's help facility to
+	generate documentation on the specified system command.  You
+	will be asked for the name of a system command if you do not
+	specify the name of a system command as an argument to
+	SYSHELP.
+
+	SYSHELP an be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by SYSHELP.
+
+	EXAMPLE:  
+
+	For a Unix machine, type
+
+		SYSHELP
+
+	and you will be asked:
+
+		Enter name of the UNIX command: 
+
+	at which point, you type
+
+		 rm
+
+	and UniPOPS will bring up the system documentation for the Unix
+	rm command.

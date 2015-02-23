@@ -1,0 +1,39 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	IT_MAX and IT_MIN specify the range in integration time
+C-	used by the SELECT verb.  The units are seconds and the values of
+C-	the adverbs only apply if the data are continuum scans.
+C-
+C-	Continuum scans will be SELECTed if they have an integration
+C-	time within the range specified by IT_MIN through IT_MAX,
+C-	inclusive.
+C-
+C-	If IT_MAX is set to the DEFAULT value, there is no upper limit
+C-	to the range.  Similarly, if IT_MIN is set to the DEFAULT
+C-	value, there is no lower limit to the range.
+C-
+C-	IT_MIN and IT_MAX are used by : SELECT
+C-
+C-	No verbs change IT_MIN or IT_MAX.
+C-
+C-	Initial values of IT_MIN and IT_MAX are DEFAULT.
+C-
+C-	EXAMPLE :
+C-
+C-	To select all scans having an integration time of less than
+C-	1 second, specify:
+C-
+C-		IT_MAX = 1.0; IT_MIN = DEFAULT
+C-
+C-	To select all scans having an integration time greater than 0.5 sec.,
+C-	specify:
+C-
+C-		IT_MAX = DEFAULT; IT_MIN = 0.5
+C-
+C-	To select all scans with an integration time between 0.5 and 1.0 sec,
+C-	specify:
+C-
+C-		IT_MAX = 1.0; IT_MIN = 0.5
+C-	
+C------------------------- Continuum --------------------------------

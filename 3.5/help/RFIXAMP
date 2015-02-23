@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'RFIXAMP:  (ADVERB) If > 0, RIPPLE and RSHAPE will use and'
+PRINT 'hold fixed the input value for RAMPLTDE, if = 0 (default'
+PRINT 'value), RIPPLE and RSHAPE will ignore the value of RAMPLTDE'
+PRINT 'and attempt to guess an initial value for RAMPLTDE,'
+PRINT 'if < 0, RIPPLE and RSHAPE will use the value of RAMPLTDE as'
+PRINT 'the initial value.'
+PRINT ' '

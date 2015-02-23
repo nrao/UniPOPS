@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'XRANGE:  Alters BDROP and EDROP according to the specified'
+PRINT 'range in the units of the current lower x-axis.  Syntax:'
+print 'XRANGE(xmin,xmax)'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+PRINT ' ' 

@@ -1,0 +1,103 @@
+#if RFRNC
+Modcomp Binary Representation
+-----------------------------
+
+#end
+	This describes the binary representation used by the Modcomp
+	computer and which is utilized in Modcomp Keep tapes and 140-ft
+	Telescope (or archive) tapes.  Modcomp use 16-bit integers,
+	32-bit reals, and 48-bit double precision words.
+
+
+	Modcomp Binary : 16-Bit Integer Words
+	-------------------------------------
+
+	Integer*2, 16-bit words are identical to those in the IEEE
+	standard.  That is: one sign bit and 15 data bits.
+
+#if RFRNC
+	Figure 2.7.3 : Modcomp Binary : 16-Bit Integer Words
+#else
+	    Modcomp Binary : 16-Bit Integer Words
+#end
+	------------------------------------------------
+	S |   I  N  T  E  G  E  R    D  A  T  A        |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+
+	Modcomp Binary : 32-Bit Real Words
+	----------------------------------
+
+	Real*4, 32-bit words consist of a sign bit, 9 bit exponent and
+	a 22 bit fraction.  Negative values of real numbers are
+	represented as the integer two's complement of the absolute
+	value of the real number.  A zero value is represented be an
+	exponent and fraction of zero.  The exponent and fraction are
+	represented by fraction * [2 ** (exponent-256)].  The fraction
+	and exponent can take on the following values:  1/2 <= fraction
+	< 1 (except for zero); 0 <= exponent <= 511.
+
+#if RFRNC
+	Figure 2.7.4 : Modcomp Binary : 32-Bit Real Words
+#else
+	    Modcomp Binary : 32-Bit Real Words
+#end
+	------------------------------------------------
+	S |  E X P O N E N T      | F R A C T I O N
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+
+	Modcomp Binary : 48-Bit Double Precision Words
+	----------------------------------------------
+
+	Real*6, 48-bit words consist of a sign bit, 9 bit exponent and
+	a 38 bit fraction.  Negative values of real numbers are
+	represented as the integer two's complement of the absolute
+	value of the real number.  A zero value is represented be an
+	exponent and fraction of zero.  The exponent and fraction are
+	represented by fraction * [2 ** (exponent-256)].  The fraction
+	and exponent can take on the following values:  
+	1/2 <= fraction < 1 (except for zero); 0 <= exponent <= 511.
+
+#if RFRNC
+
+	Figure 2.7.5 : Modcomp Binary : 48-Bit Double Precision Words
+#else
+	Modcomp Binary : 48-Bit Double Precision Words
+#end
+	------------------------------------------------
+	S |  E X P O N E N T      | F R A C T I O N
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+
+
+	Modcomp Binary : Character Strings
+	----------------------------------------------
+	
+	Character strings are in ASCII
+
+
+	---------------------------------------------------------------------
+
+	Routines are available for converting Modcomp words into IEEE words
+	and vice versa.  See a member of the computer staff for details.
+#if RFRNC
+
+#end

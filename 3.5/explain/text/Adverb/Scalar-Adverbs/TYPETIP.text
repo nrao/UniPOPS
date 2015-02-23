@@ -1,0 +1,37 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-      TYPETIP specifies, for data from the 12-m telescope, the
+C-	algorithm and model SOLVETIP should use on sky-tip data.
+C-
+C-	TYPETIP is used by : SOLVETIP
+C-
+C-	No verbs change TYPETIP.
+C-
+C-	The initial value of TYPETIP is 0.
+C-
+C-	You can set TYPETIP to one of the following values (all other
+C-	values are illegal):
+C-
+C-	1 :  This gives a linear least-squares solution
+C-	     (This method is known as TPTIP at the 12-m.)   
+C-
+C-	2 :  This assumes that Array (0) contains 
+C-
+C-			 log( T(vane) - T(sky))
+C-
+C-	     (This method is known as SPTIP at the 12-m.)
+C-
+C-	3 :  This gives a non-linear least-squares solution.
+C-	     (This method is known as STIP at the 12-m.)
+C-
+C-	See SOLVETIP for details about the three methods.
+C-
+C-	EXAMPLE :
+C-
+C-      You want to use algorithm 3 for fitting a model to your sky-tip
+C-	data from the 12-m telescope, so you specify :
+C-
+C-		TYPETIP = 3; SOLVETIP
+C-
+C------------------------- Continuum --------------------------------

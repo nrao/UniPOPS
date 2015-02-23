@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'DELTAX: (HEADER-LINE) Delta for x-axis at reference point'
+print '(km/s).'
+PRINT ' '
+PRINT 'DELTAX: (HEADER-CONT) Delta for x-axis at reference point'
+print '(degrees).'
+PRINT ' '

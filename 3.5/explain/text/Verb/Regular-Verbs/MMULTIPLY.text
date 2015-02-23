@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+	MMULTIPLY multiplies each element of Matrix (1) with the corresponding
+	element of Matrix (0) and places the results in Matrix (0).
+
+	ADVERBS USED:
+	
+          DEFMODE : Indicates how undefined data values (values equal to the
+		    value of the MUNDEF header word) are treated.
+
+                If DEFMODE is FALSE, the result will have an undefined
+                    data value if EITHER of the values in the input
+                    matrices were undefined at that location.
+
+                If DEFMODE is TRUE, the result will have an undefined
+                    data value at any location where BOTH of the
+                    input matrices have undefined values at that location.
+                    If only one value is undefined at that location, the
+                    result will be as if the undefined value were one.
+
+                    The initial value is FALSE.
+
+        EXAMPLE:
+
+	You want to perform the following calculation
+
+		0.5 * Matrix(0) * Matrix(1)
+
+	You can do that with the following:
+
+		MSCALE(0.5)
+		MMULTIPLY
+
+	Or, obviously:
+
+		MMULTIPLY
+		MSCALE(0.5)
+

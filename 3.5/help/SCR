@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SCR:  (POINTER) Indicates you want to open a scratch or'
+PRINT 'temporary file with FOPEN.'
+PRINT ' '

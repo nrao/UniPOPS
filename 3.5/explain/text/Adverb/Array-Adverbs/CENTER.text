@@ -1,0 +1,37 @@
+	(ARRAY ADVERB of 24 elements)
+
+	CENTER is the array containing the user's first guess of the
+	channel(s) at which the center(s) of up to 24 Gaussians lie,
+	and the  modified  value(s)  after Gaussian fitting  via the
+	verb GAUSS.  All values must be greater than or equal to 0 and
+	less than the number of channels in Array (0).
+
+	CENTER is used by : GDISPLAY   GMODEL   GPARTS   RESIDUAL
+
+	CENTER is modified by : GAUSS
+
+	CENTER is set by : PEAK
+
+	The initial values of CENTER(N) are 0. 
+
+	PEAK will set CENTER for a single Gaussian.
+
+	If FIXC and FIXRELC have a value of FALSE, then GAUSS will
+	determine values for CENTER.  If FIXC or FIXRELC = TRUE, the
+	user must supply NGAUSS values to CENTER.  If FIXC = TRUE, then
+	GAUSS will not modify the values in CENTER.  If FIXRELC = TRUE,
+	GAUSS will adjust all values in CENTER be the same value.
+
+	If GAUSS is not called before GMODEL, GPARTS, or RESIDUAL,
+	NGAUSS values of CENTER should be set by the user.  PEAK will
+	set the CENTER of a single Gaussian.
+  
+	EXAMPLE :
+
+	You want to fit two Gaussians with centers at channels 55 and 70, 
+  	specify :
+
+		CENTER(1) = 55
+		CENTER(2) = 70
+		NGAUSS =  2
+		GAUSS

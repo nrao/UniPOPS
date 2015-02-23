@@ -1,0 +1,31 @@
+	(PSEUDO VERB)
+
+	UNDO tries to undo the action of up to the last two command
+	lines.
+
+	Two additional verbs are related with this feature:
+
+		UNDOOFF         Toggles the UNDO feature to OFF.
+		UNDOON          Toggles the UNDO feature to ON.
+
+	UNDOOFF is the default mode.
+
+	Two UNDO commands in succession will UNDO the previous two
+	command lines.  The user cannot UNDO to any deeper level.
+
+	UNDO will NOT undo any action which has been performed on a
+	disk file or with any of the matrices or cubes.
+
+	UNDO can be used only in execute mode and must be the only
+	thing on the command line.
+
+	EXAMPLE:
+
+		PAGE SHOW		Draws original spectrum.
+		UNDOON			Turns UNDO on.
+		HANNING
+		BASELINE
+		UNDO			Undoes previous BASELINE 
+						command line.
+		UNDO			Undoes HANNING command line.
+		PAGE SHOW		Draws original spectrum.

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SAXIS:  Sets the units of the lower and upper x-axis used'
+PRINT 'by SHOW.  Syntax:  SAXIS(lower,upper).'
+PRINT ' '

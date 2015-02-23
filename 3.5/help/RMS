@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'RMS:  Calculates the RMS deviation of the data in Array 0'
+PRINT 'and both prints out the results and stores it in VRMS'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+print 'BBASE,EBASE=',BBASE,EBASE
+PRINT 'VRMS=',VRMS
+PRINT 'NREGION='; print NREGION
+PRINT ' ' 

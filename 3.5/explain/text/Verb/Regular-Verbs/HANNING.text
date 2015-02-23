@@ -1,0 +1,15 @@
+	(REGULAR VERB)
+
+	HANNING smoothes the data in Array (0) using the algorithm:
+
+		x(i) = 1/4 x(i-1) + 1/2 x(i) + 1/4 x(i+1)
+
+	No adverbs are used or set by HANNING.
+
+	EXAMPLE:
+
+	The data in Array (0) can be Hanning smoothed and displayed
+	by specifying:
+
+			HANNING PAGE SHOW
+

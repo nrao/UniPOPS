@@ -1,0 +1,27 @@
+ 	(SCALAR ADVERB)
+
+	FACT can represent either of the following,
+
+	.  A numerical constant supplied by the user, by which the
+	   data in Array (0) may be multiplied using SCALE.
+
+	.  A number which may be added to the data in Array (0) using
+	   BIAS.
+
+	FACT is used by : BIAS     SCALE
+
+	No verbs change FACT.
+
+	The initial value of FACT is 0.  
+
+	EXAMPLES :
+
+ 	.  You want to multiply array 0 by 0.001, specify :
+
+			FACT = 0.001
+			SCALE
+
+ 	.  You want to subtract 0.5 from array 0, specify :
+
+			FACT = -0.5
+			BIAS

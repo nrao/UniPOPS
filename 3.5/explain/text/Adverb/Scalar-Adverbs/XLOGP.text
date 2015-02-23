@@ -1,0 +1,29 @@
+	(SCALAR ADVERB)
+
+	XLOGP and YLOGP are used as a switches or flags for the PLOT
+	verb.  If XLOGP = TRUE (+1), a PLOT will draw the x-axis using
+	a logarithmic scale.  If YLOGP = TRUE (+1), PLOT will draw the
+	y-axis using a logarithmic scale.  If one of these adverbs is
+	FALSE (-1), the respective axis is drawn using a linear scale.
+
+	XLOGP and YLOGP are used by : PLOT
+
+	XLOGP and YLOGP are also used by several verbs that need to
+	interact with a PLOT display: 
+
+		FLAG  XPIX2C  C2XPIX   YPIX2T   T2YPIX
+
+        If you plan on using those verbs after a PLOT display, the value
+	of XLOGP and YLOGP must not change while interacting with the 
+	PLOT display.
+
+	No verbs change XLOGP or YLOGP.
+
+	The initial values of XLOGP and YLOGP are FALSE (-1).
+
+	EXAMPLE :
+
+		XLOGP=TRUE       the next PLOT will draw the x-axis using
+				 a logarithmic scale.
+
+

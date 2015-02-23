@@ -1,0 +1,109 @@
+Appendix M : Environment Variables
+----------------------------------
+
+UniPOPS uses a number of Unix environment variables.  Unix environment
+variables are ways in which strings can be associated with a symbolic
+name.  For example, if you usually store your data in a directory named
+/home/bgarwood/data, then it would be useful to you if you could associate
+that full path name with a shorter symbolic name, say MYDATA.  That way,
+whenever you reference MYDATA the system understands you to mean the
+full pathname.  The exact syntax for setting an environment variable
+varies between the different types of Unix shells (csh, sh, bash, ksh, etc).
+
+For all shells, if you want to see the current string associated with
+an environment variable, you use the echo command and put a dollar
+symbol, $, in front of the symbol name.  For example:
+
+	% echo $MYDATA
+
+would print "/home/bgarwood/data" on the screen if MYDATA was set to
+that value as in the example above.
+
+There are also several special symbols, for example:
+
+	% echo $SHELL
+
+will print the pathname of the shell you are using (e.g. "/bin/csh" for
+the c-shell, "/local/bin/bash" for a local version of the bash shell, etc).
+
+If you set a variable in one terminal or window, it will NOT be available
+in any other windows that you may be running.
+
+If you are using the c-shell, you would set an environment variable using
+the setenv command:
+
+	% setenv MYDATA /home/bgarwood/data
+
+If you are using a shell with syntax compatible with the Bourne shell
+(sh, bash, ksh, etc), you would set an environment variable using
+something similar to the following:
+
+	% export MYDATA=/home/bgarwood/data
+
+Experienced Unix users will realize that a number of details have been
+omitted or glossed over.  However, the above information should enable
+users to understand the rest of this appendix as well as to determine
+the current settings of the environment variables that UniPOPS uses.
+
+New users are provided with a file named ".unipops" located in their
+home directory.  The purpose of this file is to set the environment
+variables that UniPOPS relies upon each time you log in to your 
+account.  It is usually executed during login by one of the startup
+"dot" files appropriate for your shell (.login, cshrc, .bashrc, .profile,
+etc).  Its contents can be site-dependent and not all of the variables
+described here need be set there.  The value that is important is always
+the value that the variable has when you start using the program.  If
+you change the value from the time to log in to the time you use
+UniPOPS then it may differ from its value in your .unipops file.
+If you change the value after you start up UniPOPS, that new value will
+not affect the behavior of UniPOPS.  The only way that UniPOPS will use
+the new value is to exit and restart the program.
+
+The remainder of this document describes the primary environment variables
+that UniPOPS uses (there are other variables, but most users should
+be unaware of their use).
+
+popseditor : 	The value of this environment variable is the editor that
+		UniPOPS will use when you use the EDIT verb (e.g.
+		vi, emacs, textedit, etc).
+
+popswindow :    This should indicate the window manager you are using
+		(options include "openlook", "sunview", "tvtwm", and
+		"twm").  The use of this variable is site-dependent.
+
+popsprinter:	This variable controls the printer used by the program
+		for verbs that generate hardcopy (GCOPY, TCOPY, LASER, etc).
+		It must be a printer found in the UniPOPS printer file.
+		Look in the file $popsdir/printers for a complete
+		listing of available printers.  If this value is not
+		set at startup, you will be shown the list of available
+		printers and asked to choose one.
+
+popsversion:	This is used to construct popsdir.  It makes the version
+		name more obvious.  Most users should set this to "old".
+		Experienced users may want to set this to "test".  Staff
+		users should always set this to "test".
+
+popsdir    :	This indicates the full pathname of the top level directory
+		where the version of UniPOPS that you will be using is
+		located.  It must be terminated with a "/".
+
+PATH	   :    This gives the search path that the shell uses to find
+		commands that you type at the Unix prompt.  To use UniPOPS
+		you must include $popsdir/sunbin and $popsdir/utilities
+		some place in your path.
+
+popsproc1  :    This is the first procedure directory.  It is searched by
+		BATCH and EDIT if the requested file name is not found
+		in the current directory.  It should be set to the 
+		directory containing the standard UniPOPS procedures:
+		$popsdir/procedures/.  It should be terminated with a "/".
+		PRCDIR will display all files ending in .prc found in
+		$popsproc1.
+
+popsproc2   :   This is the second procedure directory.  It is searched by
+		BATCH and EDIT if the requested file name is not found 
+		in the current directory or $popsproc1.  It can be set
+		to any directory or left unset (the default condition).
+		If set, it should be terminated with a "/".  PRCDIR will
+		display all files ending in .prc found in $popsproc2.

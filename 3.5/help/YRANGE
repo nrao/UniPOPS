@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'YRANGE:  Alters YMIN and YINCR to reflect the specified'
+PRINT 'limits to the y-axis.  Syntax:  YRANGE(ymin, ymax)'
+PRINT ' '
+PRINT 'YMIN,YINCR=',YMIN,YINCR
+PRINT ' ' 

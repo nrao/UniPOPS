@@ -1,0 +1,39 @@
+	(REGULAR VERB)        	
+
+	RESIDUAL takes the parameters of the Gaussians stored in
+	HEIGHT, CENTER, and HWIDTH, (usually refined by GAUSS),
+	evaluates the Gaussian and subtracts this from Array (0).
+
+	ADVERBS USED:
+
+	  NGAUSS        Number of Gaussians.  Initial value is 1.
+
+	  CENTER(12)    Center channel(s) of the Gaussian(s).  Initial
+	  		values are 0.
+
+	  HEIGHT(12)    Height(s) of the Gaussian(s).  Initial values
+	  		are 0.
+
+	  HWIDTH(12)    FWHM(s) of the Gaussian(s) in channels.
+			Initial values are 0.
+
+	No adverbs are set by RESIDUAL.
+
+	EXAMPLE:
+
+	You want to see what the residual looks like for scan 520 after
+	removing a baseline and fitting a Gaussian, so specify;
+
+		GET 520 BASELINE PAGE SHOW
+
+	Now calculate the parameters for the Gaussian and display the
+	model over the data by specifying;
+
+		GAUSS GMODEL RLINE RESHOW
+
+	Now you want to remove the Gaussian and see what the residual
+	looks like.  Specify;
+
+		RESIDUAL RPOINTS RESHOW
+
+	and the residuals will be plotted as points on the display.

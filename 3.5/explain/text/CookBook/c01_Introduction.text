@@ -1,0 +1,106 @@
+1. Introduction
+---------------
+
+The POPS (People-Oriented Parsing Service) command-line interpreter has
+been the basis for a number of the major data reduction systems
+developed by NRAO over the past twenty years.  From POPS original
+development by Jerry Hudson and Tom Cram, many programmers have
+contributed  to its upgrading and adaptation to different computers and
+operating systems.  It is currently the "brain" behind the LINE and
+CONDAR single-dish analysis packages at Green Bank and Tucson, as well
+as for the heavily-used AIPS package, and the 140-foot telescope
+control system at Green Bank.
+
+A major development of the last few years has been the adoption of a
+Local Area Network (LAN) at Green Bank, based largely on the popular
+SUN-4 workstations.  An evolution in this direction has also taken
+place in Tucson.  In adapting the single-dish reduction packages to
+this new environment (LAN + workstations + UNIX), a version of the
+standard POPS system was implemented by Ron Maddalena at Green Bank.
+However, it was realized that this was only a temporary solution, and
+Ron undertook a complete reworking for the UNIX environment of both
+POPS and the reduction programs that operate under it.  In addition,
+the program was rewritten such that it could handle data from both the
+Green Bank and Tucson telescopes.  This has resulted in UniPOPS which,
+while appearing similar to `traditional' POPS for the user reducing his
+or her data, is effectively a total rewrite of POPS and its associated
+programs.  UniPOPS was first launched at Green Bank in January 1991. 
+
+This Cookbook is intended to acclimatize new users to LINE and CONDAR, 
+(the spectral-line and continuum analysis packages), and long-time 
+users of `traditional' POPS.  We hope that users will employ the REPORT 
+facility of the program (see Section 4.5) to inform the UniPOPS 
+programmers of problems that they encounter with the system and things 
+they would like to see added to the available options.
+
+A new update of UniPOPS -- Version 3.3 -- is being released in June of
+1994, and this version of the Cookbook is updated to include the
+revisions and new features of this version.
+
+Ron Maddalena has been the `Father of UniPOPS'. Among those who have
+assisted with various aspects of the development are Bob Garwood, Frank
+Ghigo, Chris Salter, and Bob Vance.
+
+
+1.1 Using the Cookbook
+----------------------
+
+The UniPOPS Cookbook has been prepared as an introduction for the new
+user, but it is hoped that it will also be a useful reference for more
+established users that need the occasional jog to their memory. To both
+these ends, an attempt has been made to incorporate a rather full index
+at the back of the volume. We have also tried to give many examples
+which illustrate the usage of the many facilities of the system.
+
+The UniPOPS Reference Manual is the companion manual to the Cookbook
+and picks up where the Cookbook leaves off.  That is, once you have
+learned the basics about UniPOPS, you will probably turn more and more
+to the Reference Manual.  In it, you will find, in a dictionary format,
+complete details about every UniPOPS command, as well as general topics
+like syntax and data formats.
+
+To use the Cookbook to best advantage, new users should read completely
+Chapters 2, 3, and 4 before attempting to use the program.  Once you
+have mastered the contents of these chapters, you should use either the
+index or the table of contents to find the additional sections that may
+interest you.  We also suggest that you keep the Cookbook's Appendix A,
+the "UniPOPS Verb, Adverb and Symbol Synopsis", at hand since it
+contains a listing of every UniPOPS commands with a brief description
+of each.  If you are using UniPOPS, the IDENTIFY verb is extremely
+useful in locating information even when are not sure of the exact
+name of the topic you are looking for.
+
+Those who have never used the Unix operating system should read
+Appendix B, "Useful UNIX Commands", before proceeding.  If you have
+never used a Sun workstation before, you should also read Appendix C,
+"Window Systems".
+
+In the examples given in this manual, words given in UPPER-CASE 
+letters can be typed in either UPPER or lower case in the program. 
+Anything given in lower-case letters, can ONLY be typed in lower case. 
+The symbols, <CR> and <LF>, should be read as `carriage return' and 
+`line feed', respectively. Control characters are given in this manual 
+as <Ctrl-x>, meaning hold down the `Control' key, and then type the symbol 
+`x', (where `x' is any given key). In the examples given, we have tried 
+to incorporate the appropriate UniPOPS or UNIX prompt that you will see 
+when the system is awaiting your input.
+
+
+1.2 Obtaining a Copy of UniPOPS
+-------------------------------
+
+Should you possess a Sun workstation at your home institute, and decide
+that you would like a version of UniPOPS there to continue your data
+reduction at home, then the program is available from NRAO with full
+installation instructions. It can be obtained on magnetic tape (as
+either compressed or uncompressed `tar' files), or can be copied via a
+disk-to-disk transfer using the ftp facility. This full UniPOPS
+Cookbook will also come with the system as a set of associated files.
+
+If you wish to avail yourself of this offer, you should send e-mail
+to popsmail@nrao.edu.  You will receive instructions on how to
+obtain a copy of the package using ftp with full installation
+instruction.  If you need additional advice, are having difficulty
+installing UniPOPS or have general questions about UniPOPS contact 
+Bob Garwood at NRAO, Charlottesville, (Telephone No., 804 296-0235; 
+Fax No., 804 296-0278 ; or E-mail address, bgarwood@nrao.edu).

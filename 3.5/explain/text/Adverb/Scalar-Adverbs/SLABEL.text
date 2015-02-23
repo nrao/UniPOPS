@@ -1,0 +1,36 @@
+	(SCALAR ADVERB)
+
+	The value of SLABEL determines the placement of documentation
+	and tick mark labels on the graphics screen.  
+
+	If SLABEL = 0, then the display verb being used will NOT add 
+	any labeling or documentation to the graphics screen.  
+
+	If  SLABEL > 0, the display verb adds documentation.
+
+	For SHOW, there are two levels of documentation:
+ 	   If SLABEL = 1, the full documentation is added.
+	   If SLABEL > 1, the documentation of header information at
+	      the bottom of the plot is omitted (but tick marks and
+	      axis labeling remains).  Instead, the plot is labeled
+	      with its scan number at the right-most edge of the plot.
+
+	SLABEL is used by : GDISPLAY	GPARTS	  LABEL	   PLOT
+		   	    SHOW						
+
+	No verbs change SLABEL.
+
+	The initial value of SLABEL is 1.
+
+	EXAMPLE :
+
+	You have  just  produced  a  profile  display  with appropriate
+	labeling. To return to printing information at the bottom of a
+	SHOW display, specify :
+
+		SLABEL = 1
+
+	Now you want to produce a PLOT without any tick mark labeling
+	so specify :
+
+		SLABEL = 0

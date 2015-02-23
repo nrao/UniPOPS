@@ -1,0 +1,89 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:    H0 (header-word)
+		   H1 (header-word)
+		   H2 (header-word)
+		   H3 (header-word)
+		   H4 (header-word)
+		   H5 (header-word)
+		   H6 (header-word)
+		   H7 (header-word)
+		   H8 (header-word)
+		   H9 (header-word)
+
+	H0 through H9 are internal-array verbs which return or set the
+	value contained within elements of the header for internal
+	Arrays (0) through (9).  You should reference the header values
+	by header keyword names (see the documentation for Keywords for a 
+	list of available keyword adverbs).
+
+	If the verb appears to the left of an equal sign, than the
+	specified header parameter has its value changed to the value
+	of the expression to the right of the equal sign.
+
+	If the verb appears in an expression or as an argument to a
+	verb or procedure, then the value of the specified header
+	parameter for that array is returned.
+
+	If H0 through H9 is not to the left of an equal sign, and if
+	the argument you supply H0 through H9 is a keyword adverb that
+	refers to a real-valued header parameter, then H0 through H9
+	will return a floating-point value.
+
+	If H0 through H9 is not to the left of an equal sign, and if
+	the argument you supply H0 through H9 is a keyword adverb that
+	refers to a string header parameter, then H0 through H9 will
+	return a string.
+
+	If H0 through H9 is to the left of an equal sign, and if the
+	argument you supply H0 through H9 is a keyword adverb that
+	refers to a real-valued header parameter, then you should
+	supply a real-valued expression to the right of the equal
+	sign.
+
+	If H0 through H9 is to the left of an equal sign, and if the
+	argument you supply H0 through H9 is a keyword adverb that
+	refers to a string header parameter, then you should supply a
+	string expression to the right of the equal sign.
+
+	No adverbs are used or set by H0 through H9.
+
+	See the description of internal-array verbs for restrictions on
+	their use.
+
+	EXAMPLES:
+
+	.  For real-valued header parameters:
+
+		PRINT H0(SCAN)		
+
+	   Will print scan number of Array(0).
+
+		X = SIN(H1(EL)/57.295)  
+
+	   Will assign to X the value of the sine of the elevation in the
+	   header of Array (1).
+
+		H0(STSYS) = SQRT(H8(STSYS)*H7(RTSYS))	
+					
+	   Changes the value of the system temperature in Array (0) to the
+	   square root of the system temperature in Array 8 times the
+	   value of the reference system temperature in Array 7.
+
+	.  For string header parameters
+
+		PRINT H1(OBSERVER)   
+	
+	   Will print the name of the observer for the header in Array
+	   (1).
+		
+		XTITLE = CONCAT('Obj:',H9(OBJECT))
+
+	   Will assign to XTITLE the concatenation of the string 'Obj:'
+	   with the name of the observed object for the header of Array
+	   (9).
+
+		H0(BACKEND) = '1024 AC' 
+
+	   Changes the value of the back-end designation for the header
+	   in Array (0) to the string '1024 AC'.

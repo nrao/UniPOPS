@@ -1,0 +1,30 @@
+	(REGULAR VERB)
+
+	MULTIPLY multiplies the data in Array (1) with the data in
+	Array (0) and places the results in Array (0).
+
+	ADVERBS USED:
+	
+          DEFMODE : Indicates how undefined data values (IEEE Inf) are
+                    treated.
+
+                If DEFMODE is FALSE, the result will have an undefined
+                    data value if EITHER of the values in the input
+                    arrays were undefined at that location.
+
+                If DEFMODE is TRUE, the result will have an undefined
+                    data value at any location where BOTH of the
+                    input arrays have undefined values at that location.
+                    If only one value is undefined at that location, the
+                    result will be as if the undefined value were one.
+
+                    The initial value is FALSE.
+
+        EXAMPLES:
+
+	.   To multiply scan 710 and off-source scan 712, and
+	    display the result, specify:
+
+        	OFF 712 ON 710 MULTIPLY PAGE SHOW
+
+

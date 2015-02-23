@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ACOUNT:  (ADVERB) Number of scan numbers in internal'
+print 'STACK array.'
+PRINT ' '

@@ -1,0 +1,40 @@
+	(REGULAR VERB)
+
+	BSHAPE uses a least squares fit to calculate the coefficients
+	of a Chebyshev polynomial of a given order for a specified
+	range of channels of data values in Array(0).  It leaves the
+	found coefficients in the BPARM array adverb.  Unlike BASELINE,
+	BSHAPE does not evaluate and subtract the polynominal.
+
+	ADVERBS USED:
+
+	  NFIT          Order of polynomial baseline to be fitted.
+			NFIT can take values from 1 to 12.  Initial
+			value is 1.
+
+	  BDROP         # of points to be ignored at beginning of
+	  		data.
+	  EDROP         # of points to be ignored at end of data.
+			Initial values are 0.
+
+	  NREGION(32)   Region(s) of data where baseline is computed.
+			Up to 16 regions can be defined.  Initial
+			values are 0.
+
+	  BBASE         # of points at each end of data (excluding
+	  EBASE         BDROP & EDROP) where baseline is fit if
+			NREGION(1)=0.  Initial values are 50.
+
+	ADVERBS SET:	
+
+	  BPARM(15)     Contains the resulting fit coefficients.
+			Initial values are 0.
+
+	EXAMPLE:
+
+	You want to calculate the coefficients for scan 1710 to use
+	with BMODEL on several scans.  Specify:
+
+		NFIT = 3
+		GET 1710; BSHAPE
+     

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RPERIOD:  (ADVERB) Number of channels in one wavelength for'
+PRINT 'sinusoidal baseline fitting.'
+PRINT ' '

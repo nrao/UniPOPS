@@ -1,0 +1,26 @@
+	The vsst.systemp and vsst.sourcetemp utilities goes through the
+	on-line data file looking for calibration data (i.e., data
+	taken with VSST).  When it finds one, it will reduce the data
+	so as to come up with calibration information.  vlbfo.exe
+	reduces all source temperature measurements and vlbcl.exe
+	reduces all system temperature measurements.  This utility
+	will only work with 140-ft on-line data.
+
+	The utility programs can be run from within UniPOPS using the
+	SYSTEM command or they can be executed outside of UniPOPS at
+	the Unix prompt.
+
+	The output from vsst.sourcetemp will go to a file by the name
+	of sourcetemp.  If a file by that name already exists, it will
+	be overwritten by the new file.  The output from vsst.systemp
+	will go to a file by the name of systemp.  If a file by that
+	name already exists, it will be overwritten by the new file.
+	These files are pretty explanatory.
+
+	When you run the programs, you will be asked for your project
+	code, a scan number range (0.0 will give you all the scans for
+	the specified project), as well as the feed number of the
+	desired data.
+
+
+

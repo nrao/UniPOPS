@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	Syntax:	  READCUBE(filename)
+
+	READCUBE reads a three-dimensional FITS image file (cube) with
+	the specified name in preparation for a call to the SLICE
+	verb.  The file name can be supplied either as a literal
+	constant or as a string adverb.  Only the FITS header is
+	actually read when this verb is used.  Other verbs are used
+	to read the data values (SLICE and CD0).
+
+	No adverbs are used or set by READCUBE.
+
+	EXAMPLE:
+
+	You want to slice a cube but before hand you must perform a
+	READCUBE.  the name of the FITS file is Orion so you type:
+
+		READCUBE('Orion')
+
+	and now you can call SLICE.

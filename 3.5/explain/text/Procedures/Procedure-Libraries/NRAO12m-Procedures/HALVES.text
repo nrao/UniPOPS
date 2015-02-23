@@ -1,0 +1,15 @@
+	HALVES averages the data found in Array (3) and Array (4) using
+	ACCUM.
+
+	Since Array(3) and Array(4) often contain the two polarizations
+	of a parallel filter bank scan through the use of other
+	common 12-m procedures (DISP12M [F, S], CBAVG), this procedure
+	is one effective way to average the two halves of a parallel
+	filter bank scan.
+
+	The data must already be in Array (3) and Array (4) 
+	(usually via DISP12M, or its more commonly known aliases, F and S).
+
+	File name: halves.prc
+
+	This procedure is included in LSETUP.12meter

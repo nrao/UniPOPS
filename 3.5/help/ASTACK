@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ASTACK:  (INTERNAL-ARRAY) Returns/sets the value of the '
+PRINT 'specified element of the internal ASTACK array.'
+PRINT ' '

@@ -1,0 +1,8 @@
+#  printers file for vangogh/cv
+none:text:/usr/ucb/lpr:lwf:text only default
+ps0:postscript:/usr/ucb/lpr -Pps0:lwf:Library printer
+ps1:postscript:/usr/ucb/lpr -Pps1:lwf:remote HP PS printer 1st floor
+ps2:postscript:/usr/ucb/lpr -Pps2:lwf:remote HP laserjet III, Rm. 215
+ps3:postscript:/usr/ucb/lpr -Pps3:lwf:Library printer
+PRINTER:postscript:/usr/ucb/lpr:lwf:Uses your PRINTER env variable
+capture:postscript:cat - > capture.file.$$;echo postscript captured in capture.file.$$:lwf:Capture postscript to capture.file.$$

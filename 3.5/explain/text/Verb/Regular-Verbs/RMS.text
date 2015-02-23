@@ -1,0 +1,37 @@
+	(REGULAR VERB)        
+
+	RMS computes the root mean squared value for the data in Array
+	(0).  The result is stored in adverb VRMS, as well as
+	displayed.
+
+	ADVERBS USED:
+
+          BDROP         # channels ignored at beginning of data.
+          EDROP         # channels ignored at end of data.
+			Initial values are 0.
+
+          NREGION(32)   Region(s) of scan used to compute RMS.
+			Initial values are 0.
+
+          BBASE         # channels at each end of data (excluding
+          EBASE         dropped channels) used for RMS if NREGION=0.
+			Initial values are 50.
+	
+	ADVERBS SET:
+
+	  VRMS  	Used by the verb RMS to return the rms value.
+			Initial value is 0.
+
+	EXAMPLE:
+
+	To compute the RMS of the scan in Array (0), specify;
+
+		BMARK=1; PAGE SHOW
+
+	and the display will show boxes which indicate the regions over 
+	which the RMS will be computed.  To compute the RMS, specify;
+
+		RMS
+
+	and the values of RMS will be printed and saved in VRMS for
+	later calculations.

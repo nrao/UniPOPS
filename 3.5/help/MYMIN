@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MYMIN:  (ADVERB) Minimum cell (or pixel) number along the'
+PRINT 'y-axis of Matrix (0) that is to be processed.'
+PRINT ' '

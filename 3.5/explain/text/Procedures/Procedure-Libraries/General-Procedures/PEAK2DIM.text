@@ -1,0 +1,14 @@
+	PEAK2DIM is identical to PRC2DIM.  It is named differently
+	to (a) remain available even as you modify PRC2DIM and
+	(b) provide an example of how you might rename a gridding
+	and processing pair of procedures once you are satisfied with
+	their functionality.  It is intended to be used with 
+	XYPEAK.
+
+	Syntax: PEAK2DIM
+
+	See the documentation for PRC2DIM for more details.
+
+	File name: peak2dim.prc
+
+	This procedure is included in maps.plib

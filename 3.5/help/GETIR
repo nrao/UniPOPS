@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'GETIR:  (VERB) Place the desired invidual record into Array'
+PRINT '(0).  Individual record access is only available for Green'
+PRINT 'Bank data.'
+PRINT ''
+PRINT 'Syntax: GETIR(scan_no.feed_no, record_no, phase_no)'
+PRINT ''

@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CALDBE:  (CONTINUUM-TUCSON) Computes the calibration values'
+PRINT 'for each point of a digital backend scan.'
+PRINT ' '
+print 'CALVAL=',CALVAL

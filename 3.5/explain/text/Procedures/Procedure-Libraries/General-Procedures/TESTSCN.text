@@ -1,0 +1,20 @@
+	TESTSCN is helpful to produce documentation or as a debugging
+	aid.  It generates an annotated list of everything in the
+	header for the data in Array (0).  It assumes that the data was
+	taken with either the 12-m or a Green Bank telescope.
+
+	Filename: testscn.prc
+
+	No adverbs are used or set by TESTSCN.
+
+	EXAMPLE:
+
+	You want to know EVERYTHING about the current contents of Array
+	(0) and you want the output to go to the "printout" file, so
+	you type:
+
+		PRINTER TESTSCN CRT
+
+	and a long listing of its contents will be added to the end of
+	the "printout" file.
+

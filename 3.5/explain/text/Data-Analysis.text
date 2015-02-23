@@ -1,0 +1,100 @@
+	The data manipulation routines in UniPOPS can be divided into
+	two major categories:  those dealing with the analysis of
+	one-dimensional arrays and those dealing with two- or three-
+	dimensional arrays.
+
+One-Dimensional Array Analysis
+------------------------------
+
+	The following arbitrary topics covers all of the capabilities 
+	UniPOPS has for analyzing one-dimensional arrays of data.
+
+     .  Averaging Data
+	--------------
+	Various routines are provided for averaging data arrays
+	together with various weighting functions.
+
+	ACCUM		AVE		SCLEAR		SUM		
+
+     .  Baseline Fitting
+	----------------
+	Baseline fitting routines either calculate a suggested baseline
+	to be removed, produce a model of a baseline, display a fitted
+	baseline, or remove a baseline from the data.
+
+	BASELINE	BMODEL		BSHAPE		BSHOW	
+	DCBASE		MDBASE		PCBASE		RIPPLE	
+	RMODEL		RSHAPE		RSHOW		
+
+     .  Data Manipulating 
+	-----------------
+	Data manipulation routines are those which alter data values in
+	ways which do not fall under any of the other categories.  For
+	example, routines are provided for rescaling data, taking
+	Fourier transforms, removing noise spikes, etc.
+
+	BIAS		CALDBE		CLIP		CONVFCN
+	COPY		CROSSFCN	D0		DECNVLV
+	DIFF		DIVIDE		FFT		FIXDBE
+	GETCOL		GETROW		H0		IFFT
+	INVERT		MINUS 		MOVE		MULTIPLY
+	OSB		PLUS 		POWSPEC 	RAP
+	REMOVE		REPLACE 	SCALE 		SEDITS
+	SHIFT		SWITCHED 	TEMP 		TOTALPWR				
+					
+     .  Data Parameters
+	---------------
+	Data parameter routines provide numbers which qualify some
+	aspect of the data.  The values of data points are NOT altered
+	in any ways.  An example would be calculating an RMS noise level
+	for a spectral line observation.
+
+	ASHIFT		AVG		AVGD		D0
+	DOC 		FSHIFT		GMEASURE	H0
+	HEADER		MOMENT		PDOC		PEAK
+	RMS 		SOLVETIP	SPIKE		TABLE
+	TEMPS 		THUMB		TITLE		VSHIFT
+	ZERO
+
+     .  Gaussian Fitting
+	----------------
+	Gaussian fitting routines either fit Gaussians to data, produce
+	a model of Gaussians, display Gaussians, or remove Gaussians
+	from the data.
+
+	GAUSS		GDISPLAY	GMODEL		GPARTS
+	RESIDUAL						
+
+     .  Smoothing Data
+	--------------
+	Routines are provided which allow for smoothing data using
+	various algorithms.
+
+	BOXCAR		CHNGRES		HANNING		SMOOTH
+
+     .  Stacking Scan Numbers
+	---------------------
+	When dealing with a large number of scans, the user may want to
+	store the scan numbers to be processed into the internal ASTACK
+	array.  Routines are provided for the easy adding and deleting
+	of scans from this array.
+
+	ADDSTACK	ASTACK		DELETE		EMPTY
+	SELECT		TELL				
+
+
+Multi-Dimensional Array Analysis
+--------------------------------
+
+	Routines are provided which allow for producing two and three
+	dimensional arrays (matrices and cubes) and manipulating the
+	data in these arrays.
+
+	CD0		CH0		CHEADER		HOLFITFOC
+	HOLWINDOW	MBIAS		MBLANK		MCOPY
+	MD0		MDIVIDE 	MFFT		MFILL
+	MH0		MHEADER 	MIFFT		MINIT
+	MLIMITS		MMINUS		MMOVE		MMULTIPLY
+	MPLUS		MRANGE		MREMOVE		MSCALE
+	MSMOOTH 	MTABLE		PUTCOL		PUTROW
+	ROTATE		SLICE				

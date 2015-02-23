@@ -1,0 +1,141 @@
+What is an Array Adverb?
+------------------------
+
+	Array adverbs can be treated like the arrays found in most
+	computer languages.  They can contain one or more values with
+	no limits (except those of program memory) as to number of
+	dimensions or number of elements.  Examples of built-in arrays
+	are:  NREGION and LEVS.  For a listing of the names of all
+	available arrays, type: HELP ARRAY
+
+	Array adverbs share most of the qualities of internal-array
+	verbs and you should look at the documentation for these verbs
+	for more details concerning the extra restriction in using
+	internal-arrays verbs.
+
+	The following briefly summarizes the qualities of an array
+	adverb.  For more general details about adverbs, see either the
+	"Adverbs" section of the Reference Manual or EXPLAIN
+	documentation.
+
+
+Array Values
+------------
+
+	Arrays can only take floating-point values.  The way each
+	adverb is used determines whether it should be considered an
+	integer, floating-point, or logical variable.  For example,
+	NREGION is assumed by UniPOPS to contain integer values.
+
+	All built-in adverbs have default or initial values assigned by
+	the system.  The initial value of user-defined arrays is zero.
+
+
+Creation of Arrays
+------------------
+
+	The user can create their own arrays through the use of the
+	ARRAY verb.  See ARRAY for details on how to create an array.
+
+
+Querying the Value of an Array
+------------------------------
+
+	You can query the value of an array via the PRINT command.
+	'PRINT array-name' will print out the value of every element of
+	the specified array while 'PRINT array-name(index)'  will print
+	out the 'index' element of the 'array-name' array.
+
+	Examples:
+
+		PRINT NREGION
+		PRINT LEVS(12)
+
+
+Arguments to Procedures or Verbs
+--------------------------------
+
+	Array elements can be used to pass arguments to procedures or
+	verbs.  For example,  if HHHH is a procedure or verb, typing
+	HHHH(GREGION(1)) will pass the value of GREGION(1) to the
+	procedure or verb HHHH.  Only elements of an array can be
+	passed -- the array itself cannot be passed (i.e., HHHH(CMARK)
+	is illegal since CMARK is an array).
+
+
+#if RFRNC
+
+#end
+Other Usages of Arrays
+----------------------
+
+	Some arrays affect the way certain verbs work (e.g., NREGION)
+	-- other arrays are used by verbs to store results (e.g.
+	SIZE).
+
+	Elements of an array can be used in mathematical or logical
+	expressions.  For example, X = GREGION(1) - CMARK(10) is a
+	legitimate statement while X = CMARK - GREGION(12) is not since
+	CMARK refers to the entire array instead of an element of an array.
+
+
+Assigning Values to Arrays
+--------------------------
+
+	The user can assign values to array elements in a few
+	fashions.
+
+	.  If all of the elements of the array are to be given the same
+	   value then one can use the following construct:
+
+			array-name = value.
+
+	   For example:  NREGION = 34
+
+	.  If the elements are to have different values, try, for example,
+	   either
+
+             a) 
+		NREGION(1) = 20.
+		NREGION(2) = 60.
+		NREGION(3) = 120.
+		NREGION(4) = 180.
+		NREGION(5) = 0.     
+
+		[Note that the remaining elements of the array remain
+		untouched.]
+
+	   or,
+
+	     b)
+		NREGION = 20., 60., 120., 180.
+
+		[NOTE that the commas are essential here. Also that the
+		array will be zero filled for all subsequent elements.]
+
+	.  You can assign every element of a built-in array its default
+	   or initial value by typing, for example:
+
+		NREGION = DEFAULT
+
+	   Or, you can assign individual elements of a built-in array its
+	   default value by typing something like the following:
+
+		NREGION(5) = DEFAULT
+	   or
+		NREGION = 20, 60, 120, 180, DEFAULT
+
+	.  You can use the READ verb to assign values (see READ).
+	
+	.  If you want to work on every element of an array, you can use
+#if XPLN
+	   the UniPOPS Array-Math construct.  (See Math for more details.)
+#else
+	   the UniPOPS Array-Math construct.  
+#end
+
+#if XPLN
+	   well as Array-Math (see Math).
+#else
+	   well as Array-Math.
+#end

@@ -1,0 +1,239 @@
+#if CKBK
+Appendix H : The Adverb STATUS
+------------------------------
+
+#else
+(ARRAY ADVERB of 32 elements)
+
+#end
+Often you can become confused as  to whether your plots will come out
+in `histogram, line or points' mode, how the top and bottom x-axes of
+#if CKBK
+that plot will be labeled, and whether command-logging (see Section
+16.3) is in effect.  STATUS is a 32-element array adverb containing
+#else
+that plot will be labeled, and whether command-logging (see LOGON) is
+in effect.  STATUS is a 32-element array adverb containing
+#end
+various information  concerning the status of the program.  You can
+determine the value of any particular element in STATUS using the verb
+#if CKBK
+PRINT, or its pseudonym ?, (see Section 14.5), but you should not try to
+#else
+PRINT, or its pseudonym ?, (see PRINT), but you should not try to
+#end
+change any of the values.  If a user does change a value in STATUS, the
+new value has no effect on the program and the program immediately
+resets the element to its  proper value before any command is
+executed.  At present, not all 32 elements of STATUS have a meaning,
+the rest being for future use.
+
+The TELL STAT command be used to give a user-friendly interpretation of
+the values of STATUS than simply printing out the values.
+
+The elements of STATUS have the following meanings and can take on the
+specified values,
+
+	STATUS(1) :  Units of the lower  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.
+
+		     Values (Spectral Line): 1 = channels 
+		    		 	     2 = frequency offset
+					     3 = velocity (header definition)
+					     4 = radio velocity
+					     5 = optical velocity
+					     6 = relativistic velocity
+					     7 = linear velocity
+					     8 = rest frequency
+					     9 = sky frequency
+					    10 = image rest frequency
+					    11 = image sky frequency
+
+		     Values (Continuum): 1 = sample 
+		    		 	 2 = time offset
+					 3 = position offset
+					 4 = X position offset
+					 5 = Y position offset
+					 6 = X position
+					 7 = Y position
+					 8 = LST
+					 9 = UT
+
+	STATUS(2) :  Units of the upper  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.  Values are the
+		     same as STATUS(1)
+
+	STATUS(3) :  Type of SHOW or PLOT plot as determined by the
+		     last LINE, HISTOGRAM, or POINTS command. 
+ 
+		     Values:  0 = line; 1 = histogram; 2 = points
+
+	STATUS(4) :  Type of RESHOW plots as determined by the last
+		     RLINE, RHIST, or RPOINTS command.  
+
+		     Values: 0 = line; 1 = histogram; 2 = points
+
+	STATUS(5) :  Present color as determined by the last call to
+		     COLOR.
+
+		     Values are coded as:  red*16*16 + green*16 + blue
+		     where red, green, and blue can take on any value
+		     from 0 to 15.  For example, if STATUS(5) = 0, the
+		     color is black; if STATUS(5) = 4095, the color is
+		     white; if STATUS(5) = 873, the color is red = 3,
+		     green = 6, blue = 9 (a sort of dark, saturated
+		     blue).
+
+	STATUS(6) :  Present line type as determined by the last call
+		     to LINETYPE.  
+
+		     Values exactly represent the parameter to the 
+		     last call to LINETYPE.
+
+	STATUS(7) :  Present character size (in points) as determined by
+		     the last call to CHARSIZE, RSTPAGE, or SETPAGE.
+
+		     Values exactly represent the parameter to the
+		     last the call to CHARSIZE.
+
+	STATUS(8) :  Number of scans accumulated in internal accum
+		     array and determined by the ACCUM or SUM
+		     commands.
+
+	STATUS(9) :  Number of separate "plots" (PLOT, SHOW, RASTER, etc)
+		     since the last PAGE.
+
+	STATUS(10) : Whether scroll-locking is in effect and is set by
+		     the FULLON or FULLOFF commands.
+
+		     Values: 1 (or TRUE) if FULLON is in effect; -1 (or
+		     FALSE) if FULLOFF is in effect.
+
+	STATUS(11) : Specifies the graphics screen type and is set by
+		     the system or by the user when the program starts
+		     up.
+
+		     Values: 1 = no graphics screen; 2 = SunView; 3 =
+		     Tek 4010 emulation; 4 = Retrographics-like screen;
+		     5 = X windows.
+
+	STATUS(12) : Specifies the printer type and is set by the
+		     system or by the user when the program starts up.
+
+		     Values: 1 = no printer available; 2 = Tek 4010
+		     emulation; 3 = PostScript; 4 = HPGL printer; 5 =
+		     QMS-QUIC.  If less than zero, then COPYOFF is in
+		     affect.
+
+	STATUS(13) : Specifies from where the program is trying to get
+		     its command input and is set by BATCH or HELP 
+	             commands.
+
+		     Values: 5 = standard (keyboard) input; 7 = batch
+		     file; 12 = setup file; 13 = help file
+
+	STATUS(14) : Specifies where the program is trying to send text
+		     output and is determined by the CRT and PRINTER
+		     commands.
+
+		     Values: 6 = standard (crt) output; 8 = printout file
+
+	STATUS(15) : Whether or not on-line data is available and is
+		     determined by the program.
+
+		     Values: 1 (or TRUE) if  on-line data is available;
+		     -1 (or FALSE) if on-line data is not available.
+
+	STATUS(16) : Whether or not command logging is in effect and
+		     determined by the last LOGON or LOGOFF commands.
+
+		     Values: 1 (or TRUE) if LOGON is in effect; -1 (or
+		     FALSE) if LOGOFF is in effect.
+
+	STATUS(17) : Whether or not text output is going to the
+		     graphics screen and is determined by the last
+		     GRAPHICS or CRT command.
+
+		     Values: 1 (or TRUE) if GRAPHICS is in effect; -1
+		     (or FALSE) if CRT is in effect.
+
+	STATUS(18) : Not used.
+
+	STATUS(19) : Whether or not error trapping is enabled and is
+		     set by the last ERRON or ERROFF command.
+
+		     Values: 1 (or TRUE) if ERRON is in effect; -1 (or
+		     FALSE) if ERROFF is in effect.
+
+	STATUS(20) : Whether or not debugging is enabled and is set by
+		     the last DEBUG TRUE or DEBUG FALSE command.
+
+		     Values: 1 (or TRUE) if DEBUG TRUE is in effect; -1
+		     (or FALSE) if DEBUG FALSE is in effect.
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+	STATUS(22) : Whether or not the UNDO facility is enabled. This
+		     is set by the last UNDOON or UNDOOFF command.
+
+		     Values : 1 (or TRUE) if UNDOON on is in effect; -1
+		     (of FALSE) if UNDOOFF is in effect.
+
+	STATUS(23) : Number of virtual pixels the graphics screen has
+		     in the x-axis direction.
+
+	STATUS(24) : Number of virtual pixels the graphics screen has
+		     in the y-axis direction.
+
+	STATUS(25) : Lowest x-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(26) : Highest x-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(27) : Lowest y-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(28) : Highest y-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(29) : Number of lines that UniPOPS assumes for your
+		     text screen.  Determined by your graphics-screen
+		     type.
+
+	STATUS(30) : Number of characters that UniPOPS assumes for the
+		     width of your text screen.  Determined by your
+		     graphics-screen type.
+
+	STATUS(31) : x-pixel number where the next string will be
+		     printed when in GRAPHICS mode and is determined by
+		     the last PLACE command and by the program.
+
+	STATUS(32) : y-pixel number where the next string will be
+		     printed when in GRAPHICS mode and is determined by
+		     the last PLACE command and by the program.
+
+	EXAMPLE:  
+
+	You want to find out what is the current character size, so you
+	type:
+
+		PRINT STATUS(7)
+
+	You want to know what the current STATUS implies, but you can
+	never remember what all the locations are used for, use
+	the TELL verb:
+
+		TELL STAT

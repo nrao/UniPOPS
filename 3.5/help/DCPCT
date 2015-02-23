@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DCPCT:  (ADVERB) The percentage of data points that PCBASE'
+PRINT 'will make negative.'
+PRINT ' '

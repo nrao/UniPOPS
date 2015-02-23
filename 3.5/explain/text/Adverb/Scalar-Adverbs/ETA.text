@@ -1,0 +1,34 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-	ETA specifies, for data from the 12-m telescope, the
+C-	'warm-spillover' efficiency that you want methods 1 and 3 of
+C-	SOLVETIP to use.  You should change ETA to a value less than
+C-	one but greater than zero.  For method 3, the value of ETA is
+C-	revised by SOLVETIP only if you have set the value of ETAFREE 
+C-	to TRUE (+1).
+C-
+C-	ETA is used by : SOLVETIP (methods 1 and 3)
+C-
+C-	ETA is set by : SOLVETIP (methods 3 only if ETAFREE = TRUE)
+C-
+C-	The initial value of ETA is 0.95.
+C-
+C-	EXAMPLE :
+C-
+C-      You want to use algorithm 3 for fitting a model to your sky-tip
+C-	data from the 12-m telescope, and you think ETA = 0.75 and you
+C-	don't want SOLVETIP to solve for ETA, so you specify :
+C-
+C-		TYPETIP = 3; ETA = 0.75; ETAFREE = FALSE; SOLVETIP
+C-
+C-	You find that the results of SOLVETIP look strange so now you
+C-	think your estimate of ETA is wrong, so you type:
+C-
+C-		TYPETIP = 3; ETAFREE = TRUE; SOLVETIP; PRINT ETA
+C-
+C-	and SOLVETIP will use 0.75 as an initial guess to ETA and will
+C-	revise its value.  The value SOLVETIP thinks ETA should be will
+C-	then be printed for you.
+C-
+C------------------------- Continuum --------------------------------

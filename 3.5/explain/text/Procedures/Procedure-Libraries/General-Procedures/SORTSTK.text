@@ -1,0 +1,34 @@
+	SORTSTK is used by CHKAVRG and PRCSTK to sort the scan coordinate
+	position information so that those procedures can identify
+	scans within some tolerance of each other.  The positions are
+	rounded to the nearest multiple of the indicated tolerances
+	so that CHKAVRG and PRCSTK do not need to do any additional
+	work to identify scans at the same position.
+
+	Syntax: SORTSTK(x_tol,y_tol)
+
+	x_tol and y_tol are tolerances in x-coordinate and y-coordinate
+	(using the XSOURCE and YSOURCE header words) in arc seconds.
+	The sky coordinates of each source are rounded to the nearest 
+	multiple of x_tol and y_tol.
+
+	The results (coordinate code, rounded x and y positions and
+	scan number) are written to a file.  The name of file to be
+	written is taken from the global string adverb F_SORTSTK which
+	must be set prior to using SORTSTK (CHKAVRG sets this to
+	"chkavrg.temp" and PRCSTK sets this to "prcstk.temp").  This
+	file must not exist prior to using SORTSTK.  SORTSTK does NOT
+	delete this file, that is the responsibility of the calling
+	procedure or user.
+
+	SORTSTK does use a scratch file prior to sorting the results.
+	This file is named sortstk.temp.  It must not exist prior to
+	running SORTSTK and it is deleted upon successful completion
+	of this procedure.
+
+	This uses the Unix "sort" utility.
+
+	File name: sortstk.prc
+
+	This procedure is included in maps.plib
+

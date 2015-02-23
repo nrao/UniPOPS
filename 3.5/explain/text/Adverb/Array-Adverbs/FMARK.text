@@ -1,0 +1,36 @@
+	(ARRAY ADVERB of 12 elements)
+
+L------------------------- Spectral Line --------------------------------
+L-      FMARK is an array containing frequencies (in MHz, relative to
+L-      the center frequency) at which SHOW draws vertical lines.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	FMARK is an array containing time (in sec, relative to
+C-	the start of scan) at which SHOW draws vertical lines.  
+C------------------------- Continuum ------------------------------------
+
+	For two-dimensional displays, FMARK contains the y-axis value
+	at which LABEL will draw horizontal lines.  Up to 12 different
+	values may be specified.
+
+	FMARK is used by : LABEL	SHOW
+
+	No verbs change FMARK.
+
+	The initial values of FMARK(N) are -999999, which means that no
+	vertical lines will be drawn.  
+
+	EXAMPLES :
+
+	You want to flag frequencies -7.5 and 5 MHz from the center
+	frequency of your next SHOW display, so you type:
+
+		FMARK(1) = -7.5;  FMARK(2) = 5.;  SHOW
+
+	You want to reset FMARK to its default values so that no
+	vertical lines will be drawn, so you type:
+
+		FMARK = DEFAULT
+	or
+		FMARK = -999999

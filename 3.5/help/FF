@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'FF:  (LINE) Sets both the lower and upper x-axis to '
+PRINT 'frequency for SHOW.'
+PRINT ' '
+PRINT 'FF:  (CONTINUUM) Sets both the lower and upper x-axis to '
+PRINT 'time for SHOW.'
+PRINT ' '

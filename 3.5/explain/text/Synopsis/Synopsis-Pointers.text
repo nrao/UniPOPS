@@ -1,0 +1,172 @@
+#if CKBK
+A-4 Pointer Adverbs
+-------------------
+	
+#end
+Here we list pointers used by such commands as TELL, SELECT, SAXIS,
+FOPEN, and SUMMARY.  For a more detailed description, see the the
+on-line EXPLAIN files or the reference manual.
+
+ACCMD:     Indicates the list of accumulated scans for TELL
+ 	   before or after an AVE has been performed.
+
+ADVERB:    Indicates listing of adverb names for HELP.
+
+ALIAS:     Indicates listing of alias names for HELP.
+
+ARRAY:     Indicates listing of array-adverb names for HELP.
+
+CHANNEL:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis channel number.
+
+CONTYPE:   Indicates 12-m continuum data for CHNGONLINE or CHNGVER.
+
+CON_VER:   Indicates the current 12-m continuum on-line data file
+           version number.
+
+DEFAULT:   Assigns default values to ADVERBs.
+
+DISK:  	   Indicates all data files for TELL and SUMMARY.
+
+DSCANS:    Indicates on-line and off-line data files for TELL, SELECT,
+	   SUMMARY and CHNGFILE.
+
+EOF:       Indicates you want to open the file with FOPEN at the end of
+	   the file.
+
+FALSE:	   Contains the value of FALSE (-1).
+
+FBTYPE:    Indicates 12-m filter-bank data for CHNGONLINE or CHNGVER.
+
+FB_VER:    Indicates the current 12-m filter-bank on-line data file
+           version number.
+
+FREQIRST:  Used with SAXIS to indicate that SHOW should use as an
+	   x-axis rest frequencies in the image sideband - Tucson only.
+
+FREQISKY:  Used with SAXIS to indicate that SHOW should use as an
+	   x-axis sky frequencies in the image sideband - Tucson only.
+
+FREQOFF:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis offset IF frequency.
+
+FREQRST:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis ret frequencies.
+
+FREQSKY:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis sky frequencies.
+
+GSCANS:    Indicates gains data file for TELL, SUMMARY, SELECT and
+	   CHNGFILE.
+
+HCTYPE:    Indicates 12-m hybrid spectrometer data for CHNGONLINE, or 
+	   CHNGVER.
+
+HC_VER:	   Indicates the current 12-m hybrid spectrometer data file 
+           version number.
+
+INFO:	   Indicates current selection criteria for SELECT.
+
+KSCANS:    Indicates keep data file for TELL, SUMMARY, SELECT and
+	   CHNGFILE.
+
+LOGFILE:   Indicates the file for command logging for CHNGFILE.
+
+NEW:       Indicates you want to open a new file with FOPEN.
+
+OFFDATA:   Indicates off-line data file for TELL, SUMMARY or SELECT.
+
+OLD:       Indicates you want to open an existing file with FOPEN.
+
+ONDATA:    Indicates on-line data file for TELL, SUMMARY or SELECT.
+
+POINTER:   Indicates listing of pointer and keyword-adverb
+	   names for HELP.
+
+POSX:      Used with SAXIS to indicate that SHOW should use as an
+	   x-axis the horizontal coordinate.
+
+POSXOFF:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis position offset along the horizontal coordinate.
+
+POSY:      Used with SAXIS to indicate that SHOW should use as an
+	   x-axis the vertical coordinate.
+
+POSYOFF:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis position offset along the vertical coordinate.
+
+POS_OFF:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis position offset.
+
+PRINTFILE: Indicates the file for captured output for CHNGFILE.
+
+PROCEDURE: Indicates listing of procedure names for HELP.
+
+REW:       Indicates you want to open the file with FOPEN at the start
+	   of the file.
+
+RO:        Indicates you want to open the file with FOPEN with read
+	   only privileges.
+
+RSCANS:    Indicates the individual records file for TELL, SUMMARY,
+	   SELECT and CHNGFILE.
+
+RW:        Indicates you want to open the file with FOPEN with
+	   read/write privileges.
+
+SAMPLE:    Used with SAXIS to indicate that SHOW should use as an
+	   x-axis sample numbers.
+
+SCALAR:    Indicates listing of scalar adverb names for HELP.
+
+SCR:       Indicates you want to open a scratch or temporary file with
+	   FOPEN.
+
+SSCANS:    Indicates save data file for TELL, SUMMARY, SELECT, and
+	   CHNGFILE.
+
+STACK:     Indicates the stack array for TELL.
+
+STAT:	   Indicates the status array for TELL.
+
+STRING:    Indicates listing of string adverb names for HELP.
+
+TIMELST:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis the LST.
+
+TIMEOFF:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis time offset.
+
+TIMEUT:    Used with SAXIS to indicate that SHOW should use as an x-axis
+	   the UT.
+
+TRUE:	   Contains the value of TRUE (+1).
+
+UNK:       Indicates that you want FOPEN to open a file whose
+	   existence is unknown.
+	
+VERB:  	   Indicates listing of verb names for HELP.
+
+VELHEAD:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis velocities using the definition in the scan"s
+	   header.
+
+VELLINR:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis velocities assuming uniform channel spacing.
+
+VELOPTI:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis velocities using the optical definition.
+
+VELRADI:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis velocities using the radio definition.
+
+VELRELT:   Used with SAXIS to indicate that SHOW should use as an
+	   x-axis velocities using the relativistic definition.
+
+VERS:	   Contains the version number of the program. 
+
+WO:        Indicates you want to open the file with FOPEN with write
+	   only privileges.
+#if CKBK
+
+#end

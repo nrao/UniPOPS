@@ -1,0 +1,29 @@
+	(FUNCTION VERB)
+
+	XTOCHAN returns the channel number of the specified value of
+	the x-axis.  The units you should specify depends upon what the
+	current lower x-axis is for the last display.
+
+L------------------------- Spectral Line ------------------------------
+L-      The entered value can represent frequency, velocity, or channel
+L-      number depending on the display option chosen for the bottom
+L-      x-axis by CV, VC, CF, FC, CC, VV, VF, FV, FF, or SAXIS.
+L------------------------- Spectral Line ------------------------------
+
+C------------------------- Continuum ----------------------------------
+C-      The entered value can represent position, time, or channel
+C-      number depending on the display option chosen for the bottom
+C-      x-axis by CV, VC, CF, FC, CC, VV, VF, FV, FF, or SAXIS.
+C------------------------- Continuum ----------------------------------
+
+
+	EXAMPLE:
+
+	You want to know what channel is at a velocity of 34.5 km/sec
+	and what channel is at a frequency, relative to the center of
+	the bandpass, of 1.25 MHz.  Type:
+
+		VV PRINT XTOCHAN(34.5) FF PRINT XTOCHAN(1.25)
+
+	And the channel numbers will be printed out.
+

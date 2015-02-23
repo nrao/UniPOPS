@@ -1,0 +1,25 @@
+	A is a simple procedure that adds a single number to the
+	end of the ASTACK array.
+
+	Syntax:  A(number)
+
+	This is equivalent to ADDSTACK(number, number, 1)
+
+	File name: a.prc
+
+	This procedure is included in LSETUP.12meter and CSETUP.12meter.
+
+	No adverbs are used by A.
+
+	Adverb set : ACOUNT
+
+	EXAMPLE:
+
+	You want to add three scan numbers to the ASTACK array, but
+	the three numbers aren't separated by a single increment:
+	245.03, 250.03, 275.04.
+
+	You type:
+
+	A(245.03) A(250.03) A(375.04)
+

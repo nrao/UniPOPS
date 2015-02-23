@@ -1,0 +1,18 @@
+	(REGULAR VERB)        	
+
+	Multiplies the data values in Array (0) by the value of the
+	adverb FACT.
+
+	ADVERBS USED:
+			
+           FACT         The value by which each data point is to be
+			multiplied.  FACT is also used by the verb
+			BIAS.  The initial value of FACT is 0.
+
+	No adverbs are set by SCALE.
+
+	EXAMPLE:
+
+	To multiply the data of the scan in Array (0) by 3.2, specify:
+
+        		FACT=3.2; SCALE

@@ -1,0 +1,540 @@
+Glossary
+--------
+
+ADVERB................. Adverbs are similar to variables in
+			Fortran or C in that they can contain values.
+			Adverbs can be of the following types:  Array,
+			Scalar, String, Pointer, and Keyword.  They can
+			be either user-defined (i.e., created by a
+			user) or built-in (provided by the system).
+
+ALIAS.................. You can redefine the name of a verb or
+			procedure.  The new name is an alias for the
+			old name.
+
+ARGUMENTS.............. In analogy to mathematics, an argument is a
+			value you supply to a procedure or verb, and
+			which is required in order for the procedure or
+			verb to do what it was intended to do.
+			Example:  BLAH(XXX, 1.2)  passes two arguments
+			to verb or procedure BLAH, the first is the
+			value of the adverb XXX and the second is the
+			value 1.2.
+
+ARRAYS................. In analogy to mathematics, an array adverb
+			is an n-dimensional set of real values.
+
+			One-dimensional spectra or continuum scans can
+			be stored in any of the ten internal
+			one-dimensional arrays provided in UniPOPS,
+			and named D0 through D9.  Each array has an
+			associated set of header parameters stored in
+			H0 through H9.
+
+ARRAY ELEMENT.......... An array element refers to one of the members
+			of an array.  The 13th value (element) of array
+			adverb NREGION would be referenced as:
+			NREGION(13).
+
+BUILT-IN............... An adverb or procedure can be either built-in
+			or user-defined.  All verbs are built-in.
+			Built-in symbols are those provided by default
+			by the UniPOPS system.  You cannot destroy or
+			modify built-in symbols.
+
+CHANNELS............... Spectrometers usually measure intensities at
+			a set of adjacent frequencies.  Each
+			measurement in the set is referred to as the
+			data in a particular spectrometer channel.
+			Usually, the frequency difference between
+			adjacent channels is constant across the
+			bandwidth of the spectrometer.
+
+COMMAND................ Another term for operator.
+
+COMMAND LINE........... You specify what you want the program to do by
+			entering operands and operators on a command
+			line.  The contents of the command line, 
+			are arranged so as to perform a desired function.
+			You type a carriage return at the end of the 
+			command line (not preceded by the backslash, \, 
+			character) so as to signal to UniPOPS that you 
+			want it to examine and execute the contents of 
+			the command line.
+
+COMMAND-LOGGING FILE... If desired, UniPOPS will log all of your typed
+			commands into a special file called the
+			command-logging file.  The CHNGFILE, LOGON, and
+			LOGOFF verbs control the usage of the file.
+
+COMPILE MODE........... Compile mode is the means whereby you can enter
+			or modify the definition of a user-defined
+			procedure.  You enter compile mode with either
+			the PROC, PROCEDURE, or POPSEDIT verbs and
+			leave the mode with the FINISH or ENDEDIT
+			verbs.  While in compile mode, the command
+			lines typed are compiled but not executed and
+			become part of the definition of the
+			procedure.
+
+CONSTANTS.............. Constants in UniPOPS refers to either
+			numerical, logical, or string values which
+			remain unaltered during a calculation.
+			Examples of constants are:  1.2345, TRUE,
+			"Hello".
+
+CONTROL CHARACTERS..... You issue a control character whenever you hold
+			down the `Control' or `Ctrl' key on the
+			keyboard at the same time as you strike an
+			alphanumeric key.
+
+CORE MEMORY............ Adverbs, verbs, and procedure definitions
+			reside within UniPOPS in a set of memory
+			locations referred to as either core, core
+			memory, or memory.  The size of core memory in
+			UniPOPS is limited.
+
+CUBE................... We call a disk file containing a
+			three-dimensional array of data values a cube.
+			The three dimensions of the array need not be
+			identical so the term is a misnomer.  UniPOPS
+			can presently analyze one cube file at a time.
+
+DEFAULT VALUE.......... All built-in adverbs have an initial
+			(default) value supplied by the system.  You
+			can assign an adverb its default value by, for
+			example:  BDROP = DEFAULT; NREGION(13)=DEFAULT
+
+DUMMY PARAMETER........ When defining a procedure, the set of
+			parameters that will be assigned values when
+			the procedure is called are known as dummy
+			parameters.  For example, PROC BLAH(X1, X2)
+			defines a procedure called BLAH that will make
+			use of two arguments.  The value of the two
+			arguments will be assigned to the dummy
+			parameters X1 and X2 when the procedure is
+			called.
+
+EFFECTIVE INTEGRATION.. During an observation, some time is lost do to
+			instrumental inefficiencies.  The noise level
+			of an observation also will depend upon the
+			observing technique.  The effective integration
+			time is defined so that the theoretical rms
+			noise level of the data will always be
+			inversely proportional to the square root of
+			the effective integration time.  Effective
+			integration time is always less than the
+			duration of an observation.
+
+EXECUTE MODE........... UniPOPS is usually in execute mode within which
+			the contents of the command lines you type are
+			executed as soon as you signal the end of the
+			line with a carriage return.  You can enter
+			input mode with the READ verb, or compile mode
+			with the PROC, PROCEDURE, or ENDEDIT verbs.
+
+EXPRESSIONS............ Any mathematical or logical formula (made out
+			of UniPOPS operands and math or logical
+			operators) constitute an expression.  Examples
+			of expressions are:  1.234;  DD*3.4 + SIN(RAD);
+			"Hello"; X >= Y
+
+FILE-TYPES............. UniPOPS can access the following different
+			types of files:
+
+				On-line Data (Site dependent)
+				Off-line Data (SDD format, read only)
+				Keep Data (SDD format, write only)
+				Save Data  (SDD format)
+				Gains Data  (SDD format, site dependent)
+				Individual Record Data (a type of SDD,
+				   site dependent)
+				Printer  (ASCII text)
+				Command-logging  (ASCII text)
+
+			All SDD format files can have their roles
+			inter-changed with the CHNGFILE verb.
+
+FITS FORMAT............ FITS (Flexible-Image-Transport-System) is a
+			format that UniPOPS uses for storing and
+			retrieving two- and three-dimensional data
+			arrays (matrices and cubes).  One-dimensional
+			spectra and scans can be converted from SDD
+			format to Single-Dish (SD) FITS format (and
+			vice-versa) so that other analysis systems can
+			work on the data.
+
+FUNCTION PROCEDURE..... Procedures can either be regular or function
+			procedures.  A function procedure is similar to
+			a Fortran or C routine in that the procedure
+			calculates and returns a value.  Function
+			procedures can be used in expressions, on the
+			right side of an assignment statement, or in a
+			PRINT statement.  Regular procedures cannot
+			appear in these locations.
+
+FUNCTION VERB.......... Verbs can either be regular, pseudo,
+			internal-array or function verbs.  A function
+			verb is similar to a Fortran or C routine in
+			that the verb calculates and returns a value.
+			Function verbs can be used in expressions, on
+			the right side of an assignment statement, or
+			in a PRINT statement.  Regular and pseudo verbs
+			cannot appear in these locations.
+
+GAINS FILE............. The gains file is site dependent and contains
+			measurements of the spectrometer gains.  Access
+			to this file is via the CGGET and GGET verbs.
+
+GLOBAL................. A global symbol is any operator or operand that
+			can be used within any procedure definition or
+			in execute mode.  All built-in symbols are
+			global.  When you create adverbs or aliases
+			within a procedure definition, you can choose
+			whether or not those symbols will be globally
+			known or known only within that procedure
+			(i.e., be local symbols).
+
+HEADER PARAMETER....... Associated with any one-, two-, or
+			three-dimensional data array is a set of
+			descriptions about the data:, where it was
+			taken, how it was taken, what conditions were
+			present, etc.  These descriptions are arranged
+			in entities called a header, and each piece of
+			information in a header is a header parameter.
+			Header parameters are accessed via
+			internal-array verbs and keywords.
+
+INDIVIDUAL RECORDS FILE This is a type of SDD file that is used to
+			Green Bank individual records data.  The utility
+			cvt.tele-recs is used to generate and fill this
+			type of file.  The GETIR verb is used to access
+			the data in this file (as well as the on-line
+			version of the individual records data).  The
+			CHNGFILE verb is used to attach this type of
+			off-line file.
+
+INPUT LINE............. If you have a long command line, you can
+			continue the line on multiple input lines by
+			placing a backslash (\) character at the end of
+			each input line.  That is, a command line is
+			made up of one or more input lines, all of
+			which, except the last, must be terminated with
+			a backslash character.
+
+INPUT MODE............. The READ verb places UniPOPS from the execute
+			mode into the input mode. Input mode is used to
+			assign values to adverbs or as an indefinite
+			pause in the execution of the the program.
+
+INTERNAL-ARRAY......... Large, built-in one-dimensional arrays,
+			two-dimensional matrices, or three-dimensional
+			cubes are internal to the program and can be
+			accessed or modified with a set of special
+			purpose verbs known as internal-array verbs.
+			In most cases, you would use the verbs in the
+			same way you would use an array adverb but
+			there are restrictions which apply (see the
+			description of internal-array verbs for
+			details).
+
+KEEP FILE.............. One-dimensional spectra or scans that you
+			have finished processing can be stored in a
+			type of file called keep.  The name of the file
+			is arbitrary, but a keep file has the
+			properties that you write to it using the KEEP
+			verb and you cannot retrieve the data once it
+			is stored.  A keep file can be accessed later
+			as a save or off-line data file by using the
+			CHNGFILE verb.
+
+KEYWORDS............... Header parameters are accessed or changed by
+			using internal-array verbs and keywords
+			adverbs.  The role of keywords is to tell the
+			internal-array verb which of the many header
+			parameter interests you.
+
+LITERAL CONSTANT....... Usually refers to a string constants such
+			as `Hello' or "Goodbye".
+
+LOCAL SYMBOLS.......... When the user, in defining a procedure, creates
+			an alias or adverb, he or she has the choice of
+			having that symbol known only within the
+			procedure, in which case it will be a local
+			symbol, or having it known as a global symbol
+			in which case the created symbol can be used by
+			all procedures and in execute mode.  Local
+			symbols prevent one procedure from accidentally
+			modifying the value of an adverb used by
+			another procedure.
+
+MATRICES............... We refer to two-dimensional arrays as
+			matrices.  Four matrices are available for your
+			usage in UniPOPS and are called MD0 through
+			MD3.  Each matrix has an associated set of
+			header parameters stored in MH0 through MH3.
+
+MEMORY................. See CORE
+
+MEMORY FILE............ UniPOPS stores (and retrieves) the contents of
+			core memory to a disk file called the memory
+			file.  To analyze spectral line or continuum
+			data, you must have an LMEMORY and CMEMORY
+			file, respectively.  You can create a default
+			memory file by typing the UNIX commands
+
+				makefile.exe LMEMORY
+			or
+				makefile.exe CMEMORY
+
+MINIMUM-MATCH.......... UniPOPS uses minimum-match when it parses
+			command lines you type while in execute mode
+			(minimum-match is turned off in compile mode).
+			Basically, minimum-match allows you to type
+			only the minimum number of characters that will
+			distinguish one adverb, verb, or procedure from
+			all others.  See the documentation on command
+			syntax for details.
+
+MODE................... When entering command lines into UniPOPS, you
+			must be aware of what mode the program is in.
+			The possible modes are:  Input, Compile, and
+			Execute.  See the individual descriptions of
+			these modes for details.
+
+OFF-LINE DATA.......... Off-line data are those spectra or scans that
+			are not currently being produced by the
+			telescope and that have either been written
+			into a file on disk, or previously stored into
+			a keep or save file.  The off-line data are
+			stored in a type of read-only file called the
+			off-line data file.  You can use the CHNGFILE
+			verb to redefine what data file you want to use
+			as the off-line data file.
+
+ON-LINE DATA........... On-line data are the observations produced by
+			your current observing session.  The data are
+			stored in a separate file, the on-line data
+			file, which can only be altered by the
+			real-time system and whose format, location,
+			and size are site dependent.  The on-line data
+			file may not exist in some cases.
+
+ON-OFF OBSERVATION..... A style of continuum observations which
+			attempts to measure the flux of a source by
+			moving the telescope between the position of
+			interest (the ON position) and a nearby
+			reference (OFF) position.  Usually a
+			calibration measurement is a part of the
+			observation as well.  The actual details of an
+			on-off observation are telescope dependent.
+
+OPERAND................ UniPOPS operands (adverbs or constants) are
+			things that have a value and which an operator
+			can operate on.
+
+OPERATOR............... UniPOPS operators (aliases, verbs, procedures,
+			and math and logical operators) perform some
+			operation or action.
+
+POINTERS............... Pointer adverbs are those that have a value
+			which the user cannot change.  They are meant
+			to be used as constants or as special flags to
+			verbs or procedures.
+
+PRINTOUT FILE.......... The printout file is an ASCII text file where
+			you can have UniPOPS store the text output that
+			it normally sends to the computer terminal.
+			You control when output will be sent to the
+			printout file with the PRINTER, CRT, or
+			GRAPHICS verbs.
+
+PROCEDURE.............. Procedures are a handy way to simplify the
+			steps needed to perform tedious, redundant
+			analysis.  They consist of a series of UniPOPS
+			verbs, aliases, other procedure calls, math and
+			logical operators, conditional and loop
+			programming structures, adverbs, and constants
+			so arranged as to perform a desired task.
+			Procedures can be function procedures (similar
+			to Fortran or C functions) or regular
+			procedures (similar to Fortran subroutines).
+
+PROCEDURE DEFINITION... A procedure definition is the series of
+			commands that make up what you want the
+			procedure to perform.
+
+PROCEDURE INSTALLATION. If you create a disk file containing procedure
+			definitions, you must install the procedure
+			with the BATCH verb so that you can use it from
+			within UniPOPS.  The installation process reads
+			in lines from the file containing the procedure
+			definition and compiles the definition.  Once
+			the end of file is reached, and no errors were
+			generated by the compilation, you can then run
+			the installed procedure.
+
+PSEUDO VERB............ Pseudo verbs are special purpose verbs that
+			perform various memory management and operating
+			system tasks.  The nature of what they do
+			requires that they cannot be used in procedures
+			and that they must be the sole contents of a
+			command line.
+
+REAL-VALUED CONSTANT... A constant that has a floating-point value is a
+			real-valued constant.  An example would be:
+			123.456e-12.
+
+RECOVER FILE........... When you exit UniPOPS, you will be asked
+			whether you want to save your environment into
+			the recover file.  If you say `y' (for yes)
+			UniPOPS dumps its memory into a disk file
+			called either LRECOVER or CRECOVER (depending
+			upon whether you were analyzing line or
+			continuum data).  Next time you start UniPOPS
+			you will be asked whether you want to recreate
+			your environment from the recover file.  If you
+			say `y', then the appropriate recover file is
+			read in and you will be in exactly the same
+			condition you were when you last updated the
+			recover file.  If you don't recreate your
+			environment, then UniPOPS reads in a default
+			environment from the memory file.  (The recover
+			file doesn't exist the first time you run
+			UniPOPS so, by default, UniPOPS uses the memory
+			file).
+
+REGULAR PROCEDURE...... A regular procedure is similar to Fortran
+			subroutines (in contrast to function procedures
+			which are like C or Fortran functions).
+
+REGULAR VERB........... Most UniPOPS verbs (operators) are regular
+			verbs.  They cannot be used in PRINT statements
+			nor in expressions.  They do not return a value
+			like a function does.
+
+SAMPLES................ Continuum observations are arranged in scans
+			which consists of one or more data points
+			called samples.
+
+SAVE FILE.............. If you want to save partially-reduced
+			one-dimensional observations (scans) , you
+			could save them into the type of file called
+			the save file.  The name of the file is
+			arbitrary but a save file has the properties
+			that you write to it using the SAVE verb and
+			you read from it using the RECALL verb.  You
+			specify the save-bin number from which you want
+			to recall or store the observation by giving
+			the adverb NSAVE the number of the desired
+			save-bin.  A save file can be accessed later on
+			as a keep or off-line data file by using the
+			CHNGFILE verb.
+
+SAVE BINS.............. A save file can contain a certain number of
+			one-dimensional observations (scans).  The
+			locations where scans can be placed are called
+			save bins, the number of which depend upon the
+			size you or the system specified when the file
+			was created.  You specify what save bin you are
+			interested in by assigning its value to the
+			adverb NSAVE.
+
+SCALAR................. A scalar adverb is a single-valued adverb that
+			can contain a floating-point value.  They are
+			similar to simple variables in Fortran or C.
+
+SCANS.................. A term that should refer only to continuum
+			observations, but which is applied to
+			spectral-line observations as well.  For
+			continuum observations, a scan is a set of data
+			samples that the user, when the data were
+			taken, wanted to be grouped as a
+			one-dimensional array.  For spectral-line
+			observations, the output of the channels in
+			each spectrometer are averaged together for a
+			user-specified duration time to form a
+			one-dimensional array.  
+
+SCAN NUMBER............ A scan number is a sequential integer tag
+			applied to each scan to distinguish it from
+			those that preceded or followed it.  If
+			multiple back-ends were in use, then you
+			specify which back-end's data is desired by
+			adding a fractional extension to the integer
+			scan number.
+
+SDD FORMAT............. The disk format native to UniPOPS is
+			Single-Dish-Data (SDD), which is a format
+			agreed to by a consortium of observatories.
+			Data files in SDD format can be converted to
+			various other formats for use in other analysis
+			systems.
+
+SETUP FILE............. If you do not recover your environment when
+			starting up UniPOPS, UniPOPS will try to find a
+			file named either LSETUP or CSETUP (depending
+			upon whether you were analyzing line or
+			continuum data).  It then executes any commands
+			that are in the file.  The setup file is useful
+			for configuring your personal UniPOPS
+			environment.
+
+SPOWER................. Same as Switched-Power.
+
+STACK AND STACKING..... The stack is an internal array where you can
+			store the scan numbers of the observations of
+			interest.  The act of placing scan numbers into
+			the stack array is called stacking.  Once the
+			desired set of scan numbers is in the stack,
+			procedures can be written that will pick off
+			scan numbers from the stack and perform some
+			operation on the observations.
+
+STRINGS................ Strings are a sequence of characters enclosed
+			in either single (') or double (") quotation
+			marks.  For example:  'Hi there'.
+
+STRING ADVERBS......... String adverbs are adverbs whose values are a
+			sequence of characters.
+
+SWITCHED-POWER......... Switched-power observations are usually either
+			frequency- or beam-switched observations --
+			that is, observing modes where there is a very
+			quick cycling between observing signal and reference
+			frequencies or positions.  The subtraction of
+			the reference (off) observation from the signal
+			(on) observation is usually performed for you
+			by the back-end or control computer so that you
+			never see the signal and reference spectra as
+			separate entities but only as (on-off)/off.
+
+SYMBOL................. The name of a UniPOPS verb, alias, adverb or
+			procedure is called a symbol.  The symbol can
+			be either global (accessible from execute mode
+			and from within any procedure) or local
+			(accessible only from within the procedure that
+			defines the symbol).
+
+TOTAL-POWER............ Total-power observations are usually
+			position-switched observations -- that is,
+			observing modes where there is very slow
+			cycling between observing signal and reference
+			positions.  The signal (on) and reference (off)
+			spectra are independent scans which you must
+			combine yourself to perform the (on-off)/off
+			calibration.
+
+TPOWER................. Same as Total-Power.
+
+USER-DEFINED........... You can create adverbs or procedures beyond
+			those that are built-in to the system.  These
+			new symbols are described as being
+			user-defined.  User-defined symbols can be
+			destroyed whenever you so desire.
+
+VERB................... Verbs are UniPOPS operators (i.e., something
+			that performs an action).  There are four types
+			of verbs:  regular, function, pseudo, and
+			internal-array.
+

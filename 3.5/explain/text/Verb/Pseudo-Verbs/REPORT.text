@@ -1,0 +1,28 @@
+	(PSEUDO VERB)
+
+	To report a problem or submit comments about UniPOPS, type
+	REPORT and you will be prompted to describe the problem.  You
+	will use the editor that you chose when you first logged into 
+	your account.
+
+	Please give as much useful information as possible, including
+	specific information (scan numbers, observing mode, etc.)
+
+	REPORT can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by REPORT.
+
+	EXAMPLE:
+
+	On those very rare occasions when you find a bug in the
+	program, you will want to report it so that it can be quickly
+	fixed.  Type:
+
+		REPORT
+
+	and an editor will be brought up so that you can submit your
+	report.  After exiting the editor, your report will be
+	automatically e-mailed to the programmers in charge of the
+	program.
+

@@ -1,0 +1,39 @@
+	These two function procedures add a feed number to a scan
+	number correctly even what that scan number is negative.
+
+	ADDFEED adds a value to existing feed number (subscan number)
+	of a scan number.  The result is returned to the stack.
+
+	Syntax: ADDFEED(scan_number, feed_increment)
+	
+	Example: you have a scan number -627.01 and you want to make
+	the feed or subscan number larger by 2 (i.e. you want the
+	subscan number to be .03)
+
+		scalar xscan
+		xscan = -627.01
+		xscan = addfeed(xscan, 2)
+
+	The value of xscan after these operations is -627.03.
+
+	NEWFEED changes any existing feed or subscan number of the
+	scan number to the desired feed number.
+
+	Syntax: NEWFEED(scan_number, feed_number)
+
+	Example:  you have scan number 723.11 and you wish to change
+	the subscan number to be 4 (i.e. .04).
+
+		scalar xscan
+		xscan = 723.11
+		xscan = newfeed(xscan, 4)
+
+	The value of xscan after these operations is 723.04.
+
+	File name: addfeed.prc
+	Note: both procedures are defined in the same file.
+
+	These procedures are included in CSETUP.12meter and LSETUP.12meter
+
+	
+	

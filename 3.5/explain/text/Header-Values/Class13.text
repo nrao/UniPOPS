@@ -1,0 +1,12 @@
+Class 13: Reduction Parameters
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Number of scans stacked                       | NOSTAC   |  R*8   |
+First Scan in stack                           | FSCAN    |  R*8   |
+Last Scan in stack                            | LSCAN    |  R*8   |
+Line Amplitude                                | LAMP     |  R*8   | K
+Line Width                                    | LWID     |  R*8   | km/sec
+Integrated Line Intensity                     | ILI      |  R*8   | K km/sec
+RMS Noise                                     | DRMS     |  R*8   | K
+

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ACOSD:  (PROC-LIBRARY) Returns the arc cosine (in degrees)'
+PRINT 'of the given parameter.'
+PRINT ' '

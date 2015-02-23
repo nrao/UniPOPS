@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EOF:  (POINTER) Indicates you want to open the file with'
+PRINT 'FOPEN at the end of the file.'
+PRINT ' '

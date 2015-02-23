@@ -1,0 +1,31 @@
+	(PSEUDO VERB)
+
+	EXIT terminates UniPOPS and returns control to the operating
+	system.  It can be used only while in execute mode and must be
+	the only thing on the command line.
+
+	EXIT will ask you whether or not to update your recovery
+	file.  If you do update the file, the next time you use UniPOPS
+	you will be given the chance to recreate your analysis session
+	environment to exactly what it was like when you exited the
+	program.  Do not update the recovery file if you want to use
+	your old recovery file when you next want to use the program.
+
+	No adverbs are used or set by EXIT.
+
+	EXAMPLE:
+
+	You want to exit UniPOPS, so you type:
+
+		EXIT
+
+	and UniPOPS asks you:
+ 
+		Normal Termination...
+ 
+		Do you want to update the RECOVER file?
+		(Y or N): 
+
+	at which point you need to decide whether or not you want to
+	restart UniPOPS later on with exactly the same condition as it
+	is now in.

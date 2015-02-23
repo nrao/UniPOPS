@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'HCTYPE:  (LINE-POINTER) Indicates 12-m hybrid '
+PRINT '         spectrometer data for CHNGONLINE, and CHNGVER.'
+PRINT ' '

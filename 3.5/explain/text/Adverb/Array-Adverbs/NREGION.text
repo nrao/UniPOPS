@@ -1,0 +1,43 @@
+	(ARRAY ADVERB of 32 elements)
+
+	NREGION is an array containing the starting and ending channels
+	for up to 16 regions of the data in array 0. 
+
+	NREGION is used by :   BASELINE     BSHAPE     DCBASE     PCBASE
+			       RIPPLE       RMS        RSHAPE
+
+	No verbs change NREGION.
+
+	The initial values of NREGION(N) are 0.
+
+	Set the starting channel of the first region you don't want to
+	use  equal to DEFAULT or zero, all values for subsequent regions
+	will be ignored. Within a given pair of values that define a
+	region, the values can appear in either order.  Similarly, 
+	the pairs of values can appear in any order.  However,
+	regions must NOT overlap. All NREGION values must be greater than
+	0 and less than the number of channels in Array (0).  
+
+	NREGION will supersede BDROP, EDROP, BBASE and EBASE unless
+	NREGION(1) = 0.
+
+	EXAMPLE :
+
+	You want to use four regions to compute a baseline, so you 
+	specify :
+
+		NREGION (1) = 10;  NREGION (2) = 30
+                NREGION (3) = 40;  NREGION (4) = 50
+                NREGION (5) = 78;  NREGION (6) = 82
+                NREGION (7) = 105; NREGION (8) = 128
+		NREGION (9) = DEFAULT
+
+	Or, more conveniently, specify :
+
+		NREGION = 10,30,40,50,78,82,105,128,DEFAULT
+
+	The following, more jumbled order, is equivalent, this
+	might have been set using a procedure which uses cursor
+	functions:
+
+		NREGION = 82,78,10,30,50,40,105,128,DEFAULT

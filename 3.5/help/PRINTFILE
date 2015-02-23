@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'PRINTFILE:  (POINTER) Indicates the printer file type for'
+PRINT 'CHNGFILE and Z_CHNGFIL.'
+PRINT ' '

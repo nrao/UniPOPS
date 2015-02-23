@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ABS:  (FUNCTION) Returns the absolute value of the'
+PRINT 'given parameter.'
+PRINT ' '

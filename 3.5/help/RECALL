@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'RECALL: Recalls a scan from the "save" file and places the '
+PRINT 'data and header into Array 0.'
+PRINT ' '
+PRINT 'NSAVE=',nsave
+PRINT ' ' 

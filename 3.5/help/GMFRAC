@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'GMFRAC:  (ARRAY-5) Starting fraction parameters for '
+PRINT 'GMEASURE.'
+print ' '

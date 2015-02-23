@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'POSX:  (POINTER-CONT) Used with SAXIS to indicate that SHOW'
+PRINT 'should use as an x-axis the horizontal coordinate.'
+PRINT ' '

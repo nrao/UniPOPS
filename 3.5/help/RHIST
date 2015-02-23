@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RHIST:  Sets up the RESHOW command so that it will use a'
+PRINT 'histogram display.'
+PRINT ' '

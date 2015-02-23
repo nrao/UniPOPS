@@ -1,0 +1,17 @@
+     	(FUNCTION VERB) 
+
+	TCUR is a function that activates the cross hair and returns the
+	intensity or y-value for the cross hair position on the current
+	display for SHOW or PLOT displays.  For two-dimensional
+	displays, TCUR returns the y-cell number.
+
+	No adverbs are set or used by TCUR.
+
+	EXAMPLE:
+
+	You want to expand the y-axis of the SHOW display between two
+	intensities designated by the horizontal cross hairs.  Type:
+
+			YRANGE (TCUR,TCUR)
+
+	and you can then define the y-axis range using the cross hairs.

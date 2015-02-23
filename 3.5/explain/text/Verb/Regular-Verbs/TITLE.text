@@ -1,0 +1,58 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-   .  Tucson Version
+L-	--------------
+L-
+L-	Writes one line of documentation about the scan in Array(0) on 
+L-	the text screen including scan number, LST, source name, 
+L-	rest frequency, filter-bank and the sideband number.
+L-
+L-   .  Green Bank Version
+L-	------------------
+L-
+L-	Writes one line of documentation about the scan in Array(0) on 
+L-	the text screen including scan number, LST, source name, rest 
+L-	frequency, and channel resolution in MHz.
+L-
+L-	No adverbs are used or set by TITLE.
+L-
+L-	EXAMPLE:  (for Green Bank data)
+L-
+L-		TITLE
+L-
+L-	will produce output which will be something like the following:
+L-
+L-	SCAN 15770.01 LST=01:40:45.4  NGC 491  FREQ= 1420.4057 RES=-3.9062E-02
+L-
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-
+C-   .  Tucson Version
+L-	--------------
+C-
+C-	Writes one line of documentation about the scan in Array(0) on 
+C-	the text screen including scan number, LST, source name, 
+C-	rest frequency, filter-bank and the sideband number.
+C-
+C-   .  Green Bank Version
+L-	------------------
+C-
+C-	Writes one line of documentation about the scan in Array(0) on 
+C-	the text screen including scan number, LST, source name, noise
+C-	tube value, and calibration factor.
+C-
+C-	No adverbs are used or set by TITLE.
+C-
+C-	EXAMPLE:  (for Green Bank data)
+C-
+C-		TITLE
+C-
+C-	will produce output which will be something like the following:
+C-
+C-	SCAN 15770.01 LST=01:40:45.4  NGC 491  NT= 7.6 CALFCT=0.4356
+C-
+C------------------------- Continuum ------------------------------------
+

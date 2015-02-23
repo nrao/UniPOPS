@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ETAFREE:  (ADVERB-TUCSON) Flag in SOLVETIP that determines'
+PRINT 'whether to solve for ETA.'
+PRINT ' '

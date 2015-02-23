@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'READCUBE:  Reads the specified three-dimensional FITS image'
+PRINT 'file in preparation for SLICEing.  '
+PRINT 'Syntax: READCUBE(filename)'
+PRINT ' '

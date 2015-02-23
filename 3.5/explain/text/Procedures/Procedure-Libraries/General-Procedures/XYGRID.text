@@ -1,0 +1,23 @@
+	XYGRID grids spectra found in the current SAVE file into
+	Matrix (0), which should have been prepared prior to
+	the use of XYGRID so that it has x-position along its first
+	axis and y-position along its second axis, in the same units as the 
+	data (e.g. using XYMATRIX).  The procedure PRC2DIM is used to
+	convert each spectrum at a given x and y position into a single
+	value which can be placed into Matrix (0).  There is no attempt
+	to average in x and y.  Any new data placed into a pixel in
+	Matrix (0) simply overwrites any data that may have been there
+	previously.
+
+	Syntax: XYGRID
+
+	The first MAXNSAVE save scans in the current SAVE file are
+	used.  MAXNSAVE is a global adverb that must be set prior to
+	using XYGRID (e.g. by PRCSTK or by hand).
+
+	The procedure PRC2DIM is used to reduced the spectra to a single
+	value that is then placed in the grid.
+
+	File name: xygrid.prc
+
+	This procedure is included in maps.plib

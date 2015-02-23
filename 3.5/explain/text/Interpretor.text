@@ -1,0 +1,125 @@
+	The following describes various aspects of the UniPOPS
+	interpretor.
+
+
+Procedure Writing
+-----------------
+
+     .  In writing procedures, you may make use of the following verbs:
+
+	FINISH		PROC		PROCEDURE	RETURN
+
+     .  To create and install procedures, you should use:
+
+	BATCH		EDIT				
+
+     .  Although not recommended, you can edit an installed procedure
+	using:
+
+	ENDEDIT		POPSEDIT				
+
+     .  You can list and delete procedures with:
+
+	LIST	SCRATCH
+
+
+Conditional and Loops
+---------------------
+
+     .  The following are used in constructing conditional programming
+	structures:
+
+	ELSE		END		IF		THEN
+
+     .  The following are used in constructing loop programming structures:
+
+	BY		END		FOR		TO
+	WHILE						
+
+
+Creation of User-defined Aliases and Adverbs
+-------------------------------------------- 
+
+     .  To create your own alias or an adverb, you will need to use
+	some of the following:
+
+	ALIAS		ARRAY		GLOBAL		POINTER
+	SCALAR		STRING				
+
+     .  You can destroy aliases and adverbs with:
+
+	SCRATCH
+
+
+Memory Usage
+------------
+
+     .  The following verbs allow you to use and query the UniPOPS memory
+	or core space.
+
+	COMPRESS	CORE		RESTART		RESTORE
+	SCRATCH		STORE				
+
+
+Debug and Help Facilities
+-------------------------
+
+     .  The following are the UniPOPS help facilities:
+
+	EXPLAIN		HELP		IDENTIFY	REPORT
+	SYSHELP		WHATIS					
+
+     .  In addition, the following debugging tools are available
+
+	DEBUG		DUMP		ERROFF		ERRON
+
+
+Math and Logical Expressions
+----------------------------
+
+     .  The following are math operators:
+
+	*		/		+		-
+	**		=
+
+     .  The following are logical operators:
+
+	>		<		>=		<=
+	=		~		~=		|
+	&
+
+     .  UniPOPS has the following trigonometric functions:
+
+	ACOS		ASIN		ATAN		ATAN2
+	COS		COSH		SIN		SINH
+	TAN		TANH				
+ 
+    .  UniPOPS has the following math functions:
+
+	ABS		DIM		EXP		IFIX
+	INT		LOG		LOG10		MAX
+	MIN 		MOD		NINT		RAND
+	SIGN 		SQRT						
+
+    .  UniPOPS has the following string functions:
+
+	COMPARE		CONCAT		INDEX		LENGTH
+	LNBLNK		SUBSTR				
+
+
+Miscellaneous Features
+----------------------
+
+     .  To undo the actions of previous commands you will make use of:
+
+	UNDO		UNDOOFF		UNDOON		
+
+     .  The following verbs are for reissuing commands that you have
+	previously typed:
+
+	HISTORY		!
+
+     .  To exit UniPOPS or restart an analysis session, use:
+
+	EXIT		RESTART
+

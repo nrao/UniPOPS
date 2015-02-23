@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FCLOSE:  Closes the ASCII file specified by the provided'
+PRINT 'unit number.  Syntax:  FCLOSE(unit)'
+PRINT ' '

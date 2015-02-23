@@ -1,0 +1,58 @@
+        (REGULAR VERB)
+
+	Syntax:	   STRING*nsize   name1, name2, ...
+		   GLOBAL STRING*nsize   name1, name2, ...
+
+	STRING creates and allocates the requested space for string
+	adverbs with the specified names of length nsize where nsize
+	must be a multiple of four (4) and not greater than sixty(60).
+	If you don't specify nsize, a size of 4 characters will be
+	assumed.  STRING must be the only command on the input line --
+	no other commands can precede or follow it.
+
+	The names for strings must follow the conventions for naming
+	adverbs and procedures.
+
+	More than one string of the same size can be defined by a
+	single STRING statement.
+
+	If the string is created while in execute mode, the string
+	becomes a global symbol and you can reference it from within
+	execute mode and from within all procedures.  If the string is
+	created while in compile mode (i.e., in a procedure definition)
+	and is proceeded by the word GLOBAL (as in the second example
+	of syntax above), then the string is created as a global symbol
+	and you can reference it within execute mode and all
+	procedures.  If the string is created while in compile mode
+	(i.e., in a procedure definition) and is NOT proceeded by the
+	word GLOBAL, then the string is created as a local symbol and
+	you can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global strings cannot be resized but they can be scratched
+	(deleted) using the SCRATCH verb.  Local strings can be
+	scratched by editing the procedure definition which created the
+	string.
+
+	HELP STRING will list all of the global strings (built-in and
+	user-defined) that currently exist.
+
+	EXAMPLE:
+
+	.  The following creates two 12-character strings named XY and
+	   XZ.
+
+	   	STRING*12 XY, XZ   
+
+	.  The following lines are equivalent and create a 4-character
+	   string
+
+	   	STRING ABC
+		STRING*4 ABC	 
+   
+	.  The following, if included within a procedure definition,
+	   creates a global string of length 60 characters.
+
+		GLOBAL STRING*60 DEF    	
+
+	

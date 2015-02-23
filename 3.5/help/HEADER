@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'HEADER:  Prints out some of the more importants parameters'
+PRINT 'in the header of the scan in Array 0.'
+PRINT ' '

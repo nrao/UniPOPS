@@ -1,0 +1,16 @@
+OpenWindows.ScrollbarPlacement:	left
+OpenWindows.DragRightDistance:	100
+OpenWindows.PopupJumpCursor:	True
+OpenWindows.WorkspaceColor:	#40a0c0
+OpenWindows.SelectDisplaysMenu:	False
+OpenWindows.SetInput:	followmouse
+OpenWindows.WindowColor:	#cccccc
+OpenWindows.MultiClickTimeout:	4
+OpenWindows.Beep:	always
+OpenWindows.IconLocation:	bottom
+Scrollbar.JumpCursor:	True
+*numeric:	C
+*displayLang:	C
+*timeFormat:	C
+*inputLang:	C
+*basicLocale:	C

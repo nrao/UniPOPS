@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CDATE:  (HEADER-CUBE) A date associated with the cube (8'
+PRINT 'characters).'
+PRINT ' '

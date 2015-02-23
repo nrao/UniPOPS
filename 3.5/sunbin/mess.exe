@@ -1,0 +1,18 @@
+#! /bin/csh -f
+# @(#)mess.exe.sh	5.1 06/22/94 
+# POPS message facility; uses messages.exe and news.exe shell scripts
+#
+set noglob
+if ($#argv < 1) then
+   echo 'USAGE: l or c for line or condar messages'
+else
+  if ($1 == "c") then
+   ${popsdir}sunbin/messages.exe ${popsdir}cmessages .cmessages
+   ${popsdir}sunbin/news.exe ${popsdir}cnews .cnews
+  else if ($1 == "l") then
+   ${popsdir}sunbin/messages.exe ${popsdir}lmessages .lmessages
+   ${popsdir}sunbin/news.exe ${popsdir}lnews .lnews
+  else
+   echo 'USAGE: l or c for line or condar messages'
+  endif
+endif

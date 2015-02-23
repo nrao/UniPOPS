@@ -1,0 +1,12 @@
+PRINT ' '
+PRINT 'CONTOUR:  Contours the contents of Matrix (0) -- high'
+PRINT 'quality algorithm.'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT 'MRATIO=',MRATIO
+PRINT 'LEVS='
+print LEVS
+PRINT 'CONLINE='
+print CONLINE
+PRINT ' ' 

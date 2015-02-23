@@ -1,0 +1,34 @@
+	The makerecindex.exe utility will go through the data section of
+	an SDD individual records file and reconstruct the index part of 
+	the file.  This may be necessary if the index part of the file has 
+	become corrupted for some reason.  Since it produces the new format
+	SDD bootstrap and index, it can be used to convert an old
+	format SDD individual records file into an individual records file 
+	with the new format index.  Individual records files are only
+	available for Green Bank data.
+
+	To use the utility, type:
+
+		makerecindex.exe file-name
+
+	where file-name is the name of the SDD individual records file.
+
+	Besides correcting the index, the program will also generate a
+	listing similar to what checkfile.exe produces so that you will
+	know what has happened to the index.
+
+	The output of the program is ~ 130 characters wide so you may
+	want to expand you window horizontally, if you are sitting at a
+	workstation.  The output can be redirected into a file, for
+	example, or redirected to a printer.  To redirect the output to
+	a file, try something like the following:
+
+		makerecindex.exe My-File > file-contents
+
+	where My-File is the individual records file and file-contents is 
+	the name of the file which will contain the output of
+	makerecindex.exe.
+
+	The output is self-explanatory.
+
+

@@ -1,0 +1,52 @@
+#!  /bin/csh -f
+#
+#  Adds a blank page if standard input is not an even number of pages
+#
+#  Usage:  addpage 1|2 [ pagesize ] where 56 is assumed if no page size is
+#          given. The 1 or 2 corresponds to whether it is a single or double
+#          column page being printed.
+#
+set com = $0
+if ($#argv < 1) then
+    echo "Usage:" $com:t "1|2 [ pagesize ]"
+    exit(1)
+endif
+if ($1 < 1 | $1 > 2) then
+    echo "Usage:" $com:t "1|2 [ pagesize ]"
+    exit(1)
+endif
+#
+if ($#argv < 2) then
+    @ pagesize = 56 * $1
+else
+    @ pagesize = $2 * $1
+endif
+#
+set tmpfile=/tmp/addpage.$$
+#
+cat - > $tmpfile
+cat $tmpfile
+# Store standard input to a file and regurgitate it to standard output.
+#
+set nlines = `wc -l $tmpfile`
+@ l1 = 2 * $pagesize
+@ l2 = $nlines[1] - 1
+@ yes = $l2 % $l1
+# $yes will be < $pagesize if the number of input lines is less than an
+# even number of $2 * $1 lines long.
+#
+if ($yes < $pagesize) then
+        @ leftover = $pagesize - ( $yes + 1 )
+        if ($leftover > 0) then
+          repeat $leftover echo " "
+        endif
+#       Echo out empty strings to pad out standard output
+#
+        echo "THIS PAGE INTENTIONALLY LEFT BLANK"
+#       If you don't like this string, change it but there MUST be at
+#       least one echo at this point even if it was a blank string.
+#
+endif
+#
+rm $tmpfile
+exit(0)

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CON_VER:  (CONTINUUM-POINTER) The version of the continuum'
+PRINT 'data file currently opened.'
+PRINT ' '

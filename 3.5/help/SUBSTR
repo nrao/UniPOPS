@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SUBSTR:  Returns substring contained between two locations'
+PRINT 'in a given string. Syntax: SUBSTR(string1, x1, x2)'
+PRINT ' '

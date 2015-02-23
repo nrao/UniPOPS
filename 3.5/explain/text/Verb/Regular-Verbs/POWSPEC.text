@@ -1,0 +1,41 @@
+	(REGULAR VERB)
+
+	POWSPEC takes the sum of the squares of the data in Arrays (0)
+	and (1) and places the results into Array (0).  It is usually
+	used on the results of FFT or IFFT to compute the power in each
+	channel for the real data in Array (0) and the imaginary data
+	in Array (1).
+
+	ADVERBS USED
+
+	  BDROP		# points to be ignored at beginning of data.
+	  EDROP		# points to be ignored at end of data.
+			Initial values are 0.
+
+	  DEFMODE : Indicates how undefined data values (IEEE Inf) are
+		    treated.  
+	
+		If DEFMODE is FALSE, the result will have an undefined 
+		   data value at any channel where EITHER of the values 
+		   in the input arrays are undefined.
+
+		If DEFMODE is TRUE, the result will have an undefined 
+		   data value at any channel where BOTH of the values
+		   in the input arrays are undefined.  If only one value
+		   is undefined at a channel, the result at that channel
+		   be the valid value.
+
+	        The initial value is FALSE.
+
+
+	No adverbs are set by POWSPEC.
+
+	EXAMPLE:
+
+	You want to do an FFT on the data in Array(0) and want to
+	display the power spectrum of the results, so specify:
+
+		GET 11345
+		FFT POWSPEC
+		PAGE SHOW
+

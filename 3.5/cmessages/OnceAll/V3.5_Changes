@@ -1,0 +1,33 @@
+The following documents changes to UniPOPS since version 3.4.1.
+
+I. Maximum size of data changed.
+
+The data arrays may now contain up to 16384 elements (up from 10240 in 
+previous versions).  This was done to accommodate the 12m spectrometer.
+No further increases are expected.
+
+This change means that existing personal [LC]RECOVER and [LC]MEMORY files will
+need to be remade when this version is first used.  You will be prompted
+to do that the first time you start up this version of UniPOPS.  If you
+need to extract any of the contents from the old versions of these files,
+you must do so using the previous version of UniPOPS before those files
+are removed and recreated.
+
+II. UNDOOFF is now the default state.
+
+UNDO is a verb which tries to undo up to the last 2 command lines.  This
+only works if UNDOON was in effect when those lines were typed..  Previously, 
+UNDOON was the default state.  UNDO works by making a copy of the entire internal 
+contents before each command line is executed.  Two such copies are always
+kept.  With the increased size of the data arrays, the amount of time
+needed to make such a copy is now noticeable.  An informal survey of users
+indicated that few if any users ever use the UNDO verb.  Therefor, it
+was decided to make UNDOOFF the default state.  UNDO will have no effect
+in that state.  If you expect to use UNDO, you must now first type
+UNDOON to turn this capability on.
+
+III. Year displays changed to 4 digits.
+
+This is the only known Y2K bug in UniPOPS.  Several display screens
+(e.g. SHOW) display a date.  Previously, only two digits were displayed
+for these dates.  Now, 4 digits are display on all such output.

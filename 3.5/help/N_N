@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'N_N:  (ADVERB) ADVERB used internally by the program -- the'
+PRINT 'user should never change its values or make reference to'
+PRINT 'N_N.'
+PRINT ' '

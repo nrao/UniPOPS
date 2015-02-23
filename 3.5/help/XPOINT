@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'XPOINT:  (HEADER-TUC) Total x-axis pointing correction'
+print '(arcsec).'
+PRINT ' '

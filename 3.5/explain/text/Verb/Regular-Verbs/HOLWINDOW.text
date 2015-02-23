@@ -1,0 +1,43 @@
+	(REGULAR VERB)
+
+	Syntax:   HOLWINDOW(window_num)
+
+	HOLWINDOW is a verb meant to be used during the processing of
+	holographic data and, as such, will have very limited
+	applicability to other kinds of data reduction.
+
+	HOLWINDOW convolves the data in Matrices (0) and (1) with a
+	specified function.  This step should be performed prior to
+	taking the inverse Fourier transform of the holographic data
+	and helps reduce the affects of "leakage" but with a resulting
+	loss in spatial resolution.  The results are stored back into
+	Matrices (0) and (1).
+
+	The user must supply an argument to HOLWINDOW that indicates
+	which 'window'ing function is to be used:
+
+    -----------------------------------------------------------------------
+    Argument   Function				  Name
+    -----------------------------------------------------------------------
+     1 	     1.	  			       Rectangular [No convolution]
+     2	     G/pi 			       Bartlet
+     3	     [ 1 - cos(G) ] / 2		       Hanning
+     4	     0.54 - 0.46*cos(G)		       Hamming
+     5	     0.42 - .5*cos(G) + 0.08*cos(2*G)  Blackman
+    -----------------------------------------------------------------------
+    where G = pi*(r-1)/(R-1); r = radius of a pixel from center of matrix,
+    R = radius of corner pixel from center.
+
+        No adverbs are set or used by HOLWINDOW
+
+	EXAMPLE:
+
+	You have prepared Matrix (0) and (1) with the real and imaginary
+	holographic data.  Now you want to 'window' the data using the
+	Blackman function and take the Inverse FFT, so you type:
+
+		HOLWINDOW(5) MIFFT
+
+
+         
+	    

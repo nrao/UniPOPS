@@ -1,0 +1,22 @@
+	(SCALAR ADVERB)
+
+	BMARK acts as a switch.  If BMARK = TRUE (+1), the verb SHOW
+	will draw boxes indicating the baseline-fitting regions last
+	used.  If BMARK  =  FALSE  (-1),  the boxes will not be
+	displayed.
+
+	BMARK is used by : SHOW
+
+	No verbs change BMARK.
+
+	The initial value of BMARK is FALSE (-1).  
+  
+	EXAMPLE :
+
+  		BMARK = FALSE; BASELINE
+		PAGE SHOW		 Produces a plot without boxes.
+
+ 		BMARK = TRUE; BASELINE	 In the same situation, will plot
+		PAGE SHOW		 the data, with boxes delineating
+					 the parts of the array used to 
+					 calculate the baseline (or RMS). 

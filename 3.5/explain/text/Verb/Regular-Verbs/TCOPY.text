@@ -1,0 +1,13 @@
+	(REGULAR VERB)
+
+	TCOPY creates a hard copy of the text window.  It can be used
+	on a command line or in a procedure.  TCOPY will not produce a
+	hardcopy if the COPYOFF flag is set.
+
+	EXAMPLE:
+
+	You want a hardcopy of the header information for scan 17890
+	for future reference, so specify:
+
+		GET 17890 HEADER
+		TCOPY

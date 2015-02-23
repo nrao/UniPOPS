@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'GMODEL:  Uses the Gaussian parameters in HEIGHT, CENTER,'
+PRINT 'HWIDTH and stores a model of the Gaussians into Array 0.'
+PRINT ' '
+PRINT 'NGAUSS=',NGAUSS
+PRINT 'HEIGHT='; print HEIGHT
+PRINT 'CENTER='; print CENTER
+PRINT 'HWIDTH='; print HWIDTH
+PRINT ' ' 

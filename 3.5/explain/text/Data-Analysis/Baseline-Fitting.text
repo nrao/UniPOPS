@@ -1,0 +1,5 @@
+
+	Baseline fitting routines either calculate a suggested baseline
+	to be removed, produce a model of a baseline, display a fitted
+	baseline, or remove a baseline from the data.
+

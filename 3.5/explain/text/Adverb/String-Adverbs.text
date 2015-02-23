@@ -1,0 +1,86 @@
+What is a String Adverb?
+------------------------
+
+	String adverbs are essentially variables which can contain
+	characters instead of numerical values.  UniPOPS comes equipped
+	with some built-in strings (for example HTITLE).  For a listing
+	of available string adverbs, type: HELP STRING
+
+	The following briefly summarizes the qualities of a string
+	adverb.  For more general details about adverbs, see either the
+	"Adverbs" section of the Reference Manual or EXPLAIN
+	documentation.
+
+
+String Values
+-------------
+
+	String adverbs can contain any character string -- the length
+	of the string is defined when the string is created with the
+	STRING verb and must be a multiple of 4 and less than or equal
+	to 60 (see STRING).
+
+	The initial value of user-defined string adverbs is blanks.
+
+Creation of Strings
+-------------------
+
+	Users can create their own string adverbs through the use of
+	the STRING verb.  See STRING for details on how to create a
+	string adverb.
+
+
+Querying the value of an Adverb
+-------------------------------
+
+	The value of a string adverb can be queried using the PRINT
+	verb.  For example, PRINT HTITLE will print out for the user
+	the characters stored in the HTITLE string.
+ 	
+Assigning Values to Strings
+---------------------------
+
+	String adverbs are assigned a "value" by equating them to
+	literals surrounded by either single or double quotes, as in,
+
+		HTITLE = 'GEORGE'
+
+		HTITLE = "This is a string"
+
+	If you used single quotes, you can use double quotes within the
+	literal as in:    HTITLE = 'He said, "This is the end"'
+
+	If you used single quotes and want a single quote within the
+	literal, use two single quotes within the literal.  For
+	example:  HTITLE = 'Don''t touch that dial'.
+
+	If you used double quotes, you can use single quotes within the
+	literal as in:    HTITLE = "Don't touch that dial".
+
+	If you used double quotes and want a double quote within the
+	literal, use two double quotes within the literal.  For
+	example:  HTITLE = "He said, ""This is the end""".
+
+	They can also be assigned "values" using the READ verb (see READ).
+
+
+#if RFRNC
+
+
+#end
+Other Usages of Strings
+-----------------------
+
+	UniPOPS is very limited in what it can do with string adverbs.
+	Very few verbs take string adverbs as arguments.  These verbs
+	are:
+
+		CHAR		COMPARE		CONCAT
+		EXEC		FOPEN		FPRINT
+		FREAD		INDEX		LENGTH
+ 		LNBLNK 		MREAD		MWRITE
+		READCUBE 	SPRINT		SREAD
+		SUBSTR 		Z_CHNGFIL	Z_SYSTEM
+
+	Procedures cannot take string adverbs as arguments.  String
+	adverbs cannot be used in expressions.

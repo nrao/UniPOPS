@@ -1,0 +1,1091 @@
+#if CKBK
+#def SCT F-2.
+#def DSH ----
+#else
+#def SCT
+#def DSH
+#end
+SCT2 Numbered Messages
+DSH-------------------
+
+Numbered error messages occur during the execution of the program and
+will be those most encountered.  They are preceded by a number and an
+error type indicator.
+
+
+SCT1 Format of Numbered Error Messages
+DSH-----------------------------------
+
+The format of the error messages is,
+
+	(a###) string_1 : string_2 
+      	string_3
+	
+The character represented by `a' indicates the type of error (see
+below) and can be,
+
+   	P -- POPS internal error 
+   	S -- Severe error when executing a command
+   	F -- Fatal error when executing a command 
+   	W -- Warning message 
+   	I -- Interpretor error when compiling a command line
+
+The ### indicate the error number (listed below)
+
+string_1 is the error message corresponding to ### (listed below).
+
+string_2 is sometimes present and provides more information about the
+error.  If you get a certain numbered error, you will always get the
+same string_1 but you can get different string_2's.
+
+string_3 describes whether or not the full command line was executed,
+whether any command on the command line was executed, or whether only
+parts of the command line were executed and the rest ignored.
+
+
+SCT2  Error Types
+DSH--------------
+
+.  POPS (P) Errors
+   ---------------
+   All POPS (P) errors should be reported to the computer staff; they
+   indicate that the program is acting very abnormally and may be
+   hemorrhaging internally.
+
+
+.  Severe (S) Errors
+   -----------------
+   Severe (S) errors are less fatal then F, P, or I errors but are more
+   severe than W errors.  They occur after UniPOPS compiles the command
+   line and when it is executing the commands specified on the command
+   line.
+
+   If an S error occurs and the verb ERRON was specified (the default)
+   then all commands up to that which caused the error will have been
+   executed.  The corresponding error message is printed and all
+   remaining commands on the command line are NOT executed.  For
+   example,
+
+         >BDROP=10; HANNING; COPY(0,1); GET 34.03; BASELINE GAUSS
+
+   will generate an S error if scan 34.03 doesn't exist.  The BDROP=10
+   HANNING and COPY commands will be executed but the GET will fail and no
+   attempt is made by the program to execute the BASELINE and GAUSS.
+
+   If the verb ERROFF was specified, and only one S type error occurs
+   during the execution of the command line, then all the commands will
+   be executed properly except that which produced the error.  The
+   program switches to ERRON whenever an S error occurs, so only one S
+   error will be trapped by each ERROFF.  For example,
+
+	>BDROP=10; HANNING; COPY(0,1); ERROFF GET 34.03; BASELINE GAUSS
+
+   will generate an S error if scan 34.03 doesn't exist.  The BDROP=10
+   and HANNING will be executed, the GET will fail and a message will
+   be printed. An attempt will be made to execute the BASELINE and
+   GAUSS commands.  If BASELINE or GAUSS also produce an S error,
+   another error message will be printed and that command, and all
+   others on the command line, will be ignored.
+
+.  Fatal (F) Errors
+   ----------------
+   Fatal (F) error occur after UniPOPS compiles the command line and
+   it is executing the commands specified on the command line.
+
+   If an F error occurs then all commands up to the one which caused
+   the error are executed.  The corresponding error message is printed
+   and all remaining commands on the command line are NOT executed.
+   For example,
+
+         BDROP=10; TABLE NFIT=14; BASELINE HANNING GAUSS
+
+   will generate an F error at the BASELINE command since NFIT is
+   greater then 12.  The BDROP=10, TABLE, and NFIT=14 commands will be
+   executed but the BASELINE will fail and no attempt will be made by
+   the program to execute the HANNING and GAUSS.
+
+.  Warning (W) Errors
+   ------------------
+   Warning (W) messages are just that.  The program has detected something
+   that you should be aware of.  An attempt will be made to compile the
+   complete command line and execute all commands found there.  Other
+   errors may be caught later on as the command line is further compiled
+   and executed.  These other errors, if present, will be handled
+   according to their type.
+
+.  Interpretor (I) Errors
+   ----------------------
+   Errors can occur during the interpretation and compilation of the
+   command line.  If such an interpretor (I) error occurs, the input
+   line is ignored and no commands are executed.  Thus, if FGGGF is not
+   the name of a verb or procedure, the following line will generate an
+   I type error and no command on the line will be executed.
+
+	>PRINT 'HELLO'; READ BDROP; FGGGF
+   
+
+SCT3 Error Messages and Numbers
+DSH----------------------------
+
+Errors are numbered from 1 upwards; numbers less than 100 are mainly
+interpretor errors, between 100 and 200 are general execution errors,
+200 through 350 are errors generated by verbs, and 350 through 400 are
+I/O errors.  There is no logical order within each group, and error
+numbers are not sequential.
+
+Below, the errors are arranged by number with a brief description of
+what the errors mean.
+
+	(1) Blew core - Exceeded PROC or ADVERB space
+
+		You have tried to create an adverb or procedure and
+		there is no more room.  See COMPRESS, SCRATCH, and
+		RESTART for help about overcoming a blown core.
+
+	(2) Unknown symbol
+
+		You have typed in the name of a non-existent command or
+		adverb outside of compile mode, or the command line
+		does not contain a command, only the name of
+		adverb(s).
+
+
+	(3) Symbol is already defined
+
+		You have attempted to create a procedure, string,
+		array or alias that already exists.
+
+	(4) Too many characters in line
+
+		The command line has a limit of 160 characters which
+		has been exceeded.  Note that each use of array math
+		reduces this by about 50 characters.
+
+	(5) Symbol has too many characters (10 max.)
+
+		You have specified a command or adverb name with more
+		than 10 characters.
+
+	(6) Cannot alter a BUILTIN operator or operand
+
+		You have tried to define, edit, or scratch a procedure
+		or adverb that has the same name as one that is built
+		into the system.  Such operators and operands cannot be
+		modified by the user.
+
+	(7) STACK limits exceeded
+
+		A general syntax error.  Check command line for errors
+		in assignment statements, loops, conditionals, etc.
+		This is NOT referring to the ASTACK array but an
+		internal array used for compiling and processing
+		UniPOPS commands.
+
+	(8) Error in syntax -- No closing )
+
+		For every `(' there must be a closing `)'.
+
+	(9) Operating system command has failed
+
+		UniPOPS uses standard UNIX commands for several verbs
+		(HELP, EXPLAIN, SYSTEM, EDIT, etc).  This error
+		indicates that the UNIX command has reported an error
+		code.  There are a number of reason that this might
+		occur, ranging from memory limitations to NFS
+		difficulties.  Check the console for any error messages
+		that the failed UNIX command may have left there.
+
+	(10) Left hand side of = is not an adverb
+
+		The object to the left of an = sign (assignment) is not
+		an adverb or internal-array verb; only adverbs and
+		internal-array verbs can be assigned values.
+
+	(11) No procedure by that name
+
+		You have attempted to POPSEDIT a procedure which
+		doesn't exist, or you have attempted to LIST a
+		procedure which doesn't exist.
+
+
+	(12) Must give a line number when editing procedure
+
+		You have tried to POPSEDIT a procedure but didn't
+		correctly specify the line number to edit.
+
+
+	(13) You are not POPSEDITing a procedure
+
+		You have typed ENDEDIT but were not `POPSEDIT'ing a
+		procedure.
+
+
+	(14) Too many characters in string (60 max.)
+
+		You are attempting to create a string adverb with
+		greater than 60 characters, or you have entered a
+		literal constant containing more than 60 characters.
+
+	(15) Error in syntax -- Bad numerical field
+
+		You have entered a bad number.
+
+	(16) Cannot perform outside of compile mode
+
+		You have tried to execute a verb which can only be used
+		when defining a procedure (i.e., in `compile-mode').
+
+	(17) Cannot perform within compile mode
+
+		You have tried to enter a pseudo-verb in the definition
+		of a procedure (i.e., in `compile-mode'); pseudo verbs
+		can only be run from `execute-mode'.
+
+	(18) Error in syntax in definition of procedure
+
+		In the definition of a procedure, you have made a
+		syntax error.
+
+	(19) Error in syntax -- No opening (
+
+		For every `(' there must be a closing `)'. Or, you need
+		an opening ( in the creation of an array adverb using
+		the ARRAY command.
+
+	(20) Ambiguous symbol
+
+		The typed command line contains a command or adverb for
+		which minimum-match cannot remove an ambiguity.  The
+		list of possible commands is also listed by this
+		error.
+
+	(21) Error in IF, FOR, or WHILE syntax
+
+		There is something wrong with the IF, FOR, or WHILE
+		statement you have just entered.
+
+	(22) Error in dimension statement
+
+		When creating an array adverb with the ARRAY command,
+		you have made a syntax error.
+
+	(25) Error in string definition
+
+		When creating a string adverb with the STRING command,
+		you have made a syntax error.
+
+	(27) Error in syntax in ! command
+
+		Your usage of the ! command is wrong.
+
+	(28) No more input devices can be opened.
+
+		There is a limit of 50 input devices which can be
+		opened at once.  HELP, SETUP, BATCH, and your
+		terminal are each an input device.  The most common
+		cause of this error is an infinite regression of batch
+		within batch.
+
+	(29) Insufficient or Bad argument list
+
+		The verb you have tried to execute requires an argument
+		that you have not supplied, or the argument is not a
+		scalar adverb.
+
+	(30) Only STORE bins 1 - 3 exist
+
+		The STORE and RESTORE commands take only numbers 1, 2,
+		or 3 as arguments.
+
+	(31) Error in CHNGFILE
+
+		You have specified a wrong file type for CHNGFILE.  
+		See the CHNGFILE documentation for help.
+
+	(32) Cannot UNDO or nothing to UNDO
+
+		An UNDO command will not work if UNDOOFF has been
+		specified or there aren't any commands to UNDO.
+
+	(34) Error in Syntax -- Unbalanced Parentheses
+
+		Either a closing ) was omitted or an opening ( is
+		missing.
+
+	(35) Error in Syntax -- Unbalanced Braces
+
+		Either a closing } was omitted or an opening { is
+		missing.
+
+	(36) PROCEDURE name already exists
+
+		The name of the procedure you are trying to create has
+		already been used.
+
+	(37) No closing quote
+
+		A closing quote was left off of a literal string or a
+		quote was supplied where one is not needed.
+
+	(38) No OPERATOR on input line
+
+		At least one operator is required on every command
+		line.
+
+	(39) Must be the only command on the input line
+
+		The command in question cannot be used in conjunction
+		with any other command on the same input line.
+
+	(40) Specified line number cannot be POSEDITed
+
+		The line number you specified can not be edited.  You
+		are not allowed to edit the first line of a procedure
+		or any declaration lines using POPSEDIT.  If you must
+		change these lines, use the EDIT verb to modify a disk
+		file and BATCH that file in to overwrite the existing
+		procedure.
+
+	(41) Two or more names are identical
+
+		You are trying to create a list of adverbs or aliases
+		and two of the names in the list are identical.
+
+	(42) Statement not allowed or out of sequence
+
+		In a procedure definition, you are trying to either add
+		adverb declarations among executable lines or
+		executable lines among executables.  Move the lines you
+		are attempting to insert in the procedure definition
+		accordingly.
+
+	 (43) Pseudo operators not allowed.
+
+		You can not use pseudo verbs in the argument string
+		for the EXEC verb.
+
+	 (44) No OPERATOR in string.
+
+		The argument string for the EXEC verb must contain
+		at least on operator.
+
+	(104) Too many characters in input line
+
+		You have attempted to enter a command line, or are
+		entering adverb values using a read, which exceeds the
+		160 character limit for input lines.
+
+	(105) Arrays are numbered between 0 and 9
+
+		You have specified a data array number out of the
+		usable range.
+
+	(106) Error in use of an array
+
+		Error in either the use of an array adverb or in the
+		index to an array adverb (e.g., specifying a location
+		outside of the array dimensions).
+
+	(107) STACK limits exceeded
+
+		General error usually indicating a syntax problem.
+		Probable error in FOR, IF, WHILE, array usage, or
+		string usage.
+
+	(111) No procedure by that name
+
+		An internal POPS error -- Report problem to the
+		computer staff.
+
+	(112) Insufficient or Bad argument list
+
+		Verbs and procedures require arguments of required type
+		and number.  A bad argument was specified.  See the
+		documentation for the command for further help.
+
+	(114) Too many characters in string
+
+		A string argument to a verb contains too many
+		characters for the verb.  See the verb's documentation
+		for further help.
+
+	(115) Error in FOR loop
+
+		Probable error in syntax in FOR loop.
+
+	(116) Error in RETURN
+
+		Probable error in syntax of RETURN statement.
+
+	(118) Infinite FOR loop?
+
+		The FOR loop would be executed an infinite number of
+		times using the specified start, stop, and increment.
+
+
+	(120) *** INTERNAL Error ***
+
+		An internal POPS error -- Report problem to the
+		computer staff.
+
+
+	(123) Error in data type for READ
+
+		Tried to read into something other than a scalar
+		adverb, array adverb, or string adverb.
+
+	(124) Error in data type for PRINT
+
+		Tried to print out something other than a scalar
+		adverb, array adverb, or string adverb.
+
+	(126) Error in assignment statement
+
+		Probable syntax problem in an assignment statement or
+		the left and right hand sides of the equal sign are not
+		the same type of adverb.
+
+	(127) Too many characters in right-hand string
+
+		You have attempted to assign values from one string to
+		another but the string on the right hand side of the
+		equals has more characters then the one on the left.
+
+	(128) Error in use of an array
+
+		Error in either the use of an array adverb or in the
+		index to an array adverb (e.g., specifying a location
+		outside of the array dimensions).
+
+	(129) COPYOFF in affect -- no hardcopy generated
+
+		You have attempted a hardcopy command (GCOPY or TCOPY)
+		but COPYOFF was in affect.  To get a hardcopy, type
+		COPYON, regenerate the desired display, and type your
+		hardcopy command.
+
+	(130) Too many or too few operands
+
+		You have specified too many or too few arguments to an
+		operator on the command line, or arguments of the wrong
+		type.  Check your usage of each operator.
+
+	(131) No room left in CORE for run-time variables
+
+		Your available core space is getting low and there is
+		not enough room to run your commands on the command
+		line.  Give yourself more memory space by using
+		COMPRESS, SCRATCH, or RESTART.
+
+	(132) Error while COMPRESSing
+
+		Your COMPRESS command has failed and nothing has been
+		compressed.  This is an internal error and you should
+		inform the computer division of your problem.
+
+	(133) Two or more imbedded array math constructs
+
+		You can only use one array math syntax on a command
+		line.  This includes any array math syntax that might
+		be found in any procedures that the command line
+		invokes (either directly or indirectly).
+
+	(219) Cannot have YMINP or YMAXP <= 0 for log plots
+
+		Cannot have negative plot limits for logarithmic
+		plots.  You must change your y-axis plot limits.
+
+	(220) Cannot have XMINP or XMAXP <= 0 for log plots
+
+		Cannot have negative plot limits for logarithmic
+		plots.  You must change your x-axis plot limits.
+
+	(221) No data in Arrays (0), (1), or (2)
+
+		Verb requires that data exists in Arrays (0), (1), and
+		(2).  One of these data arrays must have been empty.
+
+	(222) No data in Arrays (0) or (1)
+
+		Verb requires that data exists in Arrays (0) and (1).
+		One of these data arrays must have been empty.
+
+	(223) No data in Array (2)
+
+		Verb requires that data exists in Array (2).  The data
+		array must have been empty.
+
+	(224) No SCAN in Array (0)
+
+		Verb requires that data exists in Array (0) and that it
+		is from a telescope scan.  The data array may have been
+		empty or the data is not that from a scan.
+
+	(225) No data in Array (0)
+
+		Verb requires that data exists in Array (0).  The data
+		array must have been empty.
+
+	(226) No data in specified Array
+
+		Verb requires data in certain data arrays but the
+		arrays must be empty.  See the verb's documentation for
+		more details.
+
+	(227) Nothing to average
+
+		You have tried to AVE data but no data was either
+		`SUM'med or `ACCUM'med.
+
+	(228) NBOX must be odd, >0 and <=13
+
+		NBOX must be a positive odd number for BOXCAR to work.
+
+	(229) Bad GMFRAC -- Don't expect the right answer
+
+		GMFRAC must be > 0 and <= 1.
+
+	(230) Array (0) and internal ACCUM array differ
+
+		Probably the data you are averaging have different
+		channel resolutions.
+
+	(231) Bad scan numbers
+
+		For ADDSCAN, you have specified a stopping scan number 
+		less than a starting number or you have specified a scan
+		number increment less than zero.
+
+	(232) Cannot be used on Green Bank on-line data
+
+		Data access of gains scans (through the CHNGONLINE,
+		CGGET, TELL GSCANS, and GGET verbs) only make sense
+		when accessing on-line data file from the NRAO 12-m .
+
+	(233) Error in NREGION
+
+		For some index i, NREGION(i+1) is less than NREGION(i),
+		NREGION(i) <= 0, or NREGION(i) > number of data
+		points.  NREGION needs to be redefined.
+
+
+	(234) Fit failed
+
+		Either GAUSS, RIPPLE, PDOC, or RSHAPE has failed to
+		find a solution.
+
+	(235) Improper use of SMWGT(1) - either < 1 or > 10
+
+		SMWGT(1) must be > 1 and less than 11 for SMOOTH to
+		work.
+
+	(236) Error in NREGION, BBASE, or EBASE
+
+		Baseline regions overlap for some reason.  Check values
+		of BBASE, EBASE, NREGION, or set BMARK = TRUE and SHOW
+		the data.
+
+	(237) DCPCT must be > 0 and < 100
+
+		You have specified a value for DCPCT that is either
+		less than 1, or greater than 99.
+
+	(238) Scan has different filterbank resolution
+
+		You have tried to average data with two different
+		backend resolutions.  Use CHNGRES on one of the data
+		arrays before averaging.
+
+	(239) STACK is full, (5120 max.)
+
+		You have attempted to ADDSTACK scan numbers to 
+		STACK and have exceeded the 5120 scan number limit.
+
+	(240) Only for Green Bank data
+
+		The verb you have tried to use requires Green Bank
+		data and the data in question is not from Green Bank.
+
+	(241) Only for Spectral Processor data
+
+		The verb you have tried to use requires data from
+		the Spectral Processor in Green Bank and the data
+		in question does not meet that requirement.
+
+	(242) MDBOX must be odd and < number of data points
+
+		You have given a value to MDBOX which is not an odd
+		integer.
+
+	(243) New channel width is less than old
+
+		The resolution can only be reduced, it can't be
+		increased.
+
+	(244) Crosshair was not positioned over a plot
+
+		The crosshair needs to be over a plot on the graphics
+		screen.
+
+	(245) Index out of range
+
+		You have specified an index for verb that is beyond the
+		limits of what is permissible.  Check your usage of the
+		verb.
+
+	(246) Only for NRAO 12m data
+
+		The verb you have tried to use requires data from the
+		NRAO 12-m telescope and the data in question is not
+		from that telescope.
+
+
+	(247) Not a frequency-switched spectrum
+
+		Cannot RAP a non-frequency-switched scan.
+
+        (248) Data is not from the NRAO 12m telescope
+
+		You have tried to use a verb that can only be used on
+		data taken with the 12-m telescope but the present data
+		was not taken with that telescope.
+
+        (249) Array (1) has more/less data then Array (0)
+
+		The number of data points in Array (0) is not the same
+		as that in Array (1).
+
+	(250) Not an antenna tipping
+
+		You have tried to execute SOLVETIP on a scan that is
+		not an antenna tipping.
+
+	(251) Bad value for ASHIFT
+
+		You have specified a value for ASHIFT that is greater
+		than the number of channels of data in Array (0).
+
+	(252) Too few data points in array
+
+		The analysis you have tried to do requires a minimum
+		number of data points and the data array does not have
+		more than that number of data points.
+
+	(253) No SCAN in Internal ACCUM array
+
+		Verb requires that an ACCUM or SUM has been performed
+		previously.
+
+	(254) Bad MXMIN, MYMIN, MXMAX, or MYMAX
+
+		You have specified values for one of these adverbs
+		which is out of the range of the contents of Matrix
+		(0).  Correct the wrong adverb value(s).
+
+	(255) Nothing in Matrix (0)
+
+		Verb requires that data exists in Matrix (0). The
+		matrix is probably empty.
+
+	(256) Nothing in specified matrix
+
+		Verb requires that data exists in the specified
+		Matrix.  The matrix is probably empty.
+
+	(257) Cannot copy/move a matrix onto itself
+
+		You have tried to MCOPY or MREMOVE a matrix on top of
+		itself.
+
+	(258) Out of the range of matrix
+
+		You have specified an x or y-axis value that is beyond
+		the limits of contents of Matrix (0).
+
+	(259) Bad LEVS values
+
+		The values stored in LEVS array adverb probably are not
+		in increasing value, all values are default values, or
+		all values are either greater than or less than the
+		maximum or minimum, respectively, of the data in Matrix	(0).
+
+        (260) Pixel size too big for graphics screen
+
+		The HLFTNE plot you are trying to create has too few
+		elements.
+
+	(261) Bad color value
+
+		The color value you have specified does not follow the
+		rules for assigning colors.
+
+	(262) Bad Line type
+
+		The line-type value you have specified does not follow
+		the rules for assigning line types.
+
+	(263) Cannot copy/move an array onto itself
+
+		You have tried to COPY or MOVE an array on top of
+		itself.
+
+	(264) Previous plot was not a MATRIX plot
+
+		The verb requires that the previous display be a two-
+		dimensional plot (e.g., CONTOUR, RASTER, etc.)
+
+	(265) Invalid number of data points in array
+
+		The verb requires a certain number of data points in
+		Array (0).  Probably, you have the wrong kind of
+		observation in Array (0).
+
+	(266) Invalid value specified for NOINT or SPN
+
+		The sum of NOINT and SPN in the header must not
+		exceed 10241.
+
+	(267) Array and Matrix size are not the same
+
+		This is a warning message that is issued by GETROW,
+		GETCOL PUTROW, and PUTCOL when the sizes of Array (0)
+		and Matrix (0) in the appropriate direction are not the
+		same.  This error message also informs you how many
+		values were transferred.
+
+	(268) Undefined data point exists
+
+		Some verbs can deal with undefined data values while
+		others can not.  This message is issued when an
+		undefined value is encounted.  It will also include
+		information on whether the verb was able to proceed
+		by skipping those values or whether the verb was
+		unable to proceed.
+
+	(269) Array must have an even number of points
+
+		CHNGRES requires an even number of points in 
+		Array (0).
+
+	(270) Incomplete velocity header parameters
+
+		The verb requires certain header parameters in order to
+		calculate velocities using your desired definition.
+		Add the necessary items to the scan header.
+
+	(271) Incomplete frequency header parameters
+
+		The verb requires certain header parameters in order to
+		calculate frequencies using your desired definition.
+		Add the necessary items to the scan header.
+
+	(272) Incomplete header parameters
+
+		The verb requires certain header parameters in order to
+		perform its calculation.  Add the necessary items to
+		the scan header.    
+
+	(273) Incomplete matrix header parameters
+
+		The verb requires certain header parameters in order to
+		perform its calculation.  Add the necessary items to
+		the matrix header.    
+
+	(274) Nothing in Matrix (1)
+
+		The verb requires that some valid data be present in
+		Matrix (1)
+
+	(275) Matrices (0) and (1) have different shapes
+
+		The verb requires that both matrices have the same 
+		number of pixels in each dimension.
+
+	(281) Bad ACOUNT (either < 0 or > 5120)
+
+		ACOUNT must be >= 0 and <= 5120 for certain verbs to
+		work.  See the write-up about the verb for more details.
+
+	(282) Iteration limit exceeded
+
+		The current iterative fit did not converge.  Check your
+		fitting parameters or increase the value of NITER to
+		allow for more iterations.
+
+	(283) Data is not from an NRAO telescope
+
+		Some verbs know only how to work on data scans from
+		NRAO telescopes.
+
+	(284) Bad parameters; check associated adverbs
+
+		There is a problem with the initial parameters for the 
+		sinusoidal baseline fitting verbs RIPPLE and RSHAPE.
+		Check the documentation for those verbs and the
+		value of each parameter.
+
+	(285) Bad value for BGAUSS or EGAUSS
+
+		BGAUSS is >= EGAUSS, BGAUSS <= 0, or EGAUSS > number of
+		data points.  Respecify BGAUSS or EGAUSS.
+
+	(286) Bad value in GREGION, BGAUSS, or EGAUSS
+
+		For some index i, GREGION(i+1) is less than GREGION(i),
+		GREGION(i) <= 0, or GREGION(i) > number of data
+		points.  GREGION needs to be redefined.
+
+	(287) Bad value for BBASE or EBASE
+
+		Either BBASE < 0, EBASE+BBASE > number of data points,
+		or EBASE < 0.  Reset the values of BBASE or EBASE.
+
+	(288) Bad value for BDROP or EDROP
+
+		Either BDROP < 0, EDROP < 0, or BDROP+EDROP is greater
+		then the number of data points.  Reset adverbs.
+
+	(289) Bad value for NGAUSS
+
+		NGAUSS must be > 0 and less than 13.  Reset NGAUSS.
+
+	(290) Bad CENTER or HWIDTH
+
+		For Gaussian routines, the NGAUSS values of arrays
+		CENTER and HWIDTH must be in channels and > 0.
+
+
+	(291) Bad FS or FR
+
+		You can't RAP a Tucson 12-m observation without
+		specifying FS and FR.  FS cannot equal FR nor can they
+		be zero.
+
+	(292) Bad BMOMENT or EMOMENT
+
+		BMOMENT can't be <= 0, EMOMENT can't be > number of
+		data points, and EMOMENT can't be <= BMOMENT; reset
+		adverbs.
+
+	(293) Bad WEIGHT
+
+		WEIGHT can't be <= 0.0 for SUM to work properly.
+
+	(294) Cannot use after a PLOT
+
+		The last display was generated by a PLOT command; this
+		limits you to only certain kinds of graphics calls with
+		such a display.
+
+	(295) Error in GAUSS
+
+		You have specified a bad set of input parameters.  Check
+		the values of all adverbs used by GAUSS.
+
+	(296) Bad value for MRATIO
+
+		MRATIO must be > 0 for a two-dimensional display.
+
+	(297) Bad NFIT or too few channels for fit
+
+		For this error to occur, some of the following may be
+		true:  NFIT < 0, NFIT > 12, or number of data points is
+		<= NFIT.  Redefine NFIT.
+
+	(298) Last plot was not a SHOW
+
+		The last display was not generated by a SHOW command;
+		this limits you to only certain kinds of graphics calls
+		with such a display.
+
+	(299) No previous plot
+
+		You have typed a command for which a previous display
+		is needed.  No display command has been issued yet.
+
+	(300) Inappropriate on-line file type
+
+		You specified a file type to CHNGONLINE or CHNGVER
+		which is inappropriate for the program you are
+		running (HCTYPE and FBTYPE are for line use only,
+	 	CONTYPE is for CONDAR use only)
+
+	(301) Invalid DATE string
+
+		You specified a DATE string while setting the
+		MDATE header word of a matrix which had the wrong form.
+		The date string must have one of the following FITS
+		standard forms: DD/MM/YY for dates from 1900 to 1999,
+		YYYY-MM-DD and YYYY-MM-DDThh:mm:ss[.sss] for any
+		date.  It is strongly recommended that you use one
+		of the later two forms.  Both digits in each field
+		must be present (i.e. leading zeros are required).
+		If you are including a time in the later form, it
+		must include all digits up to the first two digits
+		in the seconds field.  The current date in the
+		matrix will remain unchanged when you see this
+		error.
+
+	(352) Error in opening file
+
+		An error occurred when attempting to open a file.
+		Either the file doesn't exist, you don't have
+		permission to create files in the current directory, or
+		you don't have read or write privileges to an existing
+		file.
+
+
+	(353) PRINTOUT file is unavailable
+
+		You have tried to do something with the PRINTOUT file
+		but none was available for your use.  Look at the
+		output of the FILES command and execute CHNGFILE to
+		create a PRINTOUT file.
+
+	(354) Command Logging file is unavailable
+
+		You have tried to start up command logging but a log
+		file was not available for your use.  Look at the
+		output of the FILES command and execute CHNGFILE to
+		create a log file.
+
+	(355) File write error
+
+		An error was detected when an attempt was made to write
+		to a file.  The file or current directory may have the
+		wrong permissions, the disk is full, or the file
+		doesn't exist.
+
+	(356) Error in closing file
+
+		An error was detected when an attempt was made to close
+		a file.  The file or current directory may have the
+		wrong permissions, the disk is full, the file doesn't
+		exist, or the file was never opened.
+
+	(357) File read error
+
+		An error was detected when an attempt was made to read
+		from a file.  The file or current directory may have
+		the wrong permissions, the disk is full, or the file
+		doesn't exist.
+
+
+	(358) SAVE file is unavailable
+
+		You have attempted to access the `save' file but none
+		is currently available.  Look at the output of the
+		FILES command and execute CHNGFILE to create a `save'
+		file.
+
+	(359) Data file has a problem with its INDEX
+
+		For some reason, the index section of a data file is
+		bad.  Possibilities include:  It is not an SDD file or
+		the file may have become altered by another program.
+		Look at the output of FILES and, if needed, run the
+		checkfile.exe utility on the data file, and, as a last
+		resort, run the makeindex.exe utility on the file.
+
+	(360) Data conversion problem
+
+		The data in a disk file cannot be converted into the
+		UniPOPS internal format.  Probably, the file or data is
+		not in SDD format.  Use the `checkfile.exe' utility to
+		find out what is in the file.
+
+	(361) No current scan or ONLINE data not available
+
+		Either the on-line file is not available (see CHNGPRJ),
+		or there is no current scan taken with the specified
+		backend.
+
+	(362) Scan not found or ONLINE data not available
+
+		Probably the specified scan is not in the on-line or
+		off-line data files or these files are not available.
+
+	(363) Data file may have become corrupted
+
+		During an attempt to store data to a data file, the
+		index to the file may or may not have been correctly
+		updated.  Probably, the protections on the file or
+		current directory are wrong or the file doesn't exist.
+
+	(364) Bad file name or no file name was specified
+
+		The command needs a file name as a parameter and none
+		was provided or the file name provided does not exist
+		or has the wrong permissions.
+
+	(365) FITS file is not in the required format
+
+		You have tried to read in a FITS image file but the
+		file was not in FITS image format or is in a FITS
+		format which the program cannot read.
+
+	(366) File cannot be deleted
+
+		The program has tried to delete a file but was
+		unsuccessful.  Probably either the file does not exist
+		or the file or its directory has the wrong access
+		privileges.
+
+
+	(367) Online data file is not available
+
+		The program can not access any on-line data.  Exiting
+		the program and starting over or using the RESTART verb
+		may help.
+
+
+	(368) NSAVE is empty
+
+		You have attempt a RECALL using a value of NSAVE which
+		does not point to any data in the current save file.
+
+	(370) File is not open.
+
+		The indicated file has not been previously opened.  Use
+		the FILES or CHNGFILE command change the status of the
+		file.
+
+	(371) NSAVE value is out of range for SAVE file.
+
+		You are attempting to save a scan to a location that is
+		outside the index of the current SAVE file.  NSAVE must
+		be greater than 0 and less that the maximum number of
+		scans which can be indexed in the file.   Use the
+		checkfile.exe utility at a UNIX prompt to determine how
+		many scans a file can hold.
+
+	(372) Error on rewinding file.
+
+		An attempt at rewinding a file to its beginning has
+		failed!  If you see this message and don't understand
+		why you got it, please inform your local UniPOPS
+		administrator.
+
+	(373) Bad format specification
+
+		You have specified a input or output format that
+		doesn't conform to the rules of Fortran 77 and
+		UniPOPS.  Check the specified format for errors.
+
+	(374) Read or write error
+
+		Error in input or output.  Check your format
+		specification, permissions on the file you are using
+		(if applicable), and the input or output list you have
+		specified.
+
+	(375) Requested version is unavailable, use CHNGVER
+
+		The on-line file version you requested in 
+		CHNGONLINE does not exist or has the wrong permissions.
+		Use CHNGVER to choose from the available versions.
+
+	(376) File name could not be expanded
+
+		The wildcard or environment variable you used in the
+		file name could not be expanded.

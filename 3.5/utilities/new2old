@@ -1,0 +1,80 @@
+#! /bin/csh -f
+#
+# Converts new SDD format into old
+#
+set com = $0
+#
+if ($#argv != 2) then
+    echo Needs two arguments.
+    echo Usage: $com:t input_file output_file
+    exit(1)
+endif
+#
+set MAKEINDEX = old
+if ($?popsdir == 1) then
+  if ( -e $popsdir/utilities/makeoldindex.exe ) set MAKEINDEX = new
+endif
+#
+set infile = $1
+set outfile = $2
+#
+if (! -e $infile) then
+    echo Input file must exist.
+    echo Usage: $com:t input_file output_file
+    exit(1)
+endif
+#
+more:
+if (-e $outfile) then
+    echo -n "Overwrite $outfile (y or n)? "
+    set answr = $<
+    if ($answr == "y" || $answr == "Y") then
+	rm $outfile
+	goto more
+    else if($answr == "n" || $answr == "N") then
+	echo " "
+	exit(0)
+    else
+	echo " "
+	echo "WARNING: Incorect entry... Try again"
+	goto more
+    endif
+endif
+#
+set bb = `bootstrap $infile 512 LONG`
+if ($status != 0) goto err
+if ( $bb[10] != 1) then
+     echo " "
+     echo $infile appears to already be in the old SDD format, no conversion
+     echo $outfile has not been created
+     exit(0)
+else
+      set typesdd = $bb[9]
+      set skiprec = $bb[2]
+      set recl = $bb[4]
+      @ nscans=($bb[2] - 1 ) * $bb[4] / $bb[5]
+endif
+echo $nscans
+#
+if ($MAKEINDEX == new) then
+   cp $infile $outfile
+   if ($status != 0) goto err
+   makeoldindex.exe $outfile > /dev/null
+   if ($status != 0) goto err
+else
+   makeempty.exe $outfile $nscans
+   if ($status != 0) goto err
+   dd if=$infile bs=$recl skip=$skiprec >> $outfile
+   if ($status != 0) goto err
+   makeindex.exe $outfile > /dev/null
+   if ($status != 0) goto err
+endif
+#
+exit(0)
+#
+err:
+   echo "Some problem encountered in converting data."
+   exit(256)
+#
+# That is it
+

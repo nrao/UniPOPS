@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FB_VER:  (LINE-POINTER) The version of the filter bank'
+PRINT 'data file currently opened.'
+PRINT ' '

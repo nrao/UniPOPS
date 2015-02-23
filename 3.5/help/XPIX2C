@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'XPIX2C:  (FUNCTION) Returns the c-value (channel for SHOW,'
+print 'x-axis value for PLOT, x-cell number for 2-dim display)'
+print 'corresponding to the given x-pixel value valid for the'
+print 'last plot generated.  Syntax: c-value=XPIX2C(x-pixel)'
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'LWID:  (HEADER-TUC) Line width (same units as the data).'
+PRINT ' '

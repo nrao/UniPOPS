@@ -1,0 +1,273 @@
+#if RFRNC
+IEEE Keep
+---------
+
+#end
+	The IEEE Keep format has many similarities with the Modcomp
+	Keep format and the 140-ft telescope (archive) tape format.  It
+	is the format native to the version of POPS that ran in Green
+	Bank from June 1988 through early 1991.
+
+	The binary data file is a direct-access file with 5120 byte
+	records with 1 record needed for each scan.  Up to 1024 data
+	points for 4 backends can be stored in each record of a
+	spectral-line file while up to 1192 data points can be stored
+	in each record of a continuum file.  Each scan has a full
+	complement of header information.  The binary representation is
+	that of the IEEE standard.
+
+
+	IEEE Keep : Continuum Scans
+	---------------------------
+	The structure of an IEEE-Keep continuum scan is:
+
+#if RFRNC
+	  Table 2.7.9 : IEEE Keep: Continuum Scans
+#else
+		 IEEE Keep : Continuum Scans
+#end
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+	Real*4		Scan Number			0
+	Real*4 		UNUSED				4
+	Character*12 	Source Name 			8
+	Integer*2	Observer's Number		20
+	Character*18	Observer's Name 		22
+	Real*8		Julian Date (-2400000) Days 	40
+	Integer*2	Solar Day of Year		48
+	Integer*2	Month				50
+	Integer*2	Day				52
+	Integer*2	Year				54
+	Real*4		LST (Radians)			56
+	Real*4		EST (Radians)			60
+	Integer*2	Telescope			64
+	Integer*2	Observing Program (3,4,or 8) 	66
+	Integer*2	Scan type code			68
+	Integer*2	Mode				70
+	Integer*2	First channel			72
+	Integer*2	Number of channels		74
+	Integer*2	Samples/record			76
+	Integer*2	Start				78
+	Integer*2	Stop				80
+	Integer*2	UNUSED (8)			82
+	Integer*2	Position Code			98
+	Integer*2	Scan Direction (H-V)		100
+	Integer*2	Subscan Number			102
+	Integer*2	UNUSED				104
+	Integer*2	Total Subscans			106
+	Integer*2	UNUSED (2)			108
+	Real*4		Sample Rate (Seconds)		112
+	Real*4		Wavelength (cm.)		116
+	Integer*2	UNUSED (2) 			120  
+	Real*4		Epoch of Obs. (Years )		124
+	Real*4		H Coord. Rate (Rad/min)		128
+	Real*4		V Coord. Rate (Rad/min)		132
+#if RFRNC
+	-------------------------------------------------------
+
+	  Table 2.7.9 : IEEE Keep: Continuum Scans (Cont.)
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+#end
+	Real*4		RA Indicated (Radians)		136
+	Real*4		DEC Indicated (Radians)		140
+	Real*4		Focus (mm)			144
+	Real*4		Orientation (Radians)		148
+	Real*4		Zenith Distance	(Radians)	152
+	Real*4		Descrip. Origin (3) (Radians)	156
+	Real*4		RA Pt. Corr. (Sec. of time)	168
+	Real*4		DEC Pt. Corr. (Arc.Sec)		172
+	Real*4		PVLS (3) (arc-min)		176
+	Real*4		Commanded H Position (Radians)	188
+	Real*4		Commanded V Position (Radians)	192
+	Integer*2	140' Local Temp.*128  (deg C)	196
+	Integer*2	UNUSED				198
+	Real*4 		Zenith Opacity			200
+	Integer*2	Dew Point*128  (deg C)		204
+	Integer*2	Interf. Temp.*128 (deg C)	206
+	Integer*2	Barometric Press.*128  (cm-Hg)	208
+	Integer*2	UNUSED				210
+	Real*4		Epoch RA (Radians)		212
+	Real*4		Epoch DEC (Radians)		216
+	Real*4		Apparent RA (Radians)		220
+	Real*4		Apparent DEC (Radians)		224
+	Real*4		Galactic l (Radians)		228
+	Real*4		Galactic b (radians)		232
+	Real*4		Observed H (Radians)		236
+	Real*4		Observed V (Radians)		240
+	Real*4		Horiz. Descriptive (Radians)	244
+	Real*4		Vert. Descriptive (Radians)	248
+	Real*4		RHO (Radians)			252
+	Real*4		THETA (Radians)			256
+	Real*4		Noise Tube  (deg K)		260
+	Real*4		Scale Factor (K/Count)		264
+	Real*4 		System Temps (deg K)		268
+	Integer*2	UNUSED 				272
+	Integer*2	Number of accumulated scans	274
+	Real*4		ACCUM stack (18)		276
+	Real*4          Data (1193)			348
+	-------------------------------------------------------
+	Notes:
+	
+	(1) Observing program equals 8 for DCR scans, 4 for On-Off A/D
+	measurements, and 3 for normal A/D measurements.
+
+	(2) Scan-type code equals 0 for a "no-cal" scan or DCR scan, 1
+	for a "pulsed cal" scan, 2 for a "cal" scan, and 3 for an
+	On-Off scan.
+
+	(3) Position codes are 1 for HA, DEC; 2 for EPOCH RA, DEC; 3
+	for Apparent RA, DEC; 4 for galactic coordinates; 5 for AZ, EL;
+	and 6 for Descriptive H and V.
+
+	(4) Scan direction equals 0 for no rates; +1 for +H rates, -1
+	for -H rates, +2 for +V rates, -2 for -V rates.
+
+
+#if RFRNC
+
+#end
+	IEEE Keep : Spectral-Line Scans
+	-------------------------------
+	The structure of an IEEE-Keep spectral-line scan is:
+
+#if RFRNC
+	  Table 2.7.10 : IEEE Keep: Spectral-Line Scans
+#else
+		 IEEE Keep : Spectral-Line Scans
+#end
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+	Real*4		Scan Number			0
+	Real*4 		Off-scan number			4
+	Character*12 	Source Name 			8
+	Integer*2	Observer's Number		20
+	Character*18	Observer's Name 		22
+	Real*8		Julian Date (-2400000) Days 	42
+	Integer*2	Solar Day of Year		48
+	Integer*2	Month				50
+	Integer*2	Day				52
+	Integer*2	Year				54
+	Real*4		LST (Radians)			56
+	Real*4		EST (Radians)			60
+	Integer*2	Telescope			64
+	Integer*2	Observing Program (1 or 2) 	66
+	Integer*2	Scan type code			68
+	Integer*2	Mode				70
+	Integer*2	Initial Receiver		72
+	Integer*2	Last Receiver			74
+	Integer*2	Receiver Increment		76
+	Integer*2	Start (4)			78
+	Integer*2	Stop (4)			86
+	Integer*2	Velocity Definition		94
+	Integer*2	Velocity Reference		96
+	Integer*2	Position Code			98
+	Integer*2	Scan Direction (H-V)		100
+	Integer*2	Unused				102
+ 	Real*4		Scan-Time (Sec)			104
+	Integer*2	UNUSED (2)			108
+	Real*4		Sample rate (sec)		112
+	Integer*2	UNUSED (4)			116
+	Real*4		Epoch of Obs. (Years )		124
+	Real*4		H Coord. Rate (Rad/min)		128
+	Real*4		V Coord. Rate (Rad/min)		132
+	Real*4		RA Indicated (Radians)		136
+	Real*4		DEC Indicated (Radians)		140
+	Real*4		Focus (mm)			144
+	Real*4		Orientation (Radians)		148
+	Real*4		Zenith Distance	(Radians)	152
+	Real*4		Descrip. Origin (3) (Radians)	156
+	Real*4		RA Pt. Corr. (Sec. of time)	168
+	Real*4		DEC Pt. Corr. (Arc.Sec)		172
+	Real*4		PVLS (3) (arc-min)		176
+	Real*4		External Marker  (IMARK)	188
+ 	Integer*2	UNUSED (2)			192
+	Integer*2	140' Local Temp.*128  (deg C)	196
+	Integer*2	UNUSED				198
+	Real*4 		Zenith Opacity			200
+	Integer*2	Dew Point*128  (deg C)		204
+	Integer*2	Interf. Temp.*128 (deg C)	206
+	Integer*2	Barometric Press.*128  (cm-Hg)	208
+	Integer*2	UNUSED				210
+#if RFRNC
+	-------------------------------------------------------
+
+	  Table 2.7.10 : IEEE Keep : Spectral-Line Scans (Cont.)
+	-------------------------------------------------------
+	Word-size       Header-words        	 Byte offset
+	-------------------------------------------------------
+#end
+	Real*4		Apparent RA (4) (Radians)	212
+	Real*4		Apparent DEC (4) (Radians)	228
+ 	Real*4		1950 RA	(4)  (Radians)		244
+ 	Real*4		1950 DEC (4)  (Radians)		260
+	Real*4		Galactic l (4) (Radians)	276
+	Real*4		Galactic b (4) (Radians)	292
+	Real*4		Observed H (4) (Radians)	308
+	Real*4		Observed V (4) (Radians)	324
+	Real*4		RHO (4) (Radians)		340
+	Real*4		THETA (4) (Radians)		356
+	Real*4		Noise Tube (4) (Radians)	372
+	Real*4		Sig. System Temps (4) (deg K)	388
+	Real*4		Center Vel. (4) (Km/s)		404
+	Real*4		Delta Vel. (4) (Km/s) 		420
+	Real*4		RVSYS (4) (Km/s)		436
+	Real*4		Eff. Integration (4) (Sec)	452
+	Real*4		Bandwidth (4) (MHz)		468
+	Real*4		Theor. RMS (4) (deg. K)		484
+	Integer*2	UNUSED (2)			500
+	Real*8          Center Freq. (4) (MHz)		504
+	Real*8          Rest Freq. (4) (MHz)		536
+	Character*18	C-F Formula (4)			568
+	Real*8		L1 (MHz)			640
+	Real*8		L1F1 (MHz)			648
+	Real*8		L1F2 (MHz)			656
+	Real*8		L2 (MHz)			664
+	Real*8		L2F1 (MHz)			672
+	Real*8		L2F2 (MHz)			680
+ 	Real*4		LA (MHz)			688
+ 	Real*4		LB (MHz)			692
+ 	Real*4		LC (MHz)			696
+ 	Real*4		LD (MHz)			700
+	Integer*2	A/C Words (22)			704
+	Integer*2	Error Ind. Words (52)		748
+	Integer*2	Parameter Monitors (38)		852
+	Real*4		Ref. System Temps (4) (deg K)	928
+	Real*4		Power Cntr.-Ref. NT off (4) 	944 
+	Real*4		Power Cntr.-Ref. NT on (4) 	960 
+	Real*4		Power Cntr.-Sig. NT off (4) 	976 
+	Real*4		Power Cntr.-Sig. NT on (4) 	992 
+	Real*4		Chan. Zero -Ref. NT off 	1008
+	Real*4		Chan. Zero -Ref. NT on	 	1012
+	Real*4		Chan. Zero -Sig. NT off 	1016
+	Real*4		Chan. Zero -Sig. NT on	 	1020
+	Real*4		Data (1024) 	 		1024
+	-------------------------------------------------------
+	Notes: 
+
+	(1) Observing program equals 2 for Total-Power scans and 1 for
+	Switched-Power scans.
+
+	(2) Scan-type code equals 0 for a Total-Power OFF scan, 1 for a
+	Total-Power ON scan, and 2 for a Switched-Power scan.
+
+	(3) Velocity Reference equals 1 for Radio and 2 for Optical.
+
+	(4) Velocity Definition equals 4 for Geocentric, 3 for
+	Heliocentric, 2 for LSR, and 1 for none.
+
+	(5) Position codes are 1 for HA, DEC; 2 for EPOCH RA, DEC; 3
+	for Apparent RA, DEC; 4 for galactic coordinates; 5 for AZ, EL;
+	and 6 for Descriptive H and V.
+
+	(6) Scan direction equals 0 for no rates; +1 for +H rates,
+	-1 for -H rates, +2 for +V rates, -2 for -V rates.
+
+	(7) External marker is greater than or equal to 1 for "switched"
+	configuration, else it is an "unswitched" configuration.
+#if RFRNC
+
+#end

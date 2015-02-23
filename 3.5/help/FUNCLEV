@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'FUNCLEV:  (VERB) Assigns values to the LEVS array adverb'
+print 'such that each level contains the relative number of data'
+print 'points in each level is as indicated by the values in FLEVS.'
+PRINT ''
+PRINT 'Syntax: FUNCLEV(min_level, max_level)'
+PRINT ' '
+PRINT 'FLEVS=',FLEVS
+PRINT 'LEVS=',LEVS
+PRINT ' ' 

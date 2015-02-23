@@ -1,0 +1,127 @@
+#if RFRNC
+IEEE-Binary Representation
+--------------------------
+
+#end
+	This describes the IEEE binary representation used by the SDD
+	and IEEE Keep file formats.  It is the native binary
+	representation of most UNIX machines and, except for byte
+	ordering, IBM-PC's.  The data types used by UniPOPS and
+	described here are:  32-bit reals, 16-bit integers, 32-bit
+	integers, 64-bit double precision reals, and character
+	strings.
+
+
+	IEEE-Binary : 16-Bit Integer Words
+	----------------------------------
+
+	Integer*2, 16-bit words consist of 1 sign bit and 15 data bits
+
+#if RFRNC
+	Figure 2.7.6 : IEEE Binary : 16-Bit Integer Words
+#else
+		IEEE Binary : 16-Bit Integer Words
+#end
+	------------------------------------------------
+	S |   I  N  T  E  G  E  R    D  A  T  A        |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+
+	IEEE-Binary : 32-Bit Integer Words
+	----------------------------------
+
+	Integer*4, 32-bit words consist of 1 sign bit and 31 data bits
+
+
+#if RFRNC
+	Figure 2.7.7 : IEEE Binary : 32-Bit Integer Words
+#else
+		IEEE Binary : 32-Bit Integer Words
+#end
+	------------------------------------------------
+	S |   I  N  T  E  G  E  R    D  A  T  A        
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+
+	------------------------------------------------
+	      I  N  T  E  G  E  R    D  A  T  A        |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+	
+
+	IEEE-Binary : 32-Bit Real Words
+	-------------------------------
+
+	Real*4, 32-bit words consist of a sign bit, 8 bit exponent
+	biased by 127 and a 23 bit fraction.  A zero value is
+	represented be an exponent of zero (and possibly a fraction of
+	zero).  An exponent of 255 is reserved for abnormal numbers
+	like NaN and Infs.  If the exponent is > 0 and < 255, then the
+	resulting value is:  [(-1)**s ] * 1.f * [2 ** (exponent-127)].
+
+#if RFRNC
+
+	Figure 2.7.8 : IEEE Binary : 32-Bit Real Words
+#else
+		IEEE Binary : 32-Bit Real Words
+#end
+	------------------------------------------------
+	S |  E X P O N E N T      |  F R A C T I O N
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+
+	
+	IEEE-Binary : 64-Bit Double Precision Words
+	-------------------------------------------
+
+	Real*8, 64-bit words consist of a sign bit, 11 bit exponent
+	biased by 1023, and a 52 bit fraction.  A zero value is
+	represented be an exponent of zero (and possibly a fraction of
+	zero).  An exponent of 1023 is reserved for abnormal numbers
+	like NaN and Infs.  If the exponent is > 0 and < 1023, then the
+	resulting value is:  [(-1)**s ] * 1.f * [2 **(exponent-1023)].
+
+
+#if RFRNC
+	  Figure 2.7.9 : IEEE Binary : 64-Bit Double
+		      Precision Words
+#else
+	  IEEE Binary : 64-Bit Double Precision Words
+#end
+	------------------------------------------------
+	S |        E X P O N E N T         | F R A C T .
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+
+
+	------------------------------------------------
+	             F  R  A  C T  I O  N              |
+	--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+	48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+
+
+	IEEE-Binary : Character Strings
+	-------------------------------
+	
+	Character strings are in ASCII
+#if RFRNC
+
+#end

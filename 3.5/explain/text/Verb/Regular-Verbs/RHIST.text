@@ -1,0 +1,23 @@
+	(REGULAR VERB)
+
+	Sets plotting mode for RESHOW display to HISTOGRAM.
+
+	No adverbs are used by RHIST.
+
+	ADVERB SET:
+
+	STATUS(4)    Type of RESHOW plots as determined by the last
+		     RLINE, RHIST, or RPOINTS command.  
+
+		     Values: 0 = line; 1 = histogram; 2 = points
+
+       	EXAMPLE:
+
+	If you type the following, you will get two displays of the same
+	scan the second of which will be drawn in histogram style.
+
+	 	GET 9612
+		PAGE SHOW
+		RHIST RESHOW
+        
+

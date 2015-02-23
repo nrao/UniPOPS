@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NREGION:  (ARRAY-32) Channel numbers which are to define'
+print 'baseline regions.'
+PRINT ' '

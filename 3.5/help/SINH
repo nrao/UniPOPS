@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SINH:  (FUNCTION) Returns the hyperbolic sine of the'
+PRINT 'given parameter (in radians).'
+PRINT ' '

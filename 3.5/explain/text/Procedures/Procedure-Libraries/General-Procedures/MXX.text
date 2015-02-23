@@ -1,0 +1,15 @@
+	MXX is the 2-D equivalent of XX
+
+	Syntax: MXX
+
+	File name: mxx.prc
+
+	This procedure is included in maps.plib
+
+	Here is the complete listing of MXX
+
+	procedure mxx
+	#  A useful shorthand, like xx
+	page; qcontour; label
+	return
+	finish

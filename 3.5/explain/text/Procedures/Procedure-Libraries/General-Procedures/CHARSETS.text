@@ -1,0 +1,17 @@
+	CHARSETS prints out all the characters in the indicated
+	font to the graphics screen.
+
+	See the documentation for FONTSET for more information and
+	a list of the available fonts.
+
+	Syntax: CHARSETS(fn)
+	where fn is the number of the desired font.
+
+	File name: charsets.prc
+
+	Example:
+
+	To get a hardcopy of all the fonts, type:
+	
+		scalar i;
+		for i = 1 to 15; charsets(i); gcopy; end

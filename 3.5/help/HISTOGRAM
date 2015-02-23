@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'HISTOGRAM:  Sets up the SHOW command so that it will use a'
+PRINT 'histogram display.  PLOT will use points display (i.e., for'
+print 'PLOT, equivalent to POINTS).'
+PRINT ' '

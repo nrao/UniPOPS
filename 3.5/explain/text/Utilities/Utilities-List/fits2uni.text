@@ -1,0 +1,153 @@
+The following 3 commands write or read FITS format files:
+
+   uni2fits  -  create a Single-Dish FITS file from a UniPOPS file.
+   fits2uni  -  create a UniPOPS file from an SD-FITS file.
+   readfits  -  list SD-FITS headers or a scan summary.
+
+They are user-friendly front-ends to the programs:
+
+   u2f -- creates SD-FITS file from UniPOPS file using standard input
+   		and standard output
+   f2u -- creates UniPOPS file from SD-FITS file using standard input
+   		and standard output
+
+These two programs probably should never be user directly by the
+general user; instead one should use "uni2fits", "fits2uni", or
+"readfits."
+
+All the programs can be used while running UniPOPS or outside of
+UniPOPS.  If you are in UniPOPS, precede each command with the word
+"system".  That is, when in UniPOPS, type, for example:
+
+	SYSTEM uni2fits
+
+but, at the Unix prompt, type:
+
+	uni2fits
+
+Running "uni2fits", "fits2uni", and "readfits"
+----------------------------------------------
+When you type "uni2fits", "fits2uni", and "readfits", you are asked a
+series of questions, most of which are self-explanatory.  For example,
+you must give the name of the UniPOPS data file (e.g. LDATA, LSAVE,
+or LKEEP) to be used for input (uni2fits) or output (fits2uni).  When
+running "uni2fits", you may select a range of scan numbers to be
+included.  You must also select only line data or continuum data from
+an input UniPOPS data file.
+
+If you are writing or reading tape, you must enter a device name for
+the tape drive.  Device names, listed in the following table, depend on
+which workstation and what kind of tape you are using.  If your
+workstation is not in this list, see if the local tape drive is labeled
+or seek the help of a UniPOPS Guru.
+
+                       Tape Drive Device Name 
+-----------------------------------------------------------------------
+location  workstation    9-track   9-track   exabyte   SUN cartridge
+                        1600 BPI  6250 BPI  
+--------  ------------  --------  --------   --------  -------------
+140-ft     Nath          rst9      rst17       rst0         NA
+Jy Lab     Fomalhaut     rst9      rst17       NA           NA
+Jy Lab     Sadira        NA        NA          rst0         NA
+Jy Lab     Lodestar      NA        NA          NA           rst0
+Charlottesville		  U	     U          U            U
+Tucson			  U	     U          U            U
+12-m			  U	     U          U            U
+-----------------------------------------------------------------------
+NA = Not Available;   U = Unknown
+
+Running "u2f" and "f2u"
+-----------------------
+The scripts "uni2fits", "fits2uni", and "readfits" are user-friendly
+front-ends to the "u2f" and "f2u" programs.  Basically, "uni2fits",
+"readfits", and "fits2uni" asks the user a set of questions and passes
+the answers to "u2f" or "f2u".  The "u2f" and "f2u" programs do all of
+the real work in converting the files.
+
+If you want, you can use "u2f" and "f2u" directly but we suggest that
+you use the intermediary "uni2fits", "fits2uni", and "readfits"
+programs.  Nevertheless, if you MUST use "u2f" or "f2u", you should
+first get documentation about the "u2f" and "f2u" programs by typing
+either:  "f2u ?", or "u2f ?"
+
+For example, typing "u2f ?" produces the following instructions:
+
+u2f version 1.4 (25Sep93),  run: Wed Jun  1 13:58:43 1994
+u2f: convert a UniPOPS file from std input to
+     a FITS binary table on std output.
+Usage:  u2f -L|C [-n max] [-t npts] [-v|-f] [-s s1 s2] 
+            -L -C    : select line or continuum.
+            -n max   : maximum records per FITS table.
+            -t npts  : truncate scan to length npts.
+            -s s1 s2 : scan number range.
+            -v : 1st axis is veloc; -f for frequency.
+	    -prev : preview mode
+
+Further explanation of "-n" and "-t" is in order.  The default is not
+to use either option.  In the default case, the input data is converted
+to FITS form and written to a temporary disk file until the end of the
+input is reached.  After this, the program knows how many scans are in
+the file, and the maximum scan length.  The program can write this
+information in the FITS XTENSION header, and can truncate the scan
+length to the minimum necessary, before writing the output onto
+standard out.  Finally, the temporary file is deleted.
+
+The "-n" option is a "real time" option in which the data is passed to
+the output file continuously as the input file is read.  Each FITS
+XTENSION header will contain up to "max" scans.  If the number of input
+scans is greater than "max", a new binary table will be started for
+each "max" scans.  The last table may contain fewer than "max" scans,
+but the header will always indicate the number of scans = max.  Since
+the program can't predict the maximum scan length, it pads all scans
+out to the maximum allowable size (16384 points) with Infinities, unless
+one gives the "-t" option, in which case all scans are made "npts"
+points in length.
+
+In the default case (no -n or -t specified), there is less that you
+need to know about the input file, but the temporary output file
+can be quite large (since it assumes that each scan has the maximum
+number of points, 16384).  The default case also runs quite a bit slower
+than the "real time" option.
+
+The -prev option instructs u2f to preview the file and tell you
+the appropriate values for -n and -t so that the "real time" mode
+can be used.  This eliminates the need for the huge intermediate
+file and greatly shortens the total conversion time.  However, it
+does require two passes through the file (two invocations of u2f).
+The output of the -prev option on a typical SDD file is:
+
+maxLength(-t) 512 maxRecords(-n) 96
+
+These indicate the appropriate arguments to be used for the -t and
+-n options along with the other options (-L or -C, -f or -v, a
+specified scan range) so that u2f can write the FITS file in "real
+time" mode.
+
+  The uni2fits front end to u2f use the -prev option and makes two
+passes through the SDD file..
+
+Typing "f2u ?" produces the following instructions:
+
+f2u version 1.4 (25Sep93),  run: Wed Jun  1 14:01:52 1994
+f2u : read a FITS file from std input.
+Usage: f2u -u|-sum|-head|-dump [n]
+           -u | -U     : convert to UniPOPS format.
+           -sum or -s  : 1-line summary to stdout.
+           -head or -h : list full headers on stdout.
+           -c          : #of scans in file to stdout.
+           -dump or -d : list headers and 5 table rows, starting at n.
+
+
+
+Format of SD-FITS
+-----------------
+The format that "f2u" and "u2f" reads or writes respectively is based
+on the binary tables extensions to FITS.  At a meeting in Green Bank in
+October 1989, representatives from many observatories from around the
+world with single-dish telescopes agreed upon a single-dish FITS format
+(SD-FITS) which we have implemented for UniPOPS.  At present, the
+binary tables extension to FITS is in the process of being ratified by
+national and international committees.  We know of one other
+observatory (IRAM) that has produced an SD-FITS reader.  We are in the 
+process of writing a description of the UniPOPS implementation of
+SD-FITS. 

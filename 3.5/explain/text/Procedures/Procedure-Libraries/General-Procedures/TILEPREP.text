@@ -1,0 +1,25 @@
+	TILEPREP prepares the global adverbs that are used by TILEPLACE
+	to place a particular scan in a "tile" on the graphics page.
+
+	See the Tiles documentation for further details of the tiling
+	process.
+
+	Syntax: TILEPREP(delx, nx, dely, ny, xcpos, ycpos)
+
+	delx and dely are the coordinate increment, in arc seconds,
+	between tiles in the x and y directions in the units of the 
+	coordinate system of the scans to be tiled
+
+	nx and ny are the total number of tiles in the x and y directions
+
+	xcpos and ycpos are the center position, in decimal degrees
+	(i.e. if a scan has those x and y coordinates, the tile for
+	that scan would be centered at the center of the graphics
+	screen).
+
+	This procedure is generally not used directly.  Rather, 
+	TILESAVES does all the work.
+
+	File name: tileprep.prc
+
+	This procedure is included in tile.plib

@@ -1,0 +1,11 @@
+# @(#)tuc.nrao.edu.mkfiles.unipops	5.1 06/22/94
+#
+#   Tucson (downtown) specific mkfiles.unipops
+#   handles empty GAINS file and copying default SETUP files
+#
+if (! -e LGAINS) ${popsdir}sunbin/makefile.exe LGAINS
+echo -n "."
+if (! -e LSETUP && -e ~obs/LSETUP) cp ~obs/LSETUP LSETUP
+echo -n "."
+if (! -e CSETUP && -e ~obs/CSETUP) cp ~obs/CSETUP CSETUP
+echo -n "."

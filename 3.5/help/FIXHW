@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FIXHW:  (ADVERB) If FALSE, then GAUSS will try to find'
+print 'better estimates to the guesses in HWIDTH; else, GAUSS will '
+print 'assume the values in HWIDTH are not to be changed.'
+PRINT ' '

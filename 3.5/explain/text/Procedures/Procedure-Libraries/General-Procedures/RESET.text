@@ -1,0 +1,14 @@
+	RESET resets some adverbs used by the display verbs.
+
+	Syntax: RESET
+
+	Adverbs reset to default values:
+
+		FMARK, VMARK, TMARK, CMARK, BMARK
+
+	The procedure ALL is also called, which resets BDROP and
+	EDROP to 0.
+
+	File name: reset.prc
+
+	This file is included in LSETUP.12meter

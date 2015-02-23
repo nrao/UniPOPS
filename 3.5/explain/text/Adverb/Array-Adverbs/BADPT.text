@@ -1,0 +1,21 @@
+	(ARRAY ADVERB of 12 elements)
+
+	BADPT is an array containing the channels which are considered
+	bad.  The channels are set by SPIKE and removed by REPLACE.
+	BADPT can also be set by hand by the user or via a procedure
+	for use by REPLACE.  All values must be greater than or equal 
+	to 0 and less than the number of channels in Array (0).
+
+	BADPT is used by : REPLACE
+
+	BADPT is set by : SPIKE
+
+	The initial values of BADPT(N) are 0, which means that no bad
+	channels have been found or will be replaced.
+
+	EXAMPLE :
+
+	You want to replace all data points in Array (0) that differ
+	from zero K by more than +20 and -20 K, so you type:
+
+		CUTOFF = 20; SPIKE REPLACE PAGE SHOW

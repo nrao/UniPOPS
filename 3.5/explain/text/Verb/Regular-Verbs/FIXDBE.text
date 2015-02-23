@@ -1,0 +1,26 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	FIXDBE computes and reorders the four-phase digital back-end
+C-	data in Array (0) as switched-power followed by total-power,
+C-	calibration values and zero levels. 
+C-
+C-	It works only for data taken with the 12-meter telescope.
+C-
+C-	No adverbs are used by FIXDBE.
+C-
+C-	ADVERBS SET:
+C-
+C-	   CALVAL       The mean value of (cal_on - cal_off) for the
+C-			data in Array (0).  The initial value is 0.
+C-
+C-	EXAMPLE:
+C-
+C-	You have a continuum observation taken with the 12-meter 
+C-	and its digital back-end.  To reorder the data, type:
+C-
+C-		FIXDBE
+C-
+C------------------------- Continuum ------------------------------------
+

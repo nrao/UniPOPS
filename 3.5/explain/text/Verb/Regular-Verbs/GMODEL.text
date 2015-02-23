@@ -1,0 +1,24 @@
+	(REGULAR VERB)
+
+	GMODEL evaluates the parameters of NGAUSS Gaussians, and
+	constructs the sum of the Gaussians.  This sum replaces the
+	data in Array (0).
+
+	ADVERBS USED:
+
+	  NGAUSS        Number of Gaussians to be evaluated.
+			Initial value is 1.  Can't be greater than 24.
+
+	  CENTER(24)    The center points of the Gaussians.
+	  HEIGHT(24)    Height of Gaussian N.  
+	  HWIDTH(24)    FWHM in # of channels for Gaussian N.
+			Initial values are 0.
+
+	No adverbs are set by GMODEL.
+
+	EXAMPLE:
+
+	You have fitted a Gaussian to your data.  To display the model
+	on top of the already displayed data, specify;
+
+			 GMODEL RESHOW

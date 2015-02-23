@@ -1,0 +1,34 @@
+Class 12 :  Descriptor Block for Each Receiver Channel
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Observed Frequency                            | OBSFREQ  |  R*8   | MHz
+Rest Frequency                                | RESTFREQ |  R*8   | MHz
+Frequency Resolution or Scale Fcator          | FREQRES  |  R*8   | MHz or
+					      |	         |        |   K/Count
+Bandwidth                                     | BW       |  R*8   | MHz
+Receiver Temperature                          | TRX      |  R*8   | K
+Calibration Temperature                       | TCAL     |  R*8   | K
+Source System Temperature                     | STSYS    |  R*8   | K
+Reference System Temperature                  | RTSYS    |  R*8   | K
+Source Temperature                            | TSOURCE  |  R*8   | K
+RMS of Mean                                   | TRMS     |  R*8   | K
+Reference Point Number                        | REFPT    |  R*8   |
+X Value at the Reference Point                | X0       |  R*8   | km/sec or
+					      |	         |        |   degrees
+Delta X                                       | DELTAX   |  R*8   | km/sec
+					      |	         |        |   degrees
+Total Integration Time                        | INTTIME  |  R*8   | seconds
+Number of Integrations                        | NOINT    |  R*8   | 
+Starting Point Number                         | SPN      |  R*8   |
+H2O Opacity                                   | TAUH2O   |  R*8   |
+H2O Temperature                               | TH2O     |  R*8   | K
+O2 Opacity                                    | TAUO2    |  R*8   |
+O2 Temperature                                | TO2      |  R*8   | K
+Polarization                                  | POLARIZ  |  C*8   |
+Effective Integration Time                    | EFFINT   |  R*8   |
+Receiver Information                          | RX_INFO  |  C*16  |
+#if RFRNC CKBK
+
+
+#end

@@ -1,0 +1,42 @@
+	(REGULAR VERB)
+
+	ERROFF turns off the automatic trapping of errors which would
+	normally result in termination of a loop, procedure, etc.
+
+	ERRON turns on the automatic trapping of errors which will
+	result in termination of a loop, procedure, etc..
+
+	The adverb ERRCODE is set when an error occurs and automatic
+	trapping of errors in NOT in effect (i.e. ERROFF has been used).
+	Its value is the message error number that would have otherwise
+	occured.
+
+	No adverbs are used by ERROFF or ERRON.
+
+	ADVERB SET:
+
+	   STATUS(19)   Whether or not error trapping is enabled and is
+			set by the last ERRON or ERROFF command.
+
+			Values: 1 (or TRUE) if ERRON is in effect; -1
+			(or FALSE) if ERROFF is in effect.
+
+ 	EXAMPLE:
+
+	You wish to trap an error created by trying to get a scan which
+	does not exist.  Use the following procedure:
+
+		PROCEDURE CHKERR(CHK_I1,CHK_I2)
+		SCALAR CHK_I
+		FOR CHK_I = CHK_I1 TO CHK_I2
+		   ERROFF; GET CHK_I; ERRON
+		   IF ERRCODE ~= 0.; THEN
+		      PRINT 'CANNOT FIND SCAN NO.' CHK_I
+		   ELSE
+		      BASELINE KEEP
+		   END
+		END
+		FINISH
+
+
+	

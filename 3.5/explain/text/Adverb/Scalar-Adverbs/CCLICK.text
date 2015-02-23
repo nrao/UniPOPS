@@ -1,0 +1,10 @@
+	(SCALAR ADVERB)
+
+	CCLICK is set by CLICK.  It corresponds to the value that
+	the function CCUR would have returned at the crosshair 
+	location when the user clicks a mouse button.
+
+	For a plot made using SHOW, this is the channel number,
+	for a plot made using PLOT, this is the x-axis value,
+	and for a 2-d plot, it is the x-cell number.
+

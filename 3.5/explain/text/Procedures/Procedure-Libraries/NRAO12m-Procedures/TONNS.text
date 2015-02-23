@@ -1,0 +1,35 @@
+	TONNS sets the Arrays up appropriate for a TEMP using the
+	indicated scan number as the ON scan.
+
+	Syntax: TONNS(xscan)
+
+	The 12-m version of TEMP requires that the ON scan be in
+	Array(0), the OFF scan be in Array(1) and the GAINS scan
+	be in Array(2).  They are combined by TEMP to produce:
+
+	((ON-OFF)/OFF) * GAINS
+
+	The appropriate OFF and GAINS scan numbers are found in
+	the header of the ON scan.  These two scans also are forced
+	to have the same subscan number as the ON scan.
+
+	If the OFF scan indicated in the header of the requested
+	ON scan has the same integer value (scan number) as that
+	of the requested ON scan (or has a value of 0) then the
+	scan is assumed to itself be an OFF scan and the procedure
+	does not execute the TEMP verb.
+
+	The sign of the OFF and GAIN scan numbers are forced to be
+	the same as that of the ON scan so that GET1 and GGET behave
+	in the same fashion as GET in the presence of on-line data.
+
+	File name: tonns.prc
+
+	There is a related short hand procedure:
+
+	T(xscan) is equivalent ot TONNS(xscan) followed by PAGE SHOW.
+
+	File name: t.prc
+
+	Both procedures are included in LSETUP.12meter
+

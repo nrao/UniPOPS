@@ -1,0 +1,36 @@
+#! /bin/csh -f
+# @(#)help.exe.sh	5.1 06/22/94
+# Displays selected set of POPS explain file without using EXPLAIN.  Only one
+# file is displayed.
+#
+set noglob
+cd ${popsdir}explain/text
+set com = $0
+set tmp = /tmp/$com:t.$$
+#
+if ($#argv >= 1) then
+    set topic = `echo $1 | tr [a-z] [A-Z]`
+    if ($topic == "HELP") set topic = Help-Facilities
+#
+    (${popsdir}explain/source/manonepage expdir $topic XPLN >! $tmp) >& /dev/null
+#   Create temporary file for prcdir.exe to work on
+#
+    if (-z $tmp) then
+	echo $com:t : No topic with the name of $1
+    else
+       	if ($?WINDOW_PARENT || $?DISPLAY) then
+   	   if ($?WINDOW_PARENT) then
+	      exec cmdtool -WL "" -Wl "" -WI ${popsdir}sunbin/help.icon  \
+		${popsdir}sunbin/prcdir.exe $tmp & 
+	   else
+	      exec xterm -j -sb -wf -sl 1000 -title "HELP" -n "HELP"  \
+		-e ${popsdir}sunbin/prcdir.exe $tmp &
+	   endif
+      	else
+           exec ${popsdir}sunbin/prcdir.exe $tmp
+      	endif
+    endif
+else
+    echo Usage: $com:t topic
+endif
+#

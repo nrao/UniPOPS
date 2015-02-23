@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'TMARK:  (ARRAY-12) Y-values where SHOW & PLOT draw'
+PRINT 'horizontal lines.  Y-cell numbers where LABEL will draw'
+PRINT 'horizontal lines.'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TIMEOFF:  (POINTER-CONT) Used with SAXIS to indicate that'
+PRINT 'SHOW should use as an x-axis time offset.'
+PRINT ' '

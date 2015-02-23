@@ -1,0 +1,33 @@
+	(REGULAR VERB)	       
+
+	Prints data values for each channel in Array (0).  It labels
+	each data point with its x value in units of the current lower
+	x-axis.
+
+	ADVERBS USED:
+
+	  BDROP 	The number of points at each end of the spectrum
+	  EDROP 	which will not be listed.
+			The initial values are 0.
+
+	No adverbs are set by TABLE.
+
+
+      	EXAMPLE:
+
+	To list the data values of scan 13305, specify:
+
+		GET 13305 TABLE
+
+	A portion of the output might look like:
+
+		13305.01    Freq. Res.    4.882812500     kHz
+          Velocity  Temperature Velocity  Temperature Velocity  Temperature
+       1: -302.72     1.211     -301.69     1.111     -300.66     0.819 
+       4: -299.62     2.208     -298.59     4.076     -297.56     0.359 
+       7: -296.53     1.817     -295.50    -0.525     -294.47     1.195  
+      10: -293.44     0.634     -292.41     1.101     -291.38     1.324
+			. . . . . . . . . . . . .
+
+     253: -274.93     0.052     -173.90    -0.006     -172.86    -0.084  
+     256: -173.90    -0.951     

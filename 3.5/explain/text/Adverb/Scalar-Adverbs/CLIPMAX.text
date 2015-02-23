@@ -1,0 +1,19 @@
+	(SCALAR ADVERB)
+
+	CLIPMAX and  CLIPMIN are the maximum and minimum y-values that
+	will be found in Array (0) after it has been CLIPped.
+
+	CLIPMAX and CLIPMIN are used by : CLIP
+
+	No verbs change CLIPMAX and CLIPMIN.
+
+	The initial values of CLIPMAX and CLIPMIN are 9999.000 and
+ 	-9999.000, respectively.
+
+	EXAMPLE :
+
+	To chop a spike down to noise level, specify :
+
+		CLIPMAX = 0.5
+		CLIPMIN = -0.5
+		CLIP

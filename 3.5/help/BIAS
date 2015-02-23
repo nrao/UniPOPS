@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'BIAS:  Adds the value of FACT to the data points in Array 0'
+PRINT 'and stores results back in 0.'
+PRINT ' '
+PRINT 'FACT=',FACT
+PRINT ' ' 

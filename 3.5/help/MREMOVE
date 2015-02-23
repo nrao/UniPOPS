@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MREMOVE:  Deletes data and header from the specified'
+PRINT 'Matrix.  Syntax:  MREMOVE(matrix_num)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

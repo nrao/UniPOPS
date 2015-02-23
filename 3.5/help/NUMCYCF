@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NUMCYCF:  (HEADER-TUC) PROTO12M - The number of fast cycles'
+PRINT 'per scan.'
+PRINT ' '

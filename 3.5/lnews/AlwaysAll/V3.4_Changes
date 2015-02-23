@@ -1,0 +1,54 @@
+New Features in UniPOPS Version 3.4.
+------------------------------------
+
+The following documents significant changes which have been made to
+the system since the printing of Version 3.3 of the Cookbook.
+
+I. Support for the Solaris operating system (SunOS 5.3).
+
+With version 3.4, UniPOPS should now compile and run under the Solaris
+operating system as well as the older SunOS operating system.  Please
+report any problems under Solaris to the UniPOPS support staff by
+using the REPORT verb in UniPOPS or sending e-mail to
+unipops-comments@nrao.edu
+
+II. New GETPOLZ verb for use at the 12-m
+
+The GETPOLZ verb was introduced to access data from the polarizer
+at the 12-m. It can currently only access filter bank data from
+the on-line data file.  This is still an experimental verb and
+its use may change in the future.
+
+III. BADCH improvements
+
+BADCH is used at the 12-m to indicate bad channels in data
+displayed on the graphics screen.  BADCH has been improved so
+that you can indicate bad channels in either spectrum of a 
+two-up display (i.e. two spectra displayed side-by-side).  
+Previously, you were limited to one spectrum at a time, even
+when both were displayed.
+
+IV. u2f and uni2fits enhancement
+
+A preview option has been added to u2f (use the -prev flag).
+This previews the file and returns arguments that one can then 
+use to invoke u2f in its "real-time" mode.  This mode writes the
+data to the FITS file without using any temporary file.
+
+Most users use uni2fits, the front end to u2f.  Uni2fits has
+been changed to use the preview option of u2f.  Users will notice
+a "previewing file" notice.  Users will also notice the improved
+speed of file conversion.  Previously, a temporary file was 
+created that was large enough to hold the largest scan that 
+UniPOPS allows - 10240 channels.  After the data was written
+to this temporary file, that file was transfered to the final
+FITS file with the unnecessary space removed.  This led to
+large temporary files and long execution speeds.  The preview
+argument to u2f provides the information necessary to 
+remove the need for a temporary file.
+
+V. FITS Matix and Cube 
+
+The verbs and utilities that read FITS matrices and cubes have been 
+improved to allow the following values of BITPIX: 8, 16, 32, -32, 64.
+

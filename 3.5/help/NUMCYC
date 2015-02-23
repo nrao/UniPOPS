@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NUMCYC:  (HEADER-TUC) PROTO12M - The number of slow cycles'
+PRINT 'per scan.'
+PRINT ' '

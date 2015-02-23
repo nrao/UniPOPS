@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'SETCLUT:  Assigns values to the color-look-up-table (ADVERB'
+PRINT 'array CLUT) from a set of default color tables.'
+PRINT 'Syntax: SETCLUT(table_num, num_levs)'
+PRINT ' '
+PRINT 'CLUT='
+print CLUT
+PRINT ' ' 

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BGAUSS:  (ADVERB) Channel number at which to begin fitting'
+print 'Gaussians.'
+PRINT ' '

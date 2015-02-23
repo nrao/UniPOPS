@@ -1,0 +1,17 @@
+#!/bin/csh -f
+#
+#   @(#)cvline.sh	5.1 06/22/94
+#
+# Determines whether to call line or line.rmt
+#
+onintr ERROR
+#
+setenv INFANTS /tmp/Infants.$$
+if (-e $INFANTS) rm -f $INFANTS
+touch $INFANTS
+#
+${popsdir}sunbin/cvline.exe
+#
+ERROR:
+${popsdir}sunbin/infantcide $INFANTS
+rm $INFANTS

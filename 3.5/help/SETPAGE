@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SETPAGE:  Sets the plotting region of the graphics screen'
+PRINT 'to user- specified  values.'
+PRINT ' '

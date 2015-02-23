@@ -1,0 +1,69 @@
+   	(REGULAR VERB)
+
+	Syntax:    RETURN
+		   RETURN <expression> 
+
+	RETURN is required in most procedure definitions.  It is good
+	procedure-writing style to include at least one RETURN
+	statement in a procedure.  The RETURN can be placed anywhere in
+	the procedure but is usually located on the line above the
+	FINISH statement.  A procedure can have more than one RETURN
+	statement.  If you don't place a RETURN statement in a
+	procedure then the FINISH statement will perform the equivalent
+	of a RETURN followed by a FINISH.
+
+	RETURN can be used only in procedure definitions.
+
+	If the RETURN statement is not followed by an expression, the
+	procedure is a normal one (i.e., the procedure acts like a
+	regular verb).  If the RETURN is followed by an expression
+	(logical or math expression) or a reference to a scalar or
+	string adverb or an element of an array adverb -- i.e.,
+	something that produces a single real number or a string), then
+	the procedure is a function procedure and can be used to the
+	right of an assignment (=) or PRINT operand (i.e., it acts like
+	a function verb).
+
+	EXAMPLES:
+
+	.  Procedure BUSY which can be called by procedure EG as
+	   follows:
+
+		PROCEDURE BUSY(BU_T)
+		PRINT BU_T, BU_T * BU_T
+		RETURN
+		FINISH
+
+		PROCEDURE EG
+		BUSY(12)
+		PRINT 'THATS ALL'
+		FINISH
+
+	   The command EG will now produce:
+		
+		EG
+		12.0000	   144.0000
+		THATS ALL
+
+	.   The following is an example of how to define a function
+	    procedure:
+
+		PROC FACTORIAL(FACT_I)
+		# Function procedure that calculates the factorial
+		# of its argument
+		SCALAR FACT_I1, FACT_I3
+		#
+		FACT_I1=NINT(FACT_I)
+		FACT_I3=1
+		IF FACT_I>1 THEN
+		  FOR FACT_I2=FACT_I1 TO 2 BY -1
+		     FACT_I3=FACT_I3*FACT_I2
+		     END
+		  END
+		RETURN FACT_I3
+		FINISH
+
+	   Then, typing:  PRINT FACTORIAL(33) will print out the
+	   factorial of 33.  PRINT FACTORIAL(0) will print out 1.000.
+	   X = FACTORIAL(12)  will assign to adverb X the value of the
+	   factorial of 12.

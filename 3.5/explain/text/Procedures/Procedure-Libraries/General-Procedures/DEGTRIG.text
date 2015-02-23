@@ -1,0 +1,30 @@
+	Syntax:   SIND(angle)
+		  COSD(angle)
+		  TAND(angle)
+		  ASIND(value)
+		  ACOSD(value)
+		  ATAND(value)
+		  ATAN2D(value1, value2)
+
+	These trigonometric procedure functions that take or give
+	angles in degrees.
+
+	File name : degtrig.prc 
+
+	NOTE:  All of these procedures are found in the same
+	procedure file.
+
+	No adverbs are used or set by these procedures.
+
+	EXAMPLE:
+
+	To print the sine of 30 degrees, type:
+
+		PRINT SIND(30)	
+
+	To assign the value of the arc-tangent  of 1.0 to X, type:
+
+		X = ATAND(1.0)
+
+	and X should have the value of 45 degrees.
+

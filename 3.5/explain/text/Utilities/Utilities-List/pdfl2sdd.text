@@ -1,0 +1,33 @@
+	The pdfl2sdd utility is used to convert VAX pdfl files to SDD format
+	files.  VAX pdfl format was an old and long-lived format for
+	12-m data files.
+
+	This utility can by used from the SYSTEM command within UniPOPS
+	or at a unix prompt. 
+
+	Syntax: pdfl2sdd pdfl_file_name sdd_file_name
+
+	The conversion program reports on the number of input pdfl 
+	scans as well as the number of output SDD scans.  If the
+	initial guess at the size of the output sdd_file_name is
+	too small, the conversion program will use expandsdd to make
+	the output file large enough.
+	
+	EXAMPLE:
+
+	You want to convert pdfl_hc.xyz, a VAX pdfl format file
+	from the 12-m, to an SDD file having the name hc_92may18.
+
+	At the unix prompt (%) you type (what follows is a typical
+	output, you type only what appears on the first line after
+	the unix prompt):
+	
+	% pdfl2sdd pdfl_hc.xyz hc_92may18
+	Begin converting pdfl_hc.xyz to hc_92may18 ...
+	  Begin conversion of 1844 index entries.
+	   Finished ... 2978 scans written.
+	1+0 records in
+	1+0 records out
+	Constructing index for hc_92may18
+	Conversion finished.
+

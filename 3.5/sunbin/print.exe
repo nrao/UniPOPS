@@ -1,0 +1,20 @@
+#! /bin/csh -f
+# @(#)print.exe.sh	5.1 06/22/94
+#  Shell script for printing out a file 
+#
+if ($#argv < 3) then
+   echo "print.exe: at least 3 arguments needed."
+   echo "   print.exe printcmd textfilter filename[s]"
+   exit(1)
+endif
+foreach file ($argv[3-])
+   if (-f $file && ! -z $file) then 
+      if ($2 != "") then
+        echo "pr -f $file | $2 | $1" | /bin/csh -f
+      else
+        echo "pr -f $file | $1" | /bin/csh -f
+      endif
+   else
+	echo "Cannot print" $file".  Does not exist, empty, or unprintable."
+   endif
+end

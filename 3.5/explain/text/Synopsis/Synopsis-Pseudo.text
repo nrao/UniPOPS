@@ -1,0 +1,127 @@
+#if CKBK
+#def SCT A-7.
+#def DSH ----
+A-7 Pseudo Verbs
+----------------
+
+#else
+#def SCT
+#def DSH
+#end
+SCT1 File Manipulating
+DSH-------------------
+
+BATCH:      Reads in and executes the UniPOPS commands in the
+	    specified file.  Syntax: BATCH filename
+
+CHNGFILE:   Changes the files which the program can access.
+	    Syntax: CHNGFILE action file_type [file_name]
+		or: CHNGFILE
+
+CHNGPRJ:    Changes the project code for access to the online
+	    data file.  Syntax: CHNGPRJ new_project
+
+CHNGVER:    (TUC) Changes the version number for the indicated 
+	    12-meter on-line file type.
+            Syntax: CHNGVER file_type
+                or: CHNGVER
+
+DIR:  	    Lists the contents of the disk directories.  
+	    Syntax: DIR or DIR directory/files
+
+EDIT:  	    Allows editing of given file using a system editor.
+	    Syntax: EDIT filename
+
+FILES:      Lists files currently accessible by the program.
+
+LASER:      Sends the designated text files to the printer.
+	    Syntax: LASER filenames or LASER
+
+OLFILES:    (TUC) Lists the 12-meter online files currently 
+	    accessible by the program.
+
+PRCDIR:     Lists the files on disk which contain procedures and
+	    which can be "BATCH"ed into the program.
+
+TYPE:  	    Lists the contents of the specified disk text file.
+	    Syntax: TYPE filename
+
+
+SCT2 Help Facilities
+DSH-----------------
+
+EXPLAIN:    Starts up the EXPLAIN help facility.  
+	    Syntax:  EXPLAIN or EXPLAIN topic
+
+HELP:  	    The HELP (quick reference) facility.  Syntax: HELP, 
+	    HELP HELP, HELP <pointer>, or HELP <topic>.
+
+HISTORY:    Lists recent commands that the user has issued.
+
+IDENTIFY:   Searches through help files for particular topic.
+	    Syntax: IDENTIFY, IDENTIFY topic, or IDENTIFY topic deg
+
+REPORT:     Starts up the bug and comment reporting facility.
+
+SYSHELP:    Asks system for help on specified UNIX system command.
+	    Syntax: SYSHELP sys_command
+
+WHATIS:     Tells the user the type of a symbol.  Syntax:  WHATIS symbol
+#if CKBK
+
+#else
+
+
+#end
+SCT3 Memory Management and Program Control
+DSH---------------------------------------
+
+COMPRESS:   Recovers all wasted memory space for user.
+ 
+CORE:       Reports on the usage of the program's memory space.
+
+EXIT:  	    Terminates the program.
+
+RESTART:    Restarts the program from the beginning.
+
+RESTORE:    Restores the procedures, adverbs, etc.  from the
+	    specified STORE bin.  Syntax: RESTORE bin_number
+
+SCRATCH:    Deletes specified procedure, alias or user-defined adverb
+	    from UniPOPS memory but does not return the space used by
+	    the procedure.  Syntax:  SCRATCH unwanted_name
+
+STORE:      Stores the current procedures, adverbs, etc. into the
+	    specified STORE bin to be later recalled by RESTORE.
+	    Syntax:  STORE bin_number
+
+
+SCT4 Miscellaneous Utilities
+DSH-------------------------
+
+DOCUMENT:   Echoes specified text.  Syntax:  DOCUMENT anything
+
+KILLGRPH:   Kills current graphical window & establishes a
+	    replacement.
+
+SYSTEM:     Executes the specified system command.  
+	    Syntax:  SYSTEM sys_command.
+
+UNDO:       Tries to undo the previous command.
+
+
+SCT5 Procedures
+DSH------------
+
+LIST:  	    Lists the specified procedure.  Syntax:  LIST proc_name
+
+POPSEDIT:   Starts up Pops line editor on specified procedure
+	    at specified line number.
+	    Syntax:  POPSEDIT proc_name line_number
+
+PROCEDURE:  Starts definition of a user-defined procedure.
+	    Syntax: PROC name, PROC name(dummy_arguments),
+	    PROCEDURE name, or PROCEDURE name(dummy_arguments)
+#if CKBK
+
+#end

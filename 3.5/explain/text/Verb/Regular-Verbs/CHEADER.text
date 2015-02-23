@@ -1,0 +1,13 @@
+	(REGULAR VERB)
+
+	CHEADER summarizes the header parameters for the cube last read
+	in by READCUBE.  The format of the output is self explanatory.
+
+	No adverbs are used or set by CHEADER.
+
+	EXAMPLE:
+
+	To print the header information for the current cube on the text
+	screen, specify:
+
+		CHEADER

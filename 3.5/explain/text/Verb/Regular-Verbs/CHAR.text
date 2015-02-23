@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+        Syntax:    CHAR (string)
+
+	CHAR draws a horizontal string of characters on the graphics
+	screen at the current cursor position.  (If you want a vertical
+	string, use VCHAR).  The string you want to print should be typed
+	within single quotes or should be the name of a string adverb or
+	a function verb that returns a string (e.g. FNAME).
+
+	Note that each character has a default size of about 25 pixels
+	high and 14 wide which can be changed with the CHARSIZE
+	command.  Bottom left corner of the first character will be
+	plotted at a location specified by the last PLACE, VCTR, VCHAR,
+	or CHAR command or by the program.
+
+	You can change the character font with FONTSET.
+
+	No adverbs are used or set by CHAR.
+
+	EXAMPLE: 
+
+		PLACE (100,100)
+		CHAR ('HELP')
+		PLACE(300,234); CHAR(XTITLE)
+
+	will draw the string 'HELP' at pixel (100,100) on the graphics
+	screen and will draw the string adverb XTITLE at pixel
+	(300,234).

@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'VSHIFT:  (LINE)  Calculates the vel. difference between the'
+PRINT 'scans in Array (0) & internal ACCUM array, storing this (in'
+PRINT 'chans.) in ASHIFT.'
+PRINT ' '
+PRINT '(CONTINUUM) Sets ASHIFT to zero.'
+PRINT ' '
+PRINT 'ASHIFT=',ASHIFT
+PRINT ' ' 

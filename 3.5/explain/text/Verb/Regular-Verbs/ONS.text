@@ -1,0 +1,22 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	ONS marks every ON sample of an On-Off continuum scan with a
+C-	plus (+) symbol.  A SHOW plot must have been performed before
+C-	calling ONS.
+C-
+C-	No adverbs are used or set by ONS.
+C-
+C-	EXAMPLE:
+C-
+C-	Scan 1234 is an On-Off scan but you are not sure which
+C-	are the on and which are the off samples, so you type:
+C-
+C-		PAGE SHOW ONS
+C-
+C-	and plus signs are drawn on the screen at the location
+C-	of the ONS.
+C-
+C------------------------- Continuum ------------------------------------
+

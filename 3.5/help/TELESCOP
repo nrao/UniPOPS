@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'TELESCOP:  (HEADER) Name of telescope -- 8 character string.'
+PRINT ' '

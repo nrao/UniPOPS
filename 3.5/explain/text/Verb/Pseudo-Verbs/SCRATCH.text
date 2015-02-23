@@ -1,0 +1,31 @@
+        (PSEUDO VERB)
+
+	Syntax:    SCRATCH proc-name
+		   SCRATCH adverb-name
+		   SCRATCH alias-name
+
+	SCRATCH will eliminate a user defined procedure, global adverb,
+	or global alias from the program, but does not return the
+	space used by these entities.  You should use COMPRESS to
+	reclaim this space.
+
+	SCRATCH will not let you scratch any built-in procedures, adverbs,
+	verbs, or aliases.  
+
+	You also cannot delete something that is referenced by a
+	procedure or alias.   If you try to delete such an entity,
+	UniPOPS will provide you with a list of procedures or aliases
+	that make use of the thing you are trying to scratch.  You
+	must delete all references to the item you want to scratch
+	before SCRATCH will delete it.
+
+	SCRATCH can be used only in execute mode and must be the only
+	thing on the command line.
+
+	EXAMPLE: 
+
+	.  To eliminate the procedure, adverb, or alias XMPL from the
+	   program memory, specify:
+
+			 SCRATCH XMPL
+

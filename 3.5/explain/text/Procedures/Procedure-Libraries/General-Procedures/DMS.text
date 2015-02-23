@@ -1,0 +1,31 @@
+	DMS decomposes an angle into degrees, minutes and seconds.
+	The sign (+/-) is returned.  All other returned values are
+	guaranteed to be >= 0.   The returned degrees and minutes are
+	guaranteed to be integers.
+
+	Syntax: dms(angle, sgn, ideg, imin, secs)
+
+	angle is the input angle in decimal degrees
+	sgn is the sign of angle, 1.0 if angle >= 0, else -1.0
+	ideg is the degrees, guaranteed to be an integer
+	imin is the minutes, guaranteed to be an integer
+	secs is the seconds.
+
+	angle is the only "input" parameter, all the other parameters
+	must be given as adverbs.
+
+	DMS is used heavily by CUBEINPUT
+
+	File name: dms.prc
+
+	This procedure is included in map.plib
+
+	Example:
+
+	You want to decompose the Declination -45.3024:
+
+		> SCALAR sgn, ideg, imin, secs
+		> DMS(-45.3024, sgn, ideg, imin, secs)
+		> PRINT sgn, ideg, imin, secs
+		  -1.000000    45.00000    18.00000    8.635254
+

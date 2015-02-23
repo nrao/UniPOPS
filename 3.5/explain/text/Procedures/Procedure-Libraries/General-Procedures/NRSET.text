@@ -1,0 +1,26 @@
+	Syntax:  NRSET(num_boxes)
+
+	NRSET will allow the user to set up values for NREGION using
+	the cross hair.  The user must specify the number of baseline
+	regions ( > 0 and < 16) and a set of cross hairs will be
+	generated.  The user, starting on the left of the display,
+	"clicks" the cross hair at the starting and stopping points of
+	the num-boxes baseline regions.  In all, 2*num_boxes clicks
+	will be needed.
+
+	No adverbs are used by NRSET.  NRSET assumes that you have
+	performed a previous SHOW command.
+
+	File name: nrset.prc
+
+	ADVERBS SET:	NREGION
+
+	EXAMPLE:
+
+	You want to easily set up baseline regions, so you:
+
+	PAGE SHOW		Displays the data
+	NRSET 6			Sets up 6 baseline regions
+	BSHAPE BSHOW		Fits a polynomial baseline and displays the
+				fit on top of the original data.
+

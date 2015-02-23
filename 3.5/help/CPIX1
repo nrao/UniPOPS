@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CPIX1:  (HEADER-CUBE) The x-axis reference cell in the Cube'
+PRINT 'which has the specified reference value.'
+PRINT ' '

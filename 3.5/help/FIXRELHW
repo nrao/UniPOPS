@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FIXRELHW:  (ADVERB) If TRUE, then GAUSS will try to find '
+print 'better estimates to the relative HWIDTHs'
+PRINT ' '

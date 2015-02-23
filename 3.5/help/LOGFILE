@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LOGFILE:  (POINTER) Indicates the log file type for'
+PRINT 'CHNGFILE and Z_CHNGFIL.'
+PRINT ' '

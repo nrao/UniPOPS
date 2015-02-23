@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'XCLICK:  (ADVERB) Set by the CLICK verb to the value that'
+PRINT 'would be returned by the XCUR function.'
+PRINT ' '

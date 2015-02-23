@@ -1,0 +1,130 @@
+	(FUNCTION VERB)
+
+	Syntax:  FOPEN( filename, mode)
+
+	FOPEN opens a file for subsequent reads or writes by FREAD and
+	FPRINT, respectively.  It returns a value which indicates a
+	unit number or file pointer that you need to use in all
+	subsequent actions (writing, reading, closing, etc.) on the
+	file.
+
+	The only types of files that can be opened are text, sequential
+	access files.  No binary or direct-access files are allowed.
+	Up to 10 files can be simultaneously opened (if the operating
+	system allows).
+
+	The 'filename' parameter must be either a string constant or a
+	string adverb that contains the name of the file that you want
+	to open.  The 'filename' can contain wildcards ('*') and
+	environment variables (which must have been set before the
+	program started).  'Mode' is either a scalar constant, scalar
+	adverb, element of an array, or a real-valued expression that
+	indicates how you want the file to be opened.  To assist you in
+	constructing a correct value for mode, we have provided nine
+	pointer adverbs which can be combined as described below.  The
+	modes fall into three categories:
+
+
+			   File Access
+	-----------------------------------------------
+	Type		   Pointer adverb	Value
+	-----------------------------------------------
+	Read and write		RW		  0 [Default]
+	Write Only		WO		  1
+	Read Only		RO		  2
+	-----------------------------------------------
+
+			   File Positioning 
+	-----------------------------------------------
+	Type		   Pointer adverb	Value
+	-----------------------------------------------
+	Rewind (at start	REW		  0 [Default]
+	   of file)
+	End-of-file		EOF		  10
+	-----------------------------------------------
+
+			   Existence of file 
+	-----------------------------------------------
+	Type		   Pointer adverb	Value
+	-----------------------------------------------
+	Unknown 		UNK		  0 [Default]
+	Old			OLD		 100
+	New			NEW		 200
+	Scratch (temporary)	SCR		 300
+	-----------------------------------------------
+
+	You can pick one mode out of each category and sum the pointer
+	adverbs together to produce the desired type of file access.
+	For example, specifying a mode of zero will open the file for
+	reading and writing, positioned initially at the start of the
+	file, and the file can either already exists or will be created
+	if it doesn't exist (i.e., its existence is 'unknown').   A
+	mode of SCR+WO = 301 will open a temporary (scratch) file
+	(i.e., it will be deleted when it is closed), initially
+	positioned at the start of the file, for writing only.
+	Specifying a mode of DEFAULT is equivalent to a mode of zero.
+
+	Once a file has been opened with certain access privileges, you
+	can only change those privileges by closing and reopening the
+	file.
+
+	Mode cannot be less than zero or have values other than the sum
+	of values allowed by the above table -- i.e., the following
+	modes are legal:
+
+	0		default		1		311	
+	NEW+REW+RO
+
+	The following modes are illegal
+
+	SCR+OLD		-12		142		OLD+RO+WO
+
+	In addition, the following restrictions also apply:
+
+	. If a scratch file is desired, you should supply am empty
+	  string for a filename since the system will provide the
+	  name of the file for you.
+
+	. A scratch or new file cannot be opened for reading only.
+
+
+	Verbs associated with FOPEN are:
+
+	FCLOSE(unit)                    Closing the file
+	FREWIND(unit)                   Rewinds the file to its first
+					   record
+	FREAD(unit, format) list        Reads into list using the
+					   specified format from the
+					   file
+	FPRINT(unit, format) list       Writes using the specified
+					   format to the file
+	FSTATUS                         Summarizes all opened files and
+					   their access modes.
+	FNAME(unit)			Function verb that returns a 
+				  	   string containing the name of 
+					   the file
+
+	where unit is the unit number returned by the call to FOPEN,
+	format is a format specification (see FREAD and FPRINT), and
+	list is a list of adverbs, constants, expressions to be printed
+	or read.
+
+	No adverbs are used or set by FOPEN.
+
+	EXAMPLES:
+
+		UNIT = FOPEN('garbage', RW+EOF+OLD)
+
+		UNIT = FOPEN('blah', DEFAULT)
+
+		PRINT FOPEN(' ', SCR)
+
+		X = RW+REW+NEW; FILE="Orion.CO"
+		UNIT = FOPEN(FILE, X)
+
+		UNIT = FOPEN('$DATA/blah', RW+EOF+OLD)
+
+	In this last example, the environment variable $DATA would
+	be expanded by the program to whatever its value was when
+	the program was started.
+

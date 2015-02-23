@@ -1,0 +1,50 @@
+        (REGULAR VERB)
+
+	Syntax:    POINTER name1 value1, name2 value2, ....
+	 	   GLOBAL POINTER name1 value1, name2 value2, ....
+
+	POINTER creates and allocates the requested space for pointer
+	adverbs with the specified names and values.  POINTER must be
+	the only command on the input line -- no other commands can
+	precede or follow it.
+
+	The names for pointers must follow the conventions for naming
+	adverbs and procedures.  The values you supply and which will
+	be given to the pointer must be a floating- point number.
+
+	More than one pointer can be defined by a single ARRAY
+	statement.
+
+	If the pointer is created while in execute mode, the pointer
+	becomes a global symbol and you can reference it from within
+	execute mode and from within all procedures.  If the pointer is
+	created while in compile mode (i.e., in a procedure definition)
+	and is proceeded by the word GLOBAL (as in the second example
+	of syntax above), then the pointer is created as a global
+	symbol and you can reference it within execute mode and all
+	procedures.  If the pointer is created while in compile mode
+	(i.e., in a procedure definition) and is NOT proceeded by the
+	word GLOBAL, then the pointer is created as a local symbol and
+	you can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global pointer cannot be given new values but they can be
+	scratched (deleted) using the SCRATCH verb.  Local pointers can
+	be scratched by editing the procedure definition which created
+	the pointer.
+
+	HELP POINTER will list all of the global pointers (built-in and
+	user-defined) that currently exist.
+
+	EXAMPLE: 
+
+	.  The following creates two pointers, named XY and XZ, which
+	   are given the values of 1.0 and 3.1415, respectively.
+
+	   	POINTER XY 1.0, XZ 3.1415   
+
+	.  The following, if included within a procedure definition,
+	   creates a global pointer with a value of 1.34e12.
+
+		GLOBAL POINTER DEF 1.34E12   	
+

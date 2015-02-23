@@ -1,0 +1,70 @@
+	(PSEUDO VERB)
+
+        Syntax:    EDIT filename 
+		   EDIT
+
+	EDIT allows you to modify an already existing text file or
+	create a new one.   EDIT invokes a user-specified editor.  You 
+	will be asked to supply a file name if you do not provide one 
+	as an argument to EDIT.
+
+	If filename is not found, EDIT will look for a file of that
+	name in the standard procedure libraries.  If filename is
+	found there, a copy will be made in your current directory and
+	you will be allowed to edit that copy.  This feature is useful
+	if you wish to make alterations to one of the standard
+	procedures.
+
+	The editor must be specified before you run the program.  For most
+	new users this is probably accomplished the first time they
+	log into their account by answering a question.  The choice
+	of editor is determined by the value of the pospeditor environment
+	variable.  This is usually set during log-in, often in a file
+	named .unipops.  See your local system administrator or UniPOPS
+	guru for help.
+
+	EDIT can be used only in execute mode and must be the only
+	thing on the command line.
+
+	EDIT, in conjunction with the BATCH command, is useful for
+	creating or editing procedures.
+
+	NOTE:  The available editors will vary from one computer system to
+	another.  Check with the system's manager for the latest
+	information on editors.
+
+	No adverbs are used or set by EDIT.
+
+	EXAMPLES :
+
+	You want to create a procedure, which is to remove a linear
+	baseline from you data, on disk in your current directory, so
+	specify:
+
+		EDIT basrm.prc
+
+	to start up an editor which you will use to create the file
+	that contains the definition of your procedure.
+
+	After saving the file and exiting the editor, you install the
+	procedure by typing:
+
+		BATCH basrm.prc 	
+		
+	You do not like the prompt that the standard 12-m procedure
+	FBDATA chooses for you.  After some searching you find that the
+	procedure is in a file name "fbdata.prc", so you type:
+
+		EDIT fbdata.prc
+
+	Since EDIT can not find a file name fbdata.prc in the current
+	directory, it makes a copy of the standard file fbdata.prc for
+	you and starts up an editor.  After you make your desired
+	changes and saved them to your copy of fbdata.prc, you batch
+	these changes in by typing :
+
+		BATCH fbdata.prc
+
+	EDIT always informs you when it is copying a standard procedure
+	file over to your area for local editing.
+

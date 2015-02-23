@@ -1,0 +1,28 @@
+	(REGULAR VERB)
+
+	Syntax:    KGET scan-number.rcvr-number 
+
+	KGET copies a scan from the keep disk file to Array (0).  
+	KGET requires the desired scan number as its object.  
+
+	The rcvr-number specifies which back-end's data is to be
+	retrieved.  Back-end number 1 is specified as a .01, back-end
+	number 2 as .02, etc.  If rcvr-number is not specified, the
+	first back-end is retrieved.
+
+	No adverbs are used or set by KGET.
+
+	EXAMPLES:
+       
+	.   To bring data from the first receiver of scan 550 from the
+	    keep file and display it on the screen,
+              
+	      KGET 550 PAGE SHOW 	Equivalent to KGET 550.01
+					PAGE SHOW
+
+	.   To bring data from the fourth receiver of scan 550 from the
+	    disk and display it on the screen,
+
+	      KGET 550.04 PAGE SHOW
+
+

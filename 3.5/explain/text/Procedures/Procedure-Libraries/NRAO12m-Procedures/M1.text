@@ -1,0 +1,22 @@
+	M1 reduces polarization 1 (subscan .01) of a continuum
+	scan using SWITCHED.
+
+	Syntax: M1(scan_number)
+
+	File name: m1.prc
+
+	This procedure is included in CSETUP.12meter
+
+	Example:
+
+	You have a continuum mapping scan with scan number 72.  
+	You type:
+
+		M1(72)
+
+	And the following happens:
+
+		GET 72.01
+		SWITCHED
+		PAGE
+		SHOW

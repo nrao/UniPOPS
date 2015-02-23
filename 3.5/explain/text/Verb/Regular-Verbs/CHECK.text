@@ -1,0 +1,30 @@
+	(REGULAR VERB)
+
+	CHECK prints out the scan number (if valid) of data in the
+	current NSAVE bin of the 'save' file.
+
+	ADVERB USED:
+
+	   NSAVE        The number of the disk bin whose data
+			are checked.  The initial value is 1.
+
+	No adverbs are set by CHECK.
+
+	EXAMPLE:
+
+	You want to find out if you have used SAVE bin number 10 so,
+	you type:
+
+		NSAVE = 10
+	 	CHECK
+
+	Will return one of the following:
+
+		NSAVE =   10 contains scan    17.01
+ 
+        if save-bin 10 contains scan 17.01, or     
+
+		NSAVE =   10 is empty
+
+	if save-bin 10 is empty.
+

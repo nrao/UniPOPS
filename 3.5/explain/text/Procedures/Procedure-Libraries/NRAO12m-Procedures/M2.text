@@ -1,0 +1,22 @@
+	M2 reduces polarization 2 (subscan .02) of a continuum
+	scan using SWITCHED.
+
+	Syntax: M2(scan_number)
+
+	File name: m2.prc
+
+	This procedure is included in CSETUP.12meter
+
+	Example:
+
+	You have a continuum mapping scan with scan number 72.  
+	You type:
+
+		M2(72)
+
+	And the following happens:
+
+		GET 72.02
+		SWITCHED
+		PAGE
+		SHOW

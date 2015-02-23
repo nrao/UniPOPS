@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'OFFDATA:  (POINTER) Indicates off-line data file for TELL,'
+PRINT 'SUMMARY or SELECT.'
+PRINT ' '

@@ -1,0 +1,49 @@
+	(REGULAR VERB)
+
+	RSTPAGE resets any plotting limits set by the SETPAGE verb.  It
+	is useful when you have been reseting plot regions on the page
+	but want to go back to the default plot regions.  The plot
+	boundaries reset by RSTPAGE affect two-dimensional displays,
+	PLOT, SHOW and routines which use the results of the last
+	display (FLAG, FCUR, GDISPLAY, GPARTS, etc.)
+
+	RSTPAGE also resets the character size to its default value of
+	11 points.
+
+	No adverbs are used by RSTPAGE.
+
+	ADVERBS SET:
+
+	STATUS(7)    Present character size (in points) as determined by
+		     the last call to CHARSIZE, RSTPAGE, or SETPAGE.
+
+	STATUS(25)   Lowest x-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(26)   Highest x-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(27)   Lowest y-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	STATUS(28)   Highest y-axis pixel number for drawing to the
+		     graphics screen as determined by the last call to
+		     SETPAGE or RSTPAGE.
+
+	EXAMPLE:
+
+	You want to have multiple plots on a page so you use SETPAGE to
+	set up plot boundaries.
+
+		SETPAGE(100,200,100,200)
+		SHOW
+		SETPAGE(300,500,500,800)
+		PLOT
+
+	Now, you want to go back to the full page display so you type:
+
+		RSTPAGE SHOW
+

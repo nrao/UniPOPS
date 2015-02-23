@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	MTABLE lists out the contents of Matrix (0) in a human-readable
+	format.  The x and y-axis cell numbers are supplied along with
+	the data values.
+
+	Adverbs used:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be processed.
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be processed.
+
+	No adverbs are set by MTABLE
+
+	EXAMPLE:
+
+	You want a disk file to contain the data values in Matrix (3)
+	so you type:
+
+		MCOPY(3,0) PRINTER MTABLE CRT

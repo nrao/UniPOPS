@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RPHASE:  (ADVERB) The phase, in number of channels, for'
+PRINT 'sinusoidal baseline fitting.'
+PRINT ' '

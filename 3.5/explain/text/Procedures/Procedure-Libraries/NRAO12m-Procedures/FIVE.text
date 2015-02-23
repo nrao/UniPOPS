@@ -1,0 +1,32 @@
+	FIVE reduces a 5-point continuum scan and displays the result.
+
+	Syntax: FIVE(scan_number)
+
+	Uses Array(8) and Array(9) as work space and leaves the result
+	in Array(0).
+
+	This procedure sets Array(0) up so that the continuum version
+	of PDOC has the correct values to work with.
+
+	File name: five.prc
+
+	This procedure is often executed through two related
+	procedures:
+
+	F1(scan_number) forces the scan_number given as the argument
+	to FIVE to have a subscan number of 1 (i.e. if scan 45 is
+	is 5-point continuum scan, then F1(45) would reduce
+	45.01).  Any subscan value present in the input scan_number
+	is ignored by F1.
+
+	File name: f1.prc
+
+	F2(scan_number) forces the scan_number given as the argument
+	to FIVE to have a subscan number of 2 (i.e. if scan 45 is
+	is 5-point continuum scan, then F2(45) would reduce
+	45.02).  Any subscan value present in the input scan_number
+	is ignored by F2.
+
+	File name: f2.prc
+
+	All of these procedures are included in CSETUP.12meter

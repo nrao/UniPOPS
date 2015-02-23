@@ -1,0 +1,134 @@
+8. Changing the Resolution of a Scan
+------------------------------------
+
+It is often necessary to change the resolution of a spectrum or
+continuum scan, for example by smoothing it to improve its
+signal-to-noise ratio, or by smoothing to obtain data sets at a common
+resolution to permit intercomparison.  There are a number of ways in
+which this can be achieved simply in UniPOPS,
+
+	i)   Boxcar smoothing
+	ii)  Hanning smoothing
+	iii) Gaussian smoothing
+	iv)  Smoothing with an arbitrary user-defined function
+	v)   Convolution and deconvolution with an arbitrary function
+	vi)  Cross-correlation permitting optimal-filtering
+
+Each of these operations will now be described.
+
+8.1 Boxcar Smoothing
+--------------------
+
+To give boxcar smoothing, the verb BOXCAR averages together an ODD
+number of consecutive data points centered on each element of Array
+(0).  You should set the adverb NBOX equal to the number of points to
+be averaged (initial value, NBOX = 3).
+
+Suppose you wish to average five consecutive points to smooth the scan
+in Array (0), type,
+
+	>NBOX = 5
+	>BOXCAR
+
+8.2 Hanning Smoothing
+---------------------
+
+Hanning smoothing operates on the data in Array (0) using the
+algorithm,
+
+	x(i) = 0.25*x(i-1) + 0.5*x(i) + 0.25*x(i+1)
+
+This operation is performed by invoking the verb HANNING, which employs
+no adverbs. To Hanning smooth the data in Array (0), just type,
+
+	>HANNING
+
+8.3 Gaussian Smoothing
+----------------------
+
+The verb CHNGRES smooths the data in Array (0) from its present
+resolution to a lower resolution specified by the adverb NEWRES
+(initial value 0). NEWRES must be specified in channels, and be > 1
+although it need not be an integer.
+
+CHNGRES computes the width of the required Gaussian smoothing function
+from the present resolution (assumed to be the channel separation), and
+the value in NEWRES, and convolves the spectrum with this smoothing
+function. Note that NEWRES must exceed the present resolution.
+
+For example, if the data in Array (0) has a channel separation of 500
+kHz, and it is required to smooth it to 2.2 MHz, type,
+
+	>NEWRES = 4.4
+	>CHNGRES
+
+8.4 Smoothing with an Arbitrary Function
+----------------------------------------
+
+Sometimes you may wish to define the function with which the data is to
+be convolved. This function, which must not exceed 11 elements in
+total, is placed in the array adverb SMWGT. The number of elements in
+the function is placed in SMWGT(1), and the values of the function go
+into all, or part, of SMWGT(2) - SMWGT(12). If the smoothing function
+has N points,
+
+	SMWGT(1) = N
+	SMWGT(2 to N+1) = the smoothing function
+
+When SMWGT has been set up, the convolution operation is performed by
+invoking the verb SMOOTH.
+
+For example, if it is required to convolve the data in Array (0) with
+the function, 0.125, 0.25, 0.5, 0.25, 0.125, then type,
+
+	>SMWGT = 5, 0.125, 0.25, 0.5, 0.25, 0.125
+	>SMOOTH
+
+NOTE : If the number of points in the convolving function are odd (as
+       in the above example), then the center of the function lies in
+       SMWGT((N+3)/2). If the number of points is even, then the center
+       of the function is in SMWGT((N+4)/2).
+
+
+An even more general facility, allowing both general convolution and
+deconvolution, exists through the verb pair CONVFCN and DECNVLV.
+CONVFCN computes the convolution of the contents of Arrays (0) and (1).
+DECNVLV deconvolves the values in Array (1) from those in Array (0).
+For both CONVFCN and DECNVLV, the number of data points in the two
+arrays must be identical, and the data in Array (0) is replaced by the
+results. Note that DECNVLV can be used to obtain the deconvolution of
+over-sampled data.
+
+Suppose you have two data arrays in Arrays (0) and (1) and want to
+convolve them together, type,
+
+	>CONVFCN
+
+Following this, the convolution of the two functions now resides in
+Array (0). If you now want to deconvolve this result and get the
+original data back in Array (0), type,
+
+	>DECNVLV
+
+8.5 The Cross-Correlation of Arrays and Optimal-Filtering
+---------------------------------------------------------
+
+The verb CROSSFCN computes the cross-correlation function of the
+contents of Arrays (0) and (1). The data in Array (0) is overwritten
+with the results of the cross-correlation.  The number of data points
+in the two arrays must be identical.
+
+CROSSFCN can be used to optimally-filter your data. Suppose your
+observed spectrum (scan number 1000) is rather noisy, but you are sure
+that a line exists within it, and probably has a line-width of 5
+channels.  You can optimally-filter the data by constructing a Gaussian
+of unit height and width 5 channels, centered in the bandpass, and
+cross-correlate this model spectrum with the real one.  To do this,
+type,
+
+	>GET 1000 
+	>HEIGHT=1; CENTER=H0(NOINT)/2+1; HWIDTH=5
+	>GMODEL COPY(0,1)
+	>#You have created a model of the line. Now cross-correlate
+	>#               model and spectrum and display results.
+	>GET 1000; CROSSFCN PAGE SHOW

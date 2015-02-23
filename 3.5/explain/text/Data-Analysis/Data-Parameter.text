@@ -1,0 +1,6 @@
+
+	Data parameter routines provide numbers which qualify some
+	aspect of the data.  The values of data points are NOT altered
+	in any ways.  An example would be calculating an RMS noise level
+	for a spectral line observation.
+

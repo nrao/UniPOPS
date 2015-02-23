@@ -1,0 +1,87 @@
+	CSETUP.12meter is a list of BATCH commands and alises
+	that together install all of the standard NRAO 12-meter
+	continuum analysis procedures.   The continuum setup
+	file provided for new users at the 12-meter simply BATCHes this 
+	file.  In other words, the default CSETUP file for 12-meter users 
+	should look something like this:
+
+		BATCH CSETUP.12meter
+
+	Users are free to tailor this file as they see fit.
+
+	By typing "EDIT CSETUP.12meter" at a UniPOPS prompt, you
+	will be given a copy of this file which you can edit
+	as you wish.  This should not be attempted until you are
+	familiar with what the standard version consists of.
+
+	The following procedures are available by BATCHing CSETUP.12meter.
+	(see the individual documentation and the listing for each
+	procedure for more information):
+
+	General Procedures:		File Name:
+
+		A			a.prc
+		ADD			add.prc
+		ADDFEED			addfeed.prc
+		ALL			all.prc
+		ANNOTATE		annotate.prc
+		NEWFEED			addfeed.prc
+		XX			xx.prc
+
+	Set the continuum version number:
+
+		CONVER			conver.prc
+
+	Process five-point scans:
+
+		CF1			cf1.prc
+		CF2			cf2.prc
+		FIVE			five.prc
+
+	Process focus scans:
+
+		FOCA1			foca1.prc
+		FOCA2			foca2.prc
+		FOCALIZE		focalize.prc
+
+	Processing mapping row scans:
+
+		M1			m1.prc
+		M2			m2.prc
+		MM			mm.prc
+		MM1			mm1.prc
+		MM2			mm2.prc
+
+	Process SEQ scans:
+
+		S1			cs1.prc
+		S2			cs2.prc
+		SEQ			seq.prc
+
+	Process TIPPING scans:
+
+		SPTIP			sptip.prc
+		SPTIP1			sptip1.prc
+		SPTIP2			sptip2.prc
+		STIP			stip.prc
+
+	Averaging scans:
+
+		CON_C1			con_c1.prc
+		CON_C2			con_c2.prc
+		CON_CB			con_cb.prc
+		CON_PSTACK		con_pstack.prc
+		CSTACK			cstack.prc
+		PRCSTACK		con_prcstack.prc
+
+	Alises set by CSETUP.12meter:
+
+		Alias			Actual
+
+		C1			CON_C1
+		C2			CON_C2
+		CB			CON_CB
+		F			FIVE
+		FOCA			FOCALIZE
+		MAKECOPY		GCOPY
+		S			SEQ

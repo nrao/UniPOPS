@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'LINETYPE:  Sets up default line type for one-dimensional'
+PRINT 'SHOW, RESHOW, or PLOT displays.  '
+PRINT 'Syntax: LINETYPE(line_num)'
+PRINT ' '

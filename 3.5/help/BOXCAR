@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'BOXCAR:  Smooths the data in Array 0 using a boxcar'
+PRINT 'smoothing function.'
+PRINT ' '
+PRINT 'NBOX=',NBOX
+PRINT ' ' 

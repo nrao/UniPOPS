@@ -1,0 +1,12 @@
+	Gets a range of scans and does a DOC on each of them.  This
+	produces a useful table summary of the scans.
+
+	Syntax: LDISK(start, stop)
+
+	Where start and stop and the first and last scan numbers of
+	the range you are interested in.  The increment between scans
+	is 1.
+
+	File name: ldisk.prc
+
+	This procedure is included in LSETUP.12meter

@@ -1,0 +1,6 @@
+
+	When dealing with a large number of scans, the user may want to
+	store the scan numbers to be processed into the internal ASTACK
+	array.  Routines are provided for the easy adding and deleting
+	of scans from this array.
+

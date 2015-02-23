@@ -1,0 +1,44 @@
+	(REGULAR VERB)
+     
+	Syntax:    PRINT list 
+	
+	PRINT prints the values of a requested list.  The list may
+	consist of one or more adverb names, literals or real-valued
+	constants, or expressions.
+
+	If the list contains an adverb name, the value(s) of the adverb
+	will be printed.  Arrays of more than one dimension are printed
+	with the first index varying most rapidly.
+
+	If the list item is a literal, it must be enclosed in single or
+	double quotation marks, and it will be printed without the
+	quotation marks.
+
+	If the list contains a real-valued constant or an expression, the 
+	value of the constant or expression will be printed.
+
+	PRINT can be used to monitor the values of any adverb.  An
+	alias for PRINT is ?
+
+	You can change the format PRINT uses with the PRNTFMT verb.  In
+	addition, you can write formatted output to the screen or files
+	using the FPRINT verb.  UniPOPS can also do internal
+	input/output using the SREAD or SPRINT verbs.
+
+	You cannot reference a complete internal-array verb but you can
+	reference an element of an internal array.  That is:
+
+		PRINT D0
+
+	is illegal while
+
+		PRINT D0(12)
+
+	is not.
+
+	EXAMPLE:
+
+		PRINT 'Hello', X > Y
+		PRINT A, B, C, VRMS
+		PRINT SIZE, 'Bye', A/2, NREGION
+		? (A+B)/C

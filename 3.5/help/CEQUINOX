@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CEQUINOX:  (HEADER-CUBE) The equinox of the reference frame'
+PRINT 'of the celestial coordinates of the cube.'
+PRINT ' '

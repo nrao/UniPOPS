@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'CROSSHAIR:  Displays crosshairs -- the crosshairs can be'
+PRINT 'moved around and the computer can display various'
+PRINT 'quantities depending upon whether it is a SHOW display of'
+PRINT 'Continuum or Spectral-Line data, a PLOT display, or a'
+PRINT 'two-dimensional display.  The value of CROSSFLG controls'
+PRINT 'what information is displayed.'
+PRINT ' '
+PRINT 'CROSSFLG=',CROSSFLG
+PRINT ' '

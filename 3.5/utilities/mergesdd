@@ -1,0 +1,143 @@
+#!/bin/csh -f
+#  @(#)mergesdd.sh	5.2 10/27/94
+#
+#  Merges two sdd files, producing a third sdd file.
+#
+#  Usage: mergesdd file1 file2 newfile
+#
+if ($#argv != 3) then
+   echo "Usage: mergesdd file1 file2 newfile"
+   exit(1)
+endif
+#
+set file1 = $1
+if (! -r $file1) then
+   echo "mergesdd: can not access $file1"
+   exit(1)
+endif
+#
+set file2 = $2
+if (! -r $file2) then
+   echo "mergesdd: can not access $file2"
+   exit(1)
+endif
+#
+set newfile = $3
+if (-e $newfile) then
+   echo "mergesdd: $newfile exists, can not overwrite! "
+   exit(1)
+endif
+#		make sure we can create the new file
+touch $newfile
+if ($status != 0) then
+   echo "mergesdd: can not create $newfile"
+   exit(1)
+endif
+/bin/rm -f $newfile
+#
+set bs = `bootstrap $file1 512 LONG`
+if ($status != 0) then
+   echo "mergesdd: problem reading bootstrap block of $file1"
+   exit(1)
+endif
+if ( $bs[10] != 1 ) then
+   set bs = `bootstrap $file1 512 SHORT`
+   if ($status != 0) then
+      echo "mergesdd: problem reading bootstrap block of $file1"
+      exit(1)
+   endif
+#
+   set nindex1 = $bs[2]
+   set bssize1 = $bs[4]
+   set recsize1 = $bs[5]
+   set nused1 = $bs[6]
+   set ntype1 = $bs[8]
+else
+   set nindex1 = $bs[2]
+   set bssize1 = $bs[4]
+   set recsize1 = $bs[5]
+   set nused1 = $bs[7]
+   set ntype1 = $bs[9]
+endif
+#
+if ($bssize1 != 512 || $recsize1 <= 0 || $nindex1 <= 0) then
+   echo "mergesdd: $file1 is not an SDD file."
+   exit(1)
+endif
+#
+set bs = `bootstrap $file2 512 LONG`
+if ($status != 0) then
+   echo "mergesdd: problem reading bootstrap block of $file2"
+   exit(1)
+endif
+if ( $bs[10] != 1 ) then
+   set bs = `bootstrap $file2 512 SHORT`
+   if ($status != 0) then
+      echo "mergesdd: problem reading bootstrap block of $file2"
+      exit(1)
+   endif
+#
+   set nindex2 = $bs[2]
+   set bssize2 = $bs[4]
+   set recsize2 = $bs[5]
+   set nused2 = $bs[6]
+   set ntype2 = $bs[8]
+else
+   set nindex2 = $bs[2]
+   set bssize2 = $bs[4]
+   set recsize2 = $bs[5]
+   set nused2 = $bs[7]
+   set ntype2 = $bs[9]
+endif
+#
+if ($bssize2 != 512 || $recsize2 <= 0 || $nindex2 <= 0) then
+   echo "mergesdd: $file2 is not an SDD file."
+   exit(1)
+endif
+#
+if ($ntype2 != $ntype1) then
+   echo "mergesdd: both files are NOT the same type."
+   echo "          $file1 is type $ntype1"
+   echo "          $file2 is type $ntype2"
+   exit(1)
+endif
+#
+@ totsize = $nused1 + $nused2
+#
+makeempty.exe $newfile $totsize
+if ($status != 0) then
+   echo "mergesdd: problems making empty $newfile."
+   /bin/rm -f $newfile
+   exit(1)
+endif
+#
+dd if=$file1 bs=512 skip=$nindex1 >> $newfile
+if ($status != 0) then
+   echo "mergesdd: problems copying data from $file1 to $newfile."
+   /bin/rm -f $newfile
+   exit(1)
+endif
+#
+dd if=$file2 bs=512 skip=$nindex2 >> $newfile
+if ($status != 0) then
+   echo "mergesdd: problems copying data from $file2 to $newfile."
+   /bin/rm -f $newfile
+   exit(1)
+endif
+#
+if ($ntype1 == 1) then
+   makerecindex.exe $newfile > /dev/null
+   if ($status != 0) then
+      echo "mergesdd: problems indexing $newfile."
+      /bin/rm -f $newfile
+      exit(1)
+   endif
+else
+   makeindex.exe $newfile > /dev/null
+   if ($status != 0) then
+      echo "mergesdd: problems indexing $newfile."
+      /bin/rm -f $newfile
+      exit(1)
+   endif
+endif
+#

@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'GETPOLZ:  (VERB) Place the desired polarizer spectral line'
+PRINT 'data record from the indicated scan and feed number into'
+PRINT 'Array (0).'
+PRINT 'This verb is only available for 12-m on-line data.'
+PRINT ''
+PRINT 'Syntax: GETPOLZ(scan_no.feed_no, record_no)'
+PRINT ' '

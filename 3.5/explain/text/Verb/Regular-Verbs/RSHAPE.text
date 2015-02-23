@@ -1,0 +1,86 @@
+	(REGULAR VERB)    	
+
+	RSHAPE is used to fit a sinusoidal baseline from the data in
+	Array (0).  You have control over which parameters of the 
+	sinusoid are to be held fixed or fitted for by RSHAPE.
+	The interval of the fit is also controlled.  Unlike
+	RIPPLE, RSHAPE does not evaluate and subtract the sinusoid.
+	See the EXPLAIN file for RIPPLE for a complete description
+	of the fitting process.
+
+	The regions used to compute the fit should not contain a known
+	or suspected spectral feature.  You should remove an
+	appropriately-windowed linear or polynomial baseline from the
+	data before executing RSHAPE.
+
+	You MUST supply an initial guess for RPERIOD.
+
+	ADVERBS used:
+        -------------
+
+          BDROP         # channels to be ignored at beginning of data.
+          EDROP         # channels to be ignored at end of data.
+			Initial values of BDROP and EDROP are 0.
+			These values are only used if NREGION(1)=0.
+
+	  NREGION(32)   Specifies region(s) of the scan to be used
+			to compute the fit.  Initial values are 0.
+
+	  BBASE         # channels at each end of data (excluding
+	  EBASE         those dropped) which will be used to
+			compute the fit if NREGION(1)=0.  Initial 
+			values of BBASE and EBASE are 50.  These
+			values are only used if NREGION(1)=0.
+
+	  RPERIOD       The wavelength (in channels) of the sinusoid.
+			An initial non-zero value must be supplied.
+	  RAMPLTDE	The amplitude of the sinusoid.  The default 
+			value is 0.
+	  RPHASE	The phase (in channels) of the sinusoid.
+			The default value is 0.
+
+	  NITER		# of iterations RSHAPE will use to obtain a 
+			fit.  Default value is 8.
+
+	  RFIXPER	If > 0, RSHAPE will not change RPERIOD.
+			If < 0, RSHAPE will attempt to fit RPERIOD.
+			RFIXPER can not be 0.  Default value is -1.
+	  RFIXAMP	If > 0, RSHAPE will not change RAMPLTDE.
+			If < 0, RSHAPE will use the value of
+			   RAMPLTDE as an initial guess.
+                        If = 0, RSHAPE will attempt to guess an
+			   initial value for RAMPLTDE.
+			Default value is 0.
+	  RFIXPHA	If > 0, RSHAPE will not change PHASE.
+			If < 0, RSHAPE will use the value of
+			   RPHASE as an initial guess.
+                        If = 0, RSHAPE will attempt to guess an
+			   initial value for RPHASE.
+			Default value is 0.
+			
+
+	ADVERBS that RSHAPE may set:
+	----------------------------
+
+	  RAMPLTDE	Fitted amplitude.
+	  RPERIOD	Period in channels.
+ 	  RPHASE	Phase in channels.
+
+	  RAMPERR	One sigma error in fitted amplitude.
+	  RPERERR	One sigma error in fitted period (channels).
+	  RPHAERR	One sigma error in fitted phase (channels).
+
+	EXAMPLE:
+
+	RSHAPE is most frequently used in conjunction with RMODEL to
+	construct a model of a particular sinusoid.  The set of
+	commands:
+
+		COPY (0,2); DCBASE           Save work copy in Array (2)
+		RPERIOD=20		     You guess the sinusoid is about
+						20 channels in wavelength.
+                RSHAPE RMODEL                Form model in Array (0)
+                COPY (0,1)                   Copy model to Array (1)
+                COPY (2,0); DIFF             Get original back and diff. them
+
+	is equivalent to a single use of RIPPLE.

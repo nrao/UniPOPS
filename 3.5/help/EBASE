@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EBASE:  (ADVERB) Channels at end of data to use for'
+PRINT 'baseline fitting, taking into account the value of EDROP'
+PRINT ' '

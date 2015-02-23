@@ -1,0 +1,1042 @@
+What is a Keyword Adverb?
+-------------------------
+
+	Keywords are adverbs you can use to easily retrieve and set
+	header parameters for the one-dimensional scans in arrays 0
+	through 9 and the two- or three- dimensional data sets (i.e.,
+	matrices and cubes).  You can list all available keyword and
+	pointer adverbs by typing:  HELP POINTER.
+
+	The following briefly summarizes the qualities of a keyword
+	adverb.  For more general details about adverbs, see either the
+	"Adverbs" section of the Reference Manual or EXPLAIN
+	documentation.
+
+
+Usages of Keyword Adverbs
+-------------------------
+
+	Keywords cannot be created by the user; they are supplied by
+	the UniPOPS system.
+
+	Normally, one uses the keywords for the one-dimensional arrays
+	as arguments to the H0 through H9 verbs in order to set or
+	retrieve the values of header parameters for the arrays.  For
+	example, to set the scan number for Array (0) equal to that in
+	Array (9), you could type:
+
+		H0(SCAN) = H9(scan)  
+
+	Similarly, you should use the matrices and cube keywords with
+	the MH0, MH1, MH2, MH3, and CH0 verbs for setting or retrieving
+	the values of the header parameters of matrices or cubes.  For
+	example, to set the type of the first axis for matrix 3 to the 
+	type of the third axis for the cube, you could type:
+
+		MH3(MTYPE1) = CH0(CTYPE3)
+
+#if XPLN
+	You can find more information on setting and retrieving header
+	parameters in the Get-Header and Set-Header documentation
+#end
+
+
+Table of Keyword Adverbs
+------------------------
+
+	The following is a table of all Keyword adverbs.  They are
+	arranged in alphabetical order.  The first column gives either
+	a number, indicating the 'SDD Class' of the header parameter
+	for one-dimensional arrays (see the documentation describing
+	the SDD Disk format for a description of the 'SDD Classes'), or
+	an M or C, indicating the header parameter for two- or three
+	dimensional data sets, respectively (i.e., matrices or cubes).
+
+	Some of the keywords are for Green Bank scans while others
+	should be used for 12-m data only.  A few have different
+	definitions depending upon whether the data is spectral line or
+	continuum.
+
+	The October 21, 1986 memo entitled "Single Dish FITS tape" by
+	Betty Stobie and Lorrie Morgan contains a lengthier though
+	somewhat out-of-date discussion of most of the one-dimensional
+	array keywords.
+
+#if RFRNC
+
+		Table 4.3.1 : List of Keyword Adverbs
+#else
+		       List of Keyword Adverbs
+#end
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+	8	ANTGAIN		(Tucson ONLY) Antenna gain.
+
+	8       APPEFF          (Tucson ONLY) Antenna aperture
+				efficiency (ratio of total power
+				observed to the total power incident on
+				the telescope).
+
+	4     	AZ              (Tucson ONLY) The commanded azimuth of
+				the source or position specified  (in
+				degrees).
+
+	1       BACKEND         Describes the backend used (8
+				characters).  Possible backends
+				include:
+
+				DIGITAL         STD A/D         FABRITEK
+				384ACIII        1024ACIV        1536HYSP
+				.03MHZFB        .1MHZFB         .25MHZFB
+				.5MHZFB         1.MHZFB         2.5MHZFB
+
+	7       BADCHV          (Tucson ONLY) Antenna temperature
+				assigned to those filter-bank channels
+				noted as being defective (deg K).
+
+	9       BASEOFF         (Tucson ONLY) The baseline offset; no
+				longer used (deg K).
+
+	8       BEAMEFF         (Tucson ONLY) Antenna beam efficiency.
+				(The fraction of the beam lying in a
+				diffraction limited main beam.)
+
+	7       BFWHM           (Tucson ONLY) Beam half width at half
+				maximum (in arcsecs) (contrary to 
+				what is implied by the keyword name).
+
+	9       BMORENT         (Tucson ONLY)  Beam Orientation; angle
+				that the throw of the Nutating
+				subreflector has in relation to horizon
+				(in degrees).
+
+	9       BMTHROW         (Tucson ONLY) Beam throw parameter;
+				quadratic sum of the subreflector's +/-
+				beams both in E/W and N/S movement axis
+				(in arcsecs).
+
+	12      BW              The bandwidth (total bandwidth of
+				filter bank in MHz).
+
+	C       CBUNIT          The units of the data in the cube (8
+				characters).
+
+	C       CCOMENT         A comment string that contains
+				documentation about the cube (54
+				characters).
+
+	C       CDATE           The 'date' corresponding to the
+				creation of the cube in the form:
+				DD/MM/YY (8 characters).
+
+	C       CDELT1          Step size between the pixels of the first
+				axis of the cube.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	C       CDELT2          Step size between the pixels of the second
+				axis of the cube.
+
+	C       CDELT3          Step size between the pixels of the third
+				axis of the cube.
+
+	C	CEQUINOX	The equinox of the coordinate system of
+				the cube.
+
+	9       CFFORM          (Green Bank ONLY) Center frequency
+				formulae (24 characters).
+
+	3	CL11TYPE	(Tucson ONLY) The type of Class 11.  
+				The recognized CL11TYPE values are: 
+				   "ORIG" or unset (original definition) 
+			           "PROTO12M" (12-m Class11 prototype).
+
+	C       CNAXIS1         The dimension of the cube's first
+				axis.
+
+	C       CNAXIS2         The dimension of the cube's second
+				axis.
+
+	C       CNAXIS3         The dimension of the cube's third
+				axis.
+
+	C       COBJECT         The 'objects' name or a plot label for
+				the cube (16 characters).
+
+	4       COORDCD         Specifies the commanded coordinate
+				system (8 characters).  One of the
+				following:
+
+				GALACTIC        1950RADC        EPOCRADC
+				MEANRADC        APPRADC         APPHADC
+				1950ECL         EPOCECL         MEANECL
+				APPECL          AZEL            USERDEF
+				2000RADC        INDRADC
+
+	C       CORIGIN         The place of origin for the cube (8
+				characters).
+
+	C       CPIX1           The pixel number along the first axis
+				of the cube that corresponds to the 
+				value specified by CRVAL1.
+
+	C       CPIX2           The pixel number along the second axis
+				of the cube that corresponds to the 
+				value specified by CRVAL2.
+
+	C       CPIX3           The pixel number along the third axis
+				of the cube that corresponds to the 
+				value specified by CRVAL3.
+
+	C       CRVAL1          The coordinate corresponding to the first
+				axis reference pixel (CRPIX1) of the cube.
+
+	C       CRVAL2          The coordinate corresponding to the second
+				axis reference pixel (CRPIX2) of the cube.
+
+	C       CRVAL3          The coordinate corresponding to the third
+				axis reference pixel (CRPIX3) of the cube.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	C       CTMAX           Maximum data value which could have
+				been stored in the cube.
+
+	C       CTMIN           Minimum data value which could have
+				been stored in the cube.
+
+	C       CTSCALE         Scale factor from cube's internal data
+				representation to that of CBUNIT; used
+				in conjunction with CTZERO.
+
+	C       CTYPE1          Character string which holds the name
+				or labeling of the first axis of the
+				cube (8 characters).
+
+	C       CTYPE2          Character string which holds the name
+				or labeling of the second axis of the
+				cube (8 characters).
+
+	C       CTYPE3          Character string which holds the name
+				or labeling of the third axis of the
+				cube (8 characters).
+
+	C       CTZERO          Bias factor from cube's internal data
+				representation to that of CBUNIT; used
+				in conjunction with CTSCALE.
+
+	C       CUNDEF          The value which 'undefined' pixels are
+				given in the cube.
+
+	3       CYCLLEN         The cycle length in seconds (time
+				required to complete one cycle).
+
+	11	CYCLLENF	(Tucson PROTO12M ONLY) The time in seconds 
+				to complete one fast cycle.
+
+	1       DATALEN         The data length (in bytes).
+
+	12      DELTAX          The step-size along the x-axis at the
+				reference position (Line: usually
+				velocity in km/sec; Continuum: usually,
+				position in degrees).
+
+	6       DELTAXR         (Tucson Spectral Line) The cell size 
+				or distance (in seconds of arc) between 
+				cells on the X axis of a map; it is used to 
+				specify the horizontal grid cell size in the
+				mapping routines.
+
+				(Green Bank and Tucson Continuum) The 
+				horizontal slew rate of the telescope in
+				arcsec/sec.
+
+	6       DELTAYR         (Tucson Spectral Line) The cell size 
+				or distance (in seconds of arc) between 
+				cells on the Y axis of a map; it is used to 
+				specify the vertical grid cell size in the
+				mapping routines.
+
+				(Green Bank and Tucson Continuum) The 
+				vertical slew rate of the telescope in
+				arcsec/sec.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	4       DESORG          The 3 value of the descriptive origin
+				(horizontal position, vertical
+				position, position angle describing the
+				orientation of the sky "horizontal
+				axis")   all angles in degrees.
+
+	5       DEWPT           (Green Bank ONLY)  Dew point in
+				Celsius.
+
+	13      DRMS            Data reduction parameter   Calculated
+				RMS noise level (same units as the
+				data).
+
+	12      EFFINT          Effective Integration time (in seconds)
+
+	4       EL              The value of the commanded elevation of
+				the source (in degrees).
+
+	4       EPOCDEC         The value of the epoch declination of
+				the source (in degrees).
+
+	4       EPOCH           The value of epoch (as specified by the
+				observer; in years).
+
+	4       EPOCRA          The value of the epoch right ascension
+				of the source (in degrees).
+
+	8       ETAFSS          (Tucson ONLY) Forward spillover and
+				scattering efficiency.
+
+	8       ETAL            (Tucson ONLY) Rear spillover and
+				scattering efficiency.
+
+	9       FIRSTIF         (Tucson ONLY) The value of the first IF
+				exiting the receiver (MHz).
+
+	2       FOCUSH          (Tucson ONLY) The value of the
+				horizontal (East-West) focus offset
+				(mm).
+
+	2       FOCUSR          The value of the radial focus position
+				in mm.
+
+	2       FOCUSV          (Tucson ONLY) The value of the vertical
+				(North-South) focus offset (mm).
+
+	9	FOFFSIG		(Tucson ONLY) The value of the frequency
+				switching signal offset (MHz).
+
+	9 	FOFFREF1	(Tucson ONLY) The value of the frequency
+				switching reference 1 offset (MHz).
+
+	9 	FOFFREF2	(Tucson ONLY) The value of the frequency
+				switching reference 2 offset (MHz).
+
+	6       FRAME           The first four characters state whether
+				the mapping grid is polar (POLR) or
+				Cartesian (CART), while the second four
+				state whether DELTAXR and DELTAYR refer
+				to STEP sizes or SCANning rates (8
+				characters total).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	12      FREQRES         For Line data, the value of the
+				frequency resolution (bandwidth per
+				channel in MHz); for Continuum data,
+				the conversion factor from counts to
+				degrees K (K/counts).
+
+	1       FRONTEND        (Tucson ONLY) Describes the receiver
+				used (8 characters).  Possible frontend
+				types include:
+
+				2C3MMSIS        140CASS         2.7-1.2M
+				2C3MMSHM        21CM4CH         1.2-0.6M
+				2MM             11CM3CH         100-30CM
+				.8MM            6/25-6CM        25-20CM
+				BOLOMETER       23-17CM         6/2525CM
+				15-0.6CM
+
+	13      FSCAN           The scan number of the first scan which
+				has been averaged.
+
+	9       GAINS           (Tucson ONLY) For total power scans,
+				refers to the scan number of the
+				calibration data to be applied to the
+				scan.
+
+	4       GALLAT          The value of the commanded galactic
+				latitude of the source (in degrees).
+
+	4       GALLONG         The value of the commanded galactic
+				longitude of the source (in degrees).
+
+	9       HARMONIC        (Tucson ONLY) Indicates which harmonic
+				of the 2 GHz oscillator the phase-lock
+				box is locked to.
+
+	1       HEADLEN         The header length (in bytes).
+
+	5       HUMIDITY        (Tucson ONLY) Relative humidity in
+				percent.
+
+	13      ILI             Integrated line intensity (in the same
+				units as the data).
+
+	4       INDX            The value of the horizontal telescope
+				coordinate of the position actually
+				observed (i.e., position measured by
+				horizontal encoders; in degrees).
+
+	4       INDY            The value of the vertical telescope
+				coordinate of the position actually
+				observed (i.e., position measured by 
+				vertical encoders; in degrees).
+
+	12      INTTIME         The value of the total integration
+				(duration) time (in seconds).
+
+	9       L1              (Green Bank ONLY) Frequency of local
+				oscillator #1 in MHz.
+
+	9       L1F1            (Green Bank ONLY) Reference frequency
+				#1 of LO #1 in MHz.
+
+	9       L1F2            (Green Bank ONLY) Reference frequency
+				#2 of LO #1 in MHz.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	9       L2              (Green Bank ONLY) Frequency of local
+				oscillator #2 in MHz.
+
+	9       L2F1            (Green Bank ONLY) Reference frequency
+				#1 of LO #2 in MHz.
+
+	9       L2F2            (Green Bank ONLY) Reference frequency
+				#2 of LO #2 in MHz.
+
+	9       LA              (Green Bank ONLY) IF frequency for
+				first receiver in MHz.
+
+	13      LAMP            Line amplitude (in the same units as
+				the data).
+
+	9       LB              (Green Bank ONLY) IF frequency for
+				second receiver in MHz.
+
+	9       LC              (Green Bank ONLY) IF frequency for
+				third receiver in MHz.
+
+	9       LD              (Green Bank ONLY) IF frequency for
+				fourth receiver in MHz.
+
+	9       LEVCORR         (Green Bank, 300-ft ONLY)  Level
+				Correction in Volts.
+
+	9       LOFACT          (Tucson ONLY) The factor by which the
+				GUNN oscillator is multiplied to
+				produce the LO frequency.
+
+	9       LOIF            (Tucson ONLY) The value of the LO-IF.
+
+	13      LSCAN           The number of the last scan which has
+				been averaged.
+
+	3       LST             The value of LST (local sidereal time
+				at the start of the observation in
+				hours).
+
+	13      LWID            Line width (in the same units as the
+				data).
+
+	9       MBEAM           (Tucson ONLY) Offsets from the
+				electrical axis of the telescope that
+				the nutating subreflector moves in the
+				Minus (-) direction   two values
+				(arcsec)
+
+	M       MBUNIT          The units of the data in the matrix (8
+				characters).
+
+	M       MCOMENT         A comment string that contains
+				documentation about the matrix (54
+				characters).
+
+	M       MDATE           The 'date' corresponding to the
+				creation of the matrix in the form:
+				DD/MM/YY (8 characters).
+
+	M       MDELT1          Step size between the pixels of the first
+				axis of the matrix.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	M       MDELT2          Step size between the pixels of the second
+				axis of the matrix.
+
+	M	MEQUINOX	The equinox of the coordinate system of
+				the matrix.
+
+	5       MMH2O           (Tucson ONLY) Atmospheric water vapor
+				in mm.
+
+	M       MNAXIS1         The dimension of the matrix's first
+				axis.
+
+	M       MNAXIS2         The dimension of the matrix's second
+				axis.
+
+	M       MOBJECT         The 'objects' name or a plot label for
+				the matrix (16 characters).
+
+	M       MORIGIN         The place of origin for the matrix (8
+				characters).
+
+	M       MPIX1           The pixel number along the first axis 
+				of the matrix that corresponds to the 
+				value specified by MRVAL1.
+
+	M       MPIX2           The pixel number along the second axis
+				of the matrix that corresponds to the 
+				value specified by MRVAL2.
+
+	M       MRVAL1          The coordinate corresponding to the first
+				axis reference pixel (MRPIX1) of the matrix.
+
+	M       MRVAL2          The coordinate corresponding to the second
+				axis reference pixel (MRPIX2) of the matrix.
+
+	M       MTYPE1          Character string which holds the name
+				or labeling of the first axis of the matrix
+				(8 characters).
+
+	M       MTYPE2          Character string which holds the name
+				or labeling of the second axis of the matrix
+				(8 characters).
+
+	M       MUNDEF          The value which 'undefined' pixels are
+				given in the matrix.
+
+	12      NOINT           The value of the total number of data
+				points.
+
+	3       NOPHASE         The value of the number of phases per
+				cycle (different states of switched
+				variables).
+
+	11	NOPHASEF	(Tucson PROTO12M ONLY) The number of fast 
+				phases per cycle.
+
+	6       NOPTS           (Tucson ONLY) The value of the number
+				of points (total number of cells in the
+				map).
+
+	3       NORCHAN         The value of the number of independent
+				polarizations or channels for this
+				frontend.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	1	NORECORD	(Green Bank) The total number of individual
+				records available for this scan number.
+				(Tucson) The total number of individual
+				OTF spectra available for this scan number.
+
+	13      NOSTAC          Number of scans which have been
+				averaged.
+
+	3       NOSWVAR         The value of the number of switching
+				variables.
+
+	11	NOSWVARF	(Tucson PROTO12M ONLY) The number of fast
+				switching variables.
+
+	6       NOXPTS          (Tucson ONLY) The value of the number
+				of x points (map sample points along
+				the "X-edge" of the rectangle).
+
+	6       NOYPTS          (Tucson ONLY) The value of the number
+				of y points (map sample points along
+				the "Y-edge" of the rectangle).
+
+	11	NUMCYC		(Tucson PROTO12M ONLY) The number of slow 
+				cycles per scan.
+
+	11	NUMCYCF		(Tucson PROTO12M ONLY) The number of fast 
+				cycles per scan.
+
+	1       OBJECT          The source name of the object observed
+				(16 characters).
+
+	1       OBSERVER        The observer's name (16 characters).
+
+	12      OBSFREQ         The observed or sky frequency in MHz.
+
+	1       OBSID           The observer's initials  (8
+				characters).
+
+	1       OBSMODE         The first four characters describe the
+				type of data, while the next four
+				describe the observing mode (8
+				characters total).
+
+		    		Types of data can be:
+
+		   		LINE (Spectral line)
+		    		CONT (Continuum)
+	            		FSAM (Continuum fast sampling)
+		    		PULS (Pulsar)  
+
+				For a list of the types of modes
+				available and their meanings, see
+				the documentation on the SDD
+				data format.  For the most up to date
+				list for a particular telescope, see
+				the local staff.
+
+
+	9       OBSTOL          (Tucson ONLY) The tolerance that the
+				observer allowed the telescope to
+				deviate from source position before
+				data collecting stopped (arcsecs).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	7       OFFSCAN         The number of the applicable off scan
+				(the last designated total power off
+				scan).
+
+	10      OPENPAR         (Tucson ONLY) 80 characters which are
+				available to the observer for
+				description of his or her data
+				processing to be stored in the header
+				of the data.
+
+	2       ORIENT          The value of the rotation or
+				polarization angle orientation of the
+				receiver or reflector at the prime
+				focus (in degrees East of North as seen
+				looking down on the dish).
+
+	9       PBEAM           (Tucson ONLY) Offsets from the
+				electrical axis of the telescope that
+				the nutating subreflector moves in the
+				Plus (+) direction   two values
+				(arcsec)
+
+	 3	PHASEID		(Green Bank ONLY) The phase number for this
+				individual record in this scan number.
+
+	11      PHASTB          (Tucson ORIG ONLY) Phase table (8
+				characters).
+
+	11	PHASTBnn	(Tucson PROTO12m ONLY) Phase table
+				(32 characters).  nn = 01, 02, 03 ...
+				(NOSWVAR + NOSWVARF).  The slow
+				phases are first, then the fast 
+				phases.	 Each character is the HEX
+				encoded representation of 4 bits of
+				phase information.
+				
+	12      POLARIZ         (Tucson ONLY) Describes the type of
+				polarization and the angle for the
+				selected receiver.  The first 2 or 3
+				characters describe the type of
+				polarization (RC, LC, or LIN) while the
+				last few characters give the
+				appropriate angle to within a tenth of
+				a degree.  (8 characters total.)
+
+	1       PRECIS          Describes the precision of the data (8
+				characters).  The precision can be one
+				of the following:  L*1 I*2 I*4  R*4
+				R*8 R*16  C*8  C*16
+
+	5       PRESSURE        (Green Bank ONLY) Atmospheric pressure
+				(in cm-Hg).
+
+	1       PROJID          The program ID associated with the
+				proposal as it appears on the telescope
+				schedule (8 characters).
+
+	2       PTCON           The value of the secondary pointing
+				constant [4 values used by Tucson; 3 by
+				Green Bank (PVLS) in arcmin].
+
+	9       PTFUDGE         (Green Bank, 300-ft ONLY) Pointing
+				fudge (2 numbers in arcmin).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	2	PT_MODEL	(Tucson ONLY) The pointing model 	
+				(8 characters).
+
+	9       RAZOFF          (Tucson ONLY) The value of the
+				reference azimuth offset in seconds of
+				arc.
+
+	 1      RECORDID	(Green Bank) The record number of this
+				individual record in this scan number.
+				(Tucson) The number of this individual
+				OTF spectra in this scan number.
+			
+	12      REFPT           The value of the reference point
+				(center channel).  The NRAO convention
+				is N/2 + 1 where N is the number of
+				channels in the backend.
+
+	5       REFRAC          (Tucson ONLY)  Index of atmospheric
+				refraction.
+
+	9       RELOFF          (Tucson ONLY) The value of the
+				reference elevation offset in seconds
+				of arc.
+
+	12      RESTFREQ        The value of the rest frequency of
+				spectral line data in MHz.
+
+	9       RHO             (Green Bank ONLY) Feed Offset
+				(rotation; in degrees).
+
+	12      RTSYS           The value of the reference system
+				temperature in K.
+
+	7       RVSYS           The value of the Doppler correction for
+				the earth's motion in the source
+				direction with respect to the velocity
+				reference frame (in km/sec).
+
+	12	RX_INFO		(Tucson ONLY) Receiver information 
+				(eg. "BAY_1") (8 characters).
+
+	3       SAMPRAT         The value of the sample period (time
+				required to complete a single sample).
+				A sample may be composed of multiple
+				cycles.  Also known as the sample
+				rate.
+
+	11	SAMPTIMF	(Tucson PROTO12M ONLY) The time required 
+				to complete one fast sample (seconds).
+
+	1       SAVENUM         The save bin number from which the scan
+				was retrieved.
+
+	1       SCAN            The value of the scan number.
+
+	6       SCANANG         (Tucson ONLY) The value of the map
+				scanning angle.  Orientation on the sky
+				in the reference frame specified by "XY
+				Reference Frame Code" of the rectangle
+				to be mapped.  It is not the angle
+				through the rectangle that the
+				telescope is driven.  This provides an
+				alternate capability to that of using
+				descriptive coordinates (in degrees).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	9       SIDEBAND        (Tucson ONLY) The value of the
+				sideband; 2 = USB, 3 = LSB.
+
+	12      SPN             The value of the starting point
+				number.
+
+	9       SROFF           (Tucson ONLY) RA/Dec Offsets   4 values
+				(arcsecs).
+
+	12      STSYS           The value of the signal system
+				temperature in K.
+
+	9       SYNFREQ         (Tucson ONLY) The value of the
+				synthesizer frequency; multiply by 20
+				to get the frequency which drives the 2
+				GHz Phase-Lock Fluke oscillator (MHz).
+
+	5       TAMB            The value of the ambient temperature in
+				Celsius.
+
+	12      TAUH2O          For Tucson, the opacity of water as
+				computed by a model; For Green Bank,
+				the zenith opacity as last measured
+				with a TIPPING scan.
+
+	12      TAUO2           (Tucson ONLY) The value of the opacity
+				of oxygen as computed by a model.
+
+	12      TCAL            The value of the calibration
+				temperature in K.
+
+	1       TELESCOP        The telescope name (8 characters).
+				Possible names include:
+
+				"NRAO 12M"      "NRAO 43M"      "NRAO 93M"
+				"MPI 100M"      "IRAM 30M"      "NRO 45M"
+				"PMO 14M"       "OSO 20M"       "MASS 14M"
+				"UTX 5M"        "UK-D 15M"      "IRAM 15M"
+				
+				A number of UniPOPS verbs are limited in
+				use to a specific telescope or have behavior
+				that varies according to the value of this
+				header word (either "NRAO 12M" or "NRAO 43M")
+
+	12      TH2O            (Tucson ONLY) The value of the
+				temperature of water as computed by a
+				model (in K).
+
+	9       THETA           (Green Bank ONLY) Feed Offset (lateral;
+				in degrees).
+
+	12      TO2             (Tucson ONLY) The value of the
+				temperature of oxygen as computed by a
+				model (in K).
+
+	12      TRMS            The theoretical value of the standard
+				deviation of the mean source
+				temperature (in K).
+
+	12      TRX             (Tucson ONLY) The value of the measured
+				receiver temperature (in K).
+
+	12      TSOURCE         (Tucson ONLY) The value of the source
+				temperature (in K).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	7       TYPECAL         (Tucson ONLY) The calibration method
+				used (8 characters).
+
+	3       UT              The value of universal time in hours.
+
+	3       UTDATE          The value of the universal time date in
+				the format:  YYYY.MMDD.
+
+	2       UXPNT           The value of the user Az/RA pointing
+				correction in arcsec.
+
+	2       UYPNT           The value of the user EL/Dec pointing
+				correction in arcsec.
+
+	11      VARDES          (Tucson ORIG ONLY) A descriptor of the
+				switching variable (8 characters).
+
+	11	VARDESnn	(Tucson PROTO12M ONLY) A descriptor of
+				switching variable (8 characters).
+				nn = 01, 02 ... (NOSWVAR + NOSWVARF).
+				Slow phases are listed first, then the
+				fast phases.
+
+				The proposed descriptors are:
+
+				Position Phases: ON_POS, OFF_POS1, OFF_POS2
+					(Units: arcmin)
+				Focus Phases: ON_FOC, OFF_FOC1, OFF_FOC2
+					(Units: mm)
+				Beam Phases: BEAM0, BEAM1, BEAM2
+					(Units: arcmin)
+				CAL Phases: CAL_ON, CAL_OFF
+					(Units: Kelvin => 0 for OFF, >0 for ON)
+				Frequency Switching: 
+					ON_FREQ, OFF_FREQ1, OFF_FREQ2
+					(Units: MHz)
+				Polarization Switching:
+					LHC (left circular)
+					RHC (right circular)
+					LIN_xxxx (xxxx = angle of E vector)
+                                        (Units: none, or degree angle of 
+					 linear pol.)
+				Load Switching: LOAD_OUT, LOAD_IN
+					(Units: Kelvin)
+	
+
+	11      VARVAL          (Tucson ORIG ONLY) The value of a single
+				switch state
+
+	11	VARVALnn	(Tucson PROTO12M ONLY) The value of a
+				single switch state.
+				nn = 01, 02 ... (NOSWVAR + NOSWVARF).
+				Slow phases are listed first, then the
+				fast phases.
+
+
+	7       VELDEF          Describes the velocity system. The
+				first four characters denote the
+				velocity definition (RADI, OPTL or
+				RELV), while the last four denote the
+				velocity reference (LSR, HELO, EART,
+				BARI or OBS); 8 characters total.
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	7       VELOCTY         The value of the velocity with respect
+				to the reference. The source velocity
+				specified by the observer relative to
+				the velocity reference frame (in
+				km/sec).
+
+	9       WL              (Tucson ONLY) Used as a size in
+				FOCALIZE, NSFOCALIZE, EWFOCALIZE (mm).
+
+	12      X0              For spectral-line scans, the value of
+				the velocity at the reference point in
+				km/sec.  For continuum scans, the
+				position (in degrees) at the reference
+				point.
+
+	6       XCELL0          (Tucson ONLY) The starting X cell (cell
+				number).  May be positive, negative, or
+				zero.  It is used to define the
+				position of the rectangle to be mapped
+				with respect to the reference position
+				which, by definition, is (x,y) =
+				(0.0).
+
+	2       XPOINT          (Tucson ONLY) The value of the total
+				pointing correction applied in the X
+				(horizontal - Az/RA) direction
+				(arcsec).
+
+	4       XREF            (Tucson ONLY) The value of the
+				commanded reference Xcoord (horizontal
+				coordinate of the reference position in
+				the system specified by the observer;
+				in degrees).
+
+	4       XSOURCE         The value of the commanded source
+				Xcoord (the horizontal coordinate of
+				source or position in the coordinate
+				system specified by the observer; in
+				degrees).
+
+	6       XZERO           (Tucson ONLY) The value of the
+				horizontal telescope coordinate at the
+				map reference position. Together with
+				"Y position at Zero", this defines the
+				cell (X,Y) = (0,0) at the map reference
+				position (in degrees).
+
+	6       YCELL0          (Tucson ONLY) The starting Y cell (cell
+				number).  May be positive, negative, or
+				zero.  It is used to define the
+				position of the rectangle to be mapped
+				with respect to the reference position
+				which, by definition, is (x,y) =
+				(0.0).
+
+	2       YPOINT          (Tucson ONLY) The value of the total
+				pointing correction applied in the Y
+				(vertical - EL/Dec) direction
+				(arcsec).
+#if RFRNC
+	------------------------------------------------------------------
+
+		Table 4.3.1 : List of Keyword Adverbs (Cont.)
+	------------------------------------------------------------------
+	Class    Name		Description
+	------------------------------------------------------------------
+#end
+	4       YREF            (Tucson ONLY) The value of the
+				commanded reference Ycoord (vertical
+				coordinate of the reference position in
+				the coordinate system specified by the
+				observer; in degrees).
+
+	4       YSOURCE         The value of the commanded source
+				Ycoord (vertical coordinate of source
+				or position in the coordinate system
+				specified by the observer; in
+				degrees).
+
+	6       YZERO           (Tucson ONLY) The value of the vertical
+				telescope coordinate at the map
+				reference position. Together with "X
+				position at Zero", this defines the
+				cell (X,Y) = (0,0) at the map reference
+				position (in degrees).
+
+	------------------------------------------------------------------
+
+	NOTES:
+
+	1.  The following keywords are for character strings containing 8
+    	characters:
+
+	BACKEND         CBUNIT		CDATE		CL11TYPE
+	COORDCD		CORIGIN		CTYPE1		CTYPE2
+	CTYPE3		FRAME           FRONTEND        MBUNIT
+	MDATE 		MORIGIN		MTYPE1 		MTYPE2
+	OBSID		OBSMODE		PHASTB 		POLARIZ
+	PRECIS 		PROJID          PT_MODEL 	RX_INFO
+	TELESCOP 	TYPECAL         VARDES 		VARDESnn
+	VELDEF          
+
+	2.  The following keywords are for character strings containing the
+    	indicated number of characters:
+
+	16:   OBSERVER       OBJECT	COBJECT		MOBJECT
+	24:   CFFORM
+	32:   PHASTBnn
+	54:   CCOMMENT	     MCOMMENT
+
+	3.  The following keyword are for character arrays containing the
+    	indicated dimensions and number of characters:
+
+	OPENPAR (10 by 8 characters)
+
+	4.  The following keywords are for arrays with the indicated number of
+   	elements:
+
+	DESORG (3)       MBEAM (2)      PBEAM (2)       PTCON (4) 
+	PTFUDGE (2)	 SROFF (4)
+
+	5.  All other keywords are not arrays and not character strings but are
+    	single real numbers.
+

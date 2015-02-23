@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MDATE:  (HEADER-MATRIX) A date associated with the matrix'
+PRINT '(8 characters).'
+PRINT ' '

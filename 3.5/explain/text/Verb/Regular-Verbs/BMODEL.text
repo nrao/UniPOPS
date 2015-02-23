@@ -1,0 +1,37 @@
+	(REGULAR VERB)
+
+	BMODEL evaluates the last computed coefficients for a Chebyshev
+	polynomial baseline stored in the array BPARM.  BMODEL replaces
+	the data in Array(0) with the evaluated polynomial.
+
+	Most often used in conjunction with BSHAPE to compute a
+	baseline without subtracting it from the data.  It is often
+	useful to plot the baseline model on top of the data for
+	comparison purposes.
+
+	ADVERBS USED:
+	   
+	   BPARM(15)    Contains the resulting fit coefficients.
+			Initial values are 0.
+
+	No adverbs are set by BMODEL.
+
+	EXAMPLE:
+
+	You have twenty scans of the same source and want to remove
+	identical baselines from each and display them.  Specify:
+
+		GET 1710 BSHAPE BMODEL COPY (0,1)  
+		FOR I = 1710 TO 1748 BY 2; GET I; DIFF; \
+		  PAGE SHOW READ; END
+
+	The first set of commands above creates a model of the baseline
+	in Array (1).  The second set subtracts the result from the
+	scans in Array (0).  The result of the subtraction is left in
+	Array (0) and Array (1) is not changed.  Thus the model can be
+	subtracted from successive scans.  The READ instruction acts as
+	an indefinite pause.
+
+	Note:  The back slash at end of line 2 allows for the
+	continuation of the command line on the next line which is
+	necessary for the FOR loop.

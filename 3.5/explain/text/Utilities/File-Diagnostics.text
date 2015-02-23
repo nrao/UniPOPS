@@ -1,0 +1,34 @@
+	UniPOPS provides some means to check and modify the contents of
+	disk files.  These utilities are:
+
+	.  checkfile.exe        Lists the contents of an SDD file
+
+	.  expandsdd    	Expand the size of an SDD index so
+				that it can hold more data.
+
+	.  ieeesummary.exe      Lists the contents of an IEEE Keep file
+
+	.  makeindex.exe        Regenerates the SDD index. Corrects any 
+				problem with the index.  Converts an old 
+				format SDD index into the new format 
+				SDD index.
+
+	.  makeoldindex.exe     Regenerates the SDD index in the old
+				format. Corrects any problem with the 
+				index.  Converts a new format SDD index into 
+				the old format SDD index.
+
+	.  makeoldrecindex.exe  Regenerates the index of an SDD individual
+				records file in the old format. Corrects any 
+				problem with the index.  Converts a new 
+				format SDD index into the old format 
+				SDD index.
+
+	.  makerecindex.exe     Regenerates the index of an SDD individual
+				records file. Corrects any problem with the 
+				index.  Converts an old format SDD index into
+				the new format SDD index.
+
+	.  makefile.exe         Creates an empty SDD or Memory file.
+
+	.  mergesdd		Merge two SDD files into one new SDD file.

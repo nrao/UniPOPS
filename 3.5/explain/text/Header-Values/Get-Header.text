@@ -1,0 +1,144 @@
+The following describes how to retrieve header parameters (using
+keywords) for data arrays, matrices, or cubes and how to set header
+parameters for data arrays and matrices.  (You CANNOT set the header
+parameter for a cube.)
+
+
+1.  Retrieving Header parameters of Arrays, Matrices, and Cubes
+---------------------------------------------------------------
+
+	Single-Valued Parameters
+	------------------------
+	To retrieve a header parameter, one makes use of either the
+	H0-H9 (for arrays), MH0-MH3 (for matrices), or CH0 (for cubes)
+	internal-array verbs.
+
+	The argument to these array-like verbs should be the
+	appropriate keyword for the desired parameter.  The value
+	returned by the verb is the value of the header parameters.  If
+	you specify a keyword that points to a real-valued header
+	parameter than a real-value corresponding to that parameter is
+	returned.  If you specify a keyword that points to a string
+	header parameter, then the string is returned.
+
+	EXAMPLES:
+
+	To print out the scan number of the data in array 0, type:
+
+		PRINT H0(SCAN)
+
+	To set the adverb X equal to the square root of the sum of the
+	squares of the reference system temperature in array 3 and the
+	square of the signal system temperature in array 5, type:
+
+		X = SQRT((H3(RTSYS)**2 + H5(STSYS)**2))
+
+	To set scalar adverb BLAH to the number of x-axis pixels in
+	matrix 0, type:
+
+		BLAH = MH0(MNAXIS1)
+
+	To print the name of the observer for the scan in array 0,
+	type:
+
+		PRINT H0(OBSERVER)
+
+	To set the string adverb STRING1 to the value of the name of
+	the telescope for the scan in array 5, type:
+
+		STRING1 = H5(TELESCOP)
+
+	To print the comment associated with matrix 3, type:
+
+		PRINT MH0(MCOMMENT)
+
+	Multiple-Valued Parameters
+	--------------------------
+	Some header parameters have multiple values (i.e., they are an
+	array of values).  The only difference between retrieving
+	non-array and array keywords is that the user may have to
+	specify which element of the array to retrieve.  The element to
+	be specified is one less than the one desired.
+
+	EXAMPLES:
+
+	To print the third and first pointing constant for the scan in
+	array 0, type:
+
+		PRINT H0(PTCON+2), H0(PTCON)
+
+
+2.  Setting Header parameters of Arrays and Matrices
+----------------------------------------------------
+
+	Single-Valued Parameters
+	------------------------
+	To set a header parameter, one makes use of either the H0-H9
+	(for arrays) or MH0-MH3 (for matrices) internal-array verbs.
+	(You CANNOT set the header parameter for a cube.)
+
+	You set values by placing these verbs to the left of the equal
+	(=) sign.
+
+	The argument to these array-like verbs should be the
+	appropriate keyword for the desired parameter you want to set.
+	If you specify a keyword that points to a real-valued header
+	parameter than you must supply a real-value on the left of the
+	equal sign.  If you specify a keyword that points to a string
+	header parameter, then you must supply a string to the left of
+	the equal sign.
+
+	You cannot set a value to a header parameter using any of these
+	verbs in a READ statement.  You can only supply one value at a
+	time to header parameters.  That is, things like:
+
+		READ H0(SCAN)
+		MH3 = 0.0
+
+	are not allowed.
+
+	EXAMPLES:
+
+	To set the scan number for the scan in array 0 to the value of
+	23.01, type:
+
+		H0(SCAN) = 23.01
+
+	To set the reference system temperature in array 6 to the
+	absolute value of the adverb B, type:
+
+		H6(RTSYS) = ABS(B)
+
+	To set the number of x-axis pixels in matrix 0 to the value of
+	the adverb BLAH, type:
+
+		MH0(MNAXIS1) =  BLAH
+
+	To set the observer's name for the scan in array 4 to George,
+	type:
+
+		H4(OBSERVER) = 'George'
+
+	To set the telescope's name for the scan in array 0 to the
+	value of the string adverb STRING1, type:
+
+		H0(TELESCOP) = STRING1
+
+	To set the coordinate type for the y-axis of matrix 3 to
+	'GLAT', type:
+
+		MH0(MTYPE2) = 'GLAT'
+
+	Multiple-Valued Parameters
+	--------------------------
+	Some header parameters have multiple values (i.e., they are an
+	array of values).  The only difference between setting
+	non-array and array keywords is that the user may have to
+	specify which element of the array to set.  The element to be
+	specified is one less than the one desired.
+
+	To set the third pointing constant for the scan in array 0 to
+	the value of the first pointing constant in array 5, type:
+
+		H0(PTCON+2) = H5(PTCON)
+

@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'RESIDUAL:  Uses the Gaussian parameters in HEIGHT, CENTER,'
+PRINT 'and HWIDTH and subtracts the Gaussians from the data in'
+PRINT 'Array 0 storing the results back into 0.'
+PRINT ' '
+PRINT 'NGAUSS=',NGAUSS
+PRINT 'HEIGHT='; print HEIGHT
+PRINT 'CENTER='; print CENTER
+PRINT 'HWIDTH='; print HWIDTH
+PRINT ' ' 

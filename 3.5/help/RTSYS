@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'RTSYS:  (HEADER) System temperature on reference (K).'
+PRINT ' '

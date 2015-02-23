@@ -1,0 +1,96 @@
+	(REGULAR VERB)
+
+	Syntax:   HOLFITFOC(Nyqrate, Dish_diam, Focal_lngth)
+
+	HOLFITFOC is a verb meant to be used during the processing of
+	holographic data and, as such, will have very limited
+	applicability to other kinds of data reduction.
+
+	HOLFITFOC fits and removes the affects of pointing or focusing
+	errors from the phase or surface-error map produced after the
+	inverse Fourier transform of the holographic data.  The
+	function fitted to the data is that described in:  "Improved
+	Profile Mapping of a Reflector Antenna from Microwave
+	Holographic Measurements" by M. P.  Godwin, A. P. Anderson, and
+	J. C.  Bennett (1978, Electronic Letters, Vol. 14, No. 5, p
+	134).  The fitting algorithm is the iterative, non-linear,
+	least-square method known as the Levenberg-Marquardt method and
+	is described in P. R.  Bevington "Data Reduction and Error
+	Analysis for the Physical Sciences (1969, McGraw-Hill, Chapters
+	8, 9, and 11) and in W. H.  Press et al, "Numerical Recipes:
+	The Art of Scientific Computing" (1986, Cambridge University,
+	Chapter 14).
+
+	HOLFITFOC assumes that Matrix (0) contains the data to be
+	fitted in units of surface errors (in cm).  Any undefined
+	points in the Matrix are not used in the fit.
+
+	The user must supply three arguments to HOLFITFOC:
+
+		First argument:  The fraction of the inverse of the
+			oversampling of the original pre-IFFT data.
+			Should be < 1 and usually between 0.75 and
+			0.9.
+
+		Second argument:  Dish Diameter in cm.
+
+		Third argument:  Dish Focal Length in cm.
+
+	HOLFITFOC will store into Matrix (0) the original data minus
+	the results of the fit (i.e., the residuals of the fit).  In
+	Matrix (1), HOLFITFOC will store the model produced by the fit
+	(i.e., Matrix (0) plus Matrix (1) after the fit will be the
+	same as Matrix (0) before the fit).  One-dimensional Arrays (0)
+	and (1) are used for temporary storage by HOLFITFOC.
+
+	The fit provides estimates, and one-sigma standard deviations
+	of the estimates, to:
+
+		the lateral-focus offset
+		the angle of the lateral offset (relative to the x-axis
+			 of the matrix) 
+		an overall bias to the data
+		the x-axis pointing offset 
+		the y-axis pointing offset
+		the radial focus offset.
+
+	The units of the estimates for the bias and two focus offsets
+	are in cm.  The angle of lateral offset is in radians.  The
+	pointing offsets are in units of the angular sampling of the
+	pre-IFFT data.
+
+	The fit also provides a listing of the covariance matrix of the
+	last iteration of the fit.
+
+        No adverbs are set by HOLFITFOC
+
+	ADVERBS used:
+
+	NITER		Number of iterations performed by the fitting
+			algorithm before it will give up.
+
+
+	EXAMPLE:
+
+	The following steps would take the IFFT of the data in Matrix
+	(0) and (1), converts from (real, imaginary) to (amplitude,
+	phase), copies the results to Matrices (2) and (3), copies the
+	phase data from Matrix (1) to (0); scales the data from phase
+	to surface errors; blanks out the data underneath the feed-legs
+	and central blockage as well as the area outside the dish; and
+	performs the fit.
+
+		MIFFT RIAP
+		MCOPY(0,2) MCOPY(1,3)
+		MCOPY(1,0)
+		MSCALE( lambda / (2*pi) )
+		MAKEMASK(4, 56, 4, 15.3, 5)
+		HOLFITFOC( 0.86, 4252., 1827.2)
+
+	Note that MSCALE is a procedure found in the mmath.prc file in
+	the general procedure library.  RIAP and MAKEMASK are
+	procedures found in the holographic procedure library.
+
+
+         
+	    

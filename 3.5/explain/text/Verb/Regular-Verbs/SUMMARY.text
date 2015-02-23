@@ -1,0 +1,48 @@
+	(REGULAR VERB)
+
+	Syntax:    SUMMARY pointer
+
+	Produces a listing of information about the scans on disk.  A
+	SUMMARY output contains more information than a TELL DISK
+	output since the actual data are referred to.  
+
+	ADVERBS USED:
+
+	   BSCAN		The minimum scan number to be listed.
+				The initial value is 0.
+		
+	   ESCAN		The maximum scan number to be listed.
+				The initial value is 0.
+
+	No adverbs are set by SUMMARY.
+
+	The pointer specifies which data file you want UniPOPS to
+	summarize.  Possible usages of SUMMARY are:
+
+		SUMMARY DSCANS	     Will list the on- and off-line data 
+				     file scans
+		SUMMARY ONDATA	     Will list the on-line data file scans
+		SUMMARY OFFDATA	     Will list the off-line data file scans
+		SUMMARY KSCANS	     Will list the 'keep' file scans
+		SUMMARY SSCANS       Will list the 'save' file scans
+                SUMMARY GSCANS	     Will list the on- and off-line gains
+				     file scans
+                SUMMARY RSCANS	     Will list the on- and off-line individual
+				     records file scans (Green Bank data only)
+	EXAMPLE:
+	
+	You want a summary of your 'keep' file scans between scan number 7060
+	and 7061, so you type:
+
+	   	BSCAN=7060; ESCAN=7061
+	  	SUMMARY KSCANS 
+
+	and something like the following will be produced: 
+
+      Summary of "keep" data file
+       Scan No  Source Name   Obs Pos   (EPOCRADC) Resolution    Rest Freq
+                              H coord     V coord    (kHz)         (GHz)
+     K  7060  1  W51         19 21 25.7  14 24 43   -312.500     20.260000
+     K  7060  2  W51         19 21 25.7  14 24 43   -312.500     20.330000
+     K  7061  1  W51         19 25 50.0  14 24 43   -312.500     20.260000
+     K  7061  2  W51         19 25 50.0  14 24 43   -312.500     20.330000

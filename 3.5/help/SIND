@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SIND:  (PROC-LIBRARY) Returns the sine of the given'
+PRINT 'parameter (in degrees).'
+PRINT ' '

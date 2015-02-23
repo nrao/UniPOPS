@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FOFFSIG:  (HEADER-TUC) The value of the frequency switching'
+PRINT 'signal offset (MHz).'
+PRINT ' '

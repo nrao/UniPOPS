@@ -1,0 +1,47 @@
+        (REGULAR VERB)
+
+	Syntax:    SCALAR name1, name2, ....
+	 	   GLOBAL SCALAR name1, name2, ....
+
+	SCALAR creates and allocates the requested space for scalar
+	adverbs with the specified names. SCALAR must be the only
+	command on the input line -- no other commands can precede or
+	follow it.
+
+	The names for scalars must follow the conventions for naming
+	adverbs and procedures.
+
+	More than one scalar can be defined by a single SCALAR
+	statement.
+
+	If the scalar is created while in execute mode, the scalar
+	becomes a global symbol and you can reference it from within
+	execute mode and from within all procedures.  If the scalar is
+	created while in compile mode (i.e., in a procedure definition)
+	and is proceeded by the word GLOBAL (as in the second example
+	of syntax above), then the scalar is created as a global symbol
+	and you can reference it within execute mode and all
+	procedures.  If the scalar is created while in compile mode
+	(i.e., in a procedure definition) and is NOT proceeded by the
+	word GLOBAL, then the scalar is created as a local symbol and
+	you can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global scalars can be scratched (deleted) using the SCRATCH
+	verb.  Local scalars can be scratched by editing the procedure
+	definition which created the scalar.
+
+	HELP SCALAR will list all of the global scalars (built-in and
+	user-defined) that currently exist.
+
+	EXAMPLE: 
+
+	.  The following creates two scalars named XY and XZ.
+
+	   	SCALAR XY, XZ   
+
+	.  The following, if included within a procedure definition,
+	   creates a global scalar.
+
+		GLOBAL SCALAR DEF    	
+

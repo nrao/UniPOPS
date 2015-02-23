@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CHARSIZE:  Changes the size of characters drawn to the'
+PRINT 'graphics screen.  Syntax:  CHARSIZE(num_points)'
+PRINT ' '

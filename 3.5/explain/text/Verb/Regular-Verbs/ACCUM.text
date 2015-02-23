@@ -1,0 +1,78 @@
+	(REGULAR VERB)
+
+	ACCUM is used to average data together using default weighting.
+
+L------------------------- Spectral Line --------------------------------
+L-	The weight factor is integration time divided by the square of 
+L-	the system temperature
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	The weight factor is one.
+C------------------------- Continuum ------------------------------------
+
+	AVE or SCLEAR should be used before beginning any accumulation
+	of scans.
+
+	The first use of ACCUM after RESTART, AVE or SCLEAR copies the
+	header information and data values of Array (0) to an internal
+	ACCUM array.  The data values are multiplied by the integration
+	time of the scan and divided by the square of the system
+	temperature.
+
+	Subsequent uses of ACCUM add the data values contained in Array
+	(0) (weighted by the integration time divided by the system
+	temperature squared) to the contents of the internal array.
+
+	A procedure using the ASTACK may facilitate the use of ACCUM.
+
+	To obtain the final result, AVE must be specified whenever you
+	have finished ACCUMing.
+
+	ADVERBS USED:
+	
+	  DEFMODE : Indicates how undefined data values (IEEE Inf) should
+		    be treated.  
+
+		    If DEFMODE is FALSE (-1), the result of each ACCUM 
+			will have an undefined value in the internal
+			accum array at any location where EITHER of the 
+			values in the scan being ACCUMed or the current 
+			accum internal array have an undefined value.  
+
+		    If DEFMODE is TRUE (+1), the result of each ACCUM 
+			will have an undefined value in the internal
+			accum array at any location where BOTH of the
+			values in the scan being ACCUMed and in the current
+			ACCUM internal array have an undefined value.
+			If only one value is undefined at that location,
+			ACCUM will use that value in the result.
+
+	            The initial value is FALSE.
+
+	ADVERB SET:
+	   
+	STATUS(8) :  Number of scans accumulated in internal accum
+		     array and determined by the ACCUM or SUM
+		     commands.
+
+	EXAMPLE:
+
+	To accumulate scans 602, 604, and 606, first specify;
+
+		SCLEAR  or  AVE
+
+	to clear the internal ACCUM array.  Then specify:
+
+		GET 602 ACCUM
+		GET 604 ACCUM
+		GET 606 ACCUM
+
+	To average the accumulated scans, specify:
+
+		AVE
+
+	If you now specify TELL ACCMD, you will get:
+
+		3 Scans have been accummed.  From:  602.01 to 606.01
+

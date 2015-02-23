@@ -1,0 +1,12 @@
+	CB1 averages both polarizations of the first filter bank
+	for the scans in the ASTACK array.  It is assumed that the data
+	are in parallel mode (.01 and .02 subscan numbers).  Any
+	subscan numbers present in the scan numbers of the ASTACK
+	array are ignored.  There is no check for duplicate scan
+	numbers.
+
+	This procedure uses PSTACK to perform the ACCUM.
+
+	File name: cb1.prc
+
+	This procedure is included in LSETUP.12meter

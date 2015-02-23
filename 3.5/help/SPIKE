@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'SPIKE:  Finds the channel numbers for all data points in'
+PRINT 'Array 0 that deviate more than CUTOFF from zero; the'
+PRINT 'results are stored in BADPT.'
+PRINT ' '
+print 'CUTOFF=',cutoff
+PRINT 'BDROP, EDROP=',BDROP, EDROP
+PRINT 'BADPT='; PRINT BADPT
+PRINT ' ' 

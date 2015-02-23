@@ -1,0 +1,43 @@
+	(ARRAY ADVERB of 48 elements)
+
+	GREGION  is an array that defines the  beginning and ending
+	channel numbers for up to 24 regions, the data within which
+	will be fit by Gaussians.  One can set up a "fitting" region
+	for each of the (up to 24) Gaussians to be fit by GAUSS.  Its
+	usage is similar to that of NREGION.
+
+	GREGION is used by : GAUSS
+
+	No verbs change GREGION.
+
+	The initial values of GREGION(N) are 0. 
+
+	Set the starting channel of the first region you don't want to
+	use  equal to DEFAULT or zero, all subsequent values in GREGION
+	after the first occurrence of zero of DEFAULT are ignored. 
+	Each pair of numbers defining a region can be in any
+	order (i.e. there is no requirement that the first value be less
+	than the second).  Each region must NOT overlap any other region.
+	All GREGION values must be greater than 0 and less than the number 
+	of channels in Array (0).
+
+	GREGION will supersede BGAUSS and EGAUSS unless GREGION(1)=0.
+
+	EXAMPLE : 
+
+	To fit two Gaussians to regions centered on channels 260 and
+	290, you might specify :
+
+	    NGAUSS = 2
+	    CENTER(1) = 260 ; CENTER(2) = 290
+	    HWIDTH(1) = 6 ; HWIDTH(2) = 8
+	    GREGION(1) = 250 ; GREGION(2) = 270     First region.
+	    GREGION(3) = 280 ; GREGION(4) = 300     Second region.
+	    GREGION(5) = DEFAULT               Guarantees previous settings 
+						 will cause no problems.  
+	    GAUSS 
+
+	NOTES : You should set the starting channel of the first region
+	you don't want to use ( GREGION(5) in the above example ) equal
+	to its default value (zero).  GREGION will supersede  BGAUSS
+	and EGAUSS unless GREGION(1) = 0.

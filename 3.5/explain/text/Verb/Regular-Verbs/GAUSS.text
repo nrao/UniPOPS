@@ -1,0 +1,470 @@
+	(REGULAR VERB)
+
+	GAUSS fits up to 24 Gaussian functions to the data in Array (0)
+	over a specified interval of channel numbers.  The user has
+	control over which Gaussian parameters are to be held fixed or
+	fitted for by GAUSS.
+
+	Number of Gaussians
+	-------------------
+	The user should give the adverb NGAUSS a value corresponding to
+	the number of Gaussians to be fitted.  NGAUSS must be > 0 and
+	<= 24.  It's default value is 1.
+
+	Specifying Interval For Fit 
+	--------------------------- 
+	You can specify the range of channel numbers to use for the fit
+	with one of two methods:
+
+	[1]  Assign values to BGAUSS and EGAUSS such that BGAUSS is
+	     less than the lowest channel at which you want to start
+	     the fit and EGAUSS is greater than the last channel at
+	     which you want to end the fit.  BGAUSS and EGAUSS must be
+	     > 0 and <= the number of data points; EGAUSS must be >
+	     BGAUSS.  The initial values of BGAUSS and EGAUSS are 1 and
+	     256, respectively.
+
+	[2]  Assign values to adverb array GREGION(24) so as to define
+	     a set of fitting regions (similar to how NREGION is used
+	     for baseline fitting).  You should assign to GREGION(1),
+	     (3), (5), etc. the starting channel numbers and
+	     GREGION(2), (4), (6), etc.  the ending channel numbers for
+	     the first, second, third, etc. fitting regions.  Up to 24
+	     regions can be specified.  You signal the last region you
+	     want to use by assigning a value of zero or DEFAULT to the
+	     next region.  That is, if you set GREGION(5) to zero, then
+	     GAUSS will use the two regions defined in GREGION(1)
+	     through (4).  The regions can be in any order (there is
+	     no requirement that they be ordered from lowest to highest)
+	     however, the regions must not overlap.
+
+	GREGION will supersede BGAUSS and EGAUSS unless GREGION(1)=0.
+	If your Gaussians are clustered closely together, than you
+	should probably use BGAUSS and EGAUSS.  If they are widely
+	distributed, then GREGION should be used.
+
+	Fitting equation:
+	-----------------
+	GAUSS fits the following equation:
+	
+	NGAUSS
+	____
+	\      	
+	 \       		        x - (x(i) + x0) 
+	 /   h0 * h(i) *   exp  { - [  ---------------- ]**2 }
+	/        		      0.6006 * s(i) * s0
+	----
+	i = 1
+
+	where:  h(i)*h0 = height of the ith Gaussians.
+      		h0 = an overall scale factor for all of the heights.
+      		s(i)*s0 = FWHM of the ith Gaussian (in units of channels).
+       		s0 = an overall scale factor for all of the widths.
+       		x(i)+x0 = center of the ith Gaussian (in units of channels).
+       		x0 = an overall offset for all of the centers.
+       		x = value of the dependent coordinate (in units of channels).
+		
+
+	Initial guesses you supply
+	--------------------------
+	You must supply initial guesses for the center(s),
+	half-width(s), and sometimes the height(s) of the Gaussian(s)
+	by giving values to the first NGAUSS elements of the array adverbs
+	CENTER, HWIDTH, and HEIGHT.  Whether you need to supply values
+	to HEIGHT depend upon which quantities in the above equation
+	you want GAUSS to fit and which you want GAUSS to hold fixed.
+
+	The units of HEIGHT, CENTER, and HWIDTH are, respectively,
+	those of the y-axis, channel number, and channel number.  The
+	user supplies FWHM values to HWIDTH.  All values of HWIDTH must
+	be greater than zero.  No two elements of HWIDTH can be equal
+	if their corresponding CENTER's are also equal.  HEIGHT's, if
+	you need to supply them, can be positive or negative but cannot
+	equal zero.
+
+	Specifying what to fit and what to keep constant
+	------------------------------------------------
+	The user specifies which of the quantities h(i), h0, x(i), x0,
+	s(i), or s0 they want the program to fit or keep constant by
+	giving FALSE or TRUE values to the adverbs FIXH, FIXRELH, FIXC,
+	FIXRELC, FIXHW, and FIXRELHW.  In most cases, the default
+	values of these adverbs will be sufficient for your use.  The
+	following describes what roles these adverbs play, and what
+	their default values are, in case you want to make use of
+	them:
+
+	------------------------------------------------------------------
+	Adverb  Value    Usage
+	------------------------------------------------------------------
+	FIXH     TRUE   If you know the heights of the Gaussians and
+			want GAUSS to hold their values constant.  You
+			must supply values to HEIGHT.  GAUSS will use
+			the values of HEIGHT as the values of h(i) and
+			will set h0=1 -- neither h(i) nor h0 will be
+			fitted.  The input and output values of HEIGHT
+			will be identical.
+
+		FALSE   [Default] If you want GAUSS to fit the values
+			of the heights; you need not supply values to
+			HEIGHT in this case.  GAUSS will set h0=1 and
+			hold it constant, will fit for h(i), and will
+			return to HEIGHT the best-fit values for h(i)
+			(i.e., HEIGHT is altered by GAUSS).
+
+	FIXC     TRUE   If you know the centers of the Gaussians and
+			want GAUSS to hold their values constant.  You
+			must supply values to CENTER.  GAUSS will use
+			the values of CENTER as the values of x(i) and
+			will set x0=0 -- neither x(i) nor x0 will be
+			fitted.  The input and output values of CENTER
+			will be identical.
+
+		FALSE   [Default] If you want GAUSS to fit the values
+			of the centers; you must supply initial guesses
+			to CENTER.  GAUSS will set x0=0 and hold it
+			constant, will fit for x(i), and will return to
+			CENTER the best-fit values for x(i) (i.e.,
+			CENTER is altered by GAUSS).
+
+	FIXHW    TRUE   If you know the half widths of the Gaussians
+			and want GAUSS to hold their values constant.
+			You must supply values to HWIDTH.  GAUSS will
+			use the values of HWIDTH as the values of s(i)
+			and will set s0=1 -- neither s(i) nor s0 will
+			be fitted.  The input and output values of
+			HWIDTH will be identical.
+
+		FALSE   [Default] If you want GAUSS to fit the values
+			of the half widths; you must supply initial
+			guesses to HWIDTH.  GAUSS will set s0=1 and
+			hold it constant, will fit for s(i), and will
+			return to HWIDTH the best-fit values for s(i)
+			(i.e., HWIDTH is altered by GAUSS).
+
+	FIXRELH  TRUE   If you know the relative heights, h(i), of the
+			Gaussians but not the overall scale factor h0
+			-- that is, h(i)/h(j), for all i's and j's, are
+			known but the actual magnitudes of the h(i)'s
+			are not.  You must supply values for HEIGHT
+			that represent your best guesses to the values
+			of the h(i)*h0.  GAUSS will use these values of
+			HEIGHT(i) as initial guesses to the values of
+			h(i), will fit for h0, and will return to
+			HEIGHT your input values multiplied by the
+			fitted h0.
+
+		FALSE   [Default] If you don't know the relative
+			heights, h(i), of the Gaussians.
+
+	FIXRELC  TRUE   If you know the relative separations, x(i), of
+			the Gaussians but not the overall offset x0 --
+			that is, x(i)-x(j), for all i's and j's, are
+			known but the actual magnitudes of the x(i)'s
+			are not.  You must supply values for CENTER
+			that represent your best guesses to the values
+			of the x(i)+x0.  GAUSS will use these values of
+			CENTER(i) as initial guesses to the values of
+			x(i), will fit for x0, and will return to
+			CENTER your input values offset by the fitted
+			x0.
+
+		FALSE   [Default] If you don't know the relative
+			separations, x(i), of the Gaussians.
+
+	FIXRELHW TRUE   If you know the relative half widths, s(i), of
+			the Gaussians but not the overall scale factor
+			s0 -- that is, s(i)/s(j), for all i's and j's,
+			are known but the actual magnitudes of the
+			s(i)'s are not.  You must supply values for
+			HWIDTH that represent your best guesses to the
+			values of the s(i)*s0.  GAUSS will use these
+			values of HWIDTH(i) as initial guesses to the
+			values of s(i), will fit for s0, and will
+			return to HWIDTH your input values multiplied
+			by the fitted s0.
+
+		FALSE   [Default] If you don't know the relative
+			heights, h(i), of the Gaussians.
+	---------------------------------------------------------------------
+
+	Restrictions 
+	------------ 
+	The following restrictions apply to the combinations of values
+	you can provide these adverbs:
+
+	FIXC, FIXH, and FIXHW cannot all be true.
+
+	If NGAUSS = 1, the values of FIXRELC, FIXRELH, and FIXRELHW are
+	ignored since they only are useful for a multiple Gaussian
+	fit.
+
+	FIXC and FIXRELC cannot both be true.
+
+	FIXH and FIXRELH cannot both be true.
+
+	FIXHW and FIXRELHW cannot both be true.
+
+	If FIXH or FIXRELH are true, then you must supply initial
+	values to HEIGHT.  If both are false, then no initial values of
+	HEIGHT are needed.
+
+
+	Here are all 26 legal combinations of the adverbs and what 
+	GAUSS will fit or hold constant in the above equation.  
+
+	--------------------------------------------------------------------------
+	  FIX     |  FIXREL   | Fitted		      | Constant
+	H  C  HW  | H  C  HW  | Parameters	      | Parameters
+	--------------------------------------------------------------------------
+	F  F  F     F  F  F     h(i) x(i) s(i)		h0, x0, s0
+	T  F  F     F  F  F	x(i) s(i)		h(i) h0, x0, s0
+	F  T  F     F  F  F	h(i) s(i)		x(i) h0, x0, s0
+	F  F  T     F  F  F	h(i) x(i) 		s(i) h0, x0, s0
+	T  T  F     F  F  F     s(i)			h(i) x(i) h0, x0, s0
+	T  F  T     F  F  F     x(i)			h(i) s(i) h0, x0, s0
+	F  T  T     F  F  F     h(i)			x(i) s(i) h0 x0 s0
+	F  F  F     T  F  F     h0 x(i) s(i) 		h(i) x0 s0
+	F  F  F     F  T  F     h(i) s(i) x0		x(i) h0 s0
+	F  F  F     F  F  T     h(i) x(i) s0		s(i) h0 x0 
+	F  F  F     T  T  F     s(i) h0 x0		h(i) x(i) s0  
+	F  F  F     T  F  T     x(i) h0 s0 		h(i) s(i) x0 
+	F  F  F     F  T  T     h(i) x0 s0		x(i) s(i) h0
+	F  F  F     T  T  T     h0 x0 s0		h(i) x(i) s(i)  
+	T  F  F     F  T  F     s(i) x0			h(i) x(i) h0 s0 
+	T  F  F     F  F  T     x(i) s0			h(i) s(i) h0 x0  
+	F  T  F     T  F  F     s(i) h0			h(i) x(i)  x0 s0
+	F  T  F     F  F  T     h(i) s0			x(i) s(i) h0 x0 
+	F  F  T     T  F  F     x(i) h0 		h(i) s(i) x0 s0 
+	F  F  T     F  T  F     h(i) x0 		x(i) s(i) h0 s0
+	T  T  F     F  F  T     s0			h(i) x(i) s(i) h0 x0 
+	T  F  T     F  T  F     x0			h(i) x(i) s(i) h0 s0 
+	F  T  T     T  F  F     h0			h(i) x(i) s(i) x0 s0
+	T  F  F     F  T  T     x0 s0			h(i) x(i) s(i) h0 
+	F  T  F     T  F  T     h0 s0			h(i) x(i) s(i) x0 
+	F  F  T     T  T  F     h0 x0			h(i) x(i) s(i) s0 
+	---------------------------------------------------------------------
+
+	When h0 or s0 are held constant, their values are assumed to be
+	1.
+
+	When x0 is held constant, its value is assumed to be zero.
+
+	When x0 is fitted for, the user must supply values to CENTER
+	which are the best guesses for x(i)+x0; GAUSS will return to
+	CENTER the user's initial values offset by the fitted x0.
+
+	Likewise, when h0 [or s0] is fitted, the user must supply
+	values to HEIGHT [or HWIDTH] which are the best guesses for
+	h(i)*h0  [or s(i)*s0]; GAUSS will return to HEIGHT [or HWIDTH]
+	the user's initial values scaled by h0 [or s0].
+
+	When h(i) is fitted, the user need not supply values to HEIGHT;
+	GAUSS will return in HEIGHT best-fit values.
+
+	When x(i) is fitted, the user must supply values to CENTER that
+	are the best guesses for x(i)+x0; GAUSS will return to CENTER
+	best-fit values.
+
+	When s(i) is fitted, the user must supply values to HWIDTH that
+	are the best guesses for s(i)*s0; GAUSS will return to HWIDTH
+	best-fit values.
+
+
+	Fitting algorithm
+	-----------------
+	GAUSS uses the Levenberg-Marquardt method of non-linear
+	least-square fitting in most cases.  This is an iterative
+	algorithm that should converge rather rapidly.  The number of
+	iteration GAUSS will perform is controlled by the adverb NITER
+	whose default value is 8.  If the fit fails and you are sure
+	you have provided good initial guesses to the values of the
+	required adverbs, you may need more iterations -- set NITER to
+	a larger number and try GAUSS again.  In most cases, however,
+	you will exceed the iteration limit because of an improperly
+	set adverb.
+
+	In the rare cases when only h0 or h(i) are fitted and all other
+	parameters are held constant, the fitting problem reduces to
+	solving a multiple linear least-squares fit; GAUSS then resorts
+	to an algorithm that uses normal equations to solve the
+	multiple linear regression.
+
+	Examples and explanations of both algorithms used by GAUSS can
+	be found in:
+
+	Bevington, Philip R. 1969, "Data Reduction and Error Analysis
+		for the Physical Sciences" (New York: McGraw-Hill),
+		Chapters 8, 9, and 11.
+
+	Press, William H., et al, Numerical Recipes: The Art of
+		Scientific Computing" (New York: Cambridge University
+		Press), Chapter 14.
+
+
+	Errors in fitted values 
+	----------------------- 
+	Besides providing best-fit values for HEIGHT, CENTER, and
+	HWIDTH, GAUSS also stores the best estimates of the standard
+	deviations of the fitted values in adverb arrays HGHTERR,
+	CNTERR, and HWERR.  If values of HEIGHT, CENTER, or HWIDTH are
+	not fitted by GAUSS (due to you setting FIXH, FIXC, or FIXHW,
+	respectively, to TRUE), then the standard deviation stored in
+	these error arrays will be zero for those quantities.
+
+
+	Associated verbs
+	----------------
+	The following verbs can use the results of GAUSS to display the
+	resulting Gaussians:
+
+		GPARTS		GDISPLAY
+
+	RESIDUAL will subtract the fitted Gaussian from the original data
+	and GMODEL will create a model of the results of GAUSS in Array (0).
+	See the documentation for these verbs for more details.
+
+	ADVERBS USED:
+
+          NGAUSS        # of Gaussians (1-24) to be fit.
+			Initial value is 1.
+
+	  BGAUSS        Channel numbers where the fit is to
+	  EGAUSS        begin and end.  Initial values are 1 and 256.
+			Superseded by GREGION if GREGION(1) > 0.
+
+	  GREGION(48)   The start and stopping channel numbers of
+			regions to be used for the fit.  Supersedes
+			BGAUSS and EGAUSS if GREGION(1) > 0.
+			Initial values are 0.
+
+          CENTER(24)    Channel # of center of Gaussian(s).
+	  HEIGHT(24)    Heights of Gaussians.
+          HWIDTH(24)    FWHM in # of channels of Gaussians.
+                        Up to 24 values can be specified.
+			Initial values are 0.
+
+	  NITER         # of iterations GAUSS will use to obtain a
+	  		fit.  Initial value is 8.
+
+          FIXC          If TRUE, GAUSS will not iterate CENTER.
+          FIXHW         If TRUE, GAUSS will not iterate HWIDTH.
+          FIXH          If TRUE, GAUSS will not iterate HEIGHT.
+	  FIXRELH	If TRUE, GAUSS will solve for h0 and return
+			   to HEIGHT your initial values scaled by h0. 
+	  FIXRELHW	If TRUE, GAUSS will solve for s0 and return
+			   to HWIDTH your initial values scaled by s0. 
+	  FIXRELC	If TRUE, GAUSS will solve for x0 and return
+			   to CENTER your initial values offset by x0. 
+			Initial values are FALSE.
+
+	ADVERBS that GAUSS may set:
+
+	  CENTER(24)    Channel #'s of Gaussian centers.
+
+	  HEIGHT(24)    Heights of Gaussians.
+
+	  HWIDTH(24)    FWHM in # of channels of Gaussians.
+
+	  CNTERR(24)    One sigma errors in fitted center channels.
+
+	  HGHTERR(24)   One sigma errors in fitted heights.
+
+	  HWERR(24)     One sigma errors in fitted FWHM's.
+
+
+	EXAMPLES:
+
+	. You know nothing about possible values for heights, widths,
+	  or centers.  Set all FIX* adverbs to there default values,
+	  assign values to NGAUSS, NGAUSS values of CENTER and HWIDTH,
+	  and either BGAUSS and EGAUSS or GREGION before calling
+	  GAUSS.  The best-fit values, and their standard deviation,
+	  will be found in the first NGAUSS elements of HEIGHT, CENTER,
+	  HWIDTH, HGHTERR, CNTERR, and HWERR.  That is:
+
+		NGAUSS=3
+		FIXC=FALSE; FIXHW=FALSE; FIXH=FALSE
+		FIXRELC=FALSE; FIXRELHW=FALSE; FIXRELH=FALSE
+		CENTER=123, 345, 34
+		HWIDTH=5, 10, 5
+		GREGION=120,130,340,350,30,40
+		GAUSS
+		? HEIGHT, CENTER, HWIDTH
+		? HGHTERR, CNTERR, HWERR
+
+
+	  For a single Gaussian, the PEAK verb can be used to find you
+	  initial guesses.  That is:
+
+		PEAK GAUSS
+
+	. You know where the Gaussians are centered.  Set all but FIXC
+	  to FALSE, set FIXC to TRUE, assign values to NGAUSS, NGAUSS
+	  values of CENTER and HWIDTH, and either BGAUSS and EGAUSS or
+	  GREGION before calling GAUSS.  The best-fit values, and their
+	  standard deviation, will be found in the first NGAUSS
+	  elements of HEIGHT, HWIDTH, HGHTERR, and HWERR.  CENTER is
+	  not changed and CNTERR is set to zero.  Type:
+
+		NGAUSS=3
+		FIXHW=FALSE; FIXH=FALSE
+		FIXRELC=FALSE; FIXRELHW=FALSE; FIXRELH=FALSE
+		FIXC=TRUE
+		CENTER=100.45, 110.39, 124,13
+		HWIDTH=5, 10, 5
+		BGAUSS=90; EGAUSS=130
+		GAUSS
+		? HEIGHT, HWIDTH
+		? HGHTERR, HWERR
+
+
+	. You know the relative separations between lines (e.g., you data
+	  is of the hyper-fine lines of formaldehyde) and you can
+	  assume that all the lines have the same width (e.g., since they
+	  all arise in the same region) but each line's height is
+	  unknown.   Thus, you need to fit for the center of the
+	  pattern of lines (x0), width (s0), and h(i).  You should set
+	  up CENTER and HWIDTH, set all but FIXRELC and FIXRELHW to
+	  FALSE, set FIXRELC and FIXRELHW to TRUE, and then call
+	  GAUSS.  CENTER will contain your original values offset by
+	  the fitted x0, CNTERR will contain the error in CENTER due to
+	  the fit of x0; HEIGHT will contain the fitted heights and
+	  HGHTERR the standard deviations of these heights; HWIDTH will
+	  contain your original values scaled by the fitted s0 and
+	  HWERR will contain the errors in HWIDTH due to the fit of
+	  s0.  So, you type:
+
+		NGAUSS=3
+		FIXC=FALSE; FIXHW=FALSE; FIXH=FALSE
+		FIXRELH=FALSE
+		FIXRELC=TRUE; FIXRELHW=TRUE
+		CENTER=100.45, 110.39, 124,13
+		HWIDTH=12.34
+		BGAUSS=90; EGAUSS=130
+		GAUSS
+		? HEIGHT, CENTER, HWIDTH
+		? HGHTERR, CNTERR, HWERR
+
+	. In the above example, if you also know that the lines will
+	  have a set pattern of relative intensities (i.e., you know
+	  the h(i) but need to fit for h0) then you would, prior to
+	  calling GAUSS, give HEIGHT the values of the relative
+	  intensities and set FIXRELH to TRUE.  After GAUSS is done,
+	  HEIGHT will contain your original values for HEIGHT scaled by
+	  the best-fit value of h0 and HWERR will contain the errors in
+	  HEIGHT due to the fit of h0.   So, you type:
+
+		NGAUSS=3
+		FIXC=FALSE; FIXHW=FALSE; FIXH=FALSE
+		FIXRELC=TRUE; FIXRELHW=TRUE; FIXRELH=TRUE
+		CENTER=100.45, 110.39, 124,13
+		HEIGHT=1.5, 3.0, 1.9
+		HWIDTH=12.34
+		BGAUSS=90; EGAUSS=130
+		GAUSS
+		? HEIGHT, CENTER, HWIDTH
+		? HGHTERR, CNTERR, HWERR
+
+
+
+

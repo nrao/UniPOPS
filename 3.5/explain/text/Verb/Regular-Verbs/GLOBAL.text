@@ -1,0 +1,54 @@
+        (REGULAR VERB)
+
+	Syntax:	   GLOBAL ALIAS name1 verb1, name2 verb2, ....
+		   GLOBAL ARRAY arrayname1(dim), arrayname2(dim), ....
+		   GLOBAL POINTER name1 value1, name2 value2, ....
+	 	   GLOBAL SCALAR name1, name2, ....
+		   GLOBAL STRING*nsize   name1, name2, ...
+
+	GLOBAL creates and allocates the requested space for the
+	specified alias or type of adverbs such that the created symbol
+	is global.  GLOBAL cannot be preceded by any command and it
+	must be followed by one of the following verbs :  ALIAS, ARRAY,
+	POINTER, SCALAR, or STRING.  No other commands can be placed on
+	the command line after the definition.
+
+	Only one GLOBAL statement can be placed on an input line.
+
+	If you are trying to create a symbol while in execute mode, the
+	symbol will be a global symbol regardless of whether or not you
+	use GLOBAL (i.e., global symbols can only be created while in
+	execute mode) and you can reference it from within execute mode
+	and from within all procedures.  That is, in execute mode, you
+	don't need to use GLOBAL.
+
+	If you are trying to create a symbol while in compile mode
+	(i.e., in a procedure definition) and you precede its
+	definition with the word GLOBAL (as in the above examples),
+	then the symbol is created as a global symbol and you can
+	reference it within execute mode and all procedures.  If you
+	create a symbol while in compile mode (i.e., in a procedure
+	definition) and you do NOT preceded its definition by the word
+	GLOBAL, then the symbol is created as a local symbol and you
+	can reference it only within the procedure in which it was
+	created and not in execute mode or in other procedures.
+
+	Global symbols can can be scratched (deleted) using the SCRATCH
+	verb.
+
+	EXAMPLE:
+
+	.  The following, if included within a procedure definition,
+	   creates two global string of length 60 characters.
+
+		GLOBAL STRING*60 DEF, DEF0    	
+
+	.  The following, if included within a procedure definition,
+	   creates three global scalars.
+
+		GLOBAL SCALAR I, J, K    	
+
+	.  The following, if included within a procedure definition,
+	   creates a global 2 by 5 by 4 array.
+
+		GLOBAL ARRAY DEF2 (13 TO 14,5,-9 TO -6)   	

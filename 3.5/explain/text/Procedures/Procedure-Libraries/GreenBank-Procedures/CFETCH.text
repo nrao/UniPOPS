@@ -1,0 +1,25 @@
+	Syntax:  CFETCH (feed-number)
+
+	CFETCH gets the current scan for the specified feed and places
+	it in Array (0).  If the scan has an associated off scan, it
+	will then get the appropriate scan and feed for the off scan,
+	place it in Array (1), and then perform a TEMP on it.
+	This form of TEMP is specific to Green Bank telescopes.
+
+	CFETCH works for both Total-Power and Switched-Power
+	observations.
+
+	File name: cfetch.prc
+
+	CFETCH uses Array (0) and (1); the results are placed into
+	Array (0).  No adverbs are used or set by CFETCH.
+
+	EXAMPLE:
+
+		CFETCH(9); PAGE SHOW
+
+	Will get feed 9's data for the current scan; if the scan was
+	taken in Total-Power mode, it will get the appropriate off scan
+	for feed 9 and perform a TEMP.  The resulting spectra will then
+	be displayed by the PAGE SHOW
+

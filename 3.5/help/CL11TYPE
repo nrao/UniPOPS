@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CL11TYPE:  (HEADER-TUC) The type of Class 11 - 8 Characters'
+PRINT 'string.  Recognized strings are "PROTO12M" and "ORIG    "'
+PRINT 'or "      "'
+PRINT ' '

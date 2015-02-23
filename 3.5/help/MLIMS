@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'MLIMS:  (ARRAY-2x5) Results from the MLIMITS verb.  The 2x5'
+PRINT 'values correspond to the 2 lines of 5 values displayed by'
+PRINT 'MLIMITS.  For example, the 3rd number of the second line'
+PRINT 'displayed by MLIMITS is MLIMS(2,3).'
+PRINT ' '

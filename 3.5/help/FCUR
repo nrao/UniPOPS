@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'FCUR:  (FUNCTION) For SHOW, returns frequency relative to'
+PRINT 'band center in MHz (LINE), or time relative to beginning of'
+PRINT 'scan in sec (CONDAR), at location of crosshair.  For 2-d'
+PRINT 'plot, returns y-axis value at location of crosshair.'
+PRINT ' '

@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'PLACE:  Places the "virtual" graphics pen at the specified'
+PRINT 'location on the graphics screen in preparation for a'
+PRINT 'subsequent CHAR or VCTR command.  Syntax: PLACE(x,y).'
+PRINT ' '

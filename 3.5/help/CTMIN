@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CTMIN:  (HEADER-CUBE) The minimum data value in the'
+PRINT 'original (unscaled) Cube.'
+PRINT ' '

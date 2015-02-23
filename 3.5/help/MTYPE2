@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MTYPE2:  (HEADER-MATRIX) Character string describing the'
+PRINT 'units or type of the x-axis for the Matrix (8 characters).'
+PRINT ' '

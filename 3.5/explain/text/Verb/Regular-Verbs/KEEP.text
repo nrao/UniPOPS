@@ -1,0 +1,35 @@
+	(REGULAR VERB)     	
+	
+	KEEP copies the scan in Array (0) into the 'keep' file on
+	disk.
+
+	Data that is kept can be retrieved using KGET.
+
+	The number of scans which can be stored in the 'keep' file
+	depends upon the size of file specified when it was created
+	and is usually 1024.
+
+	ADVERBS USED:
+
+	KPROTECT     If TRUE, will prevent overwriting keep area if a
+		     scan with the same scan number already exists in
+		     the file.  If KPROTECT=TRUE, message will appear
+		     on screen as follows:
+
+			****   Scan exists.... Cannot overwrite!!
+
+		     If FALSE, and another scan with the same number
+		     exists in the 'keep' file, then the old scan is
+		     overwritten by the new.
+
+		     The initial value is TRUE.
+
+	No adverbs are set by KEEP.
+
+	EXAMPLE:
+
+	You have a reduced scan in Array (0) and want to save it in the
+	'keep' file for exporting later, specify:
+
+			KEEP
+

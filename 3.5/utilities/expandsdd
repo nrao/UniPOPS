@@ -1,0 +1,98 @@
+#!/bin/csh -f
+#  @(#)expandsdd.sh	5.2 10/27/94
+#
+#  expand the index size of an sdd file
+#
+#  usage: expandsdd filename newsize
+#
+if ($#argv != 2) then
+   echo "Usage: expandsdd filename newsize"
+   exit(1)
+endif
+#
+set filename = $1
+if (! -r $filename ) then
+   echo "expandsdd: can not access $filename"
+   exit(1)
+endif
+#
+set newsize = $2
+if ( $newsize < 1 ) then
+   echo "expandsdd: newsize, $newsize, must be > 0"
+   exit(1)
+endif
+#
+set bsblock = `bootstrap $filename 512 LONG`
+if ( $bsblock[10] != 1 ) then
+   set bsblock = `bootstrap $filename 512 SHORT`
+   set nindex = $bsblock[2]
+   set ndata = $bsblock[3]
+   set bssize = $bsblock[4]
+   set recsize = $bsblock[5]
+   set nused = $bsblock[6]
+   set ntype = $bsblock[8]
+else
+   set nindex = $bsblock[2]
+   set ndata = $bsblock[3]
+   set bssize = $bsblock[4]
+   set recsize = $bsblock[5]
+   set nused = $bsblock[7]
+   set ntype = $bsblock[9]
+endif
+#
+if ($bssize != 512 || $recsize <= 0 || $nindex <= 0) then
+   echo "expandsdd: $filename is not an SDD file."
+   exit(1)
+endif
+#
+if ($nused > $newsize) then
+   echo "expandsdd: $filename has $nused entries in use."
+   echo "         newsize must be larger."
+   exit(1)
+endif
+#
+@ cursize = (($nindex - 1) * $bssize) / $recsize
+#		no need to do anything if it already is newsize
+if ($cursize == $newsize) exit(0)
+#
+set tmpfile = ${filename}.$$
+makeempty.exe $tmpfile $newsize
+if ($status != 0) then
+   echo "expandsdd: problems making empty temporary file"
+   /bin/rm -f $tmpfile
+   exit(1)
+endif
+#
+dd if=$filename bs=512 skip=$nindex >> $tmpfile
+if ($status != 0) then
+   echo "expandsdd: problems copying data to temporary file."
+   /bin/rm -f $tmpfile
+   exit(1)
+endif
+#
+if ($ntype == 1) then
+   makerecindex.exe $tmpfile > /dev/null
+   if ($status != 0) then
+      echo "expandsdd: problems indexing temporary file."
+      /bin/rm -f $tmpfile
+      exit(1)
+   endif
+else
+   makeindex.exe $tmpfile > /dev/null
+   if ($status != 0) then
+      echo "expandsdd: problems indexing temporary file."
+      /bin/rm -f $tmpfile
+      exit(1)
+   endif
+endif
+#
+mv -f $tmpfile $filename
+if ($status != 0) then
+   echo "WARNING: expandsdd encountered a problem copying the new, larger"
+   echo "         sdd file in place of the original file."
+   echo "         The original file MAY be corrupted."
+   echo "         The new file MAY be fine."
+   echo "         original file = $filename."
+   echo "         new file = $tmpfile."
+   exit(1)
+endif

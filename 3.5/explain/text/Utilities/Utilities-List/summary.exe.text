@@ -1,0 +1,25 @@
+	The ieeesummary.exe utility is for generating a summary listing
+	of the contents of an IEEE Keep file.  Running this utility is
+	a necessary step before running ieee2pcpops.exe.  The syntax
+	for using this utility is:
+
+		ieeesummary.exe file-name
+
+	where file-name is the name of the IEEE-Keep file you want
+	summarized.
+
+	The utility programs can be run from within UniPOPS using the
+	SYSTEM command or it can be executed outside of UniPOPS at the
+	Unix prompt.
+
+	The output can be redirected into a file, for example, or
+	redirected to a printer.  To redirect the output to a file, try
+	something like the following:
+
+		ieeesummary.exe My-File > file-contents
+
+	where My-File is the data file and file-contents is the name of
+	the file which will contain the output of ieeesummary.exe.
+
+	The output is self-explanatory.
+

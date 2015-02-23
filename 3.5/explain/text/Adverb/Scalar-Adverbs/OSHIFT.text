@@ -1,0 +1,20 @@
+L------------------------- Spectral Line --------------------------------
+L-	(SCALAR ADVERB)
+L-
+L-	OSHIFT is set by  RAP to equal the number of channels between
+L-	the two frequencies in frequency-switching mode.
+L-
+L-	OSHIFT is not used by any verb.
+L-
+L-	OSHIFT is set by : RAP
+L-
+L-	The initial value for OSHIFT is 0.
+L-
+L-	EXAMPLE : 
+L-
+L-	You have just used RAP and wish to see by how many 
+L-	channels you were frequency switching. Specify,
+L-
+L-		PRINT OSHIFT
+L-
+L------------------------- Spectral Line --------------------------------

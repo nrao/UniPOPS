@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RAMPERR:  (ADVERB) The error in the fitted sinusoidal'
+PRINT 'baseline amplitude.'
+PRINT ' '

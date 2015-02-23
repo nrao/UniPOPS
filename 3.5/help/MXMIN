@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MXMIN:  (ADVERB) Minimum cell (or pixel) number along the'
+PRINT 'x-axis of Matrix (0) that is to be processed.'
+PRINT ' '

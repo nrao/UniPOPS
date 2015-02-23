@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'INDEX:  Returns 1st location in a string where a 2nd string'
+PRINT 'is located. Syntax: INDEX(string1, string2)'
+PRINT ' '

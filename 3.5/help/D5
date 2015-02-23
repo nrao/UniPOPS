@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'D5:  (INTERNAL-ARRAY) Returns/sets the value of the '
+PRINT 'specified data point in Array 5.'
+PRINT ' '

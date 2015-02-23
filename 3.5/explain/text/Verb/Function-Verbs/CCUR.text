@@ -1,0 +1,39 @@
+ 	(FUNCTION VERB)
+
+	CCUR is a function that activates the cross hair and returns a
+	value depending upon where the cross hair is located.  For SHOW
+	plots, it returns the channel number (or sample number for
+	continuum data) for the cross hair position of the current
+	display.  For PLOT displays, it returns the x-axis value.  For
+	two-dimensional displays, it returns the x-cell number.
+
+	CCUR can be used for defining baseline regions, entering
+	initial guesses for fitting Gaussians, entering start and stop
+	channel numbers for moment calculations, etc.
+
+	No adverbs are set or used by CCUR.
+
+	EXAMPLE:
+
+	A procedure for setting Gaussian parameters with the cross hairs
+	is defined as:
+
+		PROCEDURE GSET
+		SCALAR GSET_I
+		#
+		PRINT 'Enter # of Gaussians'
+		READ NGAUSS
+		PRINT 'Set centers'
+		FOR GSET_I=1 TO NGAUSS
+		  CENTER(GSET_I)=CCUR; END
+		PRINT 'Set full-width at half max'
+		FOR GSET_I=1 TO NGAUSS
+                  HWIDTH(GSET_I)=ABS(CCUR-CCUR)
+		  END
+		PRINT 'Set BGAUSS & EGAUSS'
+		BGAUSS=CCUR
+		EGAUSS=CCUR
+		RETURN
+		FINISH
+
+	To invoke the procedure, enter GSET and use the cross hairs.

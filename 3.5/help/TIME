@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TIME:  (FUNCTION) Returns a string containing the current'
+PRINT 'time.  Example: PRINT TIME.'
+PRINT ' '

@@ -1,0 +1,717 @@
+
+
+
+
+	      A Description of UniPOPS -- A Data-Analysis System
+		     for NRAO Single-Dish Telescopes
+
+			   Ronald J. Maddalena
+
+			     April 30, 1991
+
+		       (Revised:  March 31, 1992)
+	       (Revised:  May 27, 1994 by Robert Garwood)
+	       (Revised:  March 2, 1995 by Robert Garwood)
+
+
+
+The following report is a description of the UniPOPS project and the
+UniPOPS system of programs.  Only the major highlights of the system
+are given and, in no way, is the report a complete description.  As
+with all computer projects, the UniPOPS system grows in size and
+functionality daily; what is described below is the current status of
+the system plus what will be added to it over the next few months.
+
+
+1.  Purpose 
+-----------
+
+UniPOPS serves most of the data-analysis needs of the astronomers
+who use the 140-ft and 12-m telescopes.  It is quick to learn
+a useful subset of it's potential (four hours with a manual, one hour 
+or less under the tutoring of the Friend-of-the-Telescope) and does
+not tie up an enormous amount of the NRAO's resources.
+
+As far as the user is concerned, the system is identical at both
+sites although each site has certain functionalities which have
+been altered to suit that site's needs.  Certain functions act
+differently at each site in order to allow for differences in history
+at each site and differences in data taking techniques.
+
+It is anticipated that at some future date, aips++ will replace UniPOPS
+as the recommended analysis package at NRAO single dish telescopes.
+
+
+2.  Scope
+---------
+
+UniPOPS satisfies many of the possible of the needs of observers
+while they are at the telescope.  It may satisfy some of their needs
+after observations are completed but UniPOPS is not intended to be a
+complete and ultimate analysis system.
+
+It analyzes both continuum and spectral-line 1-dimensional data as well
+as having some functionalities for two and higher dimensional data
+arrays.
+
+We anticipate close to 50 observing sessions will use the system at
+EACH site over the course of one year (100 total).  The number of
+different users is hard to estimate -- many observing sessions have
+multiple users and different observing sessions may have the same
+user.  UniPOPS is freely available using ftp or on tape by request.
+There are currently copies of UniPOPS at more than two dozen
+non-NRAO sites.
+
+
+3.  History and Personnel Resources
+-----------------------------------
+
+The UniPOPS project began in 1988 in response to requests from
+observers and User's Committees for improved single-dish analysis
+programs.  We began by reviewing many of the existing NRAO and non-NRAO
+data analysis packages and concluded that, in order to produce a
+superior product, modifying the present NRAO analysis programs was more
+cost effective than adopting any other existing package.
+
+Code development, which began in March of 1989, has been mostly the
+part-time work of one person in Green Bank with assistance from one
+programmer in Charlottesville.  Other members of the Green Bank staff
+put in part-time efforts in testing, documentation, and producing a
+FITS reader and writer.  Three Green Bank undergraduate summer students
+also contributed to the effort.
+
+To minimize code writing, we took the best analysis program the NRAO
+had for single-dish analysis (the Tucson version of the program) as a
+starting point and developed code around it.   At each stage of the
+project, the needs of all sites (Green Bank, Tucson, and
+Charlottesville) were equally considered.  Those features in the old
+program that were site-specific to Tucson, but did not need to be, were
+replaced with more general functions.  Those things that only the 12-m
+would use were left in the program while those things only the 140-ft
+would use but were lacking were taken from the old Green Bank version
+of the program and added to the Tucson program.  The user-interface was
+thoroughly redesigned; many bugs were fixed and the program was
+simplified and made easier to learn.
+
+Maintenance and development of the UniPOPS system of programs is
+currently limited to the part-time effort of one person who is
+shared between the two sites as well as some (<25% of one person)
+effort from the staffs of the two sites.
+
+Because of limited resources, we are unable to fully support those
+who use the programs at their home institutions.  Maximum support is  
+given to the current users of our telescopes -- the needs of NRAO
+staff members who use the program are not considered more important
+than those of the non-NRAO observer.
+
+The programs run only on a Sun workstation although the X graphics
+screen can be displayed on any remote X window manager.  The documentation 
+is more functional than eloquent and glamorous.  We have limited the 
+types of output graphics devices and printers to what is available 
+in Green Bank and Tucson (Tek 4010 screens or printers, HPGL printers, 
+Retro-graphics screens, QMS-QUIC printers, PostScript Printers, SunView 
+and X windows).
+
+A method is in place to ensure that the programming efforts at all
+sites are shared without compromising each site's ability to fix bugs
+quickly (i.e., each site can fix a bug as soon as one is discovered)
+and without overly hampering independent algorithm development.
+
+
+4.  Structure of System and Necessary Computer Resources
+--------------------------------------------------------
+
+The UniPOPS system consists of multiple programs.  The user uses
+mostly the spectral-line and continuum analysis programs (named LINE
+and CONDAR, with site specific versions for handling the different
+on-line data format), as well as programs to convert data from old data 
+formats into formats which UniPOPS accepts, to convert data to and from
+single-dish FITS, to summarize data in files, etc.  Each site may have
+a set of utility programs which, for example, quickly process and
+summarize the results of all of an observer's pointing or calibration
+observations.
+
+The user, for the most part, is unaware of most of the programs
+which make up UniPOPS.  For example, each site has different
+data-collators that receive, reformat, and store the data from the
+control computer onto disk and update an index to the data that is
+shared (via shared memory) with a data-server.  The data-server answers
+the requests for data from the spectral-line and continuum analysis
+programs via remote procedure calls.  The analysis programs send
+commands to the program which handles graphics using UNIX pipes and
+shared memory.  And so on.  In total, five to ten programs can be
+running simultaneously during certain periods of an analysis session.
+
+This plethora of programs allows the following:  (a) each site can
+handle its data storing problems in the way best suited to how its
+control computer supplies the data; and (b) it provides modularity and
+eases future development (e.g., today we use our own hyper-text-like
+help facility which could be replaced by another; we moved from
+SunView to X-windows with a minimum of effort; etc.)
+
+In all, UniPOPS consists of close to 70,000 lines of fortran and c
+code and another 8,000 lines of shell scripts.  It uses about
+nine MBytes of memory.  The complete program (source code +
+documentation + object files + executable + ...) takes up 57 MBytes of
+disk space while the stripped down program (executables + on-line help
++ other needed files) takes up 20 MBytes.  For Green Bank, the on-line
+data files (where the data-collator stores the data) take up 200 MBytes
+of disk space and can hold 17,000 continuum and 17,000 spectral line
+scans -- usually sufficient for three months storage of routine
+data-taking or one week of very fast data-taking.  How much data Tucson
+is able to store depends upon the amount of disk space available to the
+user.
+
+As stated above, the system of programs runs on Sun 3 and Sun 4 computers
+running SunOS and Solaris.  In case of hardware mishaps, Green Bank and 
+Tucson have available replacement computers and disks so that observers are 
+able to examine their data as soon as possible after a major hardware
+problem.  Data are still taken during such a crisis but, until the
+hardware is replaced, are not available for analysis.  We attempt to 
+ensure that observers will be able to look at their complete data set 
+within, at most, 12 hours of a hardware problem.
+
+In Green Bank, with the Local-Area-Network, Network-File-System and
+Network-Information-System, observers can analyze their data at any of the
+general-purpose Suns scattered throughout the site.  Sitting at any
+machine is equivalent to sitting at the computer at the telescope --
+the astronomer needs to learn nothing new.  More than one observer is
+able to analyze their data simultaneously.
+
+The code is written mostly in Fortran 77 with about 10 to 20 percent
+written in C and about 10 percent in UNIX shell scripts.  The mixture
+of languages was chosen: (a) to take advantage of the powers inherent
+in each language for tackling different problems; (b) to minimize the
+re-writing of existing code; and (c) to take advantage of programmers
+whose expertise was in only one of the languages.  Wherever time
+allowed, sections of the code were re-written from the original Fortran
+II or IV of the progenitors to Fortran 77 so as to ease future
+maintenance.  We have tried to isolate or identify all machine and site
+dependent features, as well as our use of extensions to Fortran 77, so
+as to increase the program's portability and maintenance.
+
+
+5. The Look of the System
+-------------------------
+
+In order to monitor computer resources, Green Bank supplies each user of 
+the program their own computer account and home directory.  Since it is
+hard to anticipate the disk-storage needs of each user, no quotas 
+are placed on user accounts.  At the 12-m, observers share a common
+account with each observer having a separate subdirectory.
+
+Since many of the users of the telescopes are not familiar with
+computers and UNIX, they are provided with a default set of
+setup files for configuring their account.  They are free to modify
+these setup files if they know how.  We have tried to minimize what
+users need to know about UNIX and have provided a list of UNIX commands
+we suggest they learn.
+
+After logging into their account, users are immediately placed into the
+X or SunView windowing environment (after answering a question on their
+preferred windowing environment) and are given all the necessary windows
+for running the analysis programs, answering mail, etc.  They are also
+asked at one point what their favorite editor is (emacs, textedit, vi,
+EDT, and whatever else is available).
+
+A "Cookbook" type of tutorial manual steps the observer through the
+stages needed to get into the analysis program.  It also describes the
+basic commands, gives examples, describes how to get on-line
+documentation, etc.  Over the history of the project, the Cookbook has
+evolved into much more than a simple Cookbook.  A simple, quick,
+tutorial is still needed.  A reference manual and on-line documentation
+describe the program in full detail.
+
+The user interface is the command-line interpretor.  It is a superior 
+version of the POPS parser used in AIPS and older versions of the NRAO
+single-dish analysis programs from which UniPOPS evolved. 
+
+
+6.  Functionality
+-----------------
+
+The functionality of UniPOPS can be divided into numerous types.  The
+following describes the more important features of UniPOPS and is not a
+complete description of the program.  The descriptions are presented
+in no particular order.
+
+   6.1.  User-Interface
+   --------------------
+
+	The command-line interpretor is a better, more resilient,
+	version of the POPS parser than exists in AIPS or any of the
+	older single-dish analysis programs.
+
+	Its functionalities include:
+
+	.  More than one command to an input line; continuation of a
+	   command line on multiple input lines.  Minimum-match is
+	   supported.
+
+	.  Ability to set and use values for parameters.
+
+	.  Math expressions between scalar operands and 1-dimensional
+	   array operands (i.e. A=1*SIN(B); ARRAY_1 = ARRAY_2/ARRAY_3,
+	   etc.).
+
+	.  Passing arguments to operators.
+
+	.  Provides a series of math and logical operators and
+	   functions which follow the typical level of precedence
+	   (i.e., * performed before +, contents of inner parenthesis
+	   first, etc.)
+
+	.  Ability to create new operators (called procedures) and
+	   operands (called adverbs).  Procedures can be of two types
+	   which are similar to subroutines and functions in Fortran.
+	   adverbs can be scalar, multi-dimensional arrays, or
+	   strings.  Procedures can contain references to either
+	   operands that are known globally or that are local to
+	   the procedure.
+
+	.  Procedures can call other procedures or any UniPOPS
+	   operator.  They also can contain such constructs as FOR
+	   loops, IF-THEN-ELSE conditionals, and WHILE loops.
+
+	.  Procedures can be constructed and edited using a system
+	   editor (emacs, vi, ... -- whatever is available and desired
+	   by the user) and reside on disk so that they can be shared
+	   among users.  A library of procedures will grow with time.
+
+	.  Commands can be taken either from the keyboard or from a
+	   disk file (the latter is useful for batch-like processing).
+
+	.  Commands can be stored to a file, reviewed, and re-executed
+	   via a command-logging and history facility similar to the
+	   UNIX C-shell.
+
+	.  The last two commands can be 'undone' in case the user
+	   changes his or her mind and wants to back up a few steps.
+
+	.  Text output can be directed to the screen, a
+	   user-specified file, or the graphics window.
+
+	.  The user can trap errors and process them in whatever
+	   way desired in much the same way $status is used in
+	   C-shell.  (For example, if operator YYY can fail because of
+	   an improperly set value for a parameter, you may want to
+	   execute YYY, test whether YYY trapped the anticipated error,
+	   and then warn yourself about the error or change what
+	   analysis steps are to be performed next.)
+
+
+   6.2.  Utility Programs
+   ----------------------
+
+	The following utility programs are presently available :
+
+	.  Data conversion between all formats Green Bank has produced
+	   over the last 10 years and the UniPOPS data format.
+
+	.  Data conversion between formats Tucson has produced over
+	   the last four years.
+
+	.  Data conversion to and from UniPOPS format from or to
+	   Single-Dish FITS.
+
+	.  Quick reduction of Green Bank pointing or calibration
+	   observations.
+
+	.  Summarize contents of data files and fix the index
+	   portion of data files.
+
+	.  Data conversion between the two forms of UniPOPS disk
+	   file (16-bit integer index and 32-bit integer index).
+
+	.  Expand a UniPOPS disk file.
+
+	.  Merge two UniPOPS disk files.
+
+
+   6.3.  1-Dimensional Analysis
+   ----------------------------
+
+	The quick manipulation of 1-dimensional data arrays is UniPOPS'
+	bread-and-butter.  The user can process up to 10 arrays
+	simultaneously.  If a particular functionality doesn't exist in
+	UniPOPS, one can create the new functionality by writing a
+	procedure.  Since the power of procedures is large, so is the
+	functionality of UniPOPS.
+
+	In most cases, it is immaterial whether the data being
+	manipulated was produced by a radio telescope or read off a
+	cereal box and entered by hand.  Very few functions require
+	that the data was taken by a radio telescope.  A handful
+	require that the data was taken by an NRAO telescope or a
+	specific NRAO telescope.
+
+	The various built-in 1-dimensional functions can be divided
+	into eight types.
+
+
+	6.3.1.  Baseline fitting
+	------------------------
+
+	   .  Either polynomial (0 through 12 degree), running median,
+	      or sinusoidal fitting (using an initial guessed
+	      frequency) over a specified range in data points.
+
+	   .  Displaying the fit, removing it, producing a model of
+	      it, etc.
+
+
+	6.3.2.  FFT
+	-----------
+
+	   .  Calculating the convolutions, cross-correlations,
+	      deconvolutions between arrays.
+
+	   .  Calculating FFTs, Inverse FFTs, or Power spectrums.
+
+
+	6.3.3.  Averaging
+	-----------------
+
+	   Averaging data arrays using default weighting or
+	   user-specified weight factors.  If the data values do not
+	   line up in position (for continuum data), frequency, or
+	   velocity (for spectral-line data), data arrays can be
+	   shifted so that they align before the values are averaged
+	   together.
+
+
+	6.3.4.  Smoothing
+	-----------------
+
+	   Various data smoothing functions (Hanning, boxcar,
+	   convolution with Gaussian) are available as well as a way of
+	   smoothing data utilizing a user-specified smoothing
+	   function.
+
+
+	6.3.5.  Data Reduction
+	----------------------
+
+	   Certain functions summarize the data or process the data and
+	   return the results of the processing without altering the
+	   data values.  These functionalities include:
+
+	   .  Calculating RMS noise in the data.
+
+	   .  Finding peak values and line widths.
+
+	   .  Calculating profile parameters, in the case that the
+	      data is from an extra-galactic HI or CO observation.
+
+	   .  Finding velocity centroids and area under a profile.
+
+
+	6.3.6.  Data Manipulation
+	-------------------------
+
+	   Other functions alter the data values.  For example:
+
+	   .  Multipling the data by a specified factor or adding to
+	      the data a specified factor.
+
+	   .  Dividing, adding, multiplying, subtracting, etc. data
+	      arrays.
+
+	   .  Finding and replacing noise spikes (or bad channels).
+
+	   .  Processing position-switched or frequency-switched
+	      data.
+
+
+	6.3.7.  Gaussian Fitting
+	------------------------
+
+	   UniPOPS provides the capability to fit up to 24 Gaussians
+	   simultaneously to a data array.  The Gaussians can be
+	   displayed over the data or removed from the data.
+
+
+	6.3.8.  Documentation
+	---------------------
+
+	   Many facilities are available to summarize the header
+	   parameters of the data and to display and change header and
+	   data values.
+
+
+   6.4.  2-Dimensional Analysis
+   ----------------------------
+
+	UniPOPS forte will never be 2-dimensional analysis.  However,
+	we have provided a number of useful verbs and procedures for
+	working with 2-dimensional data.
+
+	UniPOPS provides a means whereby the user can stuff a data
+	value into a certain element of a specified 2-dimensional
+	matrix.  Due to limits of the memory in the computers both
+	Green Bank and Tucson provide to users, only four arrays of 
+	102,400 pixels will be provided.
+
+	The user specifies the dimensions of the desired matrix (within
+	the above stated limits) and then starts placing values into
+	the matrix.  The data values of any element in any of the
+	arrays can also be easily retrieved.  Setting values and
+	manipulating these arrays is performed primarily by procedures.
+	It is possible to extract and insert an entire row or column
+	of a matrix to and from the data arrays.  Commands exist that 
+	rotate, smooth, and interpolate the data in matrices.  The 
+	matrices can be displayed using any of the 2-dimensional graphics 
+	facilities described below.  Data can be imported and exported
+	from the matrices using FITS image files.  Other analysis packages,
+	such as AIPS or iraf, can then be used for further analysis.
+
+	Although limited in capability, the provided functionality
+	should satisfy almost all observers who have large-scale
+	mapping programs while they are taking data at the telescope.
+
+
+   6.5.  3-Dimensional Analysis
+   ----------------------------
+
+	UniPOPS is be very limited in what it is able to do with
+	3-dimensional arrays.  A utility is provided which takes
+	a series of spectral line observations and arranges them into a
+	data cube (whose faces are x-coordinate, y-coordinate, and
+	velocity) and to write the cube to disk in FITS image format.
+
+	The FITS file can then be read into programs better equipped to
+	manipulate and analyze such arrays.
+
+	For beginners, or those not interested in learning a new system,
+	we have provided rudimentary ways of taking slices out of the
+	cube of specified thickness which are parallel to one of the
+	cube faces.  The slice can then be displayed using one of the
+	2-dimensional plotting capabilities described below.
+
+	Again, the limits in functionality are satisfactory for the
+	on-line type of analysis which is necessary while observations
+	are in progress.  It falls short of the types of analysis
+	needed when processing data for publication-quality graphs,
+	etc. or when the data is very complex and is difficult to
+	interpret.
+
+
+   6.6.  System Interface
+   -----------------------
+
+	Certain commands allow one to use some of the resources of the
+	computer's operating system.  This includes:
+
+	. Listing contents of directories and files.
+
+	. Listing what procedures are available in libraries.
+
+	. Printing text files on the nearest printers.
+
+	. Executing any system (UNIX) command while within the
+	  program.
+
+
+   6.7.  Data Retrieval and Storage
+   --------------------------------
+
+	Data resides either in an on-line data file (where the
+	telescope is currently placing data) or in files in the user's
+	account.  A data security feature prevents one user from
+	looking at another's data (in Green Bank only).  The user has 
+	full control as to what data files the program can read from 
+	or write to.  The format of the files follows the 1986 
+	Single-dish-data (SDD) format (a format agreed upon by many major 
+	observatories) plus a home-grown data-base manager (or 
+	indexing scheme).  In the fall of 1993, the original indexing
+	scheme, which used 16-bit integers, was replaced with one
+	that uses 32-bit integers so that SDD files can hold more
+	data.  The program can read both types of files, although access
+	of the new indexing scheme is somewhat faster.  A utility
+	is provided to convert between the two indexing schemes.
+
+	We have spent some effort in making data access as quick as
+	possible since it is typical that one observer will have a few
+	thousand observations, each of which must be retrieved many
+	times during the course of analysis.  A typical figure is, for
+	a one-week observing session, something like 10 000 disk
+	accesses of 5 kBytes each.  One recent, not-so atypical
+	observer needed to retrieve 7 500 observations (total of 38
+	MBytes), process them, and store the results on disk, all of
+	which took 45 minutes, most of which was spent in the
+	processing stage.  The data was taken over many days with other
+	observer's data intermingled with his.  After processing the
+	observations, he noticed a problem with his analysis algorithm
+	and had to repeat the analysis steps again.  Slow data access
+	is intolerable for such observing programs.
+
+	Since we have used a data-server process, accessible using
+	remote-procedure-calls, any person who has the UniPOPS program
+	on a Sun Workstation connected to InterNet can retrieve
+	observations from Green Bank.  This facility is not currently
+	available at the 12-meter, however, with an X display and a 
+	reasonably fast InterNet connection, one can observe remotely
+	even at the 12-meter.
+
+	Data can be retrieved by scan number or by a given set of
+	criteria (e.g., the user can request all observations that were
+	taken between x = 1.23 and x = 1.25, y = -90 and +90, at
+	frequency 12345.678, with source name of 'Orion' but with no
+	regard to scan number).
+
+	After processing, the data can be stored on disk in
+	user-specified files.  These output data files can be used
+	later on in the analysis as input files or converted into
+	SD-FITS format.
+
+	The contents of data files can be summarized in different
+	ways.
+
+	Green Bank has the capability to look at the observations in
+	progress.  Tucson, at the moment, is limited to examining an
+	observation only after it has been completed -- a limitation
+	imposed by their control system but which will be removed
+	in the future.
+
+	Up to 10 observations (or 1-dimensional data arrays) can be
+	manipulated simultaneously.  The observations are stored in 10
+	user-accessible arrays; when data is retrieved from disk, the
+	user can specify which one of the ten arrays is to be used to 
+	store the observation.
+
+	Each observation consists of header parameters (describing
+	either how the data was taken or how the data was reduced) plus
+	up to 16284 data values.  Various procedures and operators use,
+	work-on, or modify these arrays.
+
+	If a desired operator doesn't exist, the user can create
+	procedures which use any of the functionalities of UniPOPS to
+	perform the new operation.  In this way, the functionality of
+	UniPOPS is limited to what one can do in procedures (and
+	procedures can be relatively powerful creatures).
+
+	The contents of the arrays (both data and header parameters)
+	can be easily retrieved or modified.  In principle, this
+	ability, combined with those inherent in procedures, gives each
+	user the power to manipulate their data as they like -- they
+	are not limited in their analysis to what capabilities we have
+	built into UniPOPS.
+
+
+   6.8.  On-Line Help Facilities
+   -----------------------------
+
+	UniPOPS has five general on-line help facilities and two
+	facilities related to exchanging information between users and
+	programmers.  In addition, a "Cookbook" manual and a full reference 
+	manual exist.
+
+	.  Short helps for quickly reviewing what a command does as
+	   well as providing current values of all relevant
+	   parameters.
+
+	.  Listings of all current operators and operands.
+
+	.  Hierarchic (Hyper-text-like) help facility containing
+	   in-depth descriptions and examples of operators and operands
+	   usage.
+
+	.  A utility for identifying commands which deal with a
+	   specified topic; useful if the function of a command, but
+	   not its name, is known.
+
+	.  A utility for displaying information about a system (UNIX)
+	   command.
+
+	.  A method whereby users can send comments, suggestions, and
+	   bug reports to the NRAO programming staff.
+
+	.  A method whereby staff members can post notices of bug
+	   fixes, changes to the program, suggestions, etc. aimed at a
+	   particular user or to all users.
+
+
+   6.9.  Data Display
+   ------------------
+
+	UniPOPS can produce 1-dimensional plots, 2-dimensional contour
+	maps, 2-dimensional half-tones, and 2-dimensional gray or color
+	raster plots.  The display capabilities are such that the
+	nature or source of data being displayed is not important.
+	Almost all 1-dimensional functionalities are available for
+	2-dimensional plots.  Other 2-dimensional functionalities
+	include the ability to specify contour levels or color values,
+	for contour, raster, or half-tone plots.
+
+	The existing functionalities include:
+
+	.  Any 1-dimensional array can be plotted against another
+	   1-dimensional array -- the data need not be produced by a
+	   telescope (i.e., you can plot system temperature versus
+	   barometric pressure, if you want to).
+
+	.  Setting up plot labels, boundaries, etc. is somewhat
+	   flexible
+
+	.  Multiple plots on a single page are possible.
+
+	.  Frequencies, positions, temperatures, channel numbers,
+	   pixel numbers, etc. can be interactively gotten from a plot
+	   by using cross-hairs and a mouse.
+
+	.  A hardcopy of the presently displayed plot can be made
+	   whenever desired.
+
+	.  Lines, characters, etc. can be drawn anywhere on the
+	   graphics screen.
+
+	.  Plot can be drawn on top of another without rescaling or
+	   redrawing plot boundaries.
+
+	.  Particular channels, velocities, frequencies, or
+	   intensities can be flagged on the graph with either
+	   horizontal or vertical lines.
+
+	.  The scaling of x and y axes is either automatic or under
+	   user control.
+
+	.  Plots can be in histogram, points, or continuous line
+	   modes.
+
+	.  Fitted baselines, Gaussians, or user-specified
+	   functions can be plotted on top of existing plots.
+
+	.  Line types, character size, and line color are under
+	   the users control.
+
+
+7.  Status
+----------
+
+Since January 1991, UniPOPS has been an alternative analysis program
+for Green Bank observers -- the functionalities of the new program
+presently match or exceed those in the old Green Bank program.  The
+older version of the program in Green Bank, as of May 30, 1991, has
+been permanently retired.  The observing teams who have used the
+program so far were very pleased with it and most have requested a copy
+of the program for their home institution.
+
+In Tucson, the old VAX version of the program was permanently retired 
+after the 1992-1993 observing season.  The experience in Tucson echoes
+that in Green Bank.  Users are pleased with the improvement and
+generally request a copy for their home institution.
+
+The work which we would like to see completed over the next few months
+includes adding the analysis capabilities of NOD2 for continuum data
+reduction.
+
+
+8.  Summary
+-----------
+
+We have produced what we believe is a powerful, modern, and
+sophisticated data analysis package for the NRAO single-dish
+telescopes.  We have tried to maximize the functionality of the system
+and to minimize the learning curve and the cost of maintaining the
+programs.  Initial reactions of users to the UniPOPS system is
+extremely encouraging.

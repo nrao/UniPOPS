@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MDBASE:  Removes from Array 0 a point-by-point'
+PRINT 'median-intensity over the number of channels specified by'
+PRINT 'MDBOX.'
+PRINT ' '
+PRINT 'MDBOX=',MDBOX
+PRINT ' ' 

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'IT_MAX:  (ADVERB) Highest integration time (seconds) for'
+PRINT 'SELECT.'
+PRINT ' '

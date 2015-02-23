@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'PRINTER:  Sends printed output to the "printout" file.'
+PRINT ' '

@@ -1,0 +1,33 @@
+#if CKBK
+A-9 Logical Operators
+---------------------
+
+#end
+The following are infix operators: & < <= > >= | ~= =  .
+
+The following is a prefix operator: ~
+
+(An infix operator is one that is placed between, and works on, two
+operands, while a prefix operator is placed before the single operand
+that it works on.)
+
+& :  And operator.
+
+< :  Less than operator.
+
+<= : Less than or equal to operator.
+
+> :  Greater than operator.
+
+>= : Greater than or equal to operator.
+
+| :  Or operator.
+
+~ :  Not operator.
+
+~= : Not equal to operator.
+
+= :  Equality operator.
+#if CKBK
+
+#end

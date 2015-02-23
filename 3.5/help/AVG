@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'AVG:  (CONTINUUM) Computes the mean source temperature and'
+PRINT 'standard deviation of the mean of the analog continuum data'
+PRINT '(from the standard backend) in Array 0.'
+PRINT ' '

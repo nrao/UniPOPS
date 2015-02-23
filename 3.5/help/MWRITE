@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'MWRITE:  Writes Matrix (0) into a specified disk file as a'
+PRINT 'two-dimensional FITS image file.  '
+PRINT 'Syntax: MWRITE(filename)'
+PRINT ' '

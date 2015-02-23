@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MDELT2:  (HEADER-MATRIX) The step-size between y-axis cells'
+PRINT 'in the Matrix.'
+PRINT ' '

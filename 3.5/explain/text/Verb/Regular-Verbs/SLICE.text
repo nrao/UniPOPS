@@ -1,0 +1,48 @@
+	(REGULAR VERB)
+
+	Syntax: SLICE(face, lower, upper)
+
+	SLICE takes the three-dimensional FITS image (cube) file
+	previously read in with READCUBE and slices the cube parallel
+	to one of the cube faces.  The slice begins and ends at the
+	specified lower and upper bounds (in units of cells within the
+	cube) away from the specified face.  The slice is then placed
+	into Matrix (0).
+
+	The value of face can be either 1, 2, or 3.
+
+	If you specify a face of 3 then you will generate a matrix with
+	x and y axis that corresponds to the cube's x and y axis and
+	you will be slicing in z and parallel to the x-y face.
+
+	If you specify a face of 2 then you will generate a matrix with
+	x and y axis that corresponds to the cube's x and z axis and
+	you will be slicing in y and parallel to the x-z face.
+
+	If you specify a face of 1 then you will generate a matrix with
+	x and y axis that corresponds to the cube's y and z axis and
+	you will be slicing in x and parallel to the y-z face.
+
+	The lower limit of the slice must be specified in cells within
+	the cube and must be greater than zero but less than or equal
+	to the upper limit.  The upper limit is also specified in cells
+	and should be less than or equal to the number of cells in the
+	sliced direction.
+
+	No adverbs are used or set by SLICE.
+
+	EXAMPLE:
+
+	You have a three-dimensional FITS image file called 'Orion'
+	with axis of RA, DEC, and VELOCITY.  You want to slice it in
+	velocity from velocity cell 10 through 256 (that is, you want a
+	RA-DEC map of integrated intensity between the velocities
+	corresponding to velocity cells 10 and 256).  To read in the
+	cube, slice it, and get a quick contour plot, you need to
+	type:
+
+		READCUBE('Orion')
+		SLICE(3,10,256)
+		AUTOLEV(10) QCONTOUR LABEL
+
+

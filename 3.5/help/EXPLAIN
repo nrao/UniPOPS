@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EXPLAIN:  (PSEUDO) Starts up the EXPLAIN help facility.'
+print 'Syntax: EXPLAIN or EXPLAIN topic'
+PRINT ' '

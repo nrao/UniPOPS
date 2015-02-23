@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'NRSET:  (PROC-LIBRARY) Uses the cursor to set up regions'
+PRINT 'for baseline fitting.  Syntax:  NRSET(num_regions)'
+PRINT ' '
+PRINT 'NREGION='; print NREGION
+PRINT ' ' 

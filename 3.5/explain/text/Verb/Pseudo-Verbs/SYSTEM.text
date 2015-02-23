@@ -1,0 +1,19 @@
+        (PSEUDO VERB)
+
+	Syntax:    SYSTEM Unix-command
+
+	SYSTEM is a facility you can use to issue any operating-system
+	command from within UniPOPS.  SYSTEM returns to the UniPOPS prompt
+	after the system command has finished.
+
+	SYSTEM can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by SYSTEM.
+
+	EXAMPLE:
+
+		SYSTEM  ls
+
+	will give a listing of files in your current directory if you
+	are using a UNIX machine.

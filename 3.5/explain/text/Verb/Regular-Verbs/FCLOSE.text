@@ -1,0 +1,39 @@
+	(REGULAR VERB)
+
+	Syntax: FCLOSE(unit)
+
+	FCLOSE closes a file that has been previously opened with an
+	FOPEN.  If the opened file was a scratch file, it will be
+	deleted during the execution of the FCLOSE.  The unit number
+	you supply must be a scalar adverb, constant, or expressions
+	whose value is identical to the unit number returned by the
+	FOPEN that opened the desired  file.
+
+	If the unit you specified doesn't correspond to an open file,
+	an error message will be generated.  You can check what
+	files are attached to what unit number with the FSTATUS
+	verb.
+
+	No adverbs are used or set by FCLOSE.
+
+	EXAMPLES:
+
+	. You have opened a file with:
+
+		UNIT = FOPEN('garbage', DEFAULT)
+
+	  and, after doing what you wanted to do with it, now you want
+	  to close it.  Specify:
+
+		FCLOSE(UNIT)
+
+	. You have opened a file with:
+
+		PRINT FOPEN('blah', 0)
+
+	  which printed a unit number of 54. After doing what you
+	  wanted to do with it, now you want to close it.  Specify:
+
+		FCLOSE(54)
+
+

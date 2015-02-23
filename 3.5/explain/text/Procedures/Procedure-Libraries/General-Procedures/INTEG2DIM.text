@@ -1,0 +1,22 @@
+	INTEG2DIM is a version of PRC2DIM that is used by XYINTEG to
+	produce an integrated intensity (0th moment) map.
+
+	It is intended as an example of ways that PRC2DIM might be
+	altered.
+
+	Syntax: INTEG2DIM
+
+	The complete listing of this procedure is:
+
+      procedure integ2dim
+      #  returns the zeroth moment (area under the curve, integrated intensity)
+      #  in units of the current X axis * units of channel values of the data in
+      #  array 0.  Used by xyinteg.
+      moment
+      return size(1)
+      finish
+
+
+	File name: integ2dim.prc
+	
+	This procedure is included in maps.plib

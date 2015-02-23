@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'X0:  (HEADER-LINE) X-axis value at reference point (km/s).'
+PRINT ' '
+PRINT 'X0:  (HEADER-CONT) X-axis value at reference point (degs).'
+PRINT ' '

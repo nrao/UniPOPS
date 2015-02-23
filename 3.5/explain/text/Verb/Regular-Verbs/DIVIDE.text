@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+	DIVIDE divides the data in Array (0) by the data in Array (1),
+	leaving the result in Array (0).
+
+	ADVERBS USED:
+	
+	  DEFMODE : Indicates how undefined data values (IEEE Inf) should
+		    be treated.  
+
+		    If DEFMODE is FALSE (-1), the result of DIVIDE
+			will have an undefined value at any location 
+			where EITHER of the values in Array (1) or 
+			Array (0) are undefined.
+
+		    If DEFMODE is TRUE (+1), the result of DIVIDE
+			will have an undefined value at any location 
+			where BOTH of the values in Array (1) or
+			Array (0) are undefined.  If only one of the two
+			values is undefined at that location, DIFF
+			will use that value in the result.
+
+	            The initial value is FALSE.
+
+	EXAMPLES:
+
+	.   To divide scan 548 by scan 550, specify;
+
+		ON 548; OFF 550;  DIVIDE PAGE SHOW
+
+	.   The same example using GET rather than ON and OFF is:
+
+		GET 550; COPY (0,1); GET 548; DIVIDE PAGE SHOW
+
+	    or
+
+		GET1 550; GET0 548; DIVIDE PAGE SHOW
+

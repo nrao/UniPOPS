@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'REPORT:  (PSEUDO) Starts up the bug and comment reporting'
+PRINT 'facility.'
+PRINT ' '

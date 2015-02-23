@@ -1,0 +1,17 @@
+	XYINTEG is identical to XYGRID except that it calls
+	INTEG2DIM to do the processing.  It is not necessary to
+	edit XYGRID and rename it as well as the processing
+	procedure (PRC2DIM).  You can simply edit your own copy
+	of PRC2DIM.  However, once you have a useful set of
+	gridding and processing procedures, you might choose to
+	rename them in this way so that you can save them and
+	continue to use XYGRID and PRC2DIM to test other methods
+	of generating an x-y map.
+
+	Syntax: XYINTEG(dx, dy)
+
+	See the documentation for XYGRID for full details.
+
+	File name: xyinteg.prc
+
+	This procedure is included in maps.plib

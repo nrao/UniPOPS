@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'H6:  (INTERNAL-ARRAY) Returns/sets the value of the  '
+PRINT 'specified header parameter in Array 6.'
+PRINT ' '

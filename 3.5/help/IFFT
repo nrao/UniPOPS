@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'IFFT:  Takes the inverse FFT of the real data in Array 0'
+PRINT 'and the imaginary data in Array 1 and places the results'
+PRINT 'back in Arrays 0 and 1.'
+PRINT ' '
+PRINT 'BDROP,EDROP=',BDROP,EDROP
+PRINT ' ' 

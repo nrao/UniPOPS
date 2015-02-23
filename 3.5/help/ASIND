@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ASIND:  (PROC-LIBRARY) Returns the arc sine (in degrees) of'
+PRINT 'the given parameter.'
+PRINT ' '

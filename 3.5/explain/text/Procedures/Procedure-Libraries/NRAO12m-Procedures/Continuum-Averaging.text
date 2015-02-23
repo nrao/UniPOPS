@@ -1,0 +1,72 @@
+	This document describes the averaging procedures available
+	in the standard Condar SETUP file at the 12-meter : CSETUP.12meter.
+
+	CON_PSTACK is the continuum equivalent of the spectral line
+	procedure PSTACK.  It accumulates  the scans for the 
+	scan numbers stored in the ASTACK array.
+
+	Syntax: CON_PSTACK(offset)
+
+	Where (offset + 1) is the subscan number assigned to each
+	scan number found in the ASTACK array (any subscan values
+	present in the ASTACK array are ignored, there is no check
+	for duplicate scan numbers).  For example, if scan 45 is
+	is the ASTACK array and offset is 1, scan 45.02 will be fetched 
+	from the data file and processed.
+
+	Each scan is fetched from the data file (either on-line or
+	off-line if there is no on-line data or the scan numbers
+	are negative) and processed by the PRCSTACK procedure.
+
+	File name: con_pstack.prc
+
+	PRCSTACK is the procedure that process each scan.  It is where
+	all of the accumulation happens.  The version of PRCSTACK
+	described here (in the filename indicated below) simply
+	does the following for each scan:
+
+	SWITCHED; AVGD; ACCUM
+
+	If you wish to change how scans are treated and accumulated
+	you should alter this procedure.
+
+	PRCSTACK takes no arguments.
+
+	File name: prcstack.prc
+
+	CON_C1 calls CON_PSTACK with an argument of 0 (this results in
+	all the processed scans having a subcsan number of 1).  Following
+	the use of CON_PSTACK(0), AVE is called to finish the averaging
+	and the results are displayed on the graphics screen.
+	CON_C1 takes no arguments.
+
+	File name: con_c1.prc
+
+	CON_C2 calls CON_PSTACK with an argument of 1 (this results in
+	all the processed scans having a subcsan number of 2).  Following
+	the use of CON_PSTACK(1), AVE is called to finish the averaging
+	and the results are displayed on the graphics screen.
+	CON_C2 takes no arguments.
+
+	File name: con_c2.prc
+
+	CON_CB calls CON_PSTACK with an argument of 0 and then with
+	an argument of 1 (this results in all the processed scans having 
+	a subcsan number of 1 or 2, the "B" in the procedure name
+	stands for "both").  Following the use of CON_PSTACK(0), and
+	CON_PSTACK(1), AVE is called to finish the averaging and the results 
+	are displayed on the graphics screen.  CON_CB takes no arguments.
+
+	File name: con_cb.prc
+
+	All of these procedures are included in CSETUP.12meter
+
+	CSETUP.12meter also sets the following useful aliases:
+
+	C1 is aliased to CON_C1
+	C2 is aliased to CON_C2
+	CB is aliased to CON_CB
+
+	In addition to the above, CSTACK is also available for use
+	with continuum scans.  It will use the PRCSTACK procedure
+	to process the individual scans.

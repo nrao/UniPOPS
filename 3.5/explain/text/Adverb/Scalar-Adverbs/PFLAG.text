@@ -1,0 +1,18 @@
+	(SCALAR ADVERB)
+
+	PFLAG controls the output of the verb DOC.  If PFLAG = FALSE
+	(-1), then DOC will print a table header. Otherwise DOC will
+	print no header.  DOC changes the value of PFLAG to TRUE.
+
+	PFLAG is used and set by : DOC
+
+	The initial value of PFLAG is FALSE (-1). 
+ 
+	EXAMPLE : 
+
+	You wish DOC to produce a table header. So, specify :
+
+		PFLAG = FALSE; DOC
+
+	NOTE : PFLAG is set to TRUE by DOC, and must be set to FALSE
+	       again when this is required.

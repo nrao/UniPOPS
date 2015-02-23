@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'AUTOLEV:  Sets up automatically contour levels (adverb'
+PRINT 'array LEVS) for two-dimensional displays.'
+print 'Syntax: AUTOLEV(num_levs)'
+PRINT ' '
+PRINT 'LEVS='
+print LEVS
+PRINT ' ' 

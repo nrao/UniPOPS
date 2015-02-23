@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'MRANGE:  Limits all matrix displays and processing to the'
+PRINT 'specified subset of Matrix (0).  '
+PRINT 'Syntax: MRANGE(xcell1, xcell2, ycell1, ycell2)'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

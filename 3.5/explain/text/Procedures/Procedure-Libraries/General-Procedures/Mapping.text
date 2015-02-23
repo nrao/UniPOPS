@@ -1,0 +1,198 @@
+	The following describes in general terms the mapping procedures
+	that are currently available.  Consult the documentation for
+	the specific procedures as well as the listings of the procedures
+	themselves for more insight.
+
+	All of these procedures can be installed by batching in
+	the file "maps.plib"
+
+	BATCH maps.plib
+
+
+	A front end to cube.exe:
+
+	CUBEINPUT
+
+		The UniPOPS utility cube.exe is rather difficult to
+		use.  The procedure CUBEINPUT provides a front end to
+		cube.exe that is somewhat easier to use than is the raw 
+		utility.
+
+	Maps in two dimensions:
+
+		The 4 Matrices (but primarily Matrix (0)) are used
+		to construct 2-D maps from data sets.
+
+
+	Initial Processing of the Data:
+
+	CHKAVRG	
+
+		Examines the scans numbers found in the ASTACK array and
+		produces a list of scans (by scan number) which have the
+		same coordinates to within a specified tolerance.
+		The output is in chkavrg.temp.  This is useful to see if
+		there are any duplicate positions represented by the
+		scan numbers in the ASTACK array which should be 
+		averaged together.  In general, all such averaging should
+		be done before mapping as the mapping procedures are
+		not very careful about checking for overlapping data.
+
+	PRCSTK
+
+		This procedure averages scans (using the list of scan
+		numbers in the ASTACK array) which have the same 
+		coordinates to within a specified tolerance.  The
+		procedure that actually process the scans during the
+		averaging process is PROCESS.  Edit this procedure first
+		if you with to alter the processing step.
+		The result of each unique position is stored to the
+		a SAVE file.  You are given the option of writing over
+		the current SAVE file, appending to the end of the current
+		SAVE file, creating a new, empty SAVE file or exiting
+		the procedure.  If you choose to write over the current
+		SAVE file it should either be empty or SPROTECT should 
+		be set to FALSE.  There is no way to know the capacity of
+		a data file from within the program.  Consequently, this
+		procedure may fail if the SAVE file is not large enough
+		to hold all the data.  The procedure SORTSTK is used 
+		by PRCSTK.  Dave Burrows contributed to this procedure.
+
+	SORTSTK
+
+		This is the procedure used by CHKAVRG and PRCSTK that
+		actually sorts the scan numbers in a disk file for
+		later use by those procedures.  It uses the file
+		sortstk.temp for its work.  There MUST be no file by
+		that name in order to use SORTSTK.  It uses the
+		Unix "sort" utility to do its work.
+
+	PROCESS
+
+		This is the core processing/averaging procedure used
+		by PRCSTK.  You should edit this file if you do
+		not like the default processing offered. At the very
+		least, you should examine this file and convince yourself
+		that it is what you wish PRCSTK to do to each scan.
+
+		Currently, the standard PROCESS fits a 0th order baseline
+		to the data (i.e. removes a dc offset).  You should
+		set any BASELINE related adverbs before hand if you wish
+		to use this version of PROCESS.
+
+	Gridding the Data:
+
+	First, you need to set up the header of Matrix (0).  We have
+	provided 3 example procedures that do that:
+
+	VXMATRIX
+
+		Sets up Matrix(0) with VELOCITY on the first axis
+		and X-position on the second axis.  Requires that
+		the data be in a save file starting at NSAVE=1 and
+		extending through the value of MAXNSAVE, a global
+		adverb used by several of these procedures.
+
+	VYMATRIX
+
+		Sets up Matrix(0) with VELOCITY on the first axis
+		and Y-position on the second axis.  Requires that
+		the data be in a save file starting at NSAVE=1 and
+		extending through the value of MAXNSAVE.
+
+	XYMATRIX
+
+		Sets up Matrix(0) with X-position on the first axis
+		and Y-position on the second axis.  Requires that
+		the data be in a save file starting at NSAVE=1 and
+		extending through the value of MAXNSAVE.
+	
+
+	Next, you need to grid the data.  There are two possible parts to
+	this step.  First, you may need to convert the spectra to a
+	single value (or otherwise integrate the date).  Second, you
+	need to convert the location of the data to a cell in the
+	Matrix and drop it in place.  Generally, these procedures
+	will be coordinated with the above so that the procedure 
+	expects that a certain type of grid was create using one of
+	the above procedures.
+
+	VXGRID
+
+		The companion to VXMATRIX.  All values having the same 
+		X but different Y are averaged together.  Matrix(3) is
+		used to keep track of the sum of the weights during
+		averaging.  There is no need to convert the spectra to
+		a single value.
+
+	VYGRID
+
+		The companion to VYMATRIX.  All values having the same
+		Y but different X are averaged together.  Matrix(3) is
+		used to keep track of the sum of the weights during
+		averaging.  There is no need to convert the spectra to
+		a single value.
+
+	XYGRID
+
+		There is no attempt at data averaging here (something
+		like PRCSTK should have been done before to ensure that
+		there is no data at the same x and y position).
+		The procedure PRC2DIM is used to convert each individual
+		spectra to a single value that is then placed in the
+		appropriate grid point.
+
+	PRC2DIM
+
+		This is a template that you should use with XYGRID to
+		process each value and return a single number appropriate
+		for each grid point.  Its default behavior is to
+		return the peak value of each spectra.  Using this
+		procedure as is along with XYGRID and XYMATRIX will
+		result in an X-Y map of peak temperature for the
+		MAXNSAVE scans in the current save file starting at
+		NSAVE=1.
+
+	We have provided two alternatives to the XYGRID/PRC2DIM combination
+	above as illustrations in how these might be altered:
+
+	INTEG2DIM
+
+		This is a version of PRC2DIM.  It returns the zeroth
+		moment (integrated intensity) in units of the 	
+		current X axis * units of the data values in
+		Array(0).  It is intended to be used by XYINTEG
+
+	XYINTEG
+
+		Identical to XYGRID except that it calls INTEG2DIM to
+		do the processing.
+
+	PEAK2DIM
+
+		This is identical to PRC2DIM, but is named differently
+		to identify its function.  You are free to change
+		PRC2DIM and XYGRID and these version of those 
+		originals will still be available for your use.
+
+	XYPEAK
+
+		Identical to XYGRID except that it explicitly calls
+		PEAK2DIM rather than PRC2DIM.
+
+
+	Other Utility Procedures:
+
+	DMS
+
+		Decomposes an angle (in decimal degrees) into its
+		parts (degrees, minutes, seconds and sign [+/-]).
+		This procedure is used extensively by cubeinput.prc.
+
+	MXX
+
+		A useful shorthand in the same way that XX is useful
+		for 1-D displays.  It is equivalent to:
+
+		PAGE: QCONTOUR; LABEL
+		

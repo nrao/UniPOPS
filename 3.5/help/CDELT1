@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CDELT1:  (HEADER-CUBE) The step-size between x-axis cells'
+PRINT 'in the Cube.'
+PRINT ' '

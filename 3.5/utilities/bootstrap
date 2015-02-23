@@ -1,0 +1,63 @@
+#!/bin/csh -f
+#
+# @(#)bootstrap.sh	1.2 07/17/97
+#
+# A number of utilities need access to bootstrap information (in SDD for
+# the most part, however pdfl2sdd gets info from PDFL files).  These 
+# requests are of the form:
+#
+#   set bb = `dd if=file bs=size count=1 | /usr/bin/od -lv
+#
+# However, the l flag to od is specific to SunOS.  This script is used
+# by those utilities to isolate the Solaris/SunOS differences in one
+# location.
+#
+# Od also differs in that the Solaris version has fills each output value
+# with leading zeros so that all are of the same width.  Since most of
+# this script that depend on od use the "==" operator in csh to compare
+# values and since this is a string comparison, these comparisons will
+# fail under Solaris.  So, the final thing this script does is to
+# convert each value of the output of the dd/od pipe to a true numerical
+# value using the @ built-in to csh and echo's the result.
+#
+# Usage: bootstrap arg1 arg2 LONG|SHORT
+#
+# where arg1 is the file name, arg2 is the blocksize in bytes and the
+# third argument is either LONG or SHORT, specifying that LONG words
+# are to be interpreted as signed integers or SHORT words are to be
+# interpreted as signed integers.  count=1 is assumed.
+#
+if ($#argv != 3) then
+   echo Usage: bootstrap arg1 arg2 LONG|SHORT
+   exit(1)
+endif
+#
+# get proper form of OD argument, Solaris vs SunOS
+#
+switch ($3)
+case LONG:
+   if (`isSolaris` == "YES") then
+      set odarg = "-Sv"
+   else
+      set odarg = "-lv"
+   endif
+   breaksw
+case SHORT:
+   if (`isSolaris` == "YES") then
+      set odarg = "-sv"
+   else
+      set odarg = "-iv"
+   endif
+   breaksw
+default:
+   echo bootstrap: illegal 3rd argument $3, only LONG and SHORT are allowed
+   exit(1)
+   breaksw
+endsw
+#
+set bs = `dd if=$1 bs=$2 count=1 | /usr/bin/od $odarg`
+#
+foreach word ($bs)
+   @ val = $word
+   echo -n $val " "
+end

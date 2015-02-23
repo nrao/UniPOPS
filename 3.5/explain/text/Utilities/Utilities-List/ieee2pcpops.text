@@ -1,0 +1,40 @@
+	The ieee2pcpops.exe utility provides an easy way to convert
+	IEEE Keep disk files into disk files suitable for use by
+	PC-Pops.
+
+	All of the following steps can be run from within UniPOPS using
+	the SYSTEM command or they can be executed outside of UniPOPS
+	at the UNIX prompt.
+
+	If your data is not in IEEE Keep format, then you should use
+	the cvt.disk-disk or cvt.tape-disk utilities first.  Once you
+	have an IEEE Keep file, you should run ieeesummary.exe on the
+	file to produce a index (or table) file.  Type something like
+	the following:
+
+		ieeesummary.exe Data-File  >!   Table-File
+
+	where Data-File and Table-File are the name of the IEEE Keep
+	data file and Table-File is the name of the table (index) file
+	you need to create.  Pick whatever names seem logical to you.
+
+	After having both an IEEE and index file, you can then run
+	ieee2pcpops.exe.  The program will ask you for the names of the
+	input data and index files.  It will also ask you for the
+	number of scans that can fit on the type of floppy to which you
+	are planning to copy the data.  A Double-sided, double-density,
+	5 1/4 inch floppy, for example, can hold 65 scans.
+
+	The program will then go through the data and index files and
+	produce files by the names of DATA001, DATA002, DATA00n,
+	TABLE001, TABLE002, TABLE003, etc.  If files by these names
+	already exist, the program will immediately bomb.
+
+	Each pair of files contain at most the number of scans you
+	picked when you ran the ieee2pcpops utility.  You should then
+	copy the DATA001 and TABLE001 file to one floppy, the DATA002,
+	TABLE002 to another, etc. until all the files are copied.
+
+	Finally, you should do some house cleaning by removing all
+	unnecessary files (by using the Unix rm command).
+

@@ -1,0 +1,19 @@
+	(REGULAR VERB)     
+	
+	LINE sets the plotting mode for the SHOW and PLOT display to
+	continuous-line mode.
+
+	No adverbs are used by LINE.
+
+	ADVERB SET:
+	
+	STATUS(3)    Type of SHOW or PLOT plot as determined by the
+		     last LINE, HISTOGRAM, or POINTS command. 
+ 
+		     Values:  0 = line; 1 = histogram; 2 = points
+
+	EXAMPLE:
+
+	Your last display was a HISTOGRAM.  To change it to LINE, specify;
+
+			LINE PAGE SHOW

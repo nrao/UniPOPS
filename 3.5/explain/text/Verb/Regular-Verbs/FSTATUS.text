@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	FSTATUS lists all of the files you have opened with FOPEN and
+	which you have not yet closed with FCLOSE, as well as the unit
+	number and the access parameters you specified when you opened
+	the file.
+
+	No adverbs are used or set by FSTATUS.
+
+	Examples:
+
+	You have forgotten what unit number to use for a certain file,
+	so you type:
+
+		FSTATUS
+
+	and the program will generate something like the following:
+
+		File name = blah
+		Unit =   50     Access = Read and write
+		Init. Pos. = Rewind           Existence = New
+
+		File name =
+		Unit =   51     Access = Read and write
+		Init. Pos. = Rewind           Existence = Scratch
+
+
+
+

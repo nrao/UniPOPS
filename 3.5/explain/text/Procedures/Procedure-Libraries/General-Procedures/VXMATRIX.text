@@ -1,0 +1,49 @@
+	VXMATRIX sets up Matrix (0) to hold data from the first
+	MAXNSAVE save bins of the current save file in a 
+	velocity-x position grid.  Any contents of Matrix (0) are
+	overwritten and lost.
+
+	Syntax: VXMATRIX(dx)
+
+	dx is the increment in the x-position direction between pixels
+	on the sky (in arc seconds).  The x-position is from the
+	XSOURCE header word.
+
+	MAXNSAVE is a global adverb that must be set prior to
+	using this procedure (e.g. via PRCSTK or by hand).
+
+	The velocity increment in the matrix is taken from the
+	the velocity increment at the center of the spectra of the
+	first scan in the save file (NSAVE=1).
+
+	The coordinate system for the first axis of Matrix (0) will
+	be VELOCITY and the coordinate system for the second
+	axis of Matrix (0) will be chosen based on the value of
+	the COORDCD header word of the NSAVE=1 scan.
+
+	If H0(COORDCD) is "GALACTIC" then the second axis of the
+	matrix will have the coordinate label "GLON".  If the last 4 
+	characters of H0(COORDCD) for NSAVE=1 are "RADC" then the 
+	coordinate label will be "RA" otherwise the coordinate label 
+	will be "X-AXIS".
+
+	It is intended that the use of VXMATRIX be followed by the
+	use of VXGRID to grid the same data.
+
+	File name: vxmatrix.prc
+
+	This procedure is included in maps.plib
+
+	Example:
+
+	You have a save file with data from NSAVE=1 through 
+	NSAVE=120 and you want to make a velocity-x position map.
+	The data are separated in X by 30 arc seconds.
+	
+
+		> MAXNSAVE=120
+		> VXMATRIX(30)
+		> VXGRID
+
+	Note that VXGRID uses Matrix(3) to handle the averaging in
+	Y-coordinate at each V-X coordinate.

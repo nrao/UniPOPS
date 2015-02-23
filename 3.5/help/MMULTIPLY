@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MMULTIPLY:  Multiplies the data in Matrix 1 with that in '
+PRINT 'Matrix 0 and places the results in Matrix 0.  The shape'
+PRINT 'of each matrix must be the same.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

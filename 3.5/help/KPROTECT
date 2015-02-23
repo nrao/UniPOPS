@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'KPROTECT:  (ADVERB) If TRUE, then KEEP will not overwrite'
+print 'scans in the "keep" file; else, KEEP may overwrite scans.'
+PRINT ' '

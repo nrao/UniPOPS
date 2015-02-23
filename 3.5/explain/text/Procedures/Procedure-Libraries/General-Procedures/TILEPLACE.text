@@ -1,0 +1,28 @@
+	TILEPLACE draws the "tile" appropriate for the data in 
+	Array (0).  The global adverbs that describe the tiling surface
+	should be set prior to using TILEPLACE by using the TILEPREP
+	procedure.
+
+	This procedure is used by TILESAVES but can easily be used
+	by itself once TILEPREP has been executed.
+
+	Syntax: TILEPLACE
+
+	File name: tileplace.prc
+
+	This procedure is included in tile.plib
+
+	Example:
+
+	You have a number of SAVE file which you have already displayed
+	using TILESAVES.  But, there was a hole in the SAVE file
+	which you want to fill with the data currently in Array (0)
+	(i.e. you've just observed where that hole is and you now want
+	to add it to an already existing tile display on your graphics
+	screen).  Simply type:
+
+		TILEPLACE
+
+	and it will be placed appropriately.  In order to use this
+	new data with TILESAVES to produce a brand new tile display,
+	you'll need to add it to the save file.

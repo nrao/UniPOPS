@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ERROFF:  Turns off only the checking for less severe'
+PRINT 'errors.'
+PRINT ' '

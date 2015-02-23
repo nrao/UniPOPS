@@ -1,0 +1,25 @@
+Class 1 :   Basic Information                 
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Length of Header                              | HEADLEN  |  R*8   | Bytes
+Length of Data                                | DATALEN  |  R*8   | Bytes
+Scan Number                                   | SCAN     |  R*8   |
+Observer Initials                             | OBSID    |  C*8   |
+Observer Name                                 | OBSERVER |  C*16  |
+Telescope Descriptor                          | TELESCOP |  C*8   |
+Project Identification                        | PROJID   |  C*8   |
+Source Name                                   | OBJECT   |  C*16  |
+Type of Data and Observing Mode               | OBSMODE  |  C*8   |
+Frontend Descriptor                           | FRONTEND |  C*8   |
+Backend Descriptor                            | BACKEND  |  C*8   |
+Data Precision of Spectrum                    | PRECIS   |  C*8   |
+Save bin number from which scan was retrieved | SAVENUM  |  R*8   |
+Number of records for indiv. records scan     | NORECORD |  R*8   |
+ Or the tot. # of OTF spectra in this row 
+The record number for this indiv. record      | RECORDID |  R*8   |
+ Or the # of this OTF spectra
+#if RFRNC CKBK
+
+
+#end

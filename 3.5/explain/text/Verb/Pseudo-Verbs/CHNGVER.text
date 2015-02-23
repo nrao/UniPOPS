@@ -1,0 +1,56 @@
+	(PSEUDO VERB)
+
+	Syntax:    CHNGVER on-line_file_type
+
+         This pseudo verb presents the user with a list of available version
+         numbers for the indicated on-line_file_type.
+
+         on-line_file_type is optional.  If not specified, the user
+         is asked to make a choice between filter bank and hybrid
+         spectrometer data.  In condar, since all of the continuum data
+         will be found in the filter bank file, the choice is obvious
+         and no question is asked.  It is therefor simpler to simply
+         type "CHNGVER" in condar.
+
+         Valid on-line_file_types are:
+
+            FBTYPE: filter bank, line only
+            HCTYPE: hybrid spectrometer, line only
+            CONTYPE: continuum data, condar only
+
+         The current version is indicated by   ->   <-  symbols.
+
+         The version numbers are always listed from highest (more recent
+         to lowest, one per line). 
+
+         After listing the versions, the user is asked to specify a version
+         number to use.  The same rules that apply in CHNGONLINE apply
+         here.  See CHNGONLINE for a complete discussion.  OLFILES is
+         used to indicate which on-line files are currently opened.
+
+         CHNGVER may set HC_VER, FB_VER, or CON_VER.
+	   
+	Examples:
+
+	> CHNGVER FBTYPE
+        CHNGVER: the following versions of type FBTYPE are available:
+        ->   5 <- Current version
+             4
+             3
+             2
+             1
+        Which version to use (<return> implies the current version): 3
+        >
+
+        The user responded by choosing 3.  The value of FB_VER would be 3.
+
+        A subsequent CHNGVER FBTYPE would produce the following output:
+
+        CHNGVER: the following versions of type FBTYPE are available: 
+             5
+             4 
+        ->   3 <- Current version 
+             2
+             1
+        Which version to use (<return> implies the current version):
+

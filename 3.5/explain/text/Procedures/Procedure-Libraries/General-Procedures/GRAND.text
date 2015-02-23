@@ -1,0 +1,18 @@
+	GRAND returns a normally distributed random number with
+	zero mean and unit variance to the stack for use by other
+	procedures and verbs.
+
+	Syntax:  GRAND
+
+	This is useful if you wish to synthesize data.
+
+	File name: grand.prc
+
+	Example: 
+
+	You wish to generate a fake spectrum:
+
+		BATCH grand.prc
+		CENTER=256; HEIGHT=1.25; HWIDTH=20
+		GMODEL
+		{ D0@ = D0@ + GRAND }

@@ -1,0 +1,954 @@
+C- Main File which includes all of the files that eventually make either
+C- LPOPSDAT or CPOPSDAT.  /lib/cpp is used and the -DCONTINUUM flag controls
+C- whether you get CPOPSDAT or LPOPSDAT, although the output-file name is
+C- controled by /lib/cpp.
+C- @(#)POPSDAT.MAIN	5.1 5
+C-
+C- POPSDAT stuff specific to both LINE and CONDAR (QUICK, FUNCT, STORES
+C- EDITOR, etc. type of stuff.)
+C- @(#)POPSDAT.GEN	5.1 06/22/94
+C-
+C- QUICK operators
+C-
+C- OMEGA       5   4    1  An internal operator
+,            1   4    1
+(            1   4    2
+)            1   4    3
+=            1   4    4
++            1   4    5
+-            1   4    6
+*            1   4    7
+/            1   4    8
+**           2   4    9
+>            1   4   10
+<            1   4   11
++            1   4   12
+-            1   4   13
+~            1   4   14
+~=           2   4   15
+>=           2   4   16
+<=           2   4   17
+TO           2   4   18
+BY           2   4   19
+=            1   4   20
+|            1   4   21
+&            1   4   22
+;            1   4   23
+FOR          3   4   24
+END          3   4   25
+READ         4   4   26
+PRINT        5   4   27
+?            1   4   27
+RETURN       6   4   28
+C-GETS         4   4   29  An internal operator
+C-RUN          3   4   30  An internal operator
+C-USING        5   4   31  An internal operator
+C-PROTECT      7   4   32  An internal operator
+EXEC         4   4   33
+SPRINT       6   4   34
+SREAD        5   4   35  
+FPRINT       6   4   36
+FREAD        5   4   37  
+C-
+C-  FUNCT; Function-like  operators
+C-  
+SIN          3   4   51
+ASIN         4   4   52
+COS          3   4   53
+ACOS         4   4   54
+TAN          3   4   55
+ATAN         4   4   56
+ATAN2        5   4   57
+SQRT         4   4   58
+LOG          3   4   59
+LOG10        5   4   60
+EXP          3   4   61
+ABS          3   4   62
+IFIX         4   4   63
+INT          3   4   63
+MAX          3   4   64
+MIN          3   4   65
+MOD          3   4   66
+NINT         4   4   67
+SIGN         4   4   68
+DIM          3   4   69
+SINH         4   4   70
+COSH         4   4   71
+TANH         4   4   72
+C-					 Stack function
+ASTACK       6   4   73
+C-                                       Get Data
+D0           2   4   74
+D1           2   4   75
+D2           2   4   76
+D3           2   4   77
+D4           2   4   78
+D5           2   4   79
+D6           2   4   80
+D7           2   4   81
+D8           2   4   82
+D9           2   4   83
+C-					 Get Headers
+H0           2   4   84
+H1           2   4   85
+H2           2   4   86
+H3           2   4   87
+H4           2   4   88
+H5           2   4   89
+H6           2   4   90
+H7           2   4   91
+H8           2   4   92
+H9           2   4   93
+C-					MATRIX operations
+MD0          3   4   94
+MD1          3   4   95
+MD2          3   4   96
+MD3          3   4   97
+C-
+MH0          3   4   98
+MH1          3   4   99
+MH2          3   4  100
+MH3          3   4  101
+C-					CUBE operations
+CD0          3   4  102
+CH0          3   4  103
+C-					String functions
+COMPARE      7   4  104
+LNBLNK       6   4  105
+LENGTH       6   4  106
+CONCAT       6   4  107
+SUBSTR       6   4  108
+INDEX        5   4  109
+C-                                      Data-Array functions
+CHANTOX      7   4  110
+XTOCHAN      7   4  111
+FOPEN        5   4  112
+FNAME        5   4  113
+XPIX2C       6   4  114
+YPIX2T       6   4  115
+C2XPIX       6   4  116
+T2YPIX       6   4  117
+C-
+C-  GENOP; General utility operators 
+C-
+PLACE        5   4  201
+VCTR         4   4  202
+CHAR         4   4  203
+PAGE         4   4  204
+EQTOGAL      7   4  205
+GALTOEQ      7   4  206
+DUMP         4   4  207
+CRT          3   4  208
+PRINTER      7   4  209
+OUTPUT       6   4  210
+TCOPY        5   4  211
+GCOPY        5   4  212
+PAUSE        5   4  213
+ERRON        5   4  214
+ERROFF       6   4  215
+FULLON       6   4  216
+FULLOFF      7   4  217
+GRAPHICS     8   4  218
+C-					 Set Stack 
+C- SETASTACK    9   4  219
+C-                                       Set Data
+C- SETD0        5   4  220
+C- SETD1        5   4  221
+C- SETD2        5   4  222
+C- SETD3        5   4  223
+C- SETD4        5   4  224
+C- SETD5        5   4  225
+C- SETD6        5   4  226
+C- SETD7        5   4  227
+C- SETD8        5   4  228
+C- SETD9        5   4  229
+C-					 Set Headers
+C- SETH0        5   4  230
+C- SETH1        5   4  231
+C- SETH2        5   4  232
+C- SETH3        5   4  233
+C- SETH4        5   4  234
+C- SETH5        5   4  235
+C- SETH6        5   4  236
+C- SETH7        5   4  237
+C- SETH8        5   4  238
+C- SETH9        5   4  239
+C-					MATRIX operations
+C- SETMD0       6   4  240
+C- SETMD1       6   4  241
+C- SETMD2       6   4  242
+C- SETMD3       6   4  243
+C-
+C- SETMH0       6   4  244
+C- SETMH1       6   4  245
+C- SETMH2       6   4  246
+C- SETMH3       6   4  247
+C-					additional common operators
+LOGON        5   4  248
+LOGOFF       6   4  249
+UNDOON       6   4  250
+UNDOOFF      7   4  251
+AMATHON      7   4  252
+AMATHOFF     8   4  253
+Z_SYSTEM     8   4  254
+Z_CHNGFIL    9   4  255
+C-				Z_BATCH turned off for now
+C- Z_BATCH      7   4  256
+C-
+COPYON       6   4  257
+COPYOFF      7   4  258
+DEBUG        5   4  259
+FREWIND      7   4  260
+FCLOSE       6   4  261
+FSTATUS      7   4  262
+PRNTFMT      7   4  263
+FONTSET      7   4  264
+VCHAR        5   4  265
+C-
+C- Run-Time operators
+C-
+ELSE         4   5  300
+THEN         4   5  301
+IF           2   5  302
+WHILE        5   5  303
+C-
+C- PSEUDO operators
+C-
+PROCEDURE    9   5  310
+PROC         4   5  310
+FINISH       6   5  311
+GLOBAL       6   5  312
+ARRAY        5   5  313
+STRING       6   5  314
+SCALAR       6   5  315
+POINTER      7   5  316
+ALIAS        5   5  317
+C-                          
+C- EDITOR operators
+C-
+POPSEDIT     8   5  320
+ENDEDIT      7   5  321
+C-
+C- STORES operators
+C-
+C- STOREPO     7   5  330  An Internal operator
+STORE        5   5  331
+RESTORE      7   5  332
+LIST         4   5  333
+CORE         4   5  334
+SCRATCH      7   5  335
+BATCH        5   5  336
+FILES        5   5  337
+CHNGPRJ      7   5  338
+SYSTEM       6   5  339
+DOCUMENT     8   5  340
+UNDO         4   5  341
+EDIT         4   5  342
+TYPE         4   5  343
+DIR          3   5  344
+SYSHELP      7   5  345
+LASER        5   5  346
+REPORT       6   5  347
+PRCDIR       6   5  348
+C-			MENUS disabled
+C- MENUS        5   5  349
+C- DONEMENU     8   5  350
+C-
+CHNGFILE     8   5  351
+IDENTIFY     8   5  352
+KILLGRPH     8   5  353
+EXIT         4   5  354
+RESTART      7   5  355
+COMPRESS     8   5  356 
+OLFILES      7   5  357
+WHATIS       6   5  358
+CHNGVER      7   5  359
+C-
+C- HELPS operators
+C-
+HELP         4   5  360
+VERB         4   5  361
+ADVERB       6   5  362
+EXPLAIN      7   5  363
+HISTORY      7   5  364
+C- DUMEND      6   5  368  An Internal operator
+C- WHILESETUP 10   5  369  An Internal operator
+C- SUBS        4   5  370  An Internal operator
+C-
+C- POPS VERBS - i.e. the stuff in the au routines
+C- @(#)POPSDAT.VERBS	5.2 07/06/94
+C-
+C--------------------------------------------------------------
+C-                                  AU1
+COPY         4   4  400
+MOVE         4   4  401
+REMOVE       6   4  402
+GET0         4   4  403
+GET          3   4  403
+ON           2   4  403
+GET1         4   4  404
+OFF          3   4  404
+GET2         4   4  405
+GET3         4   4  406
+GET4         4   4  407
+GET5         4   4  408
+GET6         4   4  409
+GET7         4   4  410
+GET8         4   4  411
+GET9         4   4  412
+RECALL       6   4  413
+SAVE         4   4  414
+TELL         4   4  415
+CGET         4   4  416
+SUMMARY      7   4  417
+KEEP         4   4  418
+CHECK        5   4  419
+GGET         4   4  420
+CGGET        5   4  421
+CHNGONLINE  10   4  422
+KGET         4   4  423
+C--------------------------------------------------------------
+C-                                  AU2
+ACCUM        5   4  430
+SUM          3   4  431
+AVE          3   4  432
+BOXCAR       6   4  433
+HANNING      7   4  434
+SCALE        5   4  435
+CLIP         4   4  436
+DIFF         4   4  437
+MINUS        5   4  437
+MOMENT       6   4  438
+SMOOTH       6   4  439
+INVERT       6   4  440
+DIVIDE       6   4  441
+SPIKE        5   4  442
+REPLACE      7   4  443
+PEAK         4   4  444
+BIAS         4   4  445
+CHNGRES      7   4  446
+CROSSFCN     8   4  447
+CONVFCN      7   4  448
+DECNVLV      7   4  449
+SHIFT        5   4  450
+FSHIFT       6   4  451
+VSHIFT       6   4  452
+PDOC         4   4  453
+LISTSHIFT    9   4  454
+PLUS         4   4  455
+MULTIPLY     8   4  456
+C--------------------------------------------------------------
+C-                                  AU3
+BASELINE     8   4  460
+BMODEL       6   4  461
+BSHAPE       6   4  462
+DCBASE       6   4  463
+RMS          3   4  464
+BSHOW        5   4  465
+PCBASE       6   4  466
+MDBASE       6   4  467
+C-------------------------------------------------------------
+C-                                  AU4
+CROSSHAIR    9   4  470
+RESHOW       6   4  471
+SHOW         4   4  472
+FLAG         4   4  473
+FULLGRID     8   4  474
+PLOT         4   4  475
+SETPAGE      7   4  476
+RSTPAGE      7   4  477
+COLOR        5   4  478
+LINETYPE     8   4  479
+CHARSIZE     8   4  480
+RSTCOLOR     8   4  481
+CLICK        5   4  482
+C------------------------------------------------------------
+C-                                  AU5
+MTABLE       6   4  485
+MHEADER      7   4  486
+MBLANK       6   4  487
+MCOPY        5   4  488
+MMOVE        5   4  489
+MREMOVE      7   4  490
+MINIT        5   4  491
+MRANGE       6   4  492
+HLFTNE       6   4  493
+LABEL        5   4  494
+SETLEV       6   4  495
+AUTOLEV      7   4  496
+RASTER       6   4  497
+SETCLUT      7   4  498
+CONTOUR      7   4  499
+MREAD        5   4  500
+MWRITE       6   4  501
+READCUBE     8   4  502
+SLICE        5   4  503
+MLIMITS      7   4  504
+QCONTOUR     8   4  505
+CHEADER      7   4  506
+PLOTDOTS     8   4  507
+MSMOOTH      7   4  508
+MFILL        5   4  509
+ROTATE       6   4  510
+MFFT         4   4  511
+MIFFT        5   4  512
+HOLWINDOW    9   4  513
+HOLFITFOC    9   4  514
+EQHISTLEV    9   4  515
+FUNCLEV      7   4  516
+PUTROW       6   4  517
+PUTCOL       6   4  518
+GETROW       6   4  519
+GETCOL       6   4  520
+MPLUS        5   4  521
+MMINUS       6   4  522
+MMULTIPLY    9   4  523
+MDIVIDE      7   4  524
+MSCALE       6   4  525
+MBIAS        5   4  526
+C-----------------------------------------------------------
+C-                                  AU6
+GMODEL       6   4  530
+GPARTS       6   4  531
+RESIDUAL     8   4  532
+GDISPLAY     8   4  533
+GAUSS        5   4  534
+C----------------------------------------------------------
+C-                                  AU7
+FFT          3   4  535
+IFFT         4   4  536
+POWSPEC      7   4  537
+C---------------------------------------------------------
+C-                                  AU8
+HEADER       6   4  540
+TABLE        5   4  541
+ADDSTACK     8   4  542
+DELETE       6   4  543
+EMPTY        5   4  544
+SCLEAR       6   4  545
+TITLE        5   4  546
+DOC          3   4  547
+THUMB        5   4  548
+OSB          3   4  549
+SELECT       6   4  550
+C---------------------------------------------------------
+C-                                  AU9
+RIPPLE       6   4  560
+RMODEL       6   4  561
+RSHAPE       6   4  562
+RSHOW        5   4  563
+C---------------------------------------------------------
+C-                                  AUA
+FV           2   4  570
+VF           2   4  571
+VC           2   4  572
+CV           2   4  573
+FC           2   4  574
+CF           2   4  575
+CC           2   4  576
+FF           2   4  577
+VV           2   4  578
+LINE         4   4  579
+HISTOGRAM    9   4  580
+POINTS       6   4  581
+RLINE        5   4  582
+RHIST        5   4  583
+RPOINTS      7   4  584
+FREEY        5   4  585
+HOLDY        5   4  586
+YRANGE       6   4  587
+XRANGE       6   4  588
+SAXIS        5   4  589
+C---------------------------------------------------------
+
+C-                                  CAUB
+CALDBE       6   4  590
+FIXDBE       6   4  591
+ZERO         4   4  592
+SWITCHED     8   4  593
+TOTALPWR     8   4  594
+AVGD         4   4  595
+ONS          3   4  596
+AVG          3   4  597
+SEDITS       6   4  598
+TEMPS        5   4  599
+SOLVETIP     8   4  600
+
+C-
+C-  FUNFUNCT; Funny Functions 
+C- @(#)POPSDAT.FFUNC	5.1 2
+XCUR         4   4  150
+YCUR         4   4  151
+RAND         4   4  152
+CCUR         4   4  153
+VCUR         4   4  154
+TCUR         4   4  155
+FCUR         4   4  156
+MCUR         4   4  157
+DATE         4   4  158
+TIME         4   4  159
+C-
+C- POPSDAT ADVERBS (Always common to LINE and CONDAR.. No adverbs which are
+C- specific to LINE and CONDAR allowed)
+C- @(#)POPSDAT.ADVERBS	5.2 08/30/94 
+C-
+C-                                  SCALAR ADVERBS
+VERS         4   8           000316. 
+NBOX         4   1            3.0
+NFIT         4   1            1.0
+NSAVE        5   1            1.0
+ZLINE        5   1            -1.0
+SLABEL       6   1            1.0
+FS           2   1            0.0
+FR           2   1            0.0
+BMARK        5   1            -1.0
+MRATIO       6   1            1.0
+NGAUSS       6   1            1.0
+BGAUSS       6   1            1.0
+EGAUSS       6   1            256.0
+NITER        5   1            8.0
+FIXC         4   1            -1.0
+FIXHW        5   1            -1.0
+FIXH         4   1            -1.0
+FIXRELC      7   1            -1.0
+FIXRELHW     8   1            -1.0
+FIXRELH      7   1            -1.0
+RAMPLTDE     8   1            0.0
+RPHASE       6   1            0.0
+RPERIOD      7   1            0.0
+RAMPERR      7   1            0.0
+RPHAERR      7   1            0.0
+RPERERR      7   1            0.0
+RFIXAMP      7   1            0.0
+RFIXPHA      7   1            0.0
+RFIXPER      7   1            -1.0
+ACOUNT       6   1            0.0
+CUTOFF       6   1            9999.0
+PFLAG        5   1            -1.0
+NEWRES       6   1            0.0
+OSHIFT       6   1            0.0
+BSCAN        5   1            0.0
+ESCAN        5   1            0.0
+BDROP        5   1            0.0
+EDROP        5   1            0.0
+FACT         4   1            0.0
+YMIN         4   1            -9999.0
+YINCR        5   1            1.0
+CLIPMIN      7   1            -9999.0
+CLIPMAX      7   1            9999.0
+VRMS         4   1            0.0
+CALVAL       6   1            0.0
+BMOMENT      7   1            0.0
+EMOMENT      7   1            0.0
+ASHIFT       6   1            0.0
+WEIGHT       6   1            0.0
+BBASE        5   1            50.0
+EBASE        5   1            50.0
+XMINP        5   1            0.0
+XMAXP        5   1            0.0
+XLOGP        5   1            -1.0
+YMINP        5   1            0.0
+YMAXP        5   1            0.0
+YLOGP        5   1            -1.0
+CROSSFLG     8   1            11111.
+DEFMODE      7   1            -1.0
+C-
+C-		Make sure following are properly initialized in ARAINIT
+C-
+CCLICK       6   1            0.0                INFINITY
+TCLICK       6   1            0.0                INFINITY
+VCLICK       6   1            0.0                INFINITY
+FCLICK       6   1            0.0                INFINITY
+MCLICK       6   1            0.0                INFINITY
+XCLICK       6   1            0.0                INFINITY
+YCLICK       6   1            0.0                INFINITY
+C-
+X_MIN        5   1            0.0                INFINITY
+X_MAX        5   1            0.0                INFINITY
+Y_MIN        5   1            0.0                INFINITY
+Y_MAX        5   1            0.0                INFINITY
+SCAN_MIN     8   1            0.0                INFINITY
+SCAN_MAX     8   1            0.0                INFINITY
+FEED_MIN     8   1            0.0                INFINITY
+FEED_MAX     8   1            0.0                INFINITY
+LST_MIN      7   1            0.0                INFINITY
+LST_MAX      7   1            0.0                INFINITY
+UT_MIN       6   1            0.0                INFINITY
+UT_MAX       6   1            0.0                INFINITY
+F_MIN        5   1            0.0                INFINITY
+F_MAX        5   1            0.0                INFINITY
+RATE_MIN     8   1            0.0                INFINITY
+RATE_MAX     8   1            0.0                INFINITY
+BW_MIN       6   1            0.0                INFINITY
+BW_MAX       6   1            0.0                INFINITY
+IT_MIN       6   1            0.0                INFINITY
+IT_MAX       6   1            0.0                INFINITY
+S_SORT       6   1            0.0
+TYPETIP      7   1            0.0
+ETA          3   1            0.84
+TAU0         4   1            0.0
+FTM          3   1            0.95
+FTSBR        5   1            0.95
+TRCVR        5   1            0.0
+ETAFREE      7   1            0.0
+TVANE        5   1            -1.0
+ERRCODE      7   1            0.0
+SPROTECT     8   1            1.0
+KPROTECT     8   1            1.0
+DCPCT        5   1            10.
+MDBOX        5   1            11.
+MXMIN        5   1            0.0
+MXMAX        5   1            0.0
+MYMIN        5   1            0.0
+MYMAX        5   1            0.0
+N_N          3   1            0.0
+DEFAULT      7   8            0.0
+C-
+C-                                  STRING ADVERBS
+C-		Make sure these are properly initialized in ARAINIT
+HTITLE       6   7    1       8.0
+XTITLE       6   7    1       4.0
+YTITLE       6   7    1       4.0
+S_OBJECT     8   7    1       4.0
+S_MODE       6   7    1       1.0
+PROMPT       6   7    1       2.0
+C-
+C-                                  ARRAY ADVERBS
+C-		Make sure these are properly initialized in ARAINIT
+SIZE         4   2    1       2.0                 0.0
+NREGION      7   2    1       32.0                0.0 
+GREGION      7   2    1       48.0                0.0
+VMARK        5   2    1       12.0               -999999.
+CMARK        5   2    1       12.0               -999999.
+FMARK        5   2    1       12.0               -999999.
+TMARK        5   2    1       12.0               -999999.
+CENTER       6   2    1       24.0                0.0
+HEIGHT       6   2    1       24.0                0.0
+HWIDTH       6   2    1       24.0                0.0
+CNTERR       6   2    1       24.0                0.0
+HGHTERR      7   2    1       24.0                0.0
+HWERR        5   2    1       24.0                0.0
+SMWGT        5   2    1       12.0                0.0
+BADPT        5   2    1       12.0                0.0
+GMFRAC       6   2    1       5.0                 0.0
+GOUT         4   2    2       6.0       5.0       0.0
+MLIMS        5   2    2       2.0       5.0      INFINITY
+LEVS         4   2    1       32.0               -999999.
+FLEVS        5   2    1       32.0               -999999.
+BPARM        5   2    1       15.0                0.0
+STATUS       6   2    1       32.0                0.0
+CONLINE      7   2    1       32.0                0.0
+CLUT         4   2    2        3.0     32.0      -16.0
+C-
+C-				Protected Adverbs, unlike the other 
+C-				protected adverbs below, these are
+C-				used, and occaisionally set, in the
+C-				program itself.   They are protected to
+C-				prevent the user from altering them
+C-
+FB_VER       6   8           -1.0
+HC_VER       6   8           -1.0
+CON_VER      7   8           -1.0
+C-
+C-				Protected ADVERBS -- Header wpords
+C-				Class One
+HEADLEN      7   8            5.0
+DATALEN      7   8            6.0
+SCAN         4   8            7.0
+OBSID        5   8            8.0
+OBSERVER     8   8            9.0
+TELESCOP     8   8           11.0
+PROJID       6   8           12.0
+OBJECT       6   8           13.0
+OBSMODE      7   8           15.0
+FRONTEND     8   8           16.0
+BACKEND      7   8           17.0
+PRECIS       6   8           18.0
+SAVENUM      7   8           19.0
+NORECORD     8   8           20.0
+RECORDID     8   8           21.0
+C-                      	Class Two
+XPOINT       6   8           30.0
+YPOINT       6   8           31.0
+UXPNT        5   8           32.0
+UYPNT        5   8           33.0
+PTCON        5   8           34.0
+ORIENT       6   8           38.0
+FOCUSR       6   8           39.0
+FOCUSV       6   8           40.0
+FOCUSH       6   8           41.0
+PT_MODEL     8   8           42.0
+C-                      	Class Three
+UTDATE       6   8           55.0
+UT           2   8           56.0
+LST          3   8           57.0
+NORCHAN      7   8           58.0
+NOSWVAR      7   8           59.0
+NOPHASE      7   8           60.0
+CYCLLEN      7   8           61.0
+SAMPRAT      7   8           62.0
+CL11TYPE     8   8           63.0
+PHASEID      7   8           64.0
+C-                      	Class Four
+EPOCH        5   8           80.0
+XSOURCE      7   8           81.0
+YSOURCE      7   8           82.0
+XREF         4   8           83.0
+YREF         4   8           84.0
+EPOCRA       6   8           85.0
+EPOCDEC      7   8           86.0
+GALLONG      7   8           87.0
+GALLAT       6   8           88.0
+AZ           2   8           89.0
+EL           2   8           90.0
+INDX         4   8           91.0
+INDY         4   8           92.0
+DESORG       6   8           93.0
+COORDCD      7   8           96.0
+C-                      	Class Five
+TAMB         4   8           105.0
+PRESSURE     8   8           106.0
+HUMIDITY     8   8           107.0
+REFRAC       6   8           108.0
+DEWPT        5   8           109.0
+MMH2O        5   8           110.0
+C-                       	Class Six
+SCANANG      7   8           130.0
+XZERO        5   8           131.0
+YZERO        5   8           132.0
+DELTAXR      7   8           133.0
+DELTAYR      7   8           134.0
+NOPTS        5   8           135.0
+NOXPTS       6   8           136.0
+NOYPTS       6   8           137.0
+XCELL0       6   8           138.0
+YCELL0       6   8           139.0
+FRAME        5   8           140.0
+C-                      	Class Seven
+BFWHM        5   8           155.0
+OFFSCAN      7   8           156.0
+BADCHV       6   8           157.0
+RVSYS        5   8           158.0
+VELOCITY     8   8           159.0
+VELDEF       6   8           160.0
+TYPECAL      7   8           161.0
+C-                       	Class Eight
+APPEFF       6   8           180.0
+BEAMEFF      7   8           181.0
+ANTGAIN      7   8           182.0
+ETAL         4   8           183.0
+ETAFSS       6   8           184.0
+C-                       	Class Nine - 12 M
+SYNFREQ      7   8           205.0
+LOFACT       6   8           206.0
+HARMONIC     8   8           207.0
+LOIF         4   8           208.0
+FIRSTIF      7   8           209.0
+RAZOFF       6   8           210.0
+RELOFF       6   8           211.0
+BMTHROW      7   8           212.0
+BMORENT      7   8           213.0
+BASEOFF      7   8           214.0
+OBSTOL       6   8           215.0
+SIDEBAND     8   8           216.0
+WL           2   8           217.0
+GAINS        5   8           218.0
+PBEAM        5   8           219.0
+MBEAM        5   8           221.0
+SROFF        5   8           223.0
+FOFFSIG      7   8           227.0
+FOFFREF1     8   8           228.0
+FOFFREF2     8   8           229.0
+C-                       	Class Nine - Green Bank
+L1           2   8           205.0
+L1F1         4   8           206.0
+L1F2         4   8           207.0
+L2           2   8           208.0
+L2F1         4   8           209.0
+L2F2         4   8           210.0
+LA           2   8           211.0
+LB           2   8           212.0
+LC           2   8           213.0
+LD           2   8           214.0
+LEVCORR      7   8           215.0
+PTFUDGE      7   8           216.0
+RHO          3   8           218.0
+THETA        5   8           219.0
+CFFORM       6   8           220.0
+C-                       	Class Ten
+OPENPAR      7   8           230.0
+C-		 		Class Eleven - ORIG
+VARVAL       6   8           255.0
+VARDES       6   8           256.0
+PHASTB       6   8           257.0
+C-				Class Eleven - PROTO
+NOSWVARF     8   8           255.0
+NUMCYC       6   8           256.0
+NUMCYCF      7   8           257.0
+NOPHASEF     8   8           258.0
+CYCLLENF     8   8           259.0
+SAMPTIMF     8   8           260.0
+VARVAL01     8   8           261.0
+VARDES01     8   8           262.0
+PHASTB01     8   8           263.0
+VARVAL02     8   8           267.0
+VARDES02     8   8           268.0
+PHASTB02     8   8           269.0
+VARVAL03     8   8           273.0
+VARDES03     8   8           274.0
+PHASTB03     8   8           275.0
+VARVAL04     8   8           279.0
+VARDES04     8   8           280.0
+PHASTB04     8   8           281.0
+VARVAL05     8   8           285.0
+VARDES05     8   8           286.0
+PHASTB05     8   8           287.0
+VARVAL06     8   8           291.0
+VARDES06     8   8           292.0
+PHASTB06     8   8           293.0
+VARVAL07     8   8           297.0
+VARDES07     8   8           298.0
+PHASTB07     8   8           299.0
+VARVAL08     8   8           303.0
+VARDES08     8   8           304.0
+PHASTB08     8   8           305.0
+VARVAL09     8   8           309.0
+VARDES09     8   8           310.0
+PHASTB09     8   8           311.0
+VARVAL10     8   8           315.0
+VARDES10     8   8           316.0
+PHASTB10     8   8           317.0
+C-                       	Class Twelve
+OBSFREQ      7   8           321.0
+RESTFREQ     8   8           322.0
+FREQRES      7   8           323.0
+BW           2   8           324.0
+TRX          3   8           325.0
+TCAL         4   8           326.0
+STSYS        5   8           327.0
+RTSYS        5   8           328.0
+TSOURCE      7   8           329.0
+TRMS         4   8           330.0
+REFPT        5   8           331.0
+X0           2   8           332.0
+DELTAX       6   8           333.0
+INTTIME      7   8           334.0
+NOINT        5   8           335.0
+SPN          3   8           336.0
+TAUH2O       6   8           337.0
+TH2O         4   8           338.0
+TAUO2        5   8           339.0
+TO2          3   8           340.0
+POLARIZ      7   8           341.0
+EFFINT       6   8           342.0
+RX_INFO      7   8           343.0
+C-                        	Class Thirteen
+NOSTAC       6   8           346.0
+FSCAN        5   8           347.0
+LSCAN        5   8           348.0
+LAMP         4   8           349.0
+LWID         4   8           350.0
+ILI          3   8           351.0
+DRMS         4   8           352.0
+C-			Protected Adverbs -- Matrix header
+MNAXIS1      7   8            1.0
+MNAXIS2      7   8            2.0
+MRVAL1       6   8            3.0
+MRVAL2       6   8            4.0
+MDELT1       6   8            5.0
+MDELT2       6   8            6.0
+MPIX1        5   8            7.0
+MPIX2        5   8            8.0
+MUNDEF       6   8            9.0
+MEQUINOX     8   8           10.0
+MTYPE1       6   8           20.0
+MTYPE2       6   8           21.0
+MBUNIT       6   8           22.0
+MOBJECT      7   8           23.0
+MORIGIN      7   8           25.0
+MDATE        5   8           26.0
+MCOMMENT     8   8           27.0
+C-			Protected Adverbs -- Cube header
+CNAXIS1      7   8            1.0
+CNAXIS2      7   8            2.0
+CRVAL1       6   8            3.0
+CRVAL2       6   8            4.0
+CDELT1       6   8            5.0
+CDELT2       6   8            6.0
+CPIX1        5   8            7.0
+CPIX2        5   8            8.0
+CUNDEF       6   8            9.0
+CNAXIS3      7   8           10.0
+CRVAL3       6   8           11.0
+CDELT3       6   8           12.0
+CPIX3        5   8           13.0
+CTMIN        5   8           14.0
+CTMAX        5   8           15.0
+CTSCALE      7   8           16.0
+CTZERO       6   8           17.0
+CEQUINOX     8   8           18.0
+CTYPE1       6   8           20.0
+CTYPE2       6   8           21.0
+CBUNIT       6   8           22.0
+COBJECT      7   8           23.0
+CORIGIN      7   8           25.0
+CDATE        5   8           26.0
+CTYPE3       6   8           27.0
+CCOMMENT     8   8           28.0
+C-       		Protected Adverbs -- Others
+C-			This order should match that used by FILES
+DSCANS       6   8            1.0
+KSCANS       6   8            2.0
+SSCANS       6   8            3.0
+GSCANS       6   8            4.0
+RSCANS       6   8            5.0
+PRINTFILE    9   8           11.0
+LOGFILE      7   8           12.0
+C-			These must continue where the last left off
+ACCMD        5   8           13.0
+STACK        5   8           14.0
+DISK         4   8           15.0
+OFFDATA      7   8           16.0
+ONDATA       6   8           17.0
+INFO         4   8           18.0
+STAT         4   8           19.0
+C-			these are for use with the chngonline verb
+HCTYPE       6   8            1.0
+FBTYPE       6   8            2.0
+CONTYPE      7   8            3.0
+C-
+C-			these are for use with FOPEN
+RW           2   8            0.0
+WO           2   8            1.0
+RO           2   8            2.0
+REW          3   8            0.0
+EOF          3   8           10.0
+UNK          3   8            0.0
+OLD          3   8           100.0
+NEW          3   8           200.0
+SCR          3   8           300.0
+C-
+C-                      These are for use with SAXIS (cont and line)
+SAMPLE       6   8             1.0
+TIMEOFF      7   8             2.0
+POS_OFF      7   8             3.0
+POSXOFF      7   8             4.0
+POSYOFF      7   8             5.0
+POSX         4   8             6.0
+POSY         4   8             7.0
+TIMELST      7   8             8.0
+TIMEUT       6   8             9.0
+C-
+CHANNEL      7   8             1.0
+FREQOFF      7   8             2.0
+VELHEAD      7   8             3.0
+VELRADI      7   8             4.0
+VELOPTI      7   8             5.0
+VELRELT      7   8             6.0
+VELLINR      7   8             7.0
+FREQRST      7   8             8.0
+FREQSKY      7   8             9.0
+FREQIRST     8   8            10.0
+FREQISKY     8   8            11.0
+C-
+QUIT         4   6

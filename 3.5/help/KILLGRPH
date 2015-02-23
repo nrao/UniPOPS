@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'KILLGRPH:  Kills current graphical window & establishes a'
+PRINT 'replacement.'
+PRINT ' '

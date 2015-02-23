@@ -1,0 +1,23 @@
+	UniPOPS provides various utility programs which deal with
+	converting data from one format to another, diagnosing problems
+	with data files, and for quickly reducing pointing and
+	calibration data.
+
+	Each of the utility programs can be run from within UniPOPS
+	using the SYSTEM or Z_SYSTEM commands or they can be executed
+	outside of UniPOPS at the Unix prompt.  That is, from within
+	UniPOPS, you could type:
+
+		SYSTEM <utility_program> 
+
+	or
+
+		Z_SYSTEM " <utility_program> "
+
+	and, from within UNIX, you could type
+
+		<utility_program>
+
+	where <utility_program> is the name of the utility program you
+	want to run.
+

@@ -1,0 +1,40 @@
+	FBMODE is used to determine the mode (parallel or series) of
+	the filter bank data contained in Array (0).
+
+	Syntax: FBMODE(answer)
+
+	The dummy adverb, answer, is set by FBMODE to be 1 if the data
+	is series filter bank data and 2 for parallel filter bank data.
+
+	Answer will also be 1 if the data is not from the filter bank.
+	The data must have previously been placed in Array (0)
+
+	This procedure is not usually used directly.  Most spectral
+	line averaging procedures and display procedures use this procedure.
+
+	File name : fbmode.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Example:
+
+	Within the procedure DISP12M, the following occurs (some
+	details have been omitted from this example):
+
+	scalar fscan, nchan
+	get(fscan)
+	fbmode(nchan)
+	if nchan = 2; then
+	   copy(0,3)
+	   fscan = addfeed(fscan, 1)
+           get4(fscan)
+           cboth
+        else
+           page; show
+        end
+
+	In this manner, DISP12M can determine if CBOTH needs to be
+	used to display the parallel data side by side or if only
+	a single spectrum needs to be displayed for series data.
+	ADDFEED and CBOTH are standard, see the documentation for more 
+	information.

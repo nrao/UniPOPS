@@ -1,0 +1,22 @@
+	(SCALAR ADVERB)
+
+	MDBOX specifies the number of channels to be sorted by the
+	MDBASE baseline removal routine.  It should be an odd valued,
+	positive integer that is less than the number of data channels
+	in Array (0).
+
+	MDBOX is used by : MDBASE
+
+	No verbs change MDBOX.
+
+	The initial value of MDBOX is 11.
+
+	EXAMPLE :
+
+	Suppose that you have a scan with two narrow emission features
+	which are each 5 channels wide and an extended (~30 channel
+	wide) feature.  If you were interested in only the narrow
+	features, you could type the following:
+
+		MDBOX = 21; MDBASE
+

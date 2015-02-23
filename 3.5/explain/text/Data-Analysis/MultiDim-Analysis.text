@@ -1,0 +1,5 @@
+
+	Routines are provided which allow for producing two and three
+	dimensional arrays (matrices and cubes) and manipulating the
+	data in these arrays.
+

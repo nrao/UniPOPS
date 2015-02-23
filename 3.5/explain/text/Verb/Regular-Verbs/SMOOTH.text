@@ -1,0 +1,25 @@
+	(REGULAR VERB)        	
+
+	SMOOTH smoothes the data in Array (0) using the weight function
+	SMWGT specified by the user.
+
+	ADVERBS USED:
+
+	   SMWGT(12)     Smoothing function array.  The first element
+                         of the array specifies the number of elements
+                         which must not exceed 11.
+                       	 Initial values are 0.
+
+	No adverbs are set by SMOOTH.
+
+	If SMWGT(1) = n, then you must supply values for SMWGT(2) through
+	SMWGT(n+1).
+            
+	EXAMPLE:
+
+	If you wish to average together adjacent points, specify:
+
+       		 SMWGT(1)=3; SMWGT(2)=.5; SMWGT(3)=1; SMWGT(4)=.5
+		 SMOOTH
+
+	NOTE:  This is identical to HANNING smoothing.

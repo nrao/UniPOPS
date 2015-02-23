@@ -1,0 +1,36 @@
+The following document changes to UniPOPS since version 
+3.4.
+
+I. FITS year-2000 DATExxxx agreement support.
+
+The most significant change is that UniPOPS now fully supports
+the FITS year-2000 DATExxxx agreement.  UniPOPS FITS readers
+(fits2uni/f2u, MREAD, READCUBE ,and the cube.exe utility)
+now correctly interpret DATE fields in the new format
+as well as the old format.  Beginning in 1999, the current
+UniPOPS FITS writers (uni2fits/u2f, MWRITE, and the
+cube.exe utility) will begin writing all DATE strings
+in the new format in compliance with the agreement.
+
+
+II. Bug fixes.
+
+A. FITS related bugs.  MWRITE and cube.exe have been writing
+the DATE out with the days and months fields reversed.  This
+has been fixed and the readers should correctly recognize 
+these past mistakes in files produced by UniPOPS when 
+re-reading these files.  The UniPOPS handling of the
+BLANK keyword was not as according to valid FITS and was
+also not internally consistent.  This has been fixed.
+
+B. Other minor bugs.  A few other minor bugs have been
+fixed including the following:
+    o There were cases where a constant could be assigned a
+	new value in the interpreter.
+    o GPARTS was not lifting the "pen" between displays of
+	multiple Gaussians
+    o There was an unnecessary check that CENTER had positive
+	values for Gaussians.
+    o Some scripts were changed to behave better under Solaris.
+
+

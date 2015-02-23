@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MIN:  (FUNCTION) Returns the minimum value of the TWO'
+PRINT 'parameters.  Syntax: MIN(x1, x2).'
+PRINT ' '

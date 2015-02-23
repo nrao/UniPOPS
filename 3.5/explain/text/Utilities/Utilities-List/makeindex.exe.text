@@ -1,0 +1,37 @@
+	The makeindex.exe utility will go through the data section of
+	an SDD file and reconstruct the index part of the file.  This
+	may be necessary if the index part of the file has become
+	corrupted for some reason.  Since it produces the new format
+	SDD bootstrap and index, it can be used to convert an old
+	format SDD file into an SDD file with the new format index.
+
+	To use the utility, type:
+
+		makeindex.exe file-name
+
+	where file-name is the name of the SDD data file.
+
+	Besides correcting the index, the program will also generate a
+	listing similar to what checkfile.exe produces so that you will
+	know what has happened to the index.
+
+	The output of the program is ~ 130 characters wide so you may
+	want to expand you window horizontally, if you are sitting at a
+	workstation.  The output can be redirected into a file, for
+	example, or redirected to a printer.  To redirect the output to
+	a file, try something like the following:
+
+		makeindex.exe My-File > file-contents
+
+	where My-File is the data file and file-contents is the name of
+	the file which will contain the output of makeindex.exe.
+
+	The output is self-explanatory.
+
+
+	If you do not want to examine the output (either directly or
+	by saving it to a file), you can discard it by the following:
+
+		makeindex.exe My-file > /dev/null
+
+

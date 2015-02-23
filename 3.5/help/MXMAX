@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MXMAX:  (ADVERB) Maximum cell (or pixel) number along the'
+PRINT 'x-axis of Matrix (0) that is to be processed.'
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'TYPECAL:  (HEADER) Calibration type -- 8 character string.'
+PRINT ' '

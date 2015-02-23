@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'SCRATCH:  (PSEUDO) Deletes the specified procedure, alias'
+print 'or adverb from the program''s memory but does not return'
+print 'the space used by that item.  Syntax: SCRATCH symbol'
+PRINT ' '

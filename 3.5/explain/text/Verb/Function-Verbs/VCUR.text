@@ -1,0 +1,41 @@
+  	(FUNCTION VERB) 
+
+	VCUR is a function that activates the cross hair and returns a
+	value depending upon where the cross hair is located.  For SHOW
+	plots, the following applies:
+
+L------------------------- Spectral Line ------------------------------
+L-      This routine activates the cross hair and returns the velocity
+L-      for the cross hair position of the current display.  It will not
+L-      work if the header information in Array (0) is insufficient for
+L-	calculating velocities.  The definition of velocity will be that
+L-	stored in the header.
+L------------------------- Spectral Line ------------------------------
+
+C------------------------- Continuum ----------------------------------
+C-      This routine activates the cross hair and returns the
+C-	position (in degrees and relative to the start of scan) for the
+C-	cross hair position of the current display.  It will not work if
+C-	the header information in Array (0) is insufficient for
+C-	calculating positions.
+C------------------------- Continuum ----------------------------------
+
+	For two-dimensional displays, VCUR returns the x-axis value.
+
+	No adverbs are set or used by VCUR.
+
+	EXAMPLE:
+
+	You have displayed a scan with velocity on the bottom axis.
+	You wish to spread the display for a certain velocity range
+	specified by the vertical cross hairs.  A procedure for doing so
+	is defined below:
+
+		PROCEDURE XSET
+		VV PAGE SHOW		Sets x-axis to velocity.
+		XRANGE(VCUR,VCUR)	Turns on cross hairs for marking
+		RETURN			velocity range in channels which
+		FINISH			changes BDROP and EDROP.
+
+	which will allow you to set the velocity spread using the
+	cross hairs by invoking the procedure XSET.

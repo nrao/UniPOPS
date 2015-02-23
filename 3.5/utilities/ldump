@@ -1,0 +1,14 @@
+#!  /bin/csh
+#
+#   @(#)ldump.sh	5.2 08/02/94
+#
+# Determines whether to call ldump or ldump.rmt
+#
+if (`hostname` == "fahd") then
+   ${popsdir}utilities/ldump.exe $argv
+   exit($status)
+else
+   ${popsdir}utilities/ldump.rmt.exe $argv
+   exit($status)
+endif
+#

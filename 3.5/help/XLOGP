@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'XLOGP:  (ADVERB) If TRUE, PLOT will use a logarithmic'
+PRINT 'x-axis; else a linear axis will be used.'
+PRINT ' '

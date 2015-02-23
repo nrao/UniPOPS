@@ -1,0 +1,88 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:    MH0 (header-word)
+		   MH1 (header-word)
+		   MH2 (header-word)
+		   MH3 (header-word)
+
+	MH0 through MH3 are internal-array verbs which return or set the
+	value contained within elements of the header for internal
+	Matrices (0) through (3).  You should reference the header values
+	by header keyword names (see the documentation for Keywords for a 
+	list of available keyword adverbs).
+
+	If the verb appears to the left of an equal sign, than the
+	specified header parameter has its value changed to the value
+	of the expression to the right of the equal sign.
+
+	If the verb appears in an expression or as an argument to a
+	verb or procedure, then the value of the specified header
+	parameter for that matrix is returned.
+
+	If MH0 through MH3 is not to the left of an equal sign, and if
+	the argument you supply MH0 through MH3 is a keyword adverb that
+	refers to a real-valued header parameter, then MH0 through MH3
+	will return a floating-point value.
+
+	If MH0 through MH3 is not to the left of an equal sign, and if
+	the argument you supply MH0 through MH3 is a keyword adverb that
+	refers to a string header parameter, then MH0 through MH3 will
+	return a string.
+
+	If MH0 through MH3 is to the left of an equal sign, and if the
+	argument you supply MH0 through MH3 is a keyword adverb that
+	refers to a real-valued header parameter, then you should
+	supply a real-valued expression to the right of the equal
+	sign.
+
+	If MH0 through MH3 is to the left of an equal sign, and if the
+	argument you supply MH0 through MH3 is a keyword adverb that
+	refers to a string header parameter, then you should supply a
+	string expression to the right of the equal sign.
+
+	No adverbs are used or set by MH0 through MH3.
+
+	See the description of internal-array verbs for restrictions on
+	their use.
+
+	EXAMPLES:
+
+	.  For real-valued header parameters:
+
+		PRINT MH0(MNAXIS1)		
+
+	   Will print the number of x-axis pixels in Matrix (0).
+
+		X = MH3(MDELT2)  
+
+	   Will assign to X the value of the increment between y-axis
+	   pixels for Matrix (3).
+
+		MH0(MRVAL1) = SQRT(MH3(MRVAL1)*MH2(MRVAL2))	
+					
+	   Changes the value of the x-axis reference coordinate in
+	   Matrix (0) to the square root of the x-axis reference
+	   coordinate in Matrix 3 times the value of the y-axis
+	   reference coordinate in Matrix (2).
+
+		X = MH3(MNAXIS1)*MH3(MNAXIS2)  
+
+	   Assigns to X the value of the total number of cells in
+	   Matrix (3).
+
+	.  For string header parameters
+
+		PRINT MH1(MDATE)   
+	
+	   Will print the date contained in the header of Matrix (1).
+		
+		XTITLE = CONCAT('Obj:',MH3(MOBJECT))
+
+	   Will assign to XTITLE the concatenation of the string 'Obj:'
+	   with the name of the observed object for the header of
+	   Matrix (3).
+
+		MH0(DATE) = '11/11/92' 
+
+	   Changes the value of the date for the header in Matrix (0)
+	   to the string '11/11/92'.

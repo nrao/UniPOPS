@@ -1,0 +1,75 @@
+	(REGULAR VERB)
+
+	CONTOUR will produce a contour map of the contents of Matrix
+	(0).  This routine is different from QCONTOUR in that the user
+	can specify the line types and labeling to use for each
+	contour level.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MRATIO          Aspect ratio of x to y axis that you want for
+			the display.  Initial value is 1.
+
+	LEVS(32)        Levels at which various contours will
+			be plotted.  The values of LEVS must be in
+			ascending order.  If you want n contour levels,
+			then you should specify a the default value of
+			-999999 for the n+1 level.
+
+	CONLINE(32)     Line types to use for each contour level.
+			LEVS(1) will be drawn with line-type CONLINE(1),
+			LEVS(2) with line-type CONLINE(2), etc.
+
+	Line types follow closely the same convention as described in
+	LINETYPE.  If the nth entry in CONLINE is < 0 then the nth
+	contour level will be labeled and will be drawn with the
+	line type specified by the abs(CONLINE(n)).  If the nth entry
+	is >= 0, then the contour level will not be labeled but will
+	be drawn with the line type specified by CONLINE(n).
+
+	The size of contour labels, as well as line types, are affected
+	by the current character size (see CHARSIZE).  The color of the
+	plotted lines are affected by the last call to COLOR or
+	RSTCOLOR.
+
+	ADVERBS SET:
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLOTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+	Note that some complicated CONTOUR plots may take a long time
+	to produce; if you are certain that you will not want a hard copy
+	of the resulting plot, you can save yourself same time by specifying
+	COPYOFF before starting.
+
+	EXAMPLE:
+
+	You want to produce a CONTOUR plot of the data in Matrix (0).
+	You could type:
+
+		MXMIN=1; MXMAX=10	Specify the limits of the
+		MYMIN=10; MYMAX=20	matrix that you want to plot (i.e.,
+					you want to plot a sub-matrix of
+					Matrix (0).
+		AUTOLEV(5)		Sets up 5 contour levels which
+					span the full z extent of
+					specified sub-matrix.
+		CONLINE = 0, -102, 0, -102, 0
+					Specifies every other contour is
+					labeled and has a line type of
+					102 (ticks and slightly thick).
+		CONTOUR LABEL		Draws the contour map and 
+					labels the resulting plot.

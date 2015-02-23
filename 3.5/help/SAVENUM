@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SAVENUM:  (HEADER) Save bin number from which the scan has'
+PRINT 'been retrieved.'
+PRINT ' '

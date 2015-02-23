@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CYCLLENF:  (HEADER-TUC) PROTO12M - The time in seconds to'
+PRINT 'complete one fast cycle.'
+PRINT ' '

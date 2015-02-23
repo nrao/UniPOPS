@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'VELHEAD:  (POINTER-LINE)  Used with SAXIS to indicate that'
+PRINT 'SHOW should use as an x-axis velocities using the'
+PRINT 'definition in the scan"s header.'
+PRINT ' '

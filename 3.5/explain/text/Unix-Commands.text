@@ -1,0 +1,333 @@
+#if CKBK
+#def SCT B-1.
+#def DSH ----
+Appendix B : Useful UNIX Commands
+---------------------------------
+
+In a short Appendix we cannot provide information about all UNIX
+#else
+#def SCT
+#def DSH
+We cannot provide here information about all the various UNIX
+#end
+#
+commands you may need.  However, a knowledge of UNIX fundamentals will
+greatly increase your capacity to analyze data both quickly and
+easily. Our advice is to use the system documentation as much as
+possible (either through the UNIX man command or with the UniPOPS
+SYSHELP command) and to look through the UNIX beginners' manuals.
+
+
+Here is some general information about UNIX that you will need to be
+aware of,
+
+  .  You must have an account on the computer system you will be
+     working on. See the system manager for details.
+
+  .  As with most computers, to log in you specify an account name and
+     possibly a password.  If your account has no password, you should
+     install one (see below).
+
+  .  When an account is created for you, it will be specially tailored
+     so that all of the powers of UniPOPS will be available. Be careful
+     about editing any of the setup files in your account (files whose
+     names begin with a . (dot) and which can be listed only with the
+     ls -a UNIX command).
+
+  .  Most UNIX commands are in lower case; usually upper case and
+     lower case are VERY different things to UNIX. UniPOPS, on the
+     other hand, is case `insensitive'.
+
+  .  If you are sitting at a workstation, windows will be brought up
+     automatically after you log in. See the appropriate documentation,
+     and Appendix C of the Cookbook for information about manipulating
+     windows.
+
+  .  Usually, logging out is achieved with one of the following:
+
+     	bye 	  <Ctrl-D>	  logout	exit 
+
+     (try these commands in the order given).
+
+
+SCTUNIX Command Synopsis
+DSH---------------------
+
+Below, we attempt to list the UNIX commands that should be of most use
+to you.  Pay special attention to the commands marked with an asterisk
+(*). See the operating system documentation or a beginners' manual for
+more details about each command.
+
+
+SCT1  Help Facilities
+DSH------------------
+
+UNIX has only a poor help facility. To use it, type:
+
+*      man unix-command       (where unix-command is any UNIX
+			       command)
+
+SCT2  Directories
+DSH--------------
+
+The UNIX directory structure is similar to that found in many other
+operating systems. However, the notation on how to create, move
+destroy, etc. directories differs from other systems.
+
+*	cd 	   (moves you throughout the directory structure)
+
+*      	ls         (lists the contents of directories and gives
+		    information about the files found there)
+
+*     	mkdir      (creates directories) 
+
+*     	mv         (moves or renames directories)
+
+*      	rmdir      (deletes directories) 
+
+*      	pwd        (prints the name of the current directory)
+
+	dircmp     (compares directories)
+
+
+SCT3  Files
+DSH--------
+
+UNIX supports many different types of files. Some of the commands for
+manipulating files are:
+
+*	cat 
+*	more 
+*	tail 
+*	head 	    (list the contents of text files)
+
+*	cp 	    (copies files)
+
+*	mv 	    (moves or renames files)
+
+*	rm 	    (deletes files)
+
+	cut 
+	split 
+	paste 	    (rearrange file contents)
+
+	diff 
+	diff3 
+	sdiff 
+	comm 
+	cmp 	    (compare contents of files)
+
+	file 	    (determines the type of a file)
+
+	find        (searches for files satisfying various criteria)
+
+	grep 	    (looks for patterns within files) 
+
+	ln          (creates a link to a file)
+
+	od 	    (dumps the contents of a file using octal, hex, etc.) 
+
+	sort        (sorts a file using various methods)
+
+	spell       (checks a file for spelling mistakes)
+
+	touch       (creates an empty file, or updates the modification
+		     time for an existing file)
+
+	uniq        (reports on duplicate lines in a file)
+
+	wc          (gives the number of lines, words, and characters
+		     in a text file)
+
+
+
+SCT4  File Access Permissions
+DSH--------------------------
+
+The following  commands alter file permissions, i.e., who can look at,
+execute, or modify files and directories in your account)
+
+*      	chmod 
+*	chown 
+*      	chgrp   
+  
+ 
+SCT5  Processes
+DSH------------
+
+Each time that you start up a program, one or more processes are
+created. Commands that deal with processes are:
+
+*      	fg         (brings a background or sleeping job into the
+	 	    foreground)
+
+*      	kill 	   (kills a running process) 
+
+*      	ps 	   (lists processes)
+
+*      	<Ctrl-C>   (kills the current job) 
+
+*      	<Ctrl-Z>   (puts the current job to sleep)
+
+*	bg 	   (places a sleeping job into the background)
+
+*	jobs 	   (lists all background or sleeping jobs)
+
+
+SCT6  Hardcopies of Files
+DSH----------------------
+
+The user can make hardcopies of various files using the following
+commands,
+
+*	lpq 	    (lists printer queue)
+
+*	lprm 	    (deletes an entry in the printer queue)
+
+*	print 
+*       lprint      (print text files; use pr and lpr -- system
+		     dependent and may not be available on your
+		     computer.)
+
+	lpr 	    (sends text or graphics files to printers)
+
+	pr 	    (formats text files for printout)
+
+
+SCT7  Mail
+DSH-------
+
+	mail
+*       Mail         (The UNIX mail facility is site dependent. It is
+		      usually a command such as mail or Mail. Some
+		      windowing systems have nifty mail facilities.
+		      See the system administrator for details.)
+
+
+SCT8  Changing Passwords
+DSH---------------------
+
+	passwd
+*       yppasswd      (This may also be a site dependent feature. In
+		       most cases, either the passwd or yppasswd
+		       commands will allow you to change the password
+		       of your account. See the system administrator
+		       for details.)
+
+	
+#if CKBK
+
+#end
+SCT9  Input, Output, and Command Redirection
+DSH-----------------------------------------
+
+How input, output, and command redirection occurs depends upon whether
+you are using the Bourne, C, or K shells (a shell is the UNIX command
+interpretor, of which these are the three most common types). Most
+likely, you are using the C-shell and you should look through the
+beginners' UNIX manuals, or the `csh' documentation, for information
+about input, output, and command redirection.
+
+*	The C-Shell has a good facility for reissuing commands you have
+	previously typed (i.e., the history and ! commands)
+
+
+SCT10  Other Commands
+DSH------------------
+
+	alias 	    (creates an alias for UNIX commands)
+
+	awk 	    (pattern scanning and processing language)
+
+	cc 
+	f77 
+	ld, etc.    (compilers and linkers; see system administrator)
+
+	clear 	    (clears the screen)
+
+	date 	    (provides the current time)
+
+	dd 	    (writes files to tape or another file)
+
+*	du  
+*	df 	    (disk usage)
+
+	echo 	    (echos a string or the value of a shell variable)
+
+	ex
+	edit 
+	e 	    (line editors)
+
+	fmt 
+	fold 
+	rev 
+	nroff 
+	troff 
+	ul 	    (simple text formatters)
+
+*	ftp  
+*       rcp         (permit the copying of files from one computer to
+		     another)
+
+	graph 
+	plot 	    (simple graphics tools)
+
+	hostname    (prints computer's name)
+
+*	mt 	    (magnetic tape control)
+
+*       rsh         (tries to run a UNIX command on a remote computer)
+
+*       rusers      (lists all people logged onto the site's
+		     Local-Area-Network -- LAN)
+
+	sed 	    (stream editor)
+
+	set 
+	setenv      (assign a value to a UNIX shell variable)
+
+	sleep       (suspend execution for a specified interval)
+
+	stty 
+	tabs 
+	tty 
+	tset 
+	reset       (set up or change terminal characteristics)
+
+*       su          (switch to another user's account)
+
+	sum 	    (calculates a checksum for a file) 
+
+*       talk        (hold two-way conversations with anyone logged onto
+		     your computer or the LAN)
+
+*       tar 
+*	cpio 	    (read and write archive tapes)
+
+	tcopy 	    (copies a magnetic tape) 
+
+*       telnet 
+*       rlogin      (allow you to log into other computers)
+
+	tr          (translate characters and units -- units conversion
+	    	     program)
+
+*       vi 	    (full screen text editor found on all UNIX systems) 
+
+*       w 	    (lists what people are doing on the computer) 
+
+*       who         (lists who is using the computer you are logged into)
+
+*       whoami      (prints the name of the current user)
+
+
+SCT11  Utilities and Other Software
+DSH--------------------------------
+
+System administrators are always trying to get the best and most
+general software that their systems can run. Editors, graphics and
+mathematical libraries, etc. have been added to most systems by local
+staff members. What is available is site and time dependent, so your
+system administrator is the best source of information on what is
+available.
+

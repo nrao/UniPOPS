@@ -1,0 +1,890 @@
+6. Data Display
+---------------
+
+Perhaps the most fundamental operation when handling and processing
+data is the ability to display the result at any stage. In UniPOPS, the
+fundamental facility for data display is through the verb SHOW. SHOW
+gives you the ability to plot the data in Array (0) as a function of
+channel number, choosing from a number of styles. It will draw and
+label the axes, add an amount of documentation, and choose the x and y
+scales.  Other UniPOPS verbs allow you to superpose additional scans,
+baselines or fitted Gaussians on the plot, and to use the plot to
+feedback values for further processing.  To display data in one of
+the other Arrays, you will need to COPY or MOVE the data to Array(0).
+See Section 5.11 and 5.12.
+
+The verb PLOT allows you to plot graphs representing the quantity in
+Array (0) against that in Array (1).
+
+The display of two-dimensional data (contour plots, half-tone plots and
+color displays) is completely covered in Section 16.7. 
+
+6.1 Clearing the Screen
+-----------------------
+
+Before plotting a scan, you usually want to clear the graphics screen.
+This is achieved via the verb PAGE. Thus, to provide yourself with a
+"fresh canvas", type,
+
+	>PAGE
+
+6.2 Customizing the Display
+---------------------------
+
+SHOW has a number of possibilities to help you obtain the display you
+desire. These are,
+
+  i) LABELING THE X-AXIS : The x-axis of the display is labeled 
+     above and below the plot independently.  New users or users looking
+     for a quick answer may wish to skip ahead to the discussion on CV, 
+     CF, FV, etc, later in this section.  Users desiring more flexibility
+     should read on.  The SAXIS verb allows you to select the combination 
+     of labeling that you prefer.  SAXIS takes two arguments, the first 
+     indicates what you want to use for the lower x-axis and the second 
+     what you want for the upper.  You use pointer adverbs as arguments to 
+     SAXIS to indicate your two choices.  The pointer adverbs are:
+
+     Continuum:  SAMPLE  --   Sample numbers 
+		 TIMEOFF --   UT Time offset relative to start of
+				observation.
+		 TIMELST --   LST Time
+		 TIMEUT  --   UT Time
+		 POS_OFF --   Position offset relative to start of 
+				observation
+		 POSXOFF --   Position along the x-axis of the observing
+				coordinate system relative to starting
+				x-axis position.
+		 POSYOFF --   Position along the y-axis of the observing
+				coordinate system relative to starting
+				y-axis position.
+		 POSX    --   Position along the x-axis of the observing
+				coordinate system.
+		 POSY    --   Position along the y-axis of the observing
+				coordinate system.
+
+      Spectral Line: CHANNEL  -- Channel number
+		     FREQOFF  -- IF frequency offset from the center of the
+					bandwidth. 
+		     FREQRST  -- Rest frequency.
+		     FREQSKY  -- Sky frequency.
+		     FREQIRST -- Rest frequency in the image sideband (12-m
+					only).
+		     FREQISKY -- Sky frequency in the image sideband (12-m
+					only).
+		     VELHEAD  -- Velocity in the reference system and 
+					definition stipulated in the
+					spectra's header information.
+		     VELRADI  -- Velocity using the radio definition of
+					Doppler shifts.
+		     VELOPTI  -- Velocity using the optical definition of
+					Doppler shifts.
+		     VELRELT  -- Velocity using the relativistic definition
+					of Doppler shifts.
+		     VELLINR  -- Velocity assuming channels equally
+					spaced in velocity.
+
+      For example, to specify you want relativistic velocities on the lower
+      x-axis and image rest frequency on the upper, type,
+
+	> SAXIS(VELRELT,FREQIRST)
+
+     The initial setting is, for CONDAR, time offset on the lower
+     x-axis and position offset on the upper.
+
+     A set of nine verbs, CC, CF, CV, FC, FF, FV, VC, VF, and VV have
+     been retained from previous versions of the program which allow
+     you to select some of the more common combination of labeling that
+     you prefer. They are equivalent to calls to SAXIS.  The letters in
+     the names of these verbs represent,
+
+	For LINE:
+
+	C - Channel number
+	F - IF frequency offset from the center of the bandwidth. 
+	V - Radial velocity in the reference system and definition
+	        stipulated in the spectra's header information.
+
+	For CONDAR:
+
+	C - Sample number
+	F - UT Time offset relative to start of observation.
+        V - Position offset relative to start of observation.
+
+     The first letter in the name defines the units for the lower
+     x-axis, and the second letter defines those for the upper axis.
+     In LINE, for example, VF is equivalent to SAXIS(VELOFF,FREQOFF).
+     The initial setting is FV. Suppose you wish to label the lower
+     axis by channel number, and the upper axis by frequency, then
+     type,
+
+	>CF		[or: SAXIS(CHANNEL,FREQOFF) ]
+	>PAGE SHOW
+
+   **********************************************************************
+   * NOTE : When displaying a velocity scale, the spacing of the tick   *
+   *	    marks will be slightly non-linear, as should be the case    *
+   *	    for equi-spaced frequency channels, except if the VELLINR   *
+   *	    definition is used.			  			*
+   *									*
+   *        The units of the lower x-axis dictate the units returned    *
+   *	    by various analysis verbs such as GMEASURE, MOMENT, GPARTS, *
+   *        and GDISPLAY.  You should always make sure that the lower   *
+   * 	    x-axis uses your desired definition.			*
+   *									*
+   *	    If the current scan has inadequate header information, 	*
+   *	    UniPOPS may be unable to calculate x-axis values using your *
+   *	    desired definition.  UniPOPS will usually perform the	* 
+   *	    calculation using as a backup definition either channel 	*
+   *        number or sample number followed by a warning message.	*
+   **********************************************************************
+
+  ii) RESTRICTING THE X-AXIS RANGE : The portion of the scan to be
+      plotted is limited using the adverbs BDROP and EDROP, where these
+      define the number of channels ignored at the beginning and end of
+      the scan when plotting. Suppose you wish to display only channels
+      100 to 200 in a 512-channel spectrum. Then type,
+
+	>BDROP = 99 ; EDROP = 312
+	>PAGE SHOW
+
+      Alternatively, BDROP and EDROP can be set rather easily using the
+      verb XRANGE. XRANGE takes two arguments, these being the minimum
+      and maximum x-values it is desired to display, in the labeling
+      units of the bottom axis of the plot. Suppose you want to plot
+      the spectral region with radial velocities between -150 and -50
+      km/sec. Then type,
+
+	>VF       [or VC, VV, or SAXIS(VELHEAD,VELHEAD), ... as desired]
+	>XRANGE(-150., -50.)
+	>PAGE SHOW
+
+      Then, if you decide to display just spectral channels 100 to 250
+      instead, type,
+
+	>CF       [or CV, CC, or SAXIS(CHANNEL,VELHEAD), ... as desired]
+	>XRANGE(100, 250)
+	>PAGE SHOW
+
+      NOTE : Do not forget that XRANGE sets BDROP and EDROP.
+
+
+ iii) RESTRICTING THE Y-AXIS RANGE : The scaling of the y-axis is
+      controlled by the adverbs YMIN and YINCR. You can set these
+      directly using assignment statements, i.e.,
+
+	>YMIN = -25 ; YINCR = 30
+
+      If YMIN is set to -9999, or less, then SHOW will automatically
+      scale the display to fit the full y-range of the scan. If YMIN is
+      greater than -9999, then this adverb dictates the minimum antenna
+      temperature included in the plot, while YINCR specifies the
+      increment between the tick marks on the y-axis. The initial value
+      of YMIN (-9999) gives automatic scaling.
+
+      While the y-axis scaling can be set via the adverbs YMIN and
+      YINCR directly, for user-selected scaling it is much simpler to
+      use the verb YRANGE to set these adverbs. YRANGE takes two
+      arguments, these being the minimum and maximum values of antenna
+      temperature that will appear on the plot. Suppose, it is required
+      to plot only spectral values between -10 and +40 deg K. Then
+      type,
+
+	>YRANGE(-10., +40.)
+	>PAGE SHOW
+
+      Further, if you have fixed the y-scale of the plot, either by
+      assigning values to YMIN and YINCR, or by the use of YRANGE or
+      HOLDY (see just below), then the simplest way to return to
+      automatic scaling for SHOW is  to invoke the verb FREEY. FREEY
+      sets YMIN to an appropriate value (-90000) for automatic scaling.
+      Thus, in the above circumstances, to return to automatic scaling,
+      just type,
+
+	>FREEY
+
+      The opposite case often arises where you wish to `freeze' the
+      y-range SHOW has produced in automatic scaling mode. An example
+      of this would be where it is desired to plot a series of scans on
+      the same scale. To achieve this, after plotting, invoke the verb
+      HOLDY, i.e.,
+
+	>HOLDY 
+
+      The y-scaling will then be retained until either the scaling is
+      reset by assignment or YRANGE, or FREEY are invoked.
+
+      The y-axis always represents the magnitude of the data values in
+      the scan (usually antenna temperature).
+
+ iv) PLOTTING STYLE : You can choose between various plotting styles.
+     These are selected through any of the three verbs HISTOGRAM, LINE
+     or POINTS.  HISTOGRAM presents the familiar `box-style' histogram
+     display, LINE connects adjacent data points with a line segment,
+     while POINTS plots just the unconnected data values as crosses.
+     The default style is HISTOGRAM.
+
+  v) DISPLAYING THE BASELINE-FITTING RANGE : One can add a set of boxes
+     to the plot showing over which ranges of x the most recent
+     baseline fitting was made (see Section 7.1).  Such boxes are added
+     to the plot by setting the adverb BMARK (initial value = FALSE) to
+     TRUE, i.e. by typing,
+
+	>BMARK = TRUE
+
+     To disable the facility again, type,
+
+	>BMARK = FALSE
+
+ vi) DRAWING X-Y LINES OR GRIDS : Horizontal and/or vertical lines,
+     and x-y grids can be drawn on a plot in various ways. These are,
+
+	a) If a horizontal line is required to be drawn at y = 0
+	   (x-axis), then the adverb ZLINE (initial value = FALSE)
+	   should be set to TRUE by typing,
+
+		>ZLINE = TRUE
+
+	   It is disabled again by setting it back to FALSE.
+
+	b) Four 12-element array adverbs, CMARK, FMARK, TMARK and VMARK
+	   are available for the user to have SHOW draw lines across
+	   the plot at chosen values of channel number, frequency
+	   offset, antenna temperature or radial velocity (header
+	   definition), respectively, when running LINE. The four verbs
+	   draw lines in channel number, time offset, antenna
+	   temperature or position offset, respectively, in CONDAR.
+	   Suppose you wish to identify channels 100, 200 and 300, and
+	   the antenna temperatures 10, 20, 30 and 40 K on the display,
+	   then type,
+
+
+		>CMARK = 100, 200, 300, DEFAULT
+		>TMARK = 10, 20, 30, 40, DEFAULT
+		>PAGE SHOW
+
+	   (The DEFAULT values flag the first elements of the arrays
+	   NOT to be used.)
+
+	c) Should you desire to extend the tick marks around the border
+	   of the plot to form a regular grid over the present display,
+	   then the verb FULLGRID should be invoked. Thus, to display a
+	   scan, with a regular grid over the display, type,
+
+		>PAGE SHOW FULLGRID
+		
+	d) If you want to draw a vertical line across the plot at any
+	   value specified in the units of the lower x-axis, then the
+	   verb FLAG can be used with the required x-value as
+	   argument.  Suppose you wish to draw a line representing
+	   channel 56, type,
+
+		>SAXIS(CHANNEL,CHANNEL)
+		>FLAG(56)
+
+ vii) PLACEMENT OF DOCUMENTATION : You can decide where to place
+      the scan number and source name on the plot using the adverb
+      SLABEL (initial value = 1). With SLABEL = 0, no labeling of tick
+      marks, or documentation, is added to the plot. If SLABEL = 1,
+      then the above information is printed at the bottom of the
+      display.  For SLABEL = 2, the scan number appears at the
+      right-most edge of the scan.  This final option is useful when a
+      number of scans are being superposed on a plot (see below).
+
+
+6.3 Using the Cross Hairs (Cursors)
+-----------------------------------
+
+Both x and y cross hairs, or cursors, can be activated, allowing you to
+determine positions and antenna temperatures at any point on the
+currently-displayed scan. The cursors can also be used to feed values
+into UniPOPS adverbs. Cursor applications to two-dimensional images
+will be dealt with in Section 16.7.8.
+
+6.3.1 CROSSHAIR
+---------------
+
+To identify the x-position and brightness (antenna temperature) at any
+point in a plot, the verb CROSSHAIR can be invoked, causing the
+cross hairs to appear on the display. The mouse is then used to guide
+the intersection of the cross hairs to the desired point. Clicking right
+on the mouse will cause the printing of as much information as the antenna 
+temperature, channel number, frequency and radial velocity for LINE, or 
+antenna temperature, sample number, position and time for CONDAR, 
+corresponding to that x-position.  You control how much information is
+displayed using the CROSSFLG adverb.  The default value of CROSSFLG
+instructs CROSSHAIR to display as much information as it can.  Once 
+activated, the cross hairs can be used as often as required, and then 
+removed by clicking left. 
+
+6.3.2 CCUR, FCUR, TCUR, VCUR, XCUR and YCUR
+-------------------------------------------
+
+Values can be assigned directly from the current plot to either
+adverbs, or verb arguments, using the cursors via the function verbs
+TCUR (to provide an antenna temperature), CCUR (for a channel number in
+LINE or sample number in CONDAR), FCUR (for a frequency offset in LINE,
+or a time offset in CONDAR) or VCUR (for a radial velocity (header
+definition) in LINE, or a position offset in CONDAR). (For XCUR and
+YCUR to get x-y pixel positions, see Section 6.4 below.) When any of
+these four verbs are used in an assignment statement, the appropriate
+cursor appears and, after its positioning via the mouse, clicking
+either left or right will enter the current value `under' the cursor.
+Suppose it is required to set a restricted y-range for the antenna
+temperatures to be plotted, this can be done via calls to TCUR by
+typing,
+
+	>YRANGE(TCUR, TCUR)
+
+The cross hairs will then appear, the horizontal cursor should be placed
+at the minimum required temperature, and you should click (say) left.
+The cursor will vanish, then immediately reappear and should be moved
+to the maximum required temperature, followed by a final click left.
+
+To illustrate setting adverbs, the adverbs BDROP and EDROP can be set
+from the plot by typing,
+
+	>BDROP = CCUR ; EDROP = H0(NOINT) - CCUR
+
+One then proceeds as just described, except that in this case it is the
+vertical cursor that should be positioned twice. Other examples of
+using the cursor verbs are to be found in Section 7.3.
+
+The two function verbs, XCUR and YCUR, can be used to return the pixel
+position of the vertical or horizontal cross hair respectively. They are
+used exactly as CCUR, FCUR, TCUR and VCUR.
+
+The following table describes for LINE and CONDAR the quantities
+returned by these different cursor functions,
+
+     -------------------------------------------------------------
+     |  Function Verb  | LINE     	       |   CONDAR        |
+     |-----------------|-----------------------|-----------------|
+     |   CCUR          | Channel Number	       | Sample Number   |
+     |-----------------|-----------------------|-----------------|
+     |   FCUR          | Frequency Offset      | Time Offset     |
+     |-----------------|-----------------------|-----------------|
+     |   TCUR          | Brightness            | Brightness      |
+     |-----------------|-----------------------|-----------------|
+     |   VCUR          | Radial Velocity       | Position Offset |
+     |                 | (header definition)   |  		 |
+     |-----------------|-----------------------|-----------------|
+     |   XCUR          | x-pixel               | x-pixel         |
+     |-----------------|-----------------------|-----------------|
+     |   YCUR          | y-pixel               | y-pixel         |
+     ------------------------------------------------------------
+
+6.3.3 CLICK
+-----------
+
+The CLICK verb sets seven adverbs (CCLICK, FCLICK, TCLICK, VCLICK,
+XCLICK, and YCLICK) with a single click of the mouse button (the
+cursor is drawn on the graphics screen and you are asked to click
+the mouse button).  This is equivalent to executing each of
+the 7 function verbs shown above at the same point on the graphics
+screen with a single click of the mouse (as opposed to the seven
+it would have taken with the cursor function verbs).  The first
+letter of the CLICK adverb indicates what function verb that
+corresponds to.
+
+For example, you want to set the first element of the HEIGHT array
+adverb and CENTER array adverb to the value of the peak of a 
+feature and the location (channel number) of that peak so that
+you can fit a Gaussian to it (see Chapter 7). You type:
+
+	> CLICK
+
+You follow the instructions and click the mouse button to indicate
+when the cursor is positioned on the peak of the feature.  You
+then type:
+
+	> HEIGHT(1) = TCLICK
+	> CENTER(1) = CCLICK
+
+to set both values from a single mouse click.  Using the function
+verbs in Section 6.3.2, this would be achieved with:
+
+	> HEIGHT(1) = TCUR
+	> CENTER(1) = CCUR
+
+
+6.4 Annotating the Display
+--------------------------
+
+The UniPOPS graphic screen can be considered to consist of a 1024x800
+pixel matrix. Any pixel on the screen can be referenced as an x-y
+coordinate pair. Four verbs (PLACE, VCTR, CHAR, and VCHAR) allow you to
+move the write cursor to any pixel, either in `pen up' (draw no line)
+or `pen down' (draw line) mode, and to write a character string to
+annotate the present plot.  Two function verbs (XCUR and YCUR)  allow
+you to determine the pixel coordinates of any position on the screen
+using the graphics cursors, and to set adverbs, or verb arguments, to
+these values.
+
+The verb PLACE will move the write cursor to any point on the screen in
+`pen up' mode. PLACE takes two arguments, these being the x-y
+coordinates of the point of destination. A matching verb VCTR takes the
+same two arguments, but draws a straight line on the screen (`pen down'
+mode) as it moves from the current position to the point of
+destination.
+
+The verb CHAR will print a string of characters horizontally on the
+screen, starting at the present position of the write cursor.  CHAR
+takes as an argument a string literal or a string adverb (the maximum
+string length is 60 characters). The bottom left-hand corner of the
+first character is placed at the write cursor.
+
+The verb VCHAR will print a string of characters vertically on the
+screen, starting at the present position of the write cursor.  VCHAR
+takes two arguments.  The first is a string literal or a string adverb
+(the maximum string length is 60 characters).  The second is a flag
+which should have the value of TRUE or FALSE and which tells VCHAR
+whether the characters are to be rotated before plotting.  If TRUE, the
+string will be printed from the current position of the write cursor up
+the screen with each character rotated counter-clockwise from the
+horizontal by 90 degrees.  If FALSE, the string will be printed from
+the current write cursor position down the screen with no rotation.
+These are the two typical ways one wants to print vertical character
+strings.
+
+For any character string drawn on the graphics page, the verb CHARSIZE
+can be invoked to change the size of the resultant characters.
+CHARSIZE takes one argument, this being the character size in `points',
+the DEFAULT value being 11 points.  The limits for the character size
+are,
+
+	0 points < character size <= 44 points
+
+NOTES : 1) For many printers and types of graphics screens, you may not
+	   get exactly the character size you desire due to device
+	   limitations.
+
+	2) The character size is also affected by calls to RSTPAGE and
+	   SETPAGE (see Section 6.8).
+
+	3) For `11-points' characters, the dimensions on the screen of
+	   the widest characters will be 14 pixels wide by 20 pixels
+	   high.
+
+
+FONTSET allows you to change the character (font) used by the graphics
+screen and takes two arguments.  The first is a number indicating which
+font you desire (a font number of 1 is the default), and the second is
+a TRUE or FALSE flag which tells FONTSET whether to use equally spaced
+or proportionally spaced characters.  The available fonts, and their
+respective font numbers are:
+
+#if CKBK
+
+#end
+	------------------------------------------------
+	Font number	Font description
+	------------------------------------------------
+           1 		(Default) Roman Simplex
+	   2 		Greek Simplex
+           3 		Greek Gothic
+	   4 		Italic Gothic
+	   5 		English Gothic
+	   6 		Roman Duplex
+	   7 		Cyrillic Complex
+	   8 		Script Complex
+	   9 		Roman Complex
+	   10		Italic Complex
+	   11		Greek Complex
+ 	   12		Roman Triplex
+	   13		Italic Triplex
+	   14		Special Symbols
+	   15		Script Simplex
+	------------------------------------------------
+
+Appendix J describes how keyboard (ASCII) characters map into these
+various fonts.
+
+Suppose you wish to label a new spectral feature on a plot by drawing a
+vertical line above it and then labeling it with `22-points'
+characters, type,
+
+	>PAGE SHOW
+        >CLICK
+	># Place crosshairs above feature & click left or right once.
+	>PLACE(XCLICK,YCLICK)              
+	>VCTR(XCLICK, YCLICK + 50)
+	>PLACE(XCLICK - 60, YCLICK + 60)
+	>CHARSIZE(22)
+	>CHAR('NEW LINE')
+
+Now you want to place a vertical, rotated label using greek-simplex
+characters with proportional spacing:
+
+	> PLACE(100,300)
+ 	> FONTSET(2, FALSE)
+	> VCHAR( 'a(1950)    d(1950)')
+	> # Now, return to default font
+	> FONTSET(1, FALSE)
+
+
+Should you wish to add a caption to the display, this can be done using
+the pseudo verb DOCUMENT (must be the only command on the line), rather
+than CHAR. The output of DOCUMENT should have been directed to the
+screen by a previous call to GRAPHICS (see Section 12.3).  DOCUMENT
+takes a single argument, which is the string it is required to print.
+For DOCUMENT, the string should NOT be enclosed in quotation marks. The
+write cursor is first moved to the required x- and y-value by a PLACE
+command.
+
+Suppose it is wished to use DOCUMENT to write a caption at the top of
+the display, then type,
+
+	>GRAPHICS
+	># So DOCUMENT will direct its output to the graphics screen.
+	>PLACE(100,770)
+	>DOCUMENT This is a Caption.
+	>CRT
+	># So all future output will go to the text screen.
+
+
+6.5 Superposition of Multiple Scans on one Plot
+-----------------------------------------------
+
+It is often desired to display two or more scans on a single plot.
+This can be done simply by using the verb RESHOW. RESHOW graphs just
+the data in Array (0), superposing it on top of an existing plot
+produced by SHOW. It uses the same y-scaling, and other parameters, as
+the previous call to SHOW.
+
+Three verbs, analogous to HISTOGRAM, LINE and POINTS with SHOW, are
+available for setting the plot style for RESHOW. These three are RHIST,
+RLINE and RPOINTS. The initial RESHOW plot style (on login) is RLINE.
+
+Suppose you wish to display the spectra of scans 1800 and 1820 on the
+same plot, using a connected line between points for the first
+spectrum, and plotting just crosses for the data of the second. Then
+type,
+
+	>GET 1800
+	>LINE PAGE SHOW
+	>GET 1820 
+	>RPOINTS RESHOW
+
+6.6 The Use of Color in Displays
+--------------------------------
+
+Provided that you are working from an appropriate screen, the displays
+produced either by PLOT (see Section 6.9), SHOW and RESHOW, or through
+the two-dimensional display routines CONTOUR, QCONTOUR, HLFTNE and
+RASTER (see Section 16.7) can be produced in color.
+
+The color to be used as standard for all types of display is set using
+the verb COLOR. COLOR takes three arguments and these can be used to
+assign a color in either the RGB (Red-Green-Blue), or the HIS
+(Hue-Intensity-Saturation) systems. The three arguments take on the
+following meanings,
+
+------------------------------------------------------------------
+| System | Sign of Arg |     Arg 1     |   Arg 2    |  Arg 3     |
+|--------|-------------|---------------|------------|------------|
+|  RGB   |  Negative   | Red Intensity | Green Int. | Blue Int.  |
+|--------|-------------|---------------|------------|------------|
+|  HIS   |  Positive   |     Hue       | Intensity  | Saturation |
+------------------------------------------------------------------
+
+In the RGB system, you supply negative numbers for the arguments in the
+range, 0 > Arg > -17. The intensity of the color varies from, -1 =
+absent, to -16 = maximum intensity. Shades of gray are produced by
+setting all three arguments to the same negative numbers as in,
+
+	>COLOR(-1, -1, -1)
+	># Set Black
+	>COLOR(-10, -10, -10)
+	># Set a Shade of Gray
+	>COLOR(-16, -16, -16)
+	># Set White
+
+The final one of these combinations represents the UniPOPS default of
+white, and can be called upon any time by invoking the verb RSTCOLOR,
+which is equivalent to COLOR(-16, -16, -16). Thus if you want scan 1000
+to be plotted in red, and scan 1001 to be overlaid on the same plot in
+white, type,
+
+	>COLOR(-16, -1, -1)
+	>GET 1000; PAGE SHOW
+	>RSTCOLOR
+	>GET 1001; RESHOW
+
+NOTE : It is rather difficult to set a pleasing color scale in the RGB
+system, and for this the HIS system is recommended.
+
+To provide a color in the HIS system, you supply values for the three
+arguments representing hue, intensity and saturation. There are 64 hue
+codes (numbered 0 through 63), 9 intensity codes (numbered 0 through
+8), and 7 saturation codes (numbered 0 through 6). The full set of
+these codes, with an example of setting up a color scale, are detailed
+in Appendix I. 
+
+6.7 Defining Line Types for Displays
+------------------------------------ 
+
+It is possible to define the `type of line' drawn in your displays
+by using the verb LINETYPE. LINETYPE defines the line types for PLOT,
+SHOW (in LINE mode), VCTR, RESHOW (in RLINE mode), BSHOW, RSHOW, GPARTS,
+and GDISPLAY displays. This verb takes one argument which is the sum of 
+three numbers: a thickness code, a dash code, and a tick-mark code.
+
+The thickness codes are:  0,1 - Thin (DEFAULT)
+			  2 - Slightly thick
+			  3 - Medium thick
+			  4 - Thick
+			  5 - Very thick
+
+The dash codes are:  0 - No dashes (DEFAULT)
+		    10 - Large dashes and spaces
+		    20 - Small dashes and spaces
+		    30 - Large dashes and small spaces
+		    40 - Large dash, small space, small dash, small
+		    	       space
+		    50 - Large dash, small space, small dash, small 
+          		       space, small dash, small space
+	            60 - Very small dashes and spaces
+		    70 - Small dashes and large spaces
+		    80 - Small dashes and very large spaces
+		    90 - Very large dash, moderate space, small dot,
+		    	      moderate space
+
+The tick-mark codes are:  0 - No tick marks (DEFAULT)
+			100 - Up/left going large ticks
+			200 - Up/left going small ticks
+			300 - Down/right going large ticks
+			400 - Down/right going small ticks
+			500 - Up/right going large arrows
+			600 - Up/right going small, closely spaced
+			            arrows
+			700 - Down/left going small, widely spaced
+			            arrows
+			800 - Up/right going small, widely spaced
+			            double arrows 
+		        900 - Inverted V's
+
+Thus to specify a slightly-thick, dot-dash line with no ticks, the
+argument to LINETYPE would be 42 (i.e. 0 + 40 + 2). The code of the
+default line type is 0.  In principle, 325 different line types are
+possible.  Line types 0 and 1 are the same (for reasons that have
+to do with contour plots - see Section 16.7.5, line type 1 is
+required in order to be able to label think lines with no dashes
+or tick-marks on contour plots).
+
+The current character size (see Section 6.4) will alter the spacing
+between dashes and ticks, and also the length of ticks.
+
+Suppose that you want to overlay plots of the data in Arrays (0) and
+(1), with the second plot using  a slightly-thick line having small
+arrows and a dash-dot-dot form (i.e. LINETYPE argument = 652), type,
+
+	>LINETYPE(0) LINE		   
+	># Sets default line type.
+	>PAGE SHOW		  
+	>COPY(1,0)		   
+	>LINETYPE(652)		   
+	>CHARSIZE(5)		   
+	># Make the arrows and dashes smaller than normal.
+	>RLINE RESHOW			   
+	>LINETYPE(0); CHARSIZE(11)  
+	># Reset defaults
+
+
+6.8 Plotting Multiple Scans on a Page
+-------------------------------------
+
+
+The verb SETPAGE defines where on the graphics screen the next display
+will go, and its total extent. SETPAGE is very useful if you wish to
+plot multiple spectra, contour plots, etc. on the same screen page.
+The syntax of the verb is,
+
+	>SETPAGE(xlo, xhi, ylo, yhi)
+
+	where, xlo and xhi define the x-limits of the plot in pixels,
+	and ylo and yhi fulfill the same function for the y-limits.
+	The full screen boundaries are pixels 1 to 1024 in x, and 1 to
+	800 in y.
+
+Suppose you want to plot a spectrum within pixels 100 to 500 in x and
+400 to 800 in y, type,
+
+	>SETPAGE(100,500,400,800)
+
+If you place many plots on one page, you may choose to eliminate adding
+documentation and the labeling of tick marks by setting SLABEL = 0.
+The plot boundaries set by SETPAGE affect PLOT, SHOW and RESHOW, the
+two-dimensional display verbs described in Section 16.7, the size of
+characters plotted, and the verbs which use the results of the last
+display (FLAG, FCUR, GDISPLAY, GPARTS, etc.).
+
+To reset the plot limits to full page display after using SETPAGE, the
+verb RSTPAGE is invoked. 
+
+As an example, suppose you want to draw a spectrum such that it fills
+the region x = 100 to 200; y = 100 to 200 (in pixels), and then plot a
+graph (see Section 6.9) within the region x = 300 to 500; y = 500 to
+800, afterwards resetting the option to full screen display. Then type,
+
+	>SETPAGE(100, 200, 100, 200)
+	>SHOW
+	>SETPAGE(300, 500, 500, 800)
+	>PLOT
+	>RSTPAGE 
+
+Of especial interest is that by a judicious choice of the plot limits,
+you can produce a display with spectra positioned on the screen
+according to their observed astronomical coordinates.  For example, the
+following procedures (see Chapter 13) will make just such a plot for a
+five-point spectral-line map, where the five scan numbers are held on
+the stack (see Chapter 11) with the center position entered first,
+
+     >PROC ARRANGE(XSIZE,YSIZE,XPIXPERDEG,YPIXPERDEG,XCENTER,YCENTER)
+     :# Places multiple spectra on one page according the position
+     :# of observations
+     :SCALAR RAD, X_ARR, Y_ARR
+     :RAD = 45 / ATAN(1)
+     :X_ARR = (H0(XSOURCE)-XCENTER)*XPIXPERDEG*COS(H0(YSOURCE)/RAD)+512
+     :Y_ARR = (H0(YSOURCE)-YCENTER)*YPIXPERDEG + 400
+     :# XPIX... and YPIX are the number of pixels per degree on the
+     :# sky in both the X and Y coord         
+     :SETPAGE(X_ARR-XSIZE, X_ARR+XSIZE, Y_ARR-YSIZE, Y_ARR+YSIZE)
+     :# XSIZE and YSIZE are the number of pixels in X and Y directions
+     :# that each spectra will take.
+     :SHOW
+     :RETURN
+     :FINISH
+
+     >PROC ARRLOOP(NX, NY, DELTAX, DELTAY)
+     :# Plots spectral-line 'tile' map.  
+     :# Assumes the central position is the first scan in ASTACK.
+     :# NX, NY = number of scans you want to plot in the X and Y    
+     :#	directions on the screen
+     :# DELTAX, DELTAY = Number of arcminutes between observations in   
+     :#	the X and Y directions.
+     :SCALAR XPIXPERDEG,YPIXPERDEG,XSIZE,YSIZE,XCENTER,YCENTER,I_ARRL
+     :PAGE SLABEL=0
+     :XSIZE=512/NX; YSIZE=400/NY
+     :XPIXPERDEG = 2*XSIZE/(DELTAX/60)
+     :YPIXPERDEG = 2*YSIZE/(DELTAY/60)
+     :# Calculate size of each tiled spectrum in pixels and the number
+     :# of pixels per arc degree.
+     :GET ASTACK(1)
+     :# get the center scan
+     :PLACE(1,20) CHAR(H0(OBJECT))
+     :GRAPHICS PLACE(0,750) TITLE CRT
+     :# Label the graph
+     :XCENTER = H0(XSOURCE)
+     :YCENTER = H0(YSOURCE)
+     :# Set up center coords
+     :ARRANGE(XSIZE, YSIZE, XPIXPERDEG, YPIXPERDEG, XCENTER, YCENTER)
+     :HOLDY
+     :FOR I_ARRL = 2 TO ACOUNT
+     :GET ASTACK(I_ARRL) 
+     :ARRANGE(XSIZE, YSIZE, XPIXPERDEG, YPIXPERDEG, XCENTER, YCENTER)
+     :END
+     :# plot up the 5 spectra
+     :RSTPAGE FREEY CRT SLABEL=2
+     :# Reset default plot parameters
+     :RETURN
+     :FINISH
+
+
+To use this procedure, type something like :
+
+     >ADDSTACK(500,504,1)
+     ># Scans in 5 point map -- center is 500
+     >ARRLOOP(3,3,11.2,11.2)
+     ># 3 plots in X and Y directions
+     ># Scans are separated on the sky by 11.2 arcmin in X and Y
+     ># Produces the display
+
+You should also look at the on-line documentation on Tiles 
+("EXPLAIN TILES") for some useful procedures similar to the above
+examples.
+	
+6.9 Plotting Graphs
+-------------------
+
+The verb PLOT enables you to plot the data in Array (0) against that in
+Array (1) on a one-to-one basis. Array (0) provides the y-values for
+the plot, while Array (1) provides the x-values. To set the x- and
+y-scales, there are two pairs of adverbs, XMINP and XMAXP, and YMINP
+and YMAXP. If XMINP = XMAXP, and/or YMINP = YMAXP, then the appropriate
+axis(es) is scaled to fit the full range of the appropriate data.
+Otherwise, the adverb pairs set the minimum and maximum values to plot
+in each axis. If XMINP < XMAXP, the x-scale increases to the right,
+while for YMINP < YMAXP, the y-scale increases upwards. For either
+condition reversed, the direction of increasing value on the
+appropriate axis(es) is reversed.
+
+If the adverbs XLOGP and/or YLOGP are set to FALSE (-1), that axis(es)
+will be a linear representation. If either (or both) of these adverbs
+are set to TRUE (+1), then that axis(es) will be logarithmic
+representations.
+
+If the last-called display `style' verb (see Section 6.2) was POINTS or
+HISTOGRAM, then the plot will consist of a set of points. If the verb
+LINE was the last invoked, a series of connected lines will be drawn
+(see Section 6.7).
+
+Vertical and horizontal lines can be drawn on the plot using the
+12-element array adverbs CMARK and TMARK (see Section 6.2). If ZLINE is
+set to TRUE (+1), the plot will contain a line drawn at y = 0. Three
+string adverbs allow one to label the axes and the overall plot. The
+16-character strings XTITLE and YTITLE should be set to the captions
+chosen for the x- and y-axes respectively, with the 32-character string
+HTITLE fulfilling the same function for the overall plot title.
+
+Suppose you wish to plot Tsys against air mass for a set of scans. The
+following Procedure could be used,
+
+
+	>PROC TSYSPL(SCAN_1, SCAN_2)
+	:SCALAR DEGTORAD, SCAN_N
+	:#Empty the Arrays (0) and (1) to store the plot data.
+	:REMOVE(0)
+	:REMOVE(1)
+	:DEGTORAD = ACOS(-1.)/180.
+	:#Now cycle thru the scans, using Array (2) to hold them.
+	:FOR SCAN_N = SCAN_1 TO SCAN_2
+	:	H0(NOINT) = H0(NOINT) + 1
+	:	H1(NOINT) = H0(NOINT)
+	:	GET2 SCAN_N
+	:	D0(H0(NOINT)) = H2(STSYS)
+	:	D1(H0(NOINT)) = 1./SIN(H2(EL)*DEGTORAD)
+	:END
+	:XTITLE = 'Air Mass'
+	:YTITLE = 'Tsys (K)'
+	:HTITLE = 'Tsys versus Air Mass'
+	:#Linear plot, Auto-scaled.
+	:XLOGP = FALSE; YLOGP = FALSE
+	:XMINP = XMAXP; YMINP = YMAXP
+	:#Now make the Plot.
+	:PLOT
+	:RETURN
+	:FINISH
+
+To plot the system temperature versus air mass for scans 100 to 150,
+type,
+
+	>TSYSPL(100, 150)
+
+6.10 Problems with Your Graphics Screen 
+---------------------------------------
+
+In the unlikely event of problems with your graphics screen, the pseudo
+verb KILLGRPH will destroy your current graphics screen and try to
+recreate another. Occasionally, it is necessary to execute KILLGRPH
+twice to really clean up the problem.  If this does not solve the 
+problem, exit the program and restart it. If you still have problems, 
+get help from your system administrator.
+
+Suppose you are getting bizarre behavior from your graphics screen, try
+typing,
+
+	>KILLGRPH
+
+and UniPOPS will ask you if you really want to kill the screen. If you
+answer yes, the graphics screen will be destroyed and a new one
+recreated.

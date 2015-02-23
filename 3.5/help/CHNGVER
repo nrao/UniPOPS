@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CHNGVER:  (TUCSON) Allows the user to change the version'
+PRINT 'number of the indicated file type.'
+PRINT 'Syntax: CHNGVER file_type'
+PRINT ' '

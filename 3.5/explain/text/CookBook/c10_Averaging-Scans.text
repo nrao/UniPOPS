@@ -1,0 +1,210 @@
+10. Averaging Scans
+-------------------
+
+A great many experiments need the ability to average a number of
+scans together, for example those taken on the same position. UniPOPS
+provides a convenient system for achieving this via the verbs ACCUM and
+SUM.
+
+
+10.1 Averaging Scans with Default Weighting
+-------------------------------------------
+
+When ACCUM is invoked, the scan in Array (0) is summed into an internal
+array.  In LINE, a weighting factor is applied that is proportional to
+the integration time, and inversely proportional to the square of the
+system temperature (the values of these two parameters being taken from
+the scan header.  For Green Bank data, UniPOPS uses effective
+integration times while for 12-m data it uses scan duration time).
+Currently, the weighting factor in CONDAR is unity.
+
+The order of operations involved in the simplest possible averaging of
+data with ACCUM is,
+
+	i)   You set the accumulator flag to OFF by invoking the verb
+	     SCLEAR. (This flag is set to ON when averaging is in
+	     progress.)
+
+	ii)  You place the first scan to be summed into Array (0), and
+	     invoke ACCUM. ACCUM sets the accumulator flag to ON, and
+	     copies the header values of the scan into the internal
+	     array.  ACCUM also copies the data values after
+	     multiplying by the weighting factor described above.
+
+	iii) You place the successive scans to be averaged in Array
+	     (0), and call ACCUM. This adds the new scan into the sum
+	     in the internal array, after multiplication by the
+	     appropriate weighting factor. The sum of the weights is
+	     also retained.
+
+	iv)  When the final scan has been ACCUMed, you invoke the verb
+	     AVE. This normalizes the sum in the internal array by the
+	     sum of the weights, and copies the normalized summation
+	     back to Array (0).  AVE sets the accumulator flag to OFF.
+
+	v)   If at any stage you type,
+
+		>TELL ACCMD
+
+	     then before invoking AVE, the list of scans ACCUMed to
+	     date will be printed. After invoking AVE, the number of
+	     scans ACCUMed and the scan numbers of the first and last
+	     component scans are printed on the screen.
+
+
+NOTE : In LINE, the final average in Array (0) will have the basic
+       header of the first scan ACCUMed, but the integration times
+       (keyword adverbs INTTIME and EFFINT) will be the sum of the
+       integration times of the individual scans, while the system
+       temperature (keyword adverb STSYS) will be the weighted mean of
+       the values for the individual scans.
+
+NOTE : The behavior of ACCUM with respect to undefined data values
+       (data values equal to IEEE Inf) is determined by the value of
+       the DEFMODE adverb.  If DEFMODE is FALSE, the result of each
+       ACCUM will have an undefined value in the internal accum
+       array at any location where either of the values in the scan
+       being ACCUMed or the current internal accum are have an
+       undefined value (in this case, once a channel has an undefined
+       value in the internal accum array, it will remain undefined).
+       If DEFMODE is TRUE, the result of each ACCUM will have an
+       undefined value at any location where both of the values in 
+       the scan being ACCUMed and the current internal accum array
+       have undefined values but if only one values is undefined at
+       a location, ACCUM will use that value as the result at that
+       location.  The value of DEFMODE can be changed at any time.
+       The default value of DEFMODE is FALSE and most users will 
+       not change this value.
+
+As an example, suppose it is desired to average scans 602, 604 and 606,
+then type, 
+
+	>SCLEAR
+	>GET 602; ACCUM
+	>GET 604; ACCUM
+	>GET 606; ACCUM
+	>AVE
+
+To see what has gone on, and then display the averaged scan, type,
+
+	>TELL ACCMD
+	>PAGE SHOW
+
+10.2 Averaging Scans with User-Specified Weights
+------------------------------------------------
+
+On occasions, you may wish to specify the weights used in averaging the
+scans together. To achieve this, you should enter the weight for each
+scan into the adverb WEIGHT, and invoke the verb SUM (rather than
+ACCUM).
+
+Suppose you wished to repeat the above averaging of scans 602, 604 and
+606, but using weights inversely proportional to the rms's of each
+scan. Employing the verb RMS, (see Section 7.6) and its adverb VRMS,
+type,
+
+	>SCALAR I
+	>SCLEAR
+	>FOR I = 602 TO 606 BY 2; GET I; RMS; WEIGHT = 1./VRMS; SUM; END
+	>AVE
+	>TELL ACCMD
+	>PAGE SHOW
+
+Note: SUM uses the adverb DEFMODE in the same sense that ACCUM does.
+      See the note at the end of Section 10.1 for more information.
+
+10.3 Averaging Scans with Frequency, Velocity or Position Offsets
+-----------------------------------------------------------------
+
+The case can arise in which spectra of the same resolution, containing
+the same line, have frequency or radial velocity offsets relative to
+each other, but it is desired to sum all after suitable alignment. It
+is possible to align these, despite the offsets, using the verbs
+FSHIFT, VSHIFT, and SHIFT. The verbs FSHIFT and VSHIFT set the adverb
+ASHIFT to the number of channels by which the spectrum must be shifted,
+and this is used by SHIFT to align the scans. You can specify the
+channel shifts yourself by setting the values of ASHIFT by assignment
+statements (i.e. ASHIFT = 35.). This is also done when you desire to
+average continuum scans having offset starting points in CONDAR, only
+here ASHIFT is set to the required shift in pixels. Note that if ASHIFT
+is not an integer number, then appropriate interpolation of the scan
+will be performed.
+
+If scans 602, 604 and 606 had been observed with different frequency
+offsets, then they should be averaged by typing,
+
+	>SCLEAR
+	>GET 602 ACCUM
+	>GET 604 FSHIFT SHIFT ACCUM
+	>GET 606 FSHIFT SHIFT ACCUM
+	>AVE PAGE SHOW
+
+NOTE : In the regions of the summed scans, where not all scans overlap,
+you should not trust the result ! In making the final plot, BDROP and
+EDROP should be used to mask out these bogus sections of the scan.
+
+SHIFT also updates an internal record of the number of channels
+shifted.  Up to the last 5120 values and the scan numbers associated
+with them can be displayed using the LISTSHIFT verb.  The SCLEAR verb
+clears this internal record.
+
+NOTE: For Tucson 12-meter data only, there is a verb OSB which, when
+invoked, changes several header words to make the data appear as if it
+had been observed in the other side band with the velocity at the
+reference channel remaining the same.  A subsequent use of OSB will
+return these header values to their original settings.  OSB also sets
+the OPENPAR header value to "OSB" if it is unset, or to "   " if it is
+set to "OSB".  SHOW and HEADER display this string if it is set.
+
+10.4 Using the Stack when Averaging Data
+----------------------------------------
+
+Averaging a large number of scans is an operation where the stack (see
+Chapter 11) can be used to aid the process considerably. For example,
+if it is desired to average the spectra in scans 602, 604 and 606, plus
+scans 1000 through 1020, this is easily achieved using the stack by
+typing,
+
+	>SCALAR I
+	>EMPTY
+	>ADDSTACK(602,606,2)
+	>ADDSTACK(1000,1020,1)
+	>SCLEAR
+	>FOR I = 1 TO ACOUNT; GET ASTACK(I); ACCUM; END
+	>AVE
+	>TELL ACCMD
+	>PAGE SHOW
+
+To see exactly which scans have been averaged, one can print out the
+stack by typing,
+
+	>TELL STACK
+
+
+As a further example, if the frequency resolutions of a set of spectra
+entered on the stack (see Chapter 11) differ, the following procedure
+will shift all scans for frequency offsets, smooth them to the
+resolution of the first scan, where possible, (alerting you if this is
+not possible), and average the smoothed, shifted scans,
+
+	>PROCEDURE SMTHSHFT
+	:SCALAR I_LOOP
+	:IF ACOUNT < 2 THEN
+	:	PRINT 'THE STACK IS EMPTY OR CONTAINS BUT ONE SCAN !'
+	:	RETURN
+	:	END
+	:SCLEAR
+	:GET ASTACK(1); ACCUM
+	:FOR I_LOOP = 2 TO ACOUNT
+	:	GET ASTACK(I_LOOP)
+	:	NEWRES = H0(FREQRES)/H2(FREQRES)
+	:	IF NEWRES >= 1. THEN
+	:		CHNGRES
+	:		FSHIFT SHIFT ACCUM
+	:	ELSE
+	:		PRINT 'CANNOT SMOOTH', ASTACK(I_LOOP)
+	:	END
+	:END
+	:AVE
+	:RETURN
+	:FINISH

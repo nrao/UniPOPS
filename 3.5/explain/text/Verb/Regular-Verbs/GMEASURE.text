@@ -1,0 +1,228 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-	Syntax: GMEASURE (fitting_modes)
+L-
+L-	GMEASURE computes various parameters (flux integral, velocity,
+L-	and width) for spiral galaxy spectra contained in Array (0).
+L-	It takes an argument which can be up to 5 digits in length,
+L-	each digit represents a method you want GMEASURE to use on your
+L-	data.  That is, a single call to GMEASURE will compute these
+L-	parameters for any of the five possible fitting methods.
+L-
+L-	The methods are numbered 1 through 5 so examples of valid
+L-	fitting_modes are:
+L-
+L-		1	2345	54321	55555	43524	341	
+L-
+L-	[Note: you can ask GMEASURE to use the same method multiple
+L-	times.]
+L-
+L-	Invalid fitting_modes are:
+L-
+L-		0	6234	23456	123456  111111	-10342
+L-
+L-	[Note: the above contains the following errors -- no digit must
+L-	be zero or greater than five, the number of digits must be five
+L-	or less, no negative numbers.]
+L-
+L-	The five modes compute the flux integral, velocity, and width
+L-	as follows:
+L-
+L-	Method = 1 : At a fraction f of the MEAN flux over the region
+L-		     of interest defined by BMOMENT and EMOMENT.
+L-
+L-	Method = 2 : At a fraction f of the peak flux over the region
+L-		     of interest defined by BMOMENT and EMOMENT.
+L-
+L-	Method = 3 : At a fraction f of each of the two 'horns',
+L-		     searched from BMOMENT and EMOMENT towards the
+L-		     center of the feature.
+L-
+L-	Method = 4 : At a fraction f of each of the two 'horns',
+L-		     searched from BMOMENT and EMOMENT in, and from the
+L-		     center of the feature out and the average of the
+L-		     two reported. A polynomial is fitted between
+L-		     fractions f1 and f2 (see below) of the two horns,
+L-		     and the coefficients used to determine the
+L-		     velocity uncertainty.
+L-
+L-	Method = 5 : At a fraction f of each of the two 'horns',
+L-		     searched using an interpolating polynomial between
+L-		     fractions f1 and f2 (see below) of each horn. The
+L-		     velocity uncertainty is estimated from the
+L-		     covariance matrix of the fitted polynomial
+L-		     coefficients.
+L-
+L-	The user specifies f, f1, and f2 as values to the array adverb
+L-	GMFRAC.  Each element of GMFRAC corresponds to the
+L-	corresponding digit in the argument you provide GMEASURE.  The
+L-	value you should supply to an element of GMFRAC depends upon
+L-	the value of the corresponding digit in the argument to
+L-	GMEASURE.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 1, then set
+L-	   GMFRAC(i) = the fraction of the mean flux at which GMEASURE
+L-	   will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 2, then set
+L-	   GMFRAC(i) = the fraction of the peak flux at which GMEASURE
+L-	   will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 3, then set
+L-	   GMFRAC(i) = the fraction of the peak flux of a two-horn
+L-	   profile at which GMEASURE will measure the profile.
+L-
+L-	.  If the i-th digit of the argument to GMEASURE is 4 or 5,
+L-	   then set GMFRAC(i) =  f1 + 0.1 * f2 + 0.01 * f, where f is
+L-	   the fraction of the peak flux of a two-horn profile at which
+L-	   GMEASURE will measure the profile and f1 and f2 are the
+L-	   fractions of the peak fluxes that will be used to fit a
+L-	   polynomial to the profile.
+L-
+L-	You must also supply values to adverbs BMOMENT and EMOMENT
+L-	which should represent the starting and ending channels for the
+L-	spectral-line feature you want GMEASURE to work on.  You can
+L-	let GMEASURE determine the extent of the spectral-line itself
+L-	if you first set BMOMENT to the value of any channel within the
+L-	spectral-line feature, set EMOMENT = BMOMENT, and then call
+L-	GMEASURE.  
+L-
+L-	In addition, you must supply the adverb VRMS a value
+L-	corresponding to the rms noise level of the data.  You can use
+L-	the verb RMS to easily calculate the rms and to assign a value
+L-	to VRMS.
+L-
+L-	GMEASURE will draw on your graphics screen vertical lines
+L-	corresponding to either your input values of BMOMENT and
+L-	EMOMENT or the channels you have asked it to find (i.e., if you
+L-	have set EMOMENT = BMOMENT) for the starting and stopping
+L-	channels of the profile.
+L-
+L-	For each desired fitting method, GMEASURE will print out its
+L-	findings to the graphics screen.  The array adverb GOUT will be
+L-	assigned values corresponding to the results.
+L-
+L-	If you have provided an argument to GMEASURE that is between 1
+L-  	and 5 digits long, then the following elements of GOUT are set
+L-  	by GMEASURE to the described value:
+L-  
+L-  		GOUT(i, 1) = Method code for i-th estimate.
+L-  		GOUT(i, 2) = Centroid for the i-th estimate.
+L-  		GOUT(i, 3) = Width for the i-th estimate.
+L-  		GOUT(i, 4) = Centroid error (modes 4 & 5 only) for the
+L-  			     i-th estimate.
+L-  		GOUT(i, 5) = The value in GMFRAC(i) for the i-th
+L-  			     estimate.
+L-  
+L-   	where i = 1 to the number of digits in the argument to GMEASURE.
+L-  
+L-  	In addition, the following elements of GOUT are always set by
+L-  	GMEASURE to the described values:
+L-  
+L-  		GOUT(6, 1) = Peak flux value within region of
+L-  			     interest.
+L-  		GOUT(6, 2) = The flux integral.
+L-  		GOUT(6, 3) = RMS value as found initially in adverb
+L-  			     VRMS.
+L-  		GOUT(6, 4) = Starting channel number used by GMEASURE.
+L-  		GOUT(6, 5) = Ending channel number used by the
+L-  			     GMEASURE.
+L-  
+L-      The units of flux will be those of the y-axis times those of
+L-	the current lower x-axis.  The units of centroid, and width
+L-	will be that of the lower x-axis.  If the header information in
+L-	Array (0) is insufficient for calculating your desired x-axis,
+L-	the units of flux, centroid, and width, channel numbers will be
+L-	used.  The units of the lower x-axis can be altered with the
+L-	SAXIS, CC, CV, CF, FV, FC, FF, VC, VF, VV verbs.
+L-
+L-	GMEASURE does not alter the contents of Array (0).
+L-
+L-	ADVERBS USED:
+L-
+L-	 BMOMENT	Beginning channel of window.
+L-	 EMOMENT        Ending channel of window.
+L-			If BMOMENT = EMOMENT, GMEASURE will search
+L-			outward from BMOMENT in both directions to
+L-			automatically find the extent of the
+L-			spectral-line feature.  Initial values are 1
+L-			and 256, respectively.
+L-
+L-	 GMFRAC(5)      Fractions at which GMEASURE is to compute the
+L-			profile's parameters.  Initial values are
+L-			zero.
+L-
+L-	 VRMS		The noise level in your spectra.  Initial value
+L-			is zero.
+L-
+L-	ADVERBS SET:
+L-
+L-	 GOUT(6,5)	The results of GMEASURE, as described above.
+L-
+L-
+L-	EXAMPLE :  
+L-
+L-      You have a galaxy profile in Array (0).  You have removed a
+L-	baseline and want to to use GMEASURE to compute the profile's
+L-	parameters.  You type:
+L-
+L-		RMS
+L-
+L-	to assign the rms value to adverb VRMS.  Now, you need to set up
+L-	BMOMENT and EMOMENT.  To do so using the cursors, type the following:
+L-
+L-		PAGE SHOW
+L-		BMOMENT=CCUR; EMOMENT=CCUR
+L-
+L-      The cursor will appear twice and you can move it to the left
+L-	and right of the feature, clicking the mouse button on the
+L-	leftmost and rightmost extent of the profile.  BMOMENT and
+L-	EMOMENT will be given the value if the channels where you just
+L-	clicked.
+L-
+L-	If you invoked GMEASURE as follows,
+L-
+L-		GMFRAC = 0.5, 0.2, 0.5, 0.825, 0.915
+L-		GMEASURE(3345)
+L-
+L-	GMEASURE would display the flux integrals, velocities and
+L-	widths, computed for,
+L-
+L-	i) 50 % of the two peaks (Method 3, GMFRAC(1)).  
+L-     ii) 20 % of the two peaks (Method 3, GMFRAC(2)).
+L-    iii) 50 % of the two peaks, with the error estimated from a
+L-	   polynomial fit between 20 and 80 % of the two peaks.
+L-	   (Method 4, GMFRAC(4) = 80 % + 0.1 * 20 % +0.01 * 50 %).
+L-     iv) 50 % of the two peaks searched by fitting a polynomial
+L-	   between 10 and 90 % of the two peaks, with the error
+L-	   estimated from the fitted polynomial.  (Method 5, GMFRAC(5)
+L-	   = 90 % + 0.1 * 10 % + 0.01 * 50 %).
+L-
+L-      GMEASURE will also flag the channels you set for BMOMENT and
+L-	EMOMENT.
+L-
+L-      Then elements (1,1), (1,2), ... (1,5) of GOUT will contain
+L-	the results of method 3 (i.e., the first digit in the argument
+L-	to GMEASURE).
+L-
+L-	Elements (2,1), (2,2), ... (2,5) of GOUT will contain the
+L-	results of method 3 (the second digit in the argument).
+L-
+L-	Elements (3,1), (3,2), ... (3,5) of GOUT will contain the
+L-	results of method 4 (the third digit in the argument).
+L-
+L-	Elements (4,1), (4,2), ... (4,5) of GOUT will contain the
+L-	results of method 5 (the fourth digit in the argument).
+L-
+L-	Elements (5,1), (5,2), ... (5,5) of GOUT will be zero (only 4
+L-	digit argument supplied to GMEASURE so only 4 methods will be
+L-	tried.
+L-
+L-	And, elements (6,1), (6,2), ... (6,5) of GOUT will have values
+L-	as described above.
+L-
+L------------------------- Spectral Line --------------------------------
+
+

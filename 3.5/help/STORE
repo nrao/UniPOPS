@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'STORE:  (PSEUDO) Stores the current procedures, adverbs,'
+PRINT 'etc. into the specified STORE bin to be later recalled by'
+print 'RESTORE.  Syntax:  STORE bin_number'
+PRINT ' '

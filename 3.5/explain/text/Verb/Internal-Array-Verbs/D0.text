@@ -1,0 +1,62 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:    D0 (channel-num) 
+		   D1 (channel-num)
+		   D2 (channel-num)
+		   D3 (channel-num)
+		   D4 (channel-num)
+		   D5 (channel-num)
+		   D6 (channel-num)
+		   D7 (channel-num)
+		   D8 (channel-num)
+		   D9 (channel-num)
+
+	D0 through D9 are internal-array verbs which return or set the
+	value contained within elements of the internal Arrays (0)
+	through (9).  You should always supply D0 through D9 with a single
+	integer-valued argument which is the channel number that you
+	want to either query or change in Arrays (0) through (9).
+
+	If the verb appears to the left of an equal sign, than the
+	specified channel has its value changed to the value of the
+	expression to the right of the equal sign.
+
+	If the verb appears in a mathematical expression or as an
+	argument to a verb or procedure, then the value of the
+	specified channel is returned.
+
+	The argument you supply D0 through D9 must be greater than zero
+	and must fall within the current size of the array in
+	question.  That is, the value of the argument you provide to
+	D0, for example, must not exceed the number of data values
+	stored in H0(NOINT).
+
+	No adverbs are used or set by D0 through D9.
+
+	See the description of internal-array verbs for restrictions on
+	their use.
+
+	EXAMPLE:
+
+	.  The following will print out the values of the 13 and 20
+	   channels in Array (3) and will assign to X the value
+	   of the 10th element of D0:
+
+		PRINT D3(13), D3(20)
+		X = D0(10)
+
+	.  The following will assign the value of 3 to the first
+	   element of D9 :
+
+		D9(1) = 3
+
+	.  The following will assign to the 14th element of D3 the
+	   value of the square root of the difference in values between
+	   the 14th elements of D1 and D2:
+
+		D3(14) = SQRT(D1(14) - D2(14))
+
+	.  If X is an adverb and HHH a procedure, then the following
+	   will pass the value of the Xth element of D0 to HHH:
+
+		HHH(D0(X)) 

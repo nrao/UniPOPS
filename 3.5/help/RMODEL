@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'RMODEL:  Creates a sinusoidal model of the baseline'
+PRINT 'described by RAMPLTDE, RPHASE, and RPERIOD and stores the '
+PRINT 'results in 0.'
+PRINT ' '
+PRINT 'RAMPLTDE=',RAMPLTDE
+PRINT 'RPHASE=',RPHASE
+PRINT 'RPERIOD=',RPERIOD
+PRINT ' ' 

@@ -1,0 +1,587 @@
+#! /bin/csh -f
+# %W% %G%
+# Charlottesville version.  Uses remote tape on rhesus.
+set tapehost = rhesus
+#		make sure that they can rsh to tapehost
+set username = `whoami`
+rsh -l $username $tapehost ls >& /dev/null
+if ($status != 0) then
+   set username = unipops
+   rsh -l $username $tapehost ls >& /dev/null
+   if ($status != 0) then
+      echo "This will not work from your login."
+      echo "See the local unipops guru for help."
+      exit(256)
+   endif
+endif
+set rmtcsh = "rsh -l $username $tapehost /bin/csh -f"
+set rmt = "rsh -l $username $tapehost"
+#
+echo " "
+echo "Converts a disk file in ONLINE, IEEE Keep, Modcomp Keep, Telescope Tape, "
+echo "ASCII, SDD, or PCPOPS format to tape in either IEEE Keep, Modcomp Keep, "
+echo "ASCII, or PCPOPS format.  All of the file or only the records specified "
+echo "by the user will be converted."
+echo " "
+echo "NOTE: The tape drive must be attached to" $tapehost
+echo " "
+#
+informat:
+echo " "
+echo "Enter one of the following to specify the format of the file to be converted"
+echo -n "IEEE, MOD, ASCII, TELE, ONLINE, SDD, or PC? "
+set informat = $<
+set informat = `echo $informat | tr "[a-z]" "[A-Z]"`
+if ($informat == "IEEE" || $informat == "MOD" || $informat == "PC") then
+	set recl = 5120
+else if ($informat == "TELE") then
+	set recl = 9600
+else if ($informat == "ASCII") then
+	set recl = 21680
+else if ($informat == "SDD") then
+	echo " "
+	echo "NOTE:  Due to the limitations of the SDD and the IEEE, PC, etc."
+	echo "formats, the conversion from SDD format on occasion may produce"
+	echo "bad output files.  Use with some caution."
+else if ($informat != "ONLINE") then
+	echo " "
+	echo "WARNING: Incorrect entry... Try again"
+	goto informat
+endif
+#
+echo " "
+if ($informat == "ONLINE") then
+	echo " "
+	echo -n "Enter project code: "
+	set projcode = $<
+else
+  	echo " "
+  	echo -n "Enter input file name: "
+  	set infile = $<
+ 	if ($infile != "" && ! -e $infile) then
+		echo " "
+		echo "ERROR: Input file" $infile "does not exist... Try again"
+		echo " "
+		exit(256)
+  	endif
+	if ($informat == "SDD") then
+      	   set bb = `bootstrap $infile 512 LONG`
+           if ( $bb[10] != 1 ) then
+      	      set bb = `bootstrap $infile 512 SHORT`
+              set typesdd = $bb[8]
+	      set skiprec = $bb[2]
+	      set recl = $bb[4]
+           else
+              set typesdd = $bb[9]
+	      set skiprec = $bb[2]
+	      set recl = $bb[4]
+           endif
+      	   if ( $typesdd != 0 ) then
+	      echo "Input SDD file is in RECORDS format... Terminating"
+	      exit 0
+           endif
+	endif
+endif
+#
+outformat:
+echo " "
+echo "Enter one of the following to specify the format of output file"
+echo -n "IEEE, MOD, ASCII, or PC? "
+set outformat = $<
+set outformat = `echo $outformat | tr "[a-z]" "[A-Z]"`
+if ($outformat != "IEEE" && $outformat != "MOD" && $outformat != "PC" && $outformat != "ASCII") then
+	echo " "
+	echo "WARNING: Incorrect entry... Try again"
+	goto outformat
+endif
+if ($outformat == "ASCII") then
+	set outrecl = 21680
+else
+	set outrecl = 5120
+endif
+#
+set cmnd2 = ""
+if ($informat != $outformat) then
+intype:
+   echo " "
+   echo "Enter L or C or B if you want line, continuum, or both"
+   echo -n "types of scans: "
+   set scntype = $<
+   if ($scntype == "l" || $scntype == "L") then
+	set cmnd2 = "l"
+   else if($scntype == "c" || $scntype == "C") then
+	if ($informat == "TELE") then
+		set cmnd2 = "c p"
+	else
+		set cmnd2 = "c"
+	endif
+   else if($scntype == "b" || $scntype == "B") then
+	if ($informat == "TELE") then
+		set cmnd2 = "p"
+	else
+		set cmnd2 = ""
+	endif
+   else
+	echo "WARNING: Incorrect entry... Try again"
+	goto intype
+   endif
+endif
+#
+echo " "
+echo -n "Enter device name of output tape drive (e.g., rst0, rst1, rmt0,...): "
+set outfile = $<
+set drv = /dev/$outfile
+#			on IBM machines, the odd drive number extensions are the
+#			non-rewind devices
+set ndrv = /dev/$outfile.1
+set ifstr = "if ( -e $drv ) echo YES"
+set EXIST = `echo $ifstr | $rmtcsh`
+if ($status != 0) then
+   echo "Problems communicating with $tapehost."
+   exit(256)
+endif
+if ( $EXIST !~ YES ) then
+   echo " "
+   echo "ERROR: Input drive" $drv "does not exist on $tapehost.  Try again"
+   goto intape
+endif
+#
+echo " "
+echo "Rewinding output tape"
+onintr -
+set cmdout = `echo mt -f $drv rewind\; echo \$status | $rmtcsh `
+if ($status != 0) then
+   echo "Problems communicating with $tapehost."
+   exit(256)
+endif
+if ($cmdout[$#cmdout] != 0) then
+   echo "Cannot rewind ${drv} on $tapehost"
+   exit(256)
+endif
+onintr
+#
+if ($outformat != "MOD") then
+  echo " "
+  echo -n "How many files do you want to skip on the output tape? "
+  set nfiles = $<
+  if ($nfiles > 0) then
+     echo " "
+     echo "Skiping" $nfiles "files"
+     onintr -
+     set cmdout = `echo mt -f $ndrv fsf $nfiles\; echo \$status | $rmtcsh`
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout]) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     onintr
+  endif
+endif
+#
+echo " "
+echo "If file already has data in it, do you want to append data to it"
+echo "or do you want to overwrite it?"
+echo -n "Enter o for overwrite, anything else to append: "
+set answr = $<
+#
+if ($answr == "o" || $answr == "O") then 
+   set seek2 = 0
+   if ($outformat == "MOD") then
+	set nfiles = 1
+	echo " "
+	echo "Writing label to tape"
+        onintr -
+        set rmtdd = "$rmt dd of=$ndrv obs=80 count=1 conv=block"
+	cat ${popsdir}utilities/keep.label | $rmtdd
+        if ($status != 0) then
+           echo "Cannot write label to ${drv}"
+           exit(256)
+        endif
+        onintr
+   endif
+else 
+    if ($outformat == "MOD") then
+	set nfiles = 1
+	echo " "
+	echo "Reading label on tape"
+        onintr -
+	set labeltape = `$rmt dd if=$ndrv bs=80 count=1 | grep "MODCOMP USERTAPE" | wc`
+        if ($status != 0) then
+           echo "Cannot read label on ${drv}"
+           exit(256)
+        endif
+	if ($labeltape[2] == 0) then
+	   echo " "
+	   echo "ERROR: Tape is NOT a MODCOMP KEEP tape... Try again"
+	   echo " "
+	   echo "Rewinding and exiting"
+           set rmtrew = "$rmt mt -f $drv rewind"
+           $rmtrew
+	   echo " "
+	   exit(256)
+        else
+	   set cmdout = `echo mt -f $drv rewind\; echo \$status | $rmtcsh`
+           if ($status != 0) then
+              echo "Problems communicating with $tapehost."
+              exit(256)
+           endif
+           if ($cmdout[$#cmdout]) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+           endif
+	   set cmdout = `echo mt -f $ndrv fsf 1\; echo \$status | $rmtcsh`
+           if ($status != 0) then
+              echo "Problems communicating with $tapehost."
+              exit(256)
+           endif
+           if ($cmdout[$#cmdout]) then
+              echo "Cannot position tape on ${drv}"
+              exit(256)
+           endif
+	endif
+        onintr
+     endif
+#
+     echo " "
+     echo "Positioning tape at End of Data file"
+     onintr -
+     set seek = `$rmt dd if=$ndrv of=/dev/null bs=$outrecl |& awk -F+ '{print $1}'`
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     echo " "
+     echo $seek[1] "records on tape"
+     set seek2 = $seek[1]
+     set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout]) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     set cmdout = `echo mt -f $ndrv fsr $seek2\; echo \$status | $rmtcsh`
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout]) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     onintr
+#
+endif
+#
+inrecords:
+echo " "
+if ($informat != "ONLINE") then
+  echo -n "Enter first record number to convert (1 for first record in file): "
+  set first = $<
+  echo -n "Enter last record number to convert (0 for last record in file): "
+  set last = $<
+else
+  echo -n "Enter first scan number to convert (1 for first scan in file): "
+  set first = $<
+  echo -n "Enter last scan number to convert (0 for last scan in file): "
+  set last = $<
+endif
+#
+if ($first <= 0) set first = 1
+if ($last <= 0 && $informat == "ONLINE") set last = 32767
+if ($last <= 0 && $informat != "ONLINE") set last = 9999999
+if ($last < $first) then
+	echo " "
+	echo -n "WARNING: First record number must be less than or equal to last"
+	echo ".... Try agin"
+	goto inrecords
+endif
+#
+@ count=1 + $last - $first 
+@ skip=$first - 1
+if ($informat == "SDD") then
+   @ skip=$skip + $skiprec
+endif
+#
+echo " "
+echo "Writing to" $drv
+if ($informat != "ONLINE") then
+   set DD = "dd if=$infile bs=$recl skip=$skip count=$count"
+endif
+onintr -
+switch ($informat)
+case TELE:
+   set TOIEEE = "tele2ieee.exe $cmnd2"
+   breaksw
+case PC:
+   set TOIEEE = "pcieee.exe $cmnd2"
+   breaksw
+case MOD:
+   set TOIEEE = "keep2ieee.exe $cmnd2"
+   breaksw
+case ASCII:
+   set TOIEEE = "ascii2ieee.exe $cmnd2"
+   if ($outformat != "ASCII") then
+      set DD = "dd if=$infile ibs=$recl cbs=80 conv=unblock skip=$skip count=$count"
+   endif
+   breaksw
+case SDD:
+   set TOIEEE = "sdd2ieee.exe $cmnd2"
+   breaksw
+case ONLINE:
+   set TOIEEE = ""
+    breaksw
+case IEEE:
+   set TOIEEE = ""
+   breaksw
+default:
+   echo "Invalid input format $informat.  This error should NOT happen."
+   echo "Contact a UniPOPS guru."
+   exit(256)
+   breaksw
+endsw
+set orecl = 5120
+switch ($outformat)
+case PC:
+   set FROMIEEE = "pcieee.exe"
+   breaksw
+case MOD:
+   set FROMIEEE = "ieee2keep.exe"
+   breaksw
+case ASCII:
+   set FROMIEEE = "ieee2ascii.exe"
+   set orecl = 21680
+   breaksw
+case IEEE:
+   set FROMIEEE = ""
+   breaksw
+default:
+   echo "Invalid output format $outformat.  This error should NOT happen."
+   echo "Contact a UniPOPS guru."
+   exit(256)
+   breaksw
+endsw
+set rmtdd = "rsh -l $username $tapehost dd of=$ndrv obs=$orecl"
+#
+if ($informat == $outformat) then
+   $DD | $rmtdd
+   if ($status != 0) goto cnverr
+else if ($informat == "ONLINE") then
+   if ($cmnd2 == "") then
+      if ($outformat == "ASCII") then
+         ldump $projcode $first $last | $FROMIEEE | \
+            dd obs=21680 cbs=80 conv=block | $rmtdd
+	 if ($status != 0) goto cnverr
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set seek = `$rmt dd if=$ndrv of=/dev/null bs=$outrecl |& awk -F+ '{print $1}'`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         set seek2 = $seek[1]
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set cmdout = `echo mt -f $ndrv fsr $seek2\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         cdump $projcode $first $last | $FROMIEEE | \
+            dd obs=21680 cbs=80 conv=block | $rmtdd
+	 if ($status != 0) goto cnverr
+      else if ($outformat == "IEEE") then
+         ldump $projcode $first $last | $rmtdd
+	 if ($status != 0) goto cnverr
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set seek = `$rmt dd if=$ndrv of=/dev/null bs=$outrecl |& awk -F+ '{print $1}'`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         set seek2 = $seek[1]
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set cmdout = `echo mt -f $ndrv fsr $seek2\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         cdump $projcode $first $last | $rmtdd
+	 if ($status != 0) goto cnverr
+      else
+         ldump $projcode $first $last | $FROMIEEE | $rmtdd
+	 if ($status != 0) goto cnverr
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set seek = `$rmt dd if=$ndrv of=/dev/null bs=$outrecl |& awk -F+ '{print $1}'`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         set seek2 = $seek[1]
+         set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         set cmdout = `echo mt -f $ndrv fsr $seek2\; echo \$status | $rmtcsh`
+         if ($status != 0) then
+            echo "Problems communicating with $tapehost."
+            exit(256)
+         endif
+         if ($cmdout[$#cmdout]) then
+            echo "Cannot position tape on ${drv}"
+            exit(256)
+         endif
+         cdump $projcode $first $last | $FROMIEEE | $rmtdd
+	 if ($status != 0) goto cnverr
+      endif
+   else
+      if ($outformat == "ASCII") then
+         ${cmnd2}dump $projcode $first $last | $FROMIEEE | \
+            dd obs=21680 cbs=80 conv=block | $rmtdd
+	 if ($status != 0) goto cnverr
+      else if ($outformat == "IEEE") then
+         ${cmnd2}dump $projcode $first $last | $rmtdd
+	 if ($status != 0) goto cnverr
+      else
+         ${cmnd2}dump $projcode $first $last | $FROMIEEE | $rmtdd
+	 if ($status != 0) goto cnverr
+      endif
+    endif
+else if ($informat == "IEEE") then
+   if ($outformat == "ASCII") then
+      $DD | $FROMIEEE | dd obs=21680 cbs=80 conv=block | $rmtdd
+      if ($status != 0) goto cnverr
+   else
+      $DD | $FROMIEEE | $rmtdd
+      if ($status != 0) goto cnverr
+   endif
+else if ($outformat == "IEEE") then
+   $DD | $TOIEEE | $rmtdd
+   if ($status != 0) goto cnverr
+else
+   if ($outformat == "ASCII") then
+      $DD | $TOIEEE | $FROMIEEE | dd obs=21680 cbs=80 conv=block | $rmtdd
+      if ($status != 0) goto cnverr
+   else
+      $DD | $TOIEEE | $FROMIEEE | $rmtdd
+   endif
+endif
+onintr
+#
+more:
+echo " "
+echo -n "Do you want to convert more records (Y/N)?: "
+set answr = $<
+if ($answr == "y" || $answr == "Y") then
+     echo " "
+     echo "Positioning tape at End of Data file."
+     onintr -
+     set cmdout = `echo mt -f $drv rewind\; echo \$status | $rmtcsh `
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout] != 0) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     set seek = `$rmt dd if=$ndrv of=/dev/null bs=$outrecl |& awk -F+ '{print $1}'`
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     echo " "
+     echo $seek[1] "records on tape"
+     set seek2 = $seek[1]
+     set cmdout = `echo mt -f $ndrv bsf 1\; echo \$status | $rmtcsh `
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout] != 0) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     set cmdout = `echo mt -f $ndrv fsr $seek2\; echo \$status | $rmtcsh `
+     if ($status != 0) then
+        echo "Problems communicating with $tapehost."
+        exit(256)
+     endif
+     if ($cmdout[$#cmdout] != 0) then
+        echo "Cannot position tape on ${drv}"
+        exit(256)
+     endif
+     onintr
+#
+     goto inrecords
+else if($answr == "n" || $answr == "N") then
+	echo "Rewinding...."
+        onintr -
+        $rmt mt -f $drv rewind
+	echo " "
+	exit(0)
+else
+	echo " "
+	echo "WARNING: Incorrect entry... Try again"
+	goto more
+endif
+#
+ cnverr:
+   echo "Some problem encountered in converting data"
+   exit(256)

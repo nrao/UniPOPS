@@ -1,0 +1,22 @@
+	GSET is a simple procedure that can be used to set the
+	initial Gaussian fit parameters.  It takes no arguments
+	and prompts for the number of Gaussians to fit.
+
+	For each Gaussian, the user is asked to indicated (using
+	the cursor) the left half-power pointer, the peak, and then
+	the right half-power point.  These three locations are
+	then combined to yield the height (the indicated peak
+	location) the center (the average of the locations of the
+	two half-power points) and the hwidth (the difference of the
+	locations of the two half-power points).
+
+	This procedure will attempt to place its questions appropriately
+	on the graphics screen if GRAPHICS has already been used.  This
+	can be useful when working on a simple terminal with a 
+	tektronix emulator where otherwise the screen could become
+	hopelessly confusing with the questions that this procedure
+	asks.
+
+	File name: gset.prc
+
+	This procedure is included in LSETUP.12meter

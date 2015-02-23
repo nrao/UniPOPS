@@ -1,0 +1,19 @@
+	(SCALAR ADVERB)
+
+	DCPCT is the percentage of data points in Array (0) that you
+	want PCBASE to make negative.  DCPCT cannot be less than or
+	equal to zero nor can it be greater than 100.
+
+	DCPCT is used by : PCBASE
+
+	No verbs change DCPCT.
+
+	The initial value of DCPCT is 10.
+
+	EXAMPLE :
+
+	You want to subtract a number from your data such that
+	30% of the data points will be negative.  Specify :
+
+		DCPCT = 30.
+		PCBASE

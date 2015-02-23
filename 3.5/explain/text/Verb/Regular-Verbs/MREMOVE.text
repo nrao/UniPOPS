@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+     	Syntax:    MREMOVE (matrixnum)
+
+	MREMOVE removes the data and header information from the matrix
+	specified by matrixnum.  All subsequent references to this
+	matrix for data will give 'Index out of range' and header
+	references will give zeros or Infs.  This allows any of the
+	four Matrices to be cleared by the user for experimenting with
+	other data and header manipulations as desired.
+
+	The Matrices are numbered from 0 through 3.
+
+	No adverbs are used or set by MREMOVE.
+
+	EXAMPLE:
+
+	You are finished with Matrix (2) and you want to clear out its
+	contents so you specify:
+
+		MREMOVE(2)

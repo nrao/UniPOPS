@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'H3:  (INTERNAL-ARRAY) Returns/sets the value of the  '
+PRINT 'specified header parameter in Array 3.'
+PRINT ' '

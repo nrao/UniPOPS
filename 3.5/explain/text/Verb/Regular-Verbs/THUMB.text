@@ -1,0 +1,25 @@
+	(REGULAR VERB)
+
+     .  Tucson Version
+
+	THUMB prints main and reference azimuth, elevation, right
+	ascension and declination offsets for the scan in Array (0).
+
+     .  Green Bank Version
+
+	THUMB prints two lines giving pointing corrections for the scan
+	in Array(0).  Line 1 contains information about PVLS (the box
+	installation corrections: P1, P2, and P3).  Line 2 contains
+	information about the Local Pointing Corrections for the
+	observation.
+
+	No adverbs are used or set by THUMB.
+
+	EXAMPLE:  (At Green Bank)
+
+		THUMB 
+
+	will print the following for Green Bank data:
+
+		PVLS:	-2.53000    2.31000    0.620000    Arcmin
+		LPCS:    57.0000   -5.00000                Arcsec

@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'SCALE:  Multiplies the data in Array 0 by the value of'
+PRINT 'FACT.'
+PRINT ' '
+PRINT 'FACT=',FACT
+PRINT ' ' 

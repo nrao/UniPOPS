@@ -1,0 +1,12 @@
+#!  /bin/csh
+#
+#   @(#)vsst.systemp.sh	5.2 08/02/94
+#
+# Determines whether to call vlbcl or vlbcl.rmt
+#
+if (`hostname` == "fahd") then
+   ${popsdir}utilities/vlbcl.exe $argv
+else
+   ${popsdir}utilities/vlbcl.rmt.exe $argv
+endif
+#

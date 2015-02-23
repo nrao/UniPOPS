@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'PAUSE:  Makes the program go to sleep for the specified'
+PRINT 'number of seconds.  Syntax: PAUSE num_seconds'
+PRINT ' '

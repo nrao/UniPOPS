@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'REPLACE:  Replaces the data in Array 0 at the channels'
+print 'specified in BADPT with the averages of neighboring data'
+print 'points; the results are stored back into Array 0.'
+PRINT ' '
+PRINT 'BDROP, EDROP=',BDROP, EDROP
+PRINT 'BADPT='; PRINT BADPT
+PRINT ' ' 

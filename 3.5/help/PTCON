@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'PTCON:  (HEADER) Pointing constants -- 4 values for Tucson'
+print '(arcsec), 3 for Green Bank (arcmin).'
+PRINT ' '

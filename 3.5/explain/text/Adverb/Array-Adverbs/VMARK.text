@@ -1,0 +1,42 @@
+	(ARRAY ADVERB of 12 elements)
+
+L------------------------- Spectral Line --------------------------------
+L-	VMARK  is an array containing the velocities  (in km/sec in the
+L-	velocity definition specified in the scan's header)  at
+L-	which SHOW draws vertical lines.  
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	VMARK  is an array containing the position (in degrees and relative
+C-	to start of scan) at which SHOW draws vertical lines .  
+C------------------------- Continuum ------------------------------------
+
+	For two-dimensional displays, VMARK contains the x-axis values
+	at which LABEL will draw vertical lines.  Up to 12 different
+	values may be specified.
+
+	VMARK is used by : LABEL	SHOW
+
+	No verbs change VMARK.
+
+	The initial values  of  VMARK(N) are -999999, which means no
+	vertical lines will be drawn.  
+
+	EXAMPLES:
+
+	You want to draw a vertical line down the center of your
+	spectral line, so you specify :
+
+		VMARK = 140
+		SHOW
+
+	Note this sets VMARK(1) through VMARK(12) to 140.  If you now
+	change VMARK(1) to 138, the next time you SHOW, you will get
+	lines at 138 and 140.
+
+	You want to reset VMARK to its default values so that no
+	vertical lines will be drawn, so you type:
+
+		VMARK = DEFAULT
+	or
+		VMARK = -999999

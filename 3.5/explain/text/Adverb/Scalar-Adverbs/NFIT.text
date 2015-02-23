@@ -1,0 +1,18 @@
+	(SCALAR ADVERB)
+
+	NFIT specifies the order of the polynomial baseline that is to
+	be computed.  The user may specify any other value for NFIT
+	between 0 and 12.
+
+	NFIT is used by : BASELINE     BSHAPE
+
+	No verbs change BFIT.
+
+	The initial value of NFIT is 1.
+
+	EXAMPLE :
+
+	You want to remove a cubic baseline from your data. Before you
+	use a polynomial baseline routine, specify :
+
+		NFIT = 3.

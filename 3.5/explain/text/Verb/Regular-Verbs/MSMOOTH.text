@@ -1,0 +1,61 @@
+	(REGULAR VERB)
+
+	Syntax:  MSMOOTH(factor, type)
+
+	MSMOOTH copies the contents of Matrix (0) to Matrix(1), and
+	smoothes the data placing the results into Matrix (0).
+
+	MSMOOTH takes two argument which define the severity of the
+	smoothing and which of two methods you want to use for
+	smoothing.  The first argument, which indicates the severity of
+	smoothing you desire, is a real-valued adverb or constant with
+	a value between zero and one.  The closer the value of the
+	severity is to zero, the more severe the smoothing.
+
+	The second argument can take the values of TRUE or FALSE, such
+	that if it is TRUE, and the array is defined as z(i,j), the
+	smoothing includes only  horizontal and vertical nearest
+	neighbors according to,
+
+	z(i,j) = c*z(i,j) 
+
+		+ [1-c] * [z(i-1,j)+z(i+1,j)+z(i,j-1)+z(i,j+1)] / 4
+
+	where c is your chosen severity.
+
+	If the second argument is FALSE, then the smoothing includes
+	horizontal, vertical and diagonal nearest neighbors, according
+	to,
+
+	z(i,j) = c*z(i,j) 
+
+		+ [1-c] * [z(i-1,j-1)+z(i-1,j)+z(i-1,j+1)+z(i,j-1)
+
+		+ z(i,j+1)+z(i+1,j-1)+z(i+1,j)+z(i+1,j+1)] / 8
+
+	The area smoothed within the matrix is defined by setting
+	MXMIN, MXMAX, MYMIN and MYMAX appropriately. If any of the z's
+	in the above definitions are undefined (i.e. if MD0(i,j) =
+	MH0(MUNDEF)), then no smoothing is made for that (i,j).  Similarly,
+	no smoothing is made for the border cells in the matrix.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be processed.
+
+	No adverbs are set by MSMOOTH.
+
+	If Matrix (1) contains something, you may want to MMOVE
+	the matrix to somewhere else before using MFILL.
+
+	EXAMPLE:
+
+	Suppose that you wish to do a 'quasi pill-box' smooth of the
+	map in Matrix (0), but you already have a valuable map in
+	Matrix (1), although Matrix (2) is empty, try typing,
+
+		MMOVE(1,2) MSMOOTH(0.5, FALSE)

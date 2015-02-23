@@ -1,0 +1,348 @@
+#if RFRNC
+GB-ASCII
+--------
+
+#end
+	The following tables and examples illustrate the format of the
+	continuum and spectral-line ASCII files which can be produced
+	and read by the cvt.disk-disk, cvt.disk-tape, and cvt.tape-disk
+	utilities.
+
+
+	GB-ASCII: Format for Spectral-line Scans
+	----------------------------------------
+	The files produced for spectral-line scans are direct-access
+	files with 21680-byte records.  Each scan consists of 1
+	physical record which holds 271 logical records (of 80 bytes
+	each).  A logical record contains either one or more items from
+	the scan header or data.  The table gives the contents (with
+	units) and formats of each logical record within each scan.
+	(See the telescope manuals for a description of the contents.)
+
+#if RFRNC
+		Table 2.7.7 : GB ASCII: Spectral-Line Scans
+#else
+		      GB ASCII: Spectral-Line Scans
+#end
+	------------------------------------------------------------------------
+	Rec. #     Contents, Dimensions, and Units                  	Format
+	------------------------------------------------------------------------
+	1	Scan number, off scan number				2e15.7
+	2	Source name (12)					12a1
+	3	Observer's number					i6
+	4	Observer's name (18)					18a1
+	5	Julian Date						d20.12
+	6	Solar day of year, month, day, year			4i6
+	7	LST (rad), EST (rad)					2e15.7
+	8	Telescope, observing program, scan type code,
+		      mode, IREC, LREC, INCR				7i6
+	9	ISTART(4), ISTOP(4)					8i6
+	10	VREF, VDEF, Position code, scan direction, unused	5i6
+	11	Scan duration (s)					e15.7
+	12      Status Word 1, status word 2				2i6
+	13	Integration time (s), unused(2), Epoch of obs. (yrs)	4e15.7
+	14      H coordinate rate ('/min), V coordinate rate ('/min),
+		Indicated RA (rad), Indicated DEC (rad)			4e15.7
+	15	Focus (mm), Orientation (rad), Zenith Distance (rad)	3e15.7
+	16	Descriptive Origin (3)					3e15.7
+	17	RA Pointing correction (rad), DEC Pointing 
+		     correction (rad), P1 (rad), P2 (rad). P3 (rad)	5e15.7
+	18	Unused(2)						2e15.7
+	19      Environmental Values (8)				8i6
+	20	Apparent RA (4) (rad)					4e15.7
+	21      Apparent DEC (4) (rad)					4e15.7
+	22	Epoch RA (4) (rad)					4e15.7
+	23      Epoch DEC (4) (rad)					4e15.7
+	24	Galactic Longitude (4) (rad)				4e15.7
+	25      Galactic Latitude (4) (rad)				4e15.7
+	26      Observed H (4) (rad)					4e15.7
+	27      Observed V (4) (rad)					4e15.7
+	28      RHO feed offset (4) (rad)				4e15.7
+	29      THETA feed offset (4) (rad)				4e15.7
+	30      Noise Tube (4) (K)					4e15.7
+	31      System Temperature (4) (K)				4e15.7
+#if RFRNC
+	------------------------------------------------------------------------
+
+		Table 2.7.7 : GB ASCII: Spectral-Line Scans (Cont.)
+	------------------------------------------------------------------------
+	Rec. #     Contents, Dimensions, and Units                  	Format
+	------------------------------------------------------------------------
+#end
+	32      Center Velocity (4) (km/s)				4e15.7
+	33	Velocity Spacing (4) (km/s)				4e15.7
+	34      RVSYS (4) (km/s)					4e15.7
+	35	Integration time (4) (s)				4e15.7
+	36	Bandwidth (4) (MHz)					4e15.7
+	37	Theoretical rms (4) (K)					4e15.7
+	38	Unused(2)						2i6
+	39	Center frequency (4) (MHz)                 		4d20.12
+	40      Rest frequency (4) (MHz)				4d20.12
+	41	Receiver 1 center frequency formula (18)		18a1
+	42      Receiver 2 center frequency formula (18)		18a1
+	43	Receiver 3 center frequency formula (18)		18a1
+	44	Receiver 4 center frequency formula (18)		18a1
+	45      L1, L1F1, L1F2						3d20.12
+	46      L2, L2F1, L2F2						3d20.12
+	47      LA, LB, LC, LD						4e15.7
+	48      A/C Words and Reserved (10)				10i6
+	49      A/C Words and Reserved (10)				10i6
+	50      A/C Words and Reserved (10)				10i6
+	51      A/C Words and Reserved (10)				10i6
+	52      A/C Words and Reserved (10)				10i6
+	53      A/C Words and Reserved (10)				10i6
+	54      A/C Words and Reserved (10)				10i6
+	55      A/C Words and Reserved (10)				10i6
+	56      A/C Words and Reserved (10)				10i6
+	57      A/C Words and Reserved (10)				10i6
+	58      A/C Words and Reserved (10)				10i6
+	59      A/C Words and Reserved (2)				2i6
+	60	Reference System Temperatures (4) (K)			4e15.7
+	61      Power Counters (4) (K)					4e15.7
+	62      Power Counters (4) (K)					4e15.7
+	63      Power Counters (4) (K)					4e15.7
+	64      Power Counters (4) (K)					4e15.7
+	65      Channel Zero Values (4) (K)				4e15.7
+	66      Spectral Values (5)					5e15.7
+	67      Spectral Values (5)					5e15.7
+	68      Spectral Values (5)					5e15.7
+	               .
+	               .
+	               .
+	               .
+	270 	Spectral Values (4)					4e15.7
+	271     End of Scan indicator (40)				40a1
+	-----------------------------------------------------------------------
+
+
+#if RFRNC
+
+#end
+	GB-ASCII: Example of Spectral-Line Format
+	-----------------------------------------
+
+	  8.6830000E+03  0.0000000E+00
+	SAMPLE DATA
+	   999
+	MADDALENA
+	  4.635556250000E+04
+	   289    10    16    85
+	  5.7940197E+00  5.4330406E+00
+	   140     1     2     4     1     4     1
+	     1   257   513   769   256   512   768  1024
+	     4     1     0     0     0
+	  3.0000000E+02
+	     0     0
+	  2.0000000E+01  1.5000000E+01 -9.9999996E+24  1.9857910E+03
+	 -2.2398381E-05  1.3089961E-05  5.3627548E+00 -1.6602838E-01
+	  2.6492188E+02  3.9269900E-01  9.2884612E-01
+	  0.0000000E+00  0.0000000E+00  6.5657837E+01
+	  0.0000000E+00  0.0000000E+00 -1.4599996E+00  1.0799999E+00  1.2599998E+00
+	  0.0000000E+00  0.0000000E+00
+	   921-31911 16109  1021   443   943  8961  8273
+	  5.3624249E+00  5.3624249E+00  5.3624249E+00  5.3624249E+00
+	 -1.6628313E-01 -1.6628313E-01 -1.6628313E-01 -1.6628313E-01
+	  5.3539848E+00  5.3539848E+00  5.3539848E+00  5.3539848E+00
+	 -1.6835648E-01 -1.6835648E-01 -1.6835648E-01 -1.6835648E-01
+	  6.1991763E-01  6.1991763E-01  6.1991763E-01  6.1991763E-01
+	 -4.5585442E-01 -4.5585442E-01 -4.5585442E-01 -4.5585442E-01
+	  5.3539848E+00  5.3539848E+00  5.3539848E+00  5.3539848E+00
+	 -1.6835654E-01 -1.6835654E-01 -1.6835654E-01 -1.6835654E-01
+	  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  1.9000001E+00  1.9000001E+00  1.9000001E+00  1.9000001E+00
+	  5.4921600E+01  5.4345398E+01  4.9784241E+01  5.2257202E+01
+	  3.1342354E+00 -6.1820564E+00  3.6021204E+00  3.3404408E+00
+	  1.5154594E-01  3.0309188E-01  1.5406615E-01  1.5358424E-01
+	  1.5039057E-01  1.5039057E-01  1.5039057E-01  1.5039057E-01
+	  7.5000000E+01  7.5000000E+01  7.5000000E+01  7.5000000E+01
+	  6.2500000E-01  1.2500000E+00  6.2500000E-01  6.2500000E-01
+	  2.7982223E-01  1.9588363E-01  2.4850327E-01  2.7783620E-01
+	     0     0
+	  4.829606484652E+03  4.829756570101E+03  4.750596535921E+03  4.765506509066E+03
+	  4.829659399986E+03  4.829659399986E+03  4.750655999988E+03  4.765562000006E+03
+	-15900+L1*04*14+LA
+	-15900+L1*04*14+LB
+	-15900+L1*04*14+LC
+	-15900+L1*04*14+LD
+	  3.659036872275E+02  3.658981157988E+02  3.658981157988E+02
+	  0.000000000000E+00  0.000000000000E+00  0.000000000000E+00
+	  2.3900299E+02  2.3915997E+02  1.6000000E+02  1.7490601E+02
+	     0    40    10   490    10   490    60     2 -2045 13123
+	     0 24880 17959 10081 16433 16440 14373     0     0     0
+	     0 20480     0     0     0     0     0     0     0     0
+	     0     0     0     0     0     0     0     0     0     0
+	     0     0     0     0     0     0     0     0     0     0
+	     0     0     0     0     0     0     0     0     0     0
+	     0     0     0     0     0     0     0     0     0     0
+	     0     0     0     0   899   962   629   524 -2048 -2002
+	  -199   227  1029  1029  1029  1029  1017   918   834   781
+	  1420  1432  1458    22    24  1411  1426  1844  1892  1836
+#if RFRNC
+
+#end
+	  1848  1850  1846  1762  1666  1593  1029  -409 -1840 -1024
+	  -408  1843
+	  5.5229523E+01  5.3516663E+01  4.8648468E+01  5.2638214E+01
+	  4.8420200E+05  4.9393300E+05  5.2242400E+05  4.9767600E+05
+	  5.0115100E+05  5.1178600E+05  5.4323400E+05  5.1597000E+05
+	  4.8335100E+05  4.9346900E+05  5.2260900E+05  4.9808800E+05
+	  5.0030500E+05  5.1095600E+05  5.4329600E+05  5.1568600E+05
+	  1.2250000E+07  1.2250000E+07  1.2250000E+07  1.2250000E+07
+	  2.1207552E+00 -7.1736646E-01 -1.3562126E+00  9.8204160E-01  1.3908625E+00
+	 -1.1860451E-01  1.5455565E+00  7.3098397E-01  4.7114134E-01 -1.8142748E-01
+	  2.6830518E-01 -2.4273723E-01  4.8109031E-01  3.4217015E-02  1.9040979E-02
+	  1.4737446E-04  1.8110818E-01  4.1108131E-01  6.9792420E-03  1.7142868E-01
+	  1.3692039E-01  6.9062978E-02 -1.0609820E-01 -2.3945069E-01 -1.0284719E-01
+	                        .
+	                        .
+	                        .
+	                        .
+	  2.7575040E-01  1.2094784E-01  1.5451264E-01  4.5739204E-02 -5.1285610E-02
+	 -5.0527349E-02  2.3986220E-01 -2.8863226E-01 -1.0945693E-01  4.5649126E-02
+	 -2.5472045E-01  6.9986075E-02 -1.8385977E-02  1.1485201E-01 -6.3242577E-03
+	  1.7133242E-01 -2.5385225E-01 -1.5193689E-01 -1.5189362E-01  2.1011037E-01
+	 -8.7904751E-02  1.7001152E-02  1.3806349E-01  3.2504275E-02  2.7734077E-01
+	  3.4409738E-01 -2.0169802E-02  6.7599490E-03  3.3462998E-03 -2.0985371E-01
+	  3.3146381E-01 -1.2394780E-01 -3.0844986E-02  1.9458449E-01 -3.6234915E-01
+	 -2.5051355E-02  1.5011211E-03 -2.1755630E-01  1.0326027E+01
+	SCAN ###################################
+	  8.6840000E+03  0.0000000E+00
+	SAMPLE DATA
+	   999
+	MADDALENA
+	  4.635556250000E+04
+	   289    10    16    85
+	  5.8168907E+00  5.4558754E+00
+	   140     1     2     4  .............
+	
+
+	GB-ASCII: Format of Continuum Scans
+	-----------------------------------
+	The files produced for continuum scans are direct-access files
+	with 10080-byte records.  Each scan consists of 1 physical
+	record which holds 126 logical records (of 80 bytes each).  A
+	logical record contains either one or more items from the scan
+	header or data.  The table gives the contents (with units) and
+	formats of each logical record within each scan.  (See the
+	telescope manuals for a description of the contents.)  Up to
+	600 data points can be stored in each record of an ASCII file.
+	If your scans have more than that number of data points, the
+	excess data points WILL NOT make it to the ASCII file!
+
+#if RFRNC
+
+		    Table 2.7.8 : GB ASCII: Continuum Scans
+#else
+		          GB ASCII: Continuum Scans
+#end
+	-----------------------------------------------------------------------
+	Rec. #     Contents, Dimensions, and Units                  	Format
+	-----------------------------------------------------------------------
+	1	Scan number, subscan indicator 				2e15.7
+	2	Source name (12)					12a1
+	3	Observer's number					i6
+	4	Observer's name (18)					18a1
+	5	Julian Date						d20.12
+	6	Solar day of year, month, day, year			4i6
+	7	LST (rad), EST (rad)					2e15.7
+	8	Telescope, observing program, scan type code, mode,
+		     first channel, number of channels, number of 
+	             points, START, STOP, Map START, Map STOP, unused   12i6
+	9       DCR Cal Factor (K/V)					e15.7
+	10	Unused, VREF, VDEF, Position code, scan direction,
+		     Total subscans, Feed Number, Total subscans        7i6
+	11	DCR System Temperature (K), Sample Rate (sec), Lambda, 
+		     Beam Size Factor (rads), Epoch of Obs. (yrs)	5e15.7
+	12      H coordinate rate ('/min), V coordinate rate ('/min),
+		Indicated RA (rad), Indicated DEC (rad), Focus (mm)	5e15.7
+	13	Orientation (rad), Zenith Distance (rad), 
+		     Descriptive Origin (3)				5e15.7
+	14	RA Pointing correction (rad), DEC Pointing 
+		     correction (rad), P1 (rad), P2 (rad). P3 (rad)	5e15.7
+	15	Commanded RA (rad), Commanded Dec (rad)			2e15.7
+	16      Environmental Values (8)				8i6
+	17	Epoch RA (rad), Epoch Dec (rad), Apparent RA (rad),
+		     Apparent Dec (rad), Galactic longitude (rad)	5e15.7
+	18      Galactic Latitude (rad), Observed H (rad),
+		     Observed V (rad), Horiz. Description (rad),
+		     Vert. Description (rad) 				5e15.7
+	19	RHO feed offset (rad), THETA feed offset (rad), 
+		     Noise Tube (K), DCR Cal value (V), DCR cal 
+		     factor (K/V)					5e15.7
+	20	Unused, No. Scans ACCUM'ed				2i6
+	21      ACCUM stack						5e15.7
+	22      ACCUM stack						5e15.7
+	23      ACCUM stack						5e15.7
+	24      ACCUM stack						3e15.7
+	25      Data values (6)      					6e12.4
+	26      Data Values (6)						6e12.4
+	27      Data Values (6)						6e12.4
+	               .
+	               .
+	               .
+	124 	Data Values (6)						6e12.4
+	125     Blank line						80a1
+	126     End of Scan indicator (40)				40a1
+	-----------------------------------------------------------------------
+
+
+#if RFRNC
+
+#end
+	GB-ASCII: Example Of Continuum Format
+	-------------------------------------
+	
+	  3.0041000E+04  0.0000000E+00
+	SAMPLE DATA         
+	   999
+	MADDALENA
+	  4.685960937500E+04
+	    63     3     4    87
+	  2.1900206E+00  5.7244282E+00
+	   140     3     0     0     8     2    30    88   117    88   117     0
+	  1.0920000E+03
+	     0     0     0     2     0     0     1     0
+	  5.7599991E+01  1.9999999E-01  2.8726572E+00  0.0000000E+00  1.9500000E+03
+	  0.0000000E+00  0.0000000E+00  2.1899958E+00  6.7088652E-01  2.8955994E+02
+	  5.1033401E+00  3.8623810E-04  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	 -5.9999990E-01 -1.4000000E+01 -2.7889071E+00  1.0015078E+00 -3.2999992E-01
+	  1.1952157E+00  5.1610351E-01
+	  -268-31888     0     0  -774  -186  8961  8030
+	  2.1793423E+00  6.7338610E-01  2.1900930E+00  6.7135024E-01  3.1952896E+00
+	  5.8703804E-01  2.1793423E+00  6.7338610E-01  2.1793423E+00  6.7338610E-01
+	  0.0000000E+00  0.0000000E+00  4.2000008E+00  1.0000000E+00  1.0000000E+00
+	     0     0
+	  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  4.2000008E+00  4.2000008E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  0.0000000E+00  0.0000000E+00  0.0000000E+00
+	  1.8000E+01  1.8000E+01 -1.0000E+01 -9.0000E+00 -8.0000E+00 -2.8000E+01
+	 -4.2000E+01 -4.1000E+01 -2.8000E+01 -3.7000E+01 -2.3000E+01 -2.1000E+01
+	 -8.0000E+00  4.0000E+00 -3.4000E+01 -4.1000E+01 -2.3000E+01 -1.5000E+01
+	 -2.0000E+01 -2.8000E+01 -6.0000E+01 -4.7000E+01 -5.0000E+01 -5.1000E+01
+	 -4.5000E+01 -5.0000E+01 -2.0000E+01 -8.0000E+00 -7.0000E+00 -4.0000E+00
+	  2.1801E+00  6.7339E-01  0.0000E+00  2.1802E+00  6.7339E-01  0.0000E+00
+	  2.1803E+00  6.7339E-01  0.0000E+00  2.1803E+00  6.7339E-01  2.3628E+02
+				.
+				.
+				.
+	  1.5824E+02  1.4818E+02  1.5558E+02  1.8072E+02  1.9965E+02  2.1739E+02
+	  2.1296E+02  1.9580E+02  1.9373E+02  1.9787E+02  1.7362E+02  1.8368E+02
+	  2.0823E+02  1.7628E+02  1.6327E+02  1.7332E+02  1.9403E+02  1.8308E+02
+	  1.7007E+02  1.7037E+02  1.4582E+02  1.5114E+02  1.4907E+02  1.6830E+02
+	  1.4641E+02  1.2955E+02  1.5203E+02  1.4937E+02  1.6268E+02  1.7954E+02
+	  1.4463E+02  1.3783E+02  1.3339E+02  9.6718E+01  9.9380E+01  8.7254E+01
+	
+	SCAN ###################################
+	  8.6840000E+03  0.0000000E+00
+	SAMPLE DATA
+	   999
+	MADDALENA
+	  4.635556250000E+04
+	   289    10    16    85
+	  5.8168907E+00  5.4558754E+00
+	   140     1     2     4  .............
+#if RFRNC
+
+#end

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BBASE:  (ADVERB) Channels at start of data to use for'
+PRINT 'baseline fitting, taking into account the value of BDROP'
+PRINT ' '

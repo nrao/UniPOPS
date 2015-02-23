@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CHARSETS:  (PROCEDURE) Illustrates character mapping for'
+PRINT 'the various fonts you can set with FONTSET.  Syntax:'
+PRINT 'CHARSETS(font)'
+PRINT ' '

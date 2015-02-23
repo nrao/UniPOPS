@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LIST:  (PSEUDO) Lists the specified procedure.  '
+print 'Syntax: LIST proc_name'
+PRINT ' '

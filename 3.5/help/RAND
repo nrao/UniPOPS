@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'RAND:  (FUNCTION) Returns a random number between -1 and'
+PRINT '1.'
+PRINT ' '

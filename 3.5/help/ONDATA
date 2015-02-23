@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ONDATA:  (POINTER) Indicates on-line data file for TELL,'
+PRINT 'SUMMARY or SELECT.'
+PRINT ' '

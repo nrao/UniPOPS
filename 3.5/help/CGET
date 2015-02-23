@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CGET: Retrieves the specified feed for the current scan and'
+PRINT 'places the header and data into Array 0.  Syntax: CGET feed.'
+PRINT ' '

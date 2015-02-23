@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'QCONTOUR:  Contour plots (quick algorithm) the contents of'
+PRINT 'Matrix (0).'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT 'MRATIO=',MRATIO
+PRINT 'LEVS='
+print LEVS
+PRINT ' ' 

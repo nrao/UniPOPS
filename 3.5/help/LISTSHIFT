@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'LISTSHIFT:  List the contents of the internal array of scan'
+PRINT 'number/ASHIFT pairs set by SHIFT.'
+PRINT ' '

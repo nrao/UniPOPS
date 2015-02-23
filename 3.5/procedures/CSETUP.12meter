@@ -1,0 +1,47 @@
+#
+#  CSETUP -- Batch in the procedures necessary to run condar for the 12m.
+#
+batch a.prc
+batch add.prc
+batch all.prc
+#	addfeed and newfeed depend on all
+batch addfeed.prc
+batch annotate.prc
+batch conver.prc
+batch five.prc
+batch focalize.prc
+batch seq.prc
+batch sptip.prc
+batch stip.prc
+batch xx.prc
+#                 averaging procedures
+batch con_prcstack.prc
+batch con_pstack.prc
+batch con_cb.prc
+batch con_c1.prc
+batch con_c2.prc
+#		generic averge the stack procedure
+batch cstack.prc
+#                 cf1, cf2 contain procs f1, f2 - same as f/five, for pols 1,2
+batch cf1.prc
+batch cf2.prc
+#                 cs1, cs2 contain procs s1 and s2 - same as seq/s, pols 1&2
+batch cs1.prc
+batch cs2.prc
+batch sptip1.prc
+batch sptip2.prc
+batch foca1.prc
+batch foca2.prc
+batch m1.prc
+batch m2.prc
+batch mm.prc
+batch mm1.prc
+batch mm2.prc
+#		aliases
+alias f five
+alias foca focalize
+alias s seq
+alias makecopy gcopy
+alias c1 con_c1
+alias c2 con_c2
+alias cb con_cb

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CLUT:  (ARRAY-3x32) Color-Look-Up table for 2-d color'
+PRINT 'raster plots.'
+PRINT ' '

@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+       
+	Syntax:   CGGET receiver_no. 
+
+	CGGET is used to retrieve the most recently completed gains
+	scan, from the on-line data file into Array (2).  It needs an
+	argument which denotes the desired receiver number or subscan
+	number.
+
+	CGGET is a telescope dependent feature and may not work at all
+	sites.
+
+	No adverbs are used or set by CGGET.
+
+	EXAMPLES:
+
+	You wish to retrieve from disk the most recently completed
+	scan, for Receiver 2 and display it on the screen.  Specify:
+
+		CGGET 2 COPY(2,0) PAGE SHOW
+

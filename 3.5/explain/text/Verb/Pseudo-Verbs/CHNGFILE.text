@@ -1,0 +1,116 @@
+ 	(PSEUDO VERB)
+
+	Syntax:    CHNGFILE action type [filename]
+		   CHNGFILE
+
+	CHNGFILE allows the user to change the files which the program can
+	access.
+
+	CHNGFILE can be used only in execute mode and must be the only 
+	thing on the command line.  If the arguments are omitted, CHNGFILE
+	will prompt the user with questions concerning what you can do.
+
+ 	The available 'action' names are: 
+
+		CREATE   --  Creates an empty file with the specified
+			     name and attaches it to UniPOPS as the
+			     specified type of file.
+
+		CHANGE   --  Attaches to UniPOPS an already-existing
+			     file with the specified name as the
+			     specified type of file.
+
+		SUBTRACT -- Detaches an attached file of the specified
+			    type.  The file is not destroyed or altered
+			    -- it only is made unavailable to UniPOPS.
+		
+
+	The type's correspond to the available types of files.  They
+	are the same as the integers listed in the first column of the
+	FILES command.  Pointer adverbs are provided so that it is
+	not necessary to remember which integer corresponds to which
+	file type. :
+
+	Type	Pointer		Description
+        -------------------------------------------------------------------
+	 1	DSCANS	  -- off-line data file 
+	 2	KSCANS    -- 'keep' data file
+	 3	SSCANS    -- 'save' data file
+         4      GSCANS    -- 'gains' data file (12-m data only)
+	 5	RSCANS    -- individual-records file (Green Bank data only)
+	11	PRINTFILE -- 'printout' file
+	12	LOGFILE   -- 'command-logging' file
+
+	A file name is not needed for the SUBTRACT action but is required
+	for the CHANGE and CREATE action.
+
+	File names can include wild cards (i.e. *) and environment variables
+	(which must have been set before starting the program).
+
+        Min-match is available for both the action and type fields (when
+	you use the above listed pointer adverbs, obviously).
+
+	If you forget all of the above, just type "CHNGFILE" with no
+	arguments and you will be prompted for all the required
+	information.
+
+	No adverbs are used or set by CHNGFILE.
+
+	EXAMPLE:
+
+	Using the command FILES first will list what files you
+	are presently using as follows:
+
+	Table of files
+	----------------------------------------------------------------
+	  | File type     | Filename                       | Accessed by
+	----------------------------------------------------------------
+	  |Data (online)  |Project: F110                   |GET, ON, OFF
+	 1|Data (offline) |Not Available                   |GET, ON, OFF
+	 2|Keep	          |LKEEP                           |KEEP, KGET
+	 3|Save	          |LSAVE                           |SAVE, RECALL
+         4|Gains          |LGAINS                          |GGET
+        11|Printer	  |LPRINTOUT	                   |PRINTER,CRT,OUTPUT
+        12|Command Logging|LCMDLOG                         |LOGON, LOGOFF
+	---------------------------------------------------------------
+	  Output will be appended to end of LPRINTOUT
+	  Output will be appended to end of LCMDLOG
+	--------------------------------------------------------------
+
+	To change the current 'printout' file from LPRINTOUT to an
+	existing file by the name of PRINT.TEST, specify:
+
+		CHNGFILE CHANGE PRINTFILE PRINT.TEST
+
+	Or, using UniPOPS's min-match capability to save on keystrokes:
+
+		CHNGF CH PRINTF PRINT.TEST
+
+	Both of the above are equivalent to :
+
+		CHNGFILE CHANGE 11 PRINT.TEXT
+
+	From now on, and until you change it, PRINT.TEST will be your
+	printout file.
+	
+	You have a file in a directory named "data" off of your
+	home directory.  You would like to make this file the offline
+	data file.  Unfortunately, you're not quite sure of the name
+	but you are certain its the only file in that directory that
+	ends with letters "sdd".  The following is all you need to
+	type:
+
+		CHNGF CH DSCANS ~/data/*sdd
+
+	The "~" is expanded into your home directory (this is a
+	standard Unix expansion), the "*" is a wild card.
+	If CHNGFILE can not find a file to match (either because
+	there is nothing matching that file or there is more than
+	one match) an error message will be issed.
+
+	You would then type "FILES" to make certain the desired
+	file was now available.
+
+	Note that FILES will only display the last 35 characters of
+	the filename if there are more than 35 characters in the
+	filename.

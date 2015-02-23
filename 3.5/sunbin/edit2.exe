@@ -1,0 +1,124 @@
+#! /bin/csh -f
+# @(#)edit2.exe.sh	5.1 06/22/94
+# Uses an editor specified by the env. variable $popseditor.  Tries to trap
+# running a window editor while not running SUNVIEW.  
+#  Usage: edit2.exe <filename> <icon> <label> <bg>
+#  FILENAME =  file to edit
+# ICON = icon file assumed to be in $popsdir/sunbin
+# LABEL = a lebel for the icon
+# BG = optional; if anything, then a window edit session will be put in the
+#	background
+#
+# Default editor (usually vi); must be usable outside of windows
+set default = /usr/ucb/vi
+#
+# List of available window-only editors
+set windows = (/usr/openwin/bin/textedit /usr/local/bin/emacstool)
+#
+# List of available window and non-window editors
+set nonwindow = (/usr/ucb/vi /usr/local/bin/edt /usr/local/bin/emacs)
+#
+if ($#argv < 3) then
+  echo 'Usage:  filename icon label [background]'
+else
+  set filename = $1
+  set icon = $2
+  set label = $3
+  if ($#argv >= 4) set bg
+endif
+# Get input params
+#
+if ($?popseditor) then
+  set editor=$popseditor
+else
+  echo "You have not defined an editor... Using" $default:t "instead"
+  echo -n "Hit q to quit, anything else to continue: "
+  set answr = $<
+  if ($answr != "q" && $answr != "Q") then
+	set editor = $default
+  else
+	exit(1)
+  endif
+endif
+#  Use default if the user hasn't specified an editor in his/her env. variables.
+#
+if ($?WINDOW_PARENT || $?DISPLAY) then
+#
+#   you are in windows
+#
+    if ($?WINDOW_PARENT || $?DISPLAY) then
+    foreach avail ($windows)
+      if ($editor == $avail:t || $editor == $avail) then
+        if ($?bg) then
+	  ${popsdir}sunbin/rundaemon $avail -WL "$label" -Wl "$label" \
+		 -WI ${popsdir}sunbin/$icon $filename
+	else
+	  $avail -WL "$label" -Wl "$label" \
+		 -WI ${popsdir}sunbin/$icon $filename 
+	endif
+	exit(0)
+      endif
+    end 
+#   Call up window editor, if one is specified
+#
+    foreach avail ($nonwindow)
+      if ($editor == $avail:t || $editor == $avail) then
+        if ($?bg) then
+    	   if ($?WINDOW_PARENT) then
+         	exec cmdtool -WL "$label" -Wl "$label" \
+		   -WI ${popsdir}sunbin/$icon $avail $filename &
+	   else
+	 	exec xterm -j -sb -wf -sl 1000 -title "$label" -n "$label"  \
+		-e $avail $filename &
+	   endif
+	else
+    	   if ($?WINDOW_PARENT) then
+         	exec cmdtool -WL "$label" -Wl "$label" \
+		   -WI ${popsdir}sunbin/$icon $avail $filename
+	   else
+	 	exec xterm -j -sb -wf -sl 1000 -title "$label" -n "$label"  \
+		-e $avail $filename
+	   endif
+	endif
+	exit(0)
+      endif
+    end 
+    endif
+#   Call up non-window editor, if one is specified; use CMDTOOL as a window
+#   to run editor in
+#
+    goto error
+#
+else
+#
+#    You are not in windows
+#
+    foreach avail ($windows)
+      if ($editor == $avail:t || $editor == $avail) then
+        echo "Cannot use" $avail "outside of Windows... Using" $default:t "instead"
+        echo -n "Hit q to quit, anything else to continue: "
+        set answr = $<
+        if ($answr != "q" && $answr != "Q") then
+	   set editor = $default
+	else
+	   exit(1)
+	endif
+      endif
+    end
+#   You have specified a windows-only editor; try out default editor on user
+#
+    foreach avail ($nonwindow)
+      if ($editor == $avail:t || $editor == $avail) then
+	exec $editor $filename
+	exit(0)
+      endif
+    end
+#   You have specified a non-window editor so just start it up
+#
+endif
+#
+error:
+echo "Your specified editor," $popseditor ", is NOT available"
+exit(1)
+#  Only a non-available editor would get you to this point.
+#

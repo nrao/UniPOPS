@@ -1,0 +1,14 @@
+PRINT ' '
+PRINT 'RIPPLE:  Fits and removes a sinusoidal baseline from the'
+PRINT 'data in Array 0 and returns the results back to 0.  Uses'
+PRINT 'RPERIOD, RAMLPTDE, and RPHASE as initial guesses and'
+PRINT 'returns the fitted values to the same adverbs.'
+PRINT ' '
+PRINT 'BDROP, EDROP=',BDROP, EDROP
+PRINT 'BBASE, EBASE=',BBASE, EBASE
+PRINT 'NREGION=', NREGION
+PRINT 'RFIXPER, RFIXAMP, RFIXPHA=', RFIXPER, RFIXAMP, RFIXPHA
+PRINT 'RPERIOD, RPERERR=', RPERIOD, RPERERR
+PRINT 'RAMPLTDE, RAMPERR=', RAMPLTDE, RAMPERR
+PRINT 'RPHASE, RPHAERR=', RPHASE, RPHAERR
+PRINT ' ' 

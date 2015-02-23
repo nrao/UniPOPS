@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'COSD:  (PROC-LIBRARY) Returns the cosine of the given'
+PRINT 'parameter (in degrees).'
+PRINT ' '

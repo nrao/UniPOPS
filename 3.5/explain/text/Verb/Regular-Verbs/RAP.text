@@ -1,0 +1,70 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-      RAP combines, for the data in Array (0), the right half of the
+L-	frequency switched spectrum with the left half of the spectrum.
+L-
+L-	RAP is used on data taken with the observing technique known as
+L-	Dual Dickey switching or overlapped frequency switching.
+L-
+L-	.  Green Bank Version
+L-	   ------------------
+L-	
+L-	   RAP will look at the frequencies in the header and
+L-	   calculate the number of channels to shift the spectrum
+L-	   before averaging.  
+L-
+L-	.  Tucson Version
+L-	   -------------- 
+L-
+L-         The user must first give values to FS and FR, the amount of the
+L-	   signal and reference frequency switch, before executing RAP.
+L-	   As of Fall 1993, 12-m data headers contain three header words
+L-	   which may be useful in setting FS and FR.  These header words
+L-	   are FOFFSIG (signal frequency offset), FOFFREF1 and FOFFREF2
+L-	   (two reference frequency offsets).
+L-
+L-	The number of channels the data is shifted will be stored by
+L-	RAP in adverb OSHIFT.   After RAP is finished, you must decide
+L-	which half of the spectrum is the signal half and drop the
+L-	other half by resetting BDROP and EDROP.
+L-
+L-	ADVERBS SET:
+L-
+L-	   OSHIFT	The number of channels by which the spectra 
+L-			has been folded.
+L-			The initial value is 0.
+L-
+L-	ADVERBS USED:  (Tucson data only)
+L-
+L-         FS           The frequency offset in MHz for the Signal
+L-			data.
+L-
+L-         FR           The frequency offset in MHz for the Reference
+L-			data.
+L-
+L-	  DEFMODE : Indicates how undefined data values (IEEE Inf) are
+L-		    treated.  
+L-
+L-		If DEFMODE is FALSE, the result will have an undefined data 
+L-		   value at any location where EITHER the signal or reference 
+L-		   values are undefined.  
+L-
+L-		If DEFMODE is TRUE, the result will have an undefined data
+L-		   value at any location where BOTH of the signal and 
+L-		   reference values are undefined.  If only one value is 
+L-		   undefined at that location, the result will be as if 
+L-		   the undefined value were zero.
+L-
+L-		The initial value is FALSE.
+L_
+L-
+L-	EXAMPLE:
+L-
+L-      To RAP (overlap) the spectrum in a Array (0) for 12-m data,
+L-	specify:
+L-
+L-		FS=1.25; FR=-1.25; RAP
+L-
+L------------------------- Spectral Line --------------------------------

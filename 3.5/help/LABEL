@@ -1,0 +1,13 @@
+PRINT ' '
+PRINT 'LABEL:  Draws a box and labels current 2-d display.'
+PRINT ' '
+PRINT 'SLABEL,ZLINE=',SLABEL,ZLINE
+PRINT 'LEVS='
+print LEVS
+PRINT 'CMARK=',CMARK
+PRINT 'FMARK=',FMARK
+PRINT 'TMARK=',TMARK
+PRINT 'VMARK=',VMARK
+PRINT 'CLUT='
+print CLUT
+PRINT ' ' 

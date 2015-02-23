@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'VELDEF:  (HEADER) Velocity reference frame and Doppler'
+PRINT 'convention -- 8 character string.'
+PRINT ' '

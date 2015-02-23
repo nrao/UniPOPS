@@ -1,0 +1,55 @@
+	(REGULAR VERB)
+
+	PEAK finds the CENTER, HWIDTH and HEIGHT of a single emission
+	feature.  It is useful for quickly obtaining first guesses for
+	GAUSS.  Sets adverbs CENTER, HWIDTH, HEIGHT, BGAUSS and EGAUSS
+	to the appropriate values.  PEAK can find smaller peaks if
+	BDROP and EDROP are used to window the region.
+
+L------------------------- Spectral Line --------------------------------
+L-	PEAK prints the center (in units of channel number and that of
+L-	the lower X-axis), y-value at the peak, and half width (in units
+L-	of the lower x-axis).  If the scan header is incomplete and
+L-	UniPOPS cannot calculate values for the lower x-axis, UniPOPS
+L-	will revert to channel numbers for its x-axis calculations.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	PEAK prints the center (in units of sample number and that of
+C-	the lower X-axis), y-value at the peak, and half width (in units
+C-	of the lower x-axis).  If the scan header is incomplete and
+C-	UniPOPS cannot calculate values for the lower x-axis, UniPOPS
+C-	will revert to sample numbers for its x-axis calculations.
+C------------------------- Continuum ------------------------------------
+
+	The user can alter the units of the lower x-axis with the
+	verbs CC, CV, CF, VC, VF, VV, FV, FC, FF, and SAXIS.
+
+	ADVERBS USED:
+
+	  BDROP  	Beginning and ending channel numbers between
+	  EDROP 	which to search for the peak temperature.
+			Initial values are 0.
+
+	ADVERBS SET:
+
+	  BGAUSS	Is set to (CENTER - HWIDTH)
+	  EGAUSS	Is set to (CENTER + HWIDTH)
+			Initial values are 1 and 256.
+
+	  HEIGHT(1)	Height of peak.
+	  CENTER(1)	The center channel.
+	  HWIDTH(1)     FWHM in number of channels.  Initial values are
+			0.
+
+	EXAMPLE:
+
+	You have a spectrum with baseline removed in Array (0). 
+	Now you want to fit a Gaussian to the primary peak.  Specify;
+
+			PEAK
+
+	which will set all the initial guesses for the Gaussian fit
+	and print out the values as follows:
+	
+        Hght:  20.3733    ; Cntr:-0.277100     (Channl:  740); HW: 5.249023E-02

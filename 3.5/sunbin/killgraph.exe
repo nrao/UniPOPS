@@ -1,0 +1,51 @@
+#!/bin/csh -f
+#
+#  @(#)killgraph.exe.sh	5.3 09/10/97
+#
+# Finds out if one can restart a graphics window and, if so, restarts
+# one.
+#
+
+if ($#argv != 5) then
+    echo 'KILLGRAPH: Bad parms' $argv > /dev/console
+    exit(-1)
+endif
+
+# ps differs from SunOS to Solaris
+# default case, SunOS
+set PS = "/usr/bin/ps -g"
+# check for SunOS
+if (`isSolaris` == "YES") then
+   set PS = "/usr/bin/ps -ef"
+endif
+
+set graphup = \
+  `$PS | grep graphics.exe | grep $1 | grep $3 | grep -v grep | grep -v popstool | grep -v makegraph2`
+
+loop:
+
+echo ' '
+if ($#graphup >= 1) then
+   echo Graphics window exists.... 
+   echo -n 'Do you want to destroy it (y or n : default = n) ? '
+   set answr = $<
+   if ($answr == "" || $answr == 'n' || $answr == 'N') then
+	echo 'Graphics window retained... Nothing has been done'
+   else if ($answr == 'y' || $answr == 'Y') then
+	echo 'Killing window... New one should automatically appear.'
+	kill -9 $graphup[1]
+	echo 'If new one does not appear in 5 sec., reissue this command'
+   else
+	echo 'Bad answer... Try again...'
+	goto loop
+   endif
+
+else
+
+   echo 'Creating new graphics window'
+   makegraph2.exe $1 $2 $3 $4 $5&
+
+endif
+
+echo ' '
+exit(0)

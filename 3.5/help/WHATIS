@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'WHATIS:  (PSEUDO) Tells the user the type of a symbol.'
+PRINT 'Syntax:  WHATIS symbol'
+PRINT ' '

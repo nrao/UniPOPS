@@ -1,0 +1,21 @@
+# @(#)cv.prepare.unipops	5.2 11/15/94
+#
+# Charlottesville version of prepare.unipops
+#
+#	The following are available under both SunOS and Solaris
+#
+set WINDOWS = (openlook twm)
+#
+#	mwm and tvtwm are only available under Solaris, check that they exist
+#
+if ( -x /opt/SUNWmotif/bin/mwm ) then
+   set WINDOWS = ($WINDOWS mwm)
+endif
+if ( -x /opt/local/X11R5/bin/tvtwm ) then
+   set WINDOWS = ($WINDOWS tvtwm)
+endif
+#	sunview is only available under SunOS, check that it exists
+#
+if ( -x /usr/bin/sunview ) then
+   set WINDOWS = ($WINDOWS sunview)
+endif

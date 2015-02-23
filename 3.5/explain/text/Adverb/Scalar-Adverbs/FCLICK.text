@@ -1,0 +1,10 @@
+	(SCALAR ADVERB)
+
+	FCLICK is set by CLICK.  It corresponds to the value that the
+	function FCUR would have returned at the crosshair location
+	when the user clicks a mouse button.
+
+	For a plot made using SHOW, this is the frequency relative
+	to the band center in MHz (LINE) or the time relative to the
+	beginning of the scan in seconds (CONDAR), and for a 
+	2-d plot, this is the y-axis value.

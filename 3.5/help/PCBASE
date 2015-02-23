@@ -1,0 +1,10 @@
+PRINT ' '
+PRINT 'PCBASE:  Removes from Array 0 a constant value such that'
+PRINT 'the percentage of data points with values less than zero is'
+PRINT 'equal to the value of the DCPCT adverb.'
+PRINT ' '
+PRINT 'BDROP, EDROP=',BDROP, EDROP
+PRINT 'BBASE, EBASE=',BBASE, EBASE
+PRINT 'DCPCT=',DCPCT
+PRINT 'NREGION='; print NREGION
+PRINT ' ' 

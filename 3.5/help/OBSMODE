@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'OBSMODE:  (HEADER) Observation mode -- 8 character string.'
+PRINT ' '

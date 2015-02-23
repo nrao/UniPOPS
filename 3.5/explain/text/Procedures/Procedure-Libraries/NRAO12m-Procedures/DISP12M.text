@@ -1,0 +1,77 @@
+	DISP12M displays the data for a particular filter bank
+	or polarization for hybrid spectrometer data of the
+	indicated scan.
+
+	Syntax: DISP12M(xscan, fb)
+
+	Where xscan is the integer part of the scan number to be
+	displayed (any fractional part is ignored) and fb is
+	either the filter bank number if filter bank data is
+	indicated (set by FBDATA) or polarization number if
+	hybrid spectrometer data (set by HCDATA).
+
+
+	This procedure is usually accessed through the shorthand
+	procedures S1 and S2 or the aliases F and S.
+
+	S1 is short for DISP12M(xscan, 1).  It displays the first
+	filter bank (or subscan .11 for hybrid spectrometer data).
+	Syntax:  S1(xscan)
+
+	S2 is short for DISP12M(xscan, 2).  It displays the second
+	filter bank (or subscan .12 for hybrid spectrometer data).
+	Syntax:  S2(xscan)
+
+	F is aliased to S1. (F = first filter bank)
+	Syntax:  F(xscan)
+
+	S is aliased to S2. (S = second filter bank)
+	Syntax:  S(xscan)
+
+
+	For filter bank data, if fb is 1 and xscan.01 is series data,
+	then only xscan.01 is displayed.  If fb is 1 and xscan.01
+	is parallel data, then xscan.01 and xscan.02 are displayed
+	using CBOTH.  If fb is 2 and xscan.03 is series data, then only
+	xscan.03 is displayed.  If  fb is 2 and xscan.03 is parallel
+	data, then xscan.03 and xscan.04 are displayed using CBOTH.
+
+	For hybrid spectrometer data, the scan displayed is
+	simply (xscan + (fb+10)/100).  So that if fb=2, and
+	xscan is 242, then scan 242.12 would be displayed.
+
+	File name: disp12m.prc
+
+	Note: disp12m.prc contains all of the procedures and aliases
+	discussed here (DISP12M, S1, S2, F, and S).
+
+	These procedures and aliases are included in LSETUP.12meter
+
+	Examples:
+
+	. FBDATA is the more recent of FBDATA and HCDATA that you have
+	  used.  You want to display the second filter bank of scan
+	  455.  You type:
+
+		DISP12M(455,2)
+	    or  S2(455)
+	    or  S(455)
+	
+
+	  If 455 is series data, scan 455.03 would be displayed.
+	  If 455 is parallel data, scan 455.03 and 455.04 would be	
+	  displayed.
+
+	. Now, you want to see the hybrid spectrometer data for
+	  the same scan number (455).  You type:
+
+
+		HCDATA
+		DISP12M(455,1)
+	     or S1(455)
+	     or F(455)
+
+	  The first command uses the HCDATA procedure to switch to
+	  using hybrid spectrometer data by default in a number of
+	  verbs and by preference in several procedures.  You would
+	  then see scan 455.11 displayed on the graphics screen.

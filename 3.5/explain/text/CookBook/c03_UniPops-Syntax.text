@@ -1,0 +1,989 @@
+3. UniPOPS Syntax
+-----------------
+
+This chapter describes the basic syntax of UniPOPS commands. It 
+describes the different forms of operators (verbs and procedures) and 
+operands (adverbs and constants), and gives the syntax for defining your 
+own global and local operands. It also tells you how to set the values
+of operands. The syntax concerning command arguments are detailed, and
+a description is given of the UniPOPS command modes. The UniPOPS special
+characters and control characters are shown.
+
+
+3.1 The Command Line
+--------------------
+
+The basic unit of code for the UniPOPS command-line interpretor is the
+command line. This can consist of one or more commands, made up of
+UniPOPS operators and operands (variables, and real or literal
+constants), obeying the simple UniPOPS syntax, and terminated by a <CR>
+(a carriage return).  It can be continued beyond one `terminal line' by
+using the continuation symbol (\) as the last character on a `terminal
+line' to escape the subsequent <CR>. For example, a longish FOR-loop
+(Section 13.5) could be written as,
+
+	>FOR IZ = ILONGNAME TO ISHORTNAME ; GET IZ PAGE SHOW \
+	 HEADER ; END
+
+NOTE : The caret (>) represents the UniPOPS prompt.
+
+
+A single command line can contain up to 160 characters. To erase
+characters, once typed, use the `delete key'. To erase a complete line,
+type <Ctrl-U>, or to erase the last word, type <Ctrl-W>. At any time,
+typing <Ctrl-C> will abort the current operation and return a fresh
+prompt.
+
+The command line consists of one or more UniPOPS operators (verbs or
+procedures), and operands (adverbs and constants).  A command line
+cannot consist solely of operands.  If a command line is empty, the
+program does nothing and reissues the current prompt for a valid
+command.
+
+If the command line starts with a '#' character, the line is assumed to
+be a comment line and is not processed.  You should use '#' followed
+by comments to document your own procedures (see Section 13.2). 
+
+In most cases, you can type the names of operators and operands in 
+either upper or lower case.  However, case is important when entering a
+literal constant (e.g. 'Hello' is different from 'HELLO'), or when
+entering arguments to certain UniPOPS commands (e.g. CHNGFILE, SYSTEM,
+DIR, SYSHELP, EDIT, BATCH, DOCUMENT, TYPE, and  LASER).
+
+Except when used in literal constants, a tab can be used anywhere a
+space could be used.  Tabs may improve the readability of procedures
+and tabs take less space to store internally in procedure listings.
+
+Except when in `compile mode' (see Section 3.7.2), UniPOPS uses
+`Minimum-Match' to examine the contents of a command line.
+`Minimum-Match' allows you to type in only those characters in an
+operator or operand which distinguish it from another.  For example,
+UniPOPS has operators or operands called XMAXP, XMINP, FF and FFT, and
+typing XMA or XMAX would be equivalent to typing XMAXP, while typing
+XMI or XMIN would be equivalent to typing XMINP.  Typing XM, however,
+would leave an ambiguity as to whether you meant XMAXP or XMINP, and
+the program would generate an error message and list all of the symbols
+whose names started with an XM (i.e. XMINP and XMAXP).  However, typing
+FF would leave no ambiguity with FFT, since the name of the verb FF
+contains the same characters as those typed.
+
+More than one operator can appear on the same command line; you use
+either a space, semi-colon (;), or tab to separate one command from the
+next.  Mathematical or logical expressions, or other assignment
+statements, should be followed by a semi-colon if any operator follows
+the expression (see Chapter 14).  When in doubt, it is always safe to
+add semi-colons between operators, i.e. both of the following will
+work,
+
+	>PAGE SHOW HEADER
+	>PAGE; SHOW; HEADER
+
+while only the first of the following pair is acceptable,
+
+	>MXMIN = 10; MXMAX = 20
+	>MXMIN = 10   MXMAX = 20
+
+
+3.2 Verbs, Procedures and Adverbs
+---------------------------------  
+
+3.2.1 Verbs and Procedures
+--------------------------
+
+UniPOPS operators will usually be referred to below as "verbs or
+procedures (See Chapter 13)". Verbs are names that, when invoked, set
+into execution appropriate operations such as analysis, book-keeping,
+or display functions. Some stand alone, while others take one or more
+parameters either as arguments enclosed either in parentheses, or as
+leading or trailing attributes.  Examples of each type would be,
+
+	>PAGE
+	>SHOW
+	>GET 1200
+	>GET(1200)
+	>TELL DSCANS
+	>TELL(DSCANS)
+	>COPY(2,0)
+	>PAUSE(10)
+
+
+There are four types of verbs: regular, pseudo, internal-array and
+function.  They differ in the following ways ;
+
+  .   Regular verbs are the normal types of verbs. They do not return
+      a value, cannot be used in mathematical expressions, and cannot
+      appear in assignment statements or PRINT commands.  Multiple
+      regular verbs can be typed on the same command line, separated by
+      spaces (or semi colons). They can be used in `execute mode' (see
+      Section 3.7.1), or within procedures (see Chapter 13).
+
+  .   A pseudo verb must be the only command on its command line.
+      Pseudo verbs can only be used in `execute mode' (see Section
+      3.7.1) and NOT within procedures (see Chapter 13).
+
+  .   Internal-Array verbs share many of the qualities of array adverbs
+      (described in Section 3.2.2.2 below) in that you can use them in
+      mathematical expressions or, in a limited way, to the left of the
+      '=' in an assignment statement.  These verbs are used to set or
+      interrogate the values of data or header-parameters in the data
+      arrays internal to UniPOPS (see Sections 9.3 through 9.5 of the
+      Cookbook).
+
+  .   Function verbs can be used in mathematical expressions.  They
+      return a value which can be assigned to an adverb or be printed.
+      For example,
+
+	>PRINT FCUR * VCUR + SIN(33)
+	>X = 2 + RAND 
+
+     where FCUR, VCUR, SIN, and RAND are function verbs and X is a
+     scalar adverb (see below).  They can be used in procedures (see
+     Chapter 13) or in `execute mode' (see Section 3.7.1).
+
+
+Procedures are described in detail in Chapter 13.  They are essentially
+blocks of UniPOPS commands that can be defined as separate units
+associated with a given procedure name (rather like subroutines).
+Effectively, procedures become user-defined UniPOPS operators.
+
+
+3.2.1.1 Setting Aliases for Verb and Procedure Names
+----------------------------------------------------
+
+The command ALIAS allows you to assign a second name to an existing
+verb or procedure. For example, if you wish to alias the name P for the
+verb PRINT, and then use the alias to save typing, type,
+
+	>ALIAS P PRINT
+	>P BDROP
+
+Aliases defined in `execute mode' (see Section 3.7.1) are global (i.e.
+apply in both `execute mode' and in procedures). Aliases defined in a
+procedure are local to that procedure (unless explicitly declared
+global by prefixing their declaration by the command GLOBAL -- see
+Section 3.2.2.1).
+
+
+3.2.2 Adverbs : Built-In and User-Defined	
+-----------------------------------------
+
+Adverbs are variables available in the present UniPOPS session. The
+program has a set of built-in adverbs, and users can create their own.
+Built-in UniPOPS adverbs are global (i.e. can be used in both
+`execute-mode' -- see Section 3.7.1 -- and in procedures), and the
+majority have significance as input or output parameters to the various
+verbs.  The built-in UniPOPS adverbs all have default values to which
+they are set when you first log in to the program, and to which the
+user can reset them at any time (see Section 3.3).
+
+User-defined adverbs can be global or local.  If an adverb is declared
+(see below) in `execute mode' (see Section 3.7.1), it is global.
+Adverbs declared in procedures (see Chapter 13) are local to that
+procedure, and cannot be used in `execute mode', unless specifically
+declared to be global, by prefixing their declaration by the command
+GLOBAL (see Section 3.2.2.1).
+
+There are five types of adverbs; scalar, array, string, keyword and
+pointer. While string adverbs hold character strings, all other 
+adverbs  contain only floating point (real) values. Context determines
+whether these are interpreted as integer, real or logical values. The
+next five subsections define, discuss and compare the different types
+of adverbs. 
+
+
+3.2.2.1 Scalar Adverbs
+----------------------
+
+Scalar adverbs are single reals and can take just single values.  There
+are many such adverbs built into UniPOPS and more can be created with
+the SCALAR command.  The SCALAR command should be followed by a list of
+the names of the adverbs you wish to create, with the names separated
+by spaces or commas. For example, you could create the global adverb
+BUMF in `execute mode' (see section 3.7.1) by typing,
+
+	>SCALAR BUMF
+
+Alternatively, suppose you wished to create global scalar adverbs
+GLOBVAL, GLOBNUM and GLOBIND, and local variables LOCVAL, LOCNUM and
+LOCIND, in the procedure SHOWHOW, you might type something like the
+following,
+
+	>PROCEDURE SHOWHOW(LOCVAL)
+	:GLOBAL SCALAR GLOBVAL, GLOBNUM, GLOBIND
+	:SCALAR LOCNUM LOCIND
+	:LOCNUM = 4
+	:GLOBVAL = LOCVAL; GLOBNUM = LOCNUM
+	:FOR LOCIND = LOCVAL TO LOCVAL + LOCNUM
+	:	GET LOCIND; HEADER
+	:END
+	:RETURN
+	:FINISH
+	>
+	>SHOWHOW(1000)
+	>FOR GLOBIND = GLOBVAL TO GLOBVAL+GLOBNUM; PRINT GLOBIND; END
+
+Note that a local scalar is created by its appearance as a dummy
+argument of a procedure (see Chapter 13), and need not also appear
+there in a SCALAR command.  It is suggested that you give very
+distinctive names to the adverbs you create.  Instead of calling an
+adverb X1, something like XAXIS_VAL, etc., would be more appropriate.
+
+
+3.2.2.2 Array Adverbs
+---------------------
+
+Array adverbs can be of any number of dimensions and any number of
+elements per dimension, limited only by memory size. Many are built
+into UniPOPS, and others can be created via the command ARRAY, with the
+usual rules (see above) for which are global and which local.  In the
+ARRAY declaration statement, the array dimensions are enclosed in a
+single set of parentheses, and if the dimensionality is two, or
+greater, the size declarations for each dimension are separated by
+commas. If the size in any dimension is declared by just one index, n,
+the array has elements 1 to n in that dimension. However, the upper and
+lower element bounds in any dimension are arbitrary, and can be
+declared as `m TO n', using the verb TO. For example, a
+three-dimensional global array FRED could be declared by typing,
+
+	>ARRAY FRED(-23 TO -20, 6, -6 TO 10)
+
+This would set the lower and upper bounds to be, 
+
+				1st dimension : -23 and -20,
+				2nd dimension :   1 and   6,
+				3rd dimension :  -6 and  10.
+
+More than one array can be defined with a single ARRAY statement, with
+spaces or commas acting as separators. For example, it would be valid
+to type,
+
+	>ARRAY FRED(-23 TO -20, 6, -6 TO 10) BERT(4, 0 TO 100) TOM(50)
+
+
+3.2.2.3 String Adverbs
+----------------------
+
+String adverbs hold character strings, the maximum length of which
+are defined when the adverb is created. Only a few such adverbs are
+built into UniPOPS, but you can create your own string adverbs using
+the verb STRING.  The usual adverb rules (see above) apply for creating
+global and local string adverbs.  The maximum length of the string that
+can be accommodated in a given string adverb will be a number between 4
+and 60 characters, in increments of 4.  The verb STRING has the syntax,
+
+	STRING*nsize name1, name2, ........
+
+where, nsize is the number of characters in the string that will fill
+the adverb. This must be a multiple of 4, between 4 and 60. If the
+`*nsize' is omitted, then STRING*4 is assumed. Suppose that you wished
+to create two global strings of length 16 characters, one of 4
+characters and one other of 60 characters, then you could type,
+
+	>STRING*16 TED, BILL
+	>STRING  TIM
+	>STRING*60 ROD
+
+
+3.2.2.4 Keyword Adverbs
+-----------------------
+
+Keyword adverbs are used for accessing and changing header values in a
+data array, matrix or cube. New keyword adverbs cannot be created by
+the user. They are used as arguments to the internal-array verbs H0 -
+H9, MH0 - MH3 and CH0 (Sections 9.3, 16.1.1 and 16.1.2),  for
+interrogating and updating header parameters.  For example, to
+interrogate how many grid points are present in the currently-selected
+scan in Array (0), you can use the keyword adverb NOINT to point to the
+value you wish to know by typing,
+
+	>PRINT H0(NOINT)
+
+The `values' of the keyword adverbs cannot be changed as they are
+essentially pointers to data elements.
+
+
+3.2.2.5 Pointer Adverbs
+-----------------------
+
+There are pointer adverbs built into UniPOPS and more can be created
+with the POINTER command.  The usual adverb rules (see above) apply for
+creating global and local pointer adverbs.  The built-in pointer
+adverbs are used as attributes to verbs such as TELL, SUMMARY, and
+SELECT and their values cannot be changed by the user. Many of these
+have similar `pointer' functions to the keyword adverbs.  Typical uses
+would be in commands such as,
+
+	>TELL DISK 
+	>SUMMARY SSCANS
+
+Two special built-in pointer adverbs are TRUE and FALSE that have the
+values of +1 and -1 respectively.
+
+When creating your own pointer adverbs, the POINTER command should be
+followed by  the name of the adverb and the value to be assigned to it,
+all separated by spaces.  More than one user-created pointer can be
+created on a line, and the definitions should be separated by spaces or
+commas.  For example, if you wanted to create a pointer adverb PI with
+the expected value and RADTODEG with the conversion value from radians
+to degrees, type,
+
+	POINTER PI 3.14159, RADTODEG 57.29578
+
+Once created and a value assigned to it, the value of the new pointer
+adverb cannot be changed, just as with the built-in pointer and keyword
+adverbs. (Note the similarity to the PARAMETER command in FORTRAN.)
+
+
+3.2.2.6 Destroying User-Defined Adverbs
+---------------------------------------
+
+If you decide that you no longer require the presence of one of your
+user-defined adverbs of any variety, you can remove it from memory
+using the pseudo verb SCRATCH. You might do this to save space (say to
+remove a big array adverb), to free its name for other uses, or merely
+to simplify your session. However, the space freed by destroying the
+adverb is not available to you again unless you run the pseudo verb
+COMPRESS, which frees the memory occupied by `scratched' adverbs (and
+`scratched' procedures, see Section 13.11) for future use. COMPRESS
+will inform you what the compression has returned for your use.
+
+Thus, if you need an array adverb FRED only briefly, you can regain the
+space it fills by typing,
+
+	>ARRAY FRED(1000, 512, 256)
+	># Use FRED as you need to.
+	>SCRATCH FRED
+	>COMPRESS  
+
+Note : If the adverb you intend to scratch is used in an existing
+procedure, SCRATCH will inform you which procedure(s) the adverb is
+used in, and NOT scratch the adverb until either you eliminate the
+reference to it from the procedure(s), or you first scratch the
+procedures.
+
+
+3.3 Setting Adverbs
+-------------------
+
+Values can be assigned to scalar, array, or string adverbs through
+assignment statements or the use of the verb READ.  Built-in UniPOPS
+adverbs can also be set back to their program-defined default values.
+The full usage of the verb READ is described below in Section 3.7.3,
+under the description of the `input mode'. The following examples
+illustrate the ways in which adverbs can be set.
+
+  .  To set the value of the scalar adverb BDROP to 25, type either,
+
+	>BDROP = 25  
+
+     or >READ BDROP
+	#25
+
+  .  To set a UniPOPS built-in adverb back to its program-defined
+     default value, merely use the value DEFAULT in an assignment
+     statement. For example,
+
+	>BDROP = DEFAULT
+
+  .  The scalar adverb KPROTECT is a flag that determines whether the
+     user can write a scan to the  "keep" file  if a scan of the same
+     number is already present there (see Section 5.10).  If KPROTECT
+     is set to  TRUE (+1),  a duplicate scan cannot be written to the
+     "keep" file.  Thus, to overwrite a scan in the "keep" file,
+     change the flag KPROTECT to FALSE (-1) by,
+
+	>KPROTECT = FALSE 
+
+  .  An array adverb can be set as a whole, or element by element.
+     Suppose it is wished to set NREGION to represent two segments of
+     the data, this could be done by either,
+
+	>NREGION(1) = 20.
+	>NREGION(2) = 60.
+	>NREGION(3) = 120.
+	>NREGION(4) = 180.
+	>NREGION(5) = 0.  
+	># Or NREGION(5) = DEFAULT for the last line.
+
+     (Note that the remaining elements of NREGION remain untouched.)
+
+     or 
+
+	>NREGION = 20., 60., 120., 180.
+
+     (NOTE that the commas are essential here or the remaining
+     elements of NREGION will not be set to zero.)
+
+  .  To set all of the elements of an array adverb to the same value,
+     type, for example:
+
+	>NREGION = 0
+
+  .  String adverbs are set by equating them to literals surrounded by
+     either single or double quotes. For example,
+
+	>XTITLE = 'GEORGE'
+	>HTITLE = "This is a string"
+
+     If single quotes are used, double quotes can be used within the
+     literal, as in,
+
+	>HTITLE = 'He said, "This is the end"'
+
+     If you use single quotes and a single quote is required within
+     the literal, use two consecutive  single quotes within the
+     literal , as in,
+
+	>XTITLE = 'Don''t touch that dial'.
+
+     If double quotes are used, single quotes can be used within the
+     literal as in,
+
+	>HTITLE = "Don't touch that dial".
+
+     If double quotes are used and a double quote is required within
+     the literal, use two consecutive double quotes within the
+     literal. As in,
+
+	>XTITLE = "He said, ""This is the end""".
+
+
+3.4 Uses of Adverbs
+-------------------
+
+This section will give examples of how to use adverbs.
+
+The value of an adverb can be queried using the verb PRINT (see also
+Section 14.5).  For example, to print the values of the scalar adverbs
+BDROP and EDROP, type,
+
+	>PRINT BDROP, EDROP
+
+Scalar adverbs can be used as dummy parameters in procedures (see
+Chapter 13) and are assigned values when the procedure is invoked.
+These assigned values may be those contained in other scalar adverbs
+or single elements of array adverbs. For example, one can define a
+procedure PRNTX to print out the value of its argument. Here XXX is
+the dummy parameter, 
+
+	>PROCEDURE PRNTX(XXX)
+	:PRINT XXX
+	:FINISH
+
+This could be invoked by,
+
+	>PRNTX(12)
+     or 
+	>PRNTX(BDROP)
+     or 
+	>PRNTX(NREGION(3))
+
+Scalar adverbs, array adverb elements, pointers, and keywords can be
+used to pass values to functions or verbs.  The example, 
+
+	>GET (LEVS(ACOUNT)) 
+
+will tell the verb GET to access the data for the scan whose number is
+in the ACOUNT-th element of adverb array LEVS. Further,
+
+	>PRINT SIN(BDROP) 
+
+will print the sine of the adverb BDROP.  
+
+	>TELL SSCANS 
+
+where TELL is a verb and SSCANS is a pointer adverb, will list the
+contents of the "save" file.
+
+	>H0(OBSERVER) = 'Fred' 
+
+will change the observer's name in the scan held in Array (0) to
+'Fred', using the keyword adverb OBSERVER to point to the correct
+location in the scan header.
+
+Many built-in adverbs affect the way certain verbs operate.  For
+example, the value of BSCAN affects what the verb SUMMARY will do.
+Some of these adverbs are flags, which should contain either the value
+TRUE (+1) or FALSE (-1). They either turn on or off certain options for
+certain verbs.  For example, whether BMARK is TRUE or FALSE will affect
+the graph produced by SHOW.
+
+Some adverbs return the results of certain verbs. For example, the verb
+MOMENT places its results into the array adverb SIZE, which the user
+can then PRINT to see the results.
+
+Any adverb can be used in mathematical or logical expressions.
+For example, 
+
+	>BSCAN = ESCAN - 100 
+
+will assign the value of ESCAN - 100 to the adverb BSCAN, while, 
+
+	>LOG_TRUE = X1 > 10 
+
+will assign the value of TRUE to the user-defined scalar adverb
+LOG_TRUE if X1 is greater then 10, else it will assign it the value of
+FALSE.
+
+
+3.5 Command Arguments
+---------------------
+
+Many verbs, procedures, mathematical and logical operators take
+arguments.  If too few arguments are supplied to a verb or a procedure,
+UniPOPS will issue an error message to this effect.  However, if too
+many arguments, or arguments of the wrong type, are supplied, then
+UniPOPS can do unpredictable things.  The user should take care that
+the number and types of arguments supplied are correct.
+
+All procedures take only real variables (scalar adverbs or elements of
+array adverbs) or real constants as arguments.  Only a few verbs take
+string adverbs or literals as arguments, and most take only real
+variables or constants as arguments.
+
+  a) Real-Value Arguments
+     --------------------
+	
+     Arguments can be placed either before or after the name of the
+     verb or procedure.  Only real constants, scalar, pointer or
+     keyword adverbs, or elements of array adverbs may be used as
+     arguments.
+
+     To prevent misinterpretation of the argument list, it is best to
+     place them after the command's name, enclosed in parentheses. If
+     there is more than one argument, these should be separated by
+     commas.  For example,
+
+	>GET (34.01); NRSET(2)
+	>ATAN2(1.23, B)
+	>ADDSTACK (1, C(23), 3)
+
+     where GET, NRSET, ATAN2, and ADDSTACK are UniPOPS verbs or 
+     procedures, which take one, one, two, and three arguments, 
+     respectively and where B and C are scalar and array adverbs, 
+     respectively.  Note that the use of spaces in the examples was 
+     not necessary but makes the command line much easier to read.
+
+     In some cases, one can get by without using the parentheses and
+     commas, but it is recommended that they are eliminated only for
+     commands with a single argument.  For example:
+
+	>GET 34.01; NRSET 2
+
+     is equivalent to the first example above.  Note that, although the
+     semi-colon is not strictly needed here, it is advised to use a
+     semi-colon whenever the parentheses are eliminated.
+
+     The following are also legitimate ways of passing arguments, but
+     it is recommended that the user avoids such constructs as there
+     can be times when the interpretor, or another user, will
+     misinterpret their meanings.
+
+	>34.01 GET 2 NRSET
+	>1 23 3 ADDSTACK
+	>ADDSTACK 1 23 3
+	>1.23 ATAN2 B
+
+    The preferred versions are,
+
+	>GET 34.01; NRSET 2
+	>ADDSTACK(1,23,3)
+	>ATAN2(1.23,B)
+
+  b)  String Arguments
+      ----------------
+
+     The only regular verbs which can take string adverbs as arguments
+     are:
+
+	 CHAR		EXEC		FOPEN		FPRINT
+	 FREAD 		PRINT		PRNTFMT		READ
+	 MREAD 		MWRITE		READCUBE	SREAD
+	 SPRINT 	VCHAR.
+  
+     Of these, only READ cannot take literal constants as its
+     arguments.  The function verbs:
+
+	COMPARE		LENGTH		LNBLNK		CONCAT
+	SUBSTR 		INDEX
+
+     also take string adverbs or literal constants as arguments.  These
+     regular and function verbs follow the same rules for placement of
+     arguments, use of parentheses and commas, etc. as described above
+     for real value arguments.  For example, if XSTRING is a string
+     adverb :
+
+	>H0(OBSERVER) = 'Fred'
+	>PRINT XSTRING, 'Goodbye'
+	>READ XSTRING
+	>Z = LNBLNK(XSTRING)
+
+     (NOTE : the command line, READ 'Any literal' is not allowed.)
+
+     Some pseudo verbs take strings as arguments which MUST NOT be
+     enclosed in parentheses or quotes.  These verbs are:  BATCH,
+     CHNGPRJ, SYSTEM, DOCUMENT, EDIT, TYPE, DIR, SYSHELP, LASER,
+     CHNGFILE, HELP, EXPLAIN, and IDENTIFY.  The whole content of the
+     command line following the verb's name is used as the argument to
+     the verb.  For example :
+
+	>DIR *.prc
+	>EXPLAIN command-syntax
+	>SYSTEM grep gghh blah | sed -e s/F/G/ >! blah2
+
+     That is, '*.prc' is the argument to DIR, 'create 11 LPRINTOUT' to
+     CHNGFILE, 'command-syntax' to EXPLAIN, and 
+     'grep gghh blah | sed -e s/F/G/ >! blah2' to SYSTEM.
+
+     CHNGFILE is somewhat of a hybrid in that it's first argument is 
+     expected to be string (without quotes) or a string adverb, it's
+     second argument is expected to be a real value (either an adverb 
+     or an actual value entered on the command line) while the 3rd argument, 
+     when present, is a string (without quotes).
+
+	>CHNGFILE CR PRINTFILE LPRINTOUT
+
+     CR is a string, LPRINTOUT is a pointer adverb and the string
+     LPRINTOUT is used as the file name.
+
+3.6 Names of Operators and Operands
+-----------------------------------
+
+The names of operators and operands must begin with a character from
+the set {a-z A-Z} which can then be followed by from zero to nine 
+characters from the set of {a-z A-Z 0-9 _}.  Case is unimportant for
+the names of operators and operands (i.e. AAA is equivalent to aaa,
+Aaa, aAa, etc.)
+
+Real constants start with any character out of the set {0-9 + -} and
+can include characters from the set {0-9 . E e + -}.  Literal constants
+must begin and end with either the ' or " characters; they can contain
+any characters found on a standard keyboard.
+
+
+3.7 Command Modes
+-----------------
+
+UniPOPS has three basic modes of operation, `execute mode', `compile
+mode' and `input mode'. They differ as follows,
+
+
+3.7.1 `Execute Mode' 
+--------------------
+
+      `Execute mode' is the mode of operation in which users find
+      themselves on entering UniPOPS. They will spend most of their
+      time in this mode in a typical UniPOPS session. It will be
+      recognized by its prompt, contained in the string adverb PROMPT
+      (see Section 2.3). When the command line is terminated with a
+      <CR>, (not preceded by a '\' continuation symbol), the
+      interpretor parses the line, checks for errors, and attempts to
+      compile and execute the given commands.
+
+      Pseudo verbs (see Section 3.2.1) can only be used in `execute
+      mode'. The only verbs that cannot be used in `execute mode' are
+      ENDEDIT, FINISH and RETURN.
+
+
+3.7.2 `Compile Mode'
+--------------------
+
+      `Compile mode' consists of two sub-modes, `define mode' and `edit
+      mode'. It is used to create new user-defined operators called
+      procedures (see Chapter 13).  Pseudo verbs (see Section 3.2.1)
+      cannot be used in `compile mode', but all other verbs can.  Its
+      two sub-modes differ as follows,
+
+	a) `Define Mode'
+   	   -------------
+
+	   `Define mode' is invoked from `execute mode' by the verbs
+	   PROCEDURE, or PROC (see Chapter 13). It will also be entered
+	   if the disk file being read in by the verb BATCH (see
+	   Section 13.9) contains a PROCEDURE or PROC command. On
+	   entering `define mode' the prompt changes to colon (:). When
+	   a command is terminated by a <CR> (not preceded by '\'),
+	   the line is parsed and compiled but NOT executed. Instead,
+	   it is stored in the program memory, and later the complete
+	   procedure can be invoked by issuing its name as a command in
+	   `execute mode'. To end the definition of a procedure, and
+	   return to `execute mode', the command FINISH should be given
+	   as the last line of the procedure.
+
+	b) `Edit Mode'
+	   -----------
+
+	   `Edit mode' is similar to `define mode' but it enables the
+	   user to modify the commands in a procedure. To enter this
+	   mode use the POPSEDIT verb (see Section 13.8). Again, the
+	   colon (:) prompt is given, and commands in a procedure can
+	   be edited or deleted, and new commands added. To exit from
+	   this mode, and return to `execute mode', enter the ENDEDIT
+	   command.
+
+
+3.7.3 `Input Mode'
+------------------
+
+      `Input mode' is entered when the verb READ is invoked. READ will
+      prompt with a hash (#) for enough values to satisfy the list of
+      variables (adverbs) which form its attributes. For many uses, it
+      involves less typing than does setting the variables by
+      assignment statements. READ is especially useful in procedure
+      definitions, and through it a procedure can ask the user to set
+      the values of a list of variables, where the values change from
+      one call to the next, or need to be reset part way through the
+      procedure.  If insufficient values are entered on an input line
+      to satisfy the variable list, UniPOPS will prompt the user for
+      more values.
+
+      Suppose that the user wishes to set the values of the adverbs
+      BDROP and EDROP with a READ command, then they can enter the
+      values singly, or all at once, i.e.,
+
+	>READ BDROP EDROP
+	#20
+	#35
+
+     or 
+
+	>READ BDROP EDROP
+	#20 35
+
+      If it is wished to input values to an array adverb using just the
+      array name as the list, enough values must be entered to satisfy
+      the complete array. Thus, to read data into the 12-element array
+      adverb CENTER, type,
+
+	>READ CENTER
+	#25 70 65 0 0 0 0 0 0 0 0 0
+
+      When entering data into a string adverb, it is advised that the
+      user makes a separate READ request for the string, i.e.,
+
+	>READ X Y ; READ STRING1
+	#24.2 12.6
+	#Hello Fred !
+
+      READ, with no attributes, can be used to provide an infinite
+      pause in a procedure. An example would be the following procedure
+      to display and view a set of scans,
+
+
+	>PROCEDURE WAIT(WT_SCAN1, WT_SCAN2)
+	:SCALAR WT_I
+	:FOR WT_I = WT_SCAN1 TO WT_SCAN2
+	:	GET WT_I
+	:	PAGE SHOW
+	:	READ
+	:END
+	:FINISH
+
+      This will display the scans, pausing on completion of each, until
+      the user types <CR>, at which time, the next scan will be
+      displayed.
+
+      NOTE : Another verb PAUSE will allow the user to pause for the
+      number of seconds given as the argument of the verb. The above
+      procedure could employ PAUSE to wait for 20 secs between plots,
+      as follows,
+
+	>PROCEDURE WAIT(WT_SCAN1, WT_SCAN2)
+	:SCALAR WT_I
+	:FOR WT_I = WT_SCAN1 TO WT_SCAN2
+	:	GET WT_I
+	:	PAGE SHOW
+	:	PAUSE(20)
+	:END
+	:FINISH
+
+
+
+3.8 Special Characters
+----------------------
+
+UniPOPS uses the following symbols and special characters,
+
+	{ } @ 	  Used for Array-Math (see Section 14.4) 
+	!  	  History operator (see Section 3.10)
+	#  	  Comments
+	<tab> 	  For indenting
+	'  " 	  For defining literal constants
+	. 	  For defining real constants
+	+         Addition and for the definition of real constants
+	-	  Subtraction and for the definition of real constants
+	=	  Assignment or comparison operator
+	\	  Command line continuation character
+	/ *	  Division and Multiplication operators
+	( )       For constructing expression, defining argument lists,
+		  and defining array subscripts
+	;	  Expression/Command separator
+	< >       Less-than and Greater-than logical operators
+	& | ~	  Logical AND, OR and NOT
+	? 	  An alias for PRINT operator
+	,	  For separating arguments and array indices
+	<space>   Command separator
+	<CR>      Input line terminator
+
+The * - / + - < > . = , ', " & | ~ and some usages of ( and ) are
+described in Chapter 14.  The { } and @ are described under Array-Math
+in Section 14.4.  The \ , <space>, <tab>, # <return> and some usages of
+( and ) are described in this Chapter.  Other usages of ( and ) are
+discussed under Section 3.2 (Adverbs). The ! and ? commands are
+discussed under HISTORY (see Section 3.10) and PRINT (see Section
+14.5), respectively.
+
+
+3.9 Control Characters
+----------------------
+
+The following is a list of control character sequences that the user
+may want to employ during their UniPOPS session.  In reality, they are
+a part of the UNIX operating system and will work outside of UniPOPS
+with most programs.
+
+A control character sequence is whenever the <Ctrl> key is held down on
+the keyboard while pressing another key.  This is usually designated
+as, for example, <Ctrl-U>, which means hold down control and press the
+'u' on the keyboard.  The more common control character sequences, and
+what they do, are,
+
+	<Ctrl-C>        Will terminate most programs.  For UniPOPS,
+			will interrupt the processing of the current
+			command line and reissue the prompt so that
+			another command line can be entered.
+	<Ctrl-G>        The `Bell' character. 
+	<Ctrl-H>        Same as backspace. 
+	<Ctrl-Q>        Starts up the scrolling of output after a
+				<Ctrl-S> stopped it (XON).
+	<Ctrl-R>        Echo back the contents of the present command
+			line -- useful if the input line becomes
+			scrambled by the output from a program.
+	<Ctrl-S>        Stop the scrolling of output (XOFF).  Restart
+			it with a <Ctrl-Q>.
+	<Ctrl-U>        Erase the current input line. 
+	<Ctrl-W>        Erase the previous word typed.
+	<Ctrl-Z>        Puts the currently executing program to `sleep'
+			and brings the user back to the UNIX prompt.
+			One can then start another program. The
+			sleeping job can be restarted in the background
+			with the 'bg' UNIX command, or placed in the
+			foreground again with the 'fg' UNIX command.
+
+The user will probably make some use of <Ctrl-C>, <Ctrl-S>, <Ctrl-Q>,
+and <Ctrl-U>.  Read up on the UNIX commands fg, bg, and jobs before
+trying <Ctrl-Z>.
+
+
+3.10 Recalling and Re-executing Commands
+----------------------------------------
+
+UniPOPS contains a simple method for retrieving previous command lines
+and re-executing them. The user can also pull out pieces of old command
+lines or modify old command lines before re-execution.  
+
+
+3.10.1 Listing Old Commands
+---------------------------
+
+To aid you in using this power, you can list up to the previous 100
+command lines which you have entered, plus an identifying line number,
+using the pseudo verb HISTORY.  HISTORY must be the only command on the
+line and takes zero or one argument. Suppose that you wish to see the
+twenty most recently-entered command lines, just type either,
+
+	>HISTORY
+
+or its equivalent
+
+	>HISTORY 20
+
+If you want the last ten command lines, type,
+
+	>HISTORY 10
+
+
+3.10.2 History substitution
+---------------------------
+
+History substitution allows you to build up a new command line out of
+pieces of previous command lines plus any new material you supply.
+This simplifies making spelling corrections and repeating complicated
+commands.  You specify the pieces you want from an old command line by
+describing which previous command line you want to use, which words in
+that command line you want, plus any modifications you want to make to
+those words.  The UniPOPS history facility is modeled very closely
+after the Unix C-Shell history facility and, therefore, anyone who
+knows the C-Shell history facility can use instantly the UniPOPS
+facility.
+
+History substitution can occur anywhere within a command line (i.e.,
+can be embedded between other commands on the command line) and you can
+have multiple substitutions on a single command line.
+
+For information on history substitution, please see Appendix K of this
+Cookbook or any UNIX manual that describes the C-Shell [one of the best
+is "The UNIX C-Shell Field Guide" by Anderson and Anderson (1986,
+Prentice Hall)].
+
+If you are familiar with the C-shell history facility, the following
+examples will illustrate what history substitution is capable of
+providing you:
+ 
+
+	!!		<- reexecute the previous command.
+
+	!-1		<- same as above.
+
+	!12		<- reexecute the 12th command you have typed.
+
+	!-4		<- reexecute the 4th previous command.
+
+	!BASELINE       <- reexecute last command that started with the
+				string 'baseline'.
+
+	!?GAUSS?        <- reexecute last command that had somewhere in
+				it the string 'GAUSS'.
+
+	!?HELLO?:7*      <- the seventh through last word in
+			the last command line that somewhere contained
+			the word HELLO.
+
+	!?HELLO?:7-$     <- same as above.
+
+	!!:*	<- reexecute the previous command the first through
+		last words (i.e., skip word 0).
+
+	!!:1-$	<- same as above.
+
+	!?RIN?:%  <- word that contains somewhere the string RIN (for
+			example, PRINT).
+
+	!-4:0-4:S/PRINT/READ/:P	<- print out but do not execute the 4th
+				previous command, words zero through 4
+				with the first occurrence of string
+				PRINT substituted by the the word
+				READ.
+
+	!-4:-4:S/PRINT/READ/:P  <- same as above.
+
+	!23:s/HELP/EXPLAIN/	<- reexecute the 23rd command you have
+				typed substituting the word EXPLAIN for
+				the first occurrence of HELP.
+
+	PRINT !123:3-           <- execute the PRINT command using as
+				its list the 3rd through next-to-last
+				last words in the 123rd command line.
+
+	!12 ; PRINT 'hello'; !14:1   <- reexecute command 12, prints
+				     'hello', and reexecute the first
+				     word from command 14.
+
+	!12 ; PRINT 'hello'; !14:^   <- same as above.
+
+	FOR I = 1 TO 23; !15:S/PRINT /EDROP =/:g& ; END  
+
+			<- in the for loop; reexecute command 15 with
+			all the first and second occurrences of 'PRINT '
+			in all words in that event changed into
+			'EDROP ='.

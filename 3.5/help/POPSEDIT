@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'POPSEDIT:  (PSEUDO) Starts up the POPS line editor on the'
+PRINT 'specified procedure at the specified line number.  '
+print 'Syntax: POPSEDIT proc_name line_number'
+PRINT ' '

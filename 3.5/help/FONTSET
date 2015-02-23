@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FONTSET:  Alters the character font used by the graphics'
+PRINT 'screen. Syntax:  FONTSET(font)'
+PRINT ' '

@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CHNGONLINE:  (TUCSON) Allows the user to change the'
+PRINT 'assumptions about unspecified feed or subscan number'
+PRINT 'as well as the version number of the indicated file type.'
+PRINT 'Syntax: CHNGONLINE(file_type, version_number)'
+PRINT ' '

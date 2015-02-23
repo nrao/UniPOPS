@@ -1,0 +1,135 @@
+	The user can manipulate and query various aspects of the
+	program's memory.  This section documents various aspects about
+	memory that are not discussed in the Cookbook.
+
+Memory Usage
+------------
+
+	In UniPOPS, the term memory or core means the region where
+	procedures and adverbs are stored.  It is limited in size so
+	the user must take care in how he or she uses memory.  For most
+	users, the limited size of memory should not be noticeable.
+
+	In UniPOPS, there is 3 types of memory:
+
+		 Storage for procedure source code
+		 Storage for compiled procedures
+		 Storage for adverb values
+
+	To find out how much room is left for the creation of
+	procedures and adverbs, use the CORE command.
+
+	To find out what procedures and adverbs are in memory, use the
+	HELP PROC or HELP ADVERB commands.
+
+Clearing or Resetting Memory
+----------------------------
+
+	To get a clean area to create procedures and adverbs, use the
+	RESTART command.  All of your procedures and adverbs will no
+	longer be in memory and all built-in adverbs will have their
+	default values again.  Use RESTART very judiciously
+
+Exceeding Memory Limits
+-----------------------
+
+	If memory is ever exceeded, you will get the "BLEW CORE" error
+	message -- the error message appears much worse than what has
+	really happened.  After exceeding memory, you can regain some
+	of your memory space by either:
+
+		compressing your memory space;
+		scratching unneeded adverbs or procedures (and then
+		    compressing); 
+		re-thinking the problem you are trying to
+		    tackle.
+
+	Scratching and compressing are discussed below.
+
+Storing and Restoring Memory to and from Disk
+---------------------------------------------
+
+	To protect you against exceeding memory, UniPOPS provides three
+	"store" areas for saving your current procedures and adverbs.
+
+	The STORE command will store a copy of your present memory or
+	core (i.e., the adverbs, their values, and the procedures
+	listed by HELP ADVERB and HELP PROC) to disk; the contents of
+	the specified disk "store" area will be overwritten by the
+	current contents of memory -- the current contents of memory
+	are not affected by a STORE.
+
+	RESTORE will take the specified "store" area on disk and
+	overwrite the current contents of memory with the procedures,
+	adverbs, and their values in that "store" area.  In almost all
+	ways, everything will be identical to what memory was like just
+	before the STORE that placed the procedures and adverbs in the
+	"store" area.
+
+	It is a good practice to occasionally store your procedures
+	into one of these areas.  If you can organize your procedures
+	into three or less categories, then you should store each set
+	of procedures in a separate area.
+
+	EXAMPLE : 
+
+	You are processing two types of data which require two
+	different sets of procedures and different adverb values.
+
+		1.   "EDIT" and "BATCH" in the procedures for
+		     processing the first type of data.
+		2.   Store the procedures in area 1 by typing:
+		     STORE 1
+		3.   Type RESTART to get yourself a clean memory.
+		4.   "EDIT" and "BATCH" in the procedures for
+		     processing the second type of data.
+		5.   Store the procedures in area 2 by typing:
+		     STORE 2
+		6.   Type RESTORE 1 and you will have all of your
+		     type #1 procedures; do your analysis using these
+		     procedures.
+		7.   Type RESTORE 2 and you will now be able to work
+		     with the type #2 procedures;
+		8.   Repeat steps 6 and 7 in any order from now on
+
+Scratching Items from Memory
+----------------------------
+
+	The SCRATCH command allows you to eliminate procedures or
+	adverbs from the program's memory.  If you try to SCRATCH
+	something, UniPOPS first checks whether any procedure makes
+	reference to the item you want to delete.  If nothing
+	references the item, it is deleted.   If something does
+	reference the item you are told what procedures use the item 
+	and the item is NOT deleted.  In the latter case, you must 
+	eliminate references to the item you want to scratch before you 
+	can scratch it.  Also, UniPOPS will not allow you to scratch 
+	any builtin-in (i.e., system-supplied) verbs, adverbs, or 
+	procedures.
+
+	The syntax for SCRATCH is:  SCRATCH <name> where <name> is the
+	name of the item you want to scratch.  For example:
+
+		SCRATCH BLAH
+
+	Note that the SCRATCH does not automatically return the memory
+	space used by the scratched item.  To regain that space, you
+	must use COMPRESS.
+
+Compressing Memory
+------------------
+
+	Whenever you overwrite a procedure, or edit one with POPSEDIT,
+	the space taken up by the overwritten code is not automatically
+	freed for your use.  Likewise, if you SCRATCH a procedure or
+	adverb, the space taken up by the scratched item is not
+	automatically freed.  To free up this space, you should type:
+
+		COMPRESS
+
+	and UniPOPS will start compressing memory and return all
+	possible space for your future use.  You should use COMPRESS if
+	you notice that your usage of memory is starting to get close
+	to the limit.  (The CORE command will tell you how much memory
+	you are using and how much is left).  COMPRESS may take some
+	time so be patient and DO NOT <Ctrl-C> once it has started.

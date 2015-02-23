@@ -1,0 +1,24 @@
+	(SCALAR ADVERB)
+
+	NITER specifies the maximum number of iterations which the 
+	Gaussian and sinusoid fitting routines will perform.  If
+	the fit has not converged the verb will report that the
+	fit failed.
+	
+	NITER can have any positive integer value.
+
+	NITER is used by : GAUSS    RIPPLE   RSHAPE.
+
+	No verbs change NITER.
+
+	The initial value of NITER is 8.
+
+	EXAMPLE :
+
+	Your attempt to fit a Gaussian failed, although you were
+	certain your  guesses for  CENTER  and  HWIDTH  were
+	accurate.  So you specify:
+
+		NITER = 12
+
+	and try again.

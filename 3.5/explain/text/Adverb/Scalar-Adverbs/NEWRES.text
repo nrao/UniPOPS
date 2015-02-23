@@ -1,0 +1,20 @@
+	(SCALAR ADVERB)
+
+	NEWRES specifies the resolution (in channels)  to which data is
+	to be smoothed with the CHNGRES verb.  NEWRES must be greater
+	than one.
+
+	NEWRES is used by : CHNGRES
+
+	No verbs change NEWRES.
+
+	The initial value of NEWRES is 0.
+
+	EXAMPLE : 
+
+	To smooth data of 0.5 kHz resolution to 1.04 kHz resolution,
+	specify :
+
+
+		NEWRES = 1.04E-3 / 0.5E-3
+		CHNGRES

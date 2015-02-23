@@ -1,0 +1,18 @@
+	(REGULAR VERB)
+
+	Syntax:   MWRITE(filename)
+
+	MWRITE takes the header and data in Matrix (0) and writes it
+	out to disk to a specified file name as a two-dimensional FITS
+	image file.  The name of the file can be supplied either as a
+	literal constant or as a string ADVERB.
+
+	No adverbs are used or set by MWRITE.
+
+	EXAMPLE:
+
+	You want to save the contents of Matrix (0) under the name
+	'Blah' and Matrix (3) under the name stored in string adverb
+	XTITLE.  Type:
+
+		MWRITE('Blah'); MCOPY(3,0); MWRITE(XTITLE)

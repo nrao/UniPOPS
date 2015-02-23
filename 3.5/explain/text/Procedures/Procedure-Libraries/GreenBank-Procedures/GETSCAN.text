@@ -1,0 +1,27 @@
+	Syntax:  GETSCAN(scan-number.feed-number)
+
+	GETSCAN will retrieve the specified scan number's data for the
+	specified feed and place it in Array (0).  If the scan is a
+	Total-Power observation, it will retrieve the appropriate
+	feed's data for the off scan, place it in Array (1) and perform
+	a TEMP.  This form of TEMP is specific to Green Bank telescopes.
+	GETSCAN will work for both Switched-Power and Total-Power 
+	observations.
+
+	File name: getscan.prc
+
+	No adverbs are used or set by GETSCAN.  GETSCAN uses Array(0)
+	and Array(1) and places its results in Array(0).
+
+	See GET for the convention on how to specify scan and feed
+	numbers.
+
+	EXAMPLE:
+
+		GETSCAN (-11.09); PAGE SHOW
+
+	Will get scan 11, feed 9 -- looks in the off-line and then the
+	on-line data files.  If the scan exists, it will get the
+	correct off scan and perform a TEMP.  If all goes well, the
+	resulting spectra will be displayed.
+

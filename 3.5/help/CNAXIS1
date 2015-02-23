@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CNAXIS1:  (HEADER-CUBE) The number of x-axis cells in the'
+PRINT 'Cube.'
+PRINT ' '

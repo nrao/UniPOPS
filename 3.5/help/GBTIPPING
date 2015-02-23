@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'GBTIPPING:  (PROC-LIB)  Reduces Green Bank Tipping scans.'
+PRINT ' '
+PRINT 'TAU0,TRCVR=',TAU0,TRCVR
+PRINT ' ' 

@@ -1,0 +1,46 @@
+	TILESAVES is the primary method of tiling a number of scans.
+
+	TILESAVES uses the first MAXNSAVE scans in the current save
+	file to prepare the global adverbs needed by TILEPLACE 
+	(using TILEPREP) and then uses TILEPLACE to make a tile
+	display where each tile, or spectral line show plot, occupies
+	a position on the graphics screen related to its sky
+	coordinates (and restricted in size on the screen so that
+	the individual plots do not overlap).
+
+	Syntax: TILESAVES(dx, dy)
+
+	dx and dy are the angular distances between scans (tiles) in
+	the x and y directions on the sky in arc seconds.  This should
+	be the actual distances on the sky.  It is corrected using
+	the cosine of the average y-coordinate value in the save
+	file to get the approximate x-coordinate increment that
+	should apply to the actual observed x-coordinates.
+
+	MAXNSAVE is a global adverb that should be set to the largest
+	value of NSAVE that should be used.  There must be no missing
+	data in the save file from NSAVE=1 through NSAVE=MAXNSAVE.
+
+	TILESAVES first RECALLs each scan to generate appropriate
+	arguments for TILEPREP and then calls TILESAVE on each
+	scan in the save file.
+
+	The more tiles in each direction, the smaller each tile and
+	the less readable the information on the display.  Generally,
+	having more than about 6 tiles on a side (36 total) is getting
+	a too small.
+
+	File name: tilesaves.prc
+
+	This procedure is included in tile.plib
+
+	Example:
+
+	You have data from NSAVE=1 through NSAVE=25 in the current
+	save file that together comprise a spectral-line map and you
+	want to display them as tiles on the graphics screen.
+	The separation on the sky was 1 arc-minute in both directions:
+
+		> MAXNSAVE=25
+		> TILESAVES(60, 60)
+

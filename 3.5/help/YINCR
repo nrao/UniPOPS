@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'YINCR:  (ADVERB) Determines the increment between y tick'
+PRINT 'marks of SHOW.'
+PRINT ' '

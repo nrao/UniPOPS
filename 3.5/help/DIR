@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DIR:  (PSEUDO) Lists the contents of the disk director.'
+PRINT 'Syntax: DIR or DIR directory/files'
+PRINT ' '

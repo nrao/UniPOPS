@@ -1,0 +1,34 @@
+	(ARRAY ADVERB of 24 elements)
+
+	HWIDTH  is an array containing the user's first guess of the
+	full-width at half the peak height (in number of channels) for
+	up to  24  Gaussians,  and  the  modified values after Gaussian
+	fitting using the verb GAUSS.  The values of HWIDTH must be
+	greater than 0.
+
+	HWIDTH is used by : GDISPLAY   GMODEL   GPARTS   RESIDUAL
+
+	HWIDTH is modified by : GAUSS
+
+	HWIDTH is set by : PEAK
+
+	The initial values of HWIDTH(N) are 0.
+
+	If FIXHW and FIXRELHW have a value of FALSE, then GAUSS will
+	determine values for HWIDTH.  If FIXHW or FIXRELHW = TRUE, the
+	user must supply NGAUSS values to HWIDTH.  If FIXHW = TRUE,
+	then GAUSS will not modify the values in HWIDTH.  If FIXRELHW =
+	TRUE, GAUSS will scale all values in HWIDTH be the same value.
+
+	If GAUSS is not called before GMODEL, GPARTS, or RESIDUAL,
+	NGAUSS values of HWIDTH should be set by the user.  PEAK will
+	set the HWIDTH of a single Gaussian.
+
+	EXAMPLE :
+
+	You want to fit two Gaussians.  For HWIDTH guesses, you specify :
+
+		NGAUSS = 2
+		HWIDTH(1) = 8
+		HWIDTH(2) =24
+		GAUSS

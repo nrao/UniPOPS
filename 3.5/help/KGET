@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'KGET: Retrieves the data and header for the specified scan '
+PRINT 'and feed from the "keep" file and places them in Array 0.'  
+PRINT 'Syntax: KGET scan_num.feed_num'
+PRINT ' '

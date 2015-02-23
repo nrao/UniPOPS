@@ -1,0 +1,12 @@
+	CB2 averages both polarizations of the second filter bank
+	for the scans in the ASTACK array.  It is assumed that the data
+	are in parallel mode (.03 and .04 subscan numbers).  Any
+	subscan numbers present in the scan numbers of the ASTACK
+	array are ignored.  There is no check for duplicate scan
+	numbers.
+
+	This procedure uses PSTACK to perform the ACCUM.
+
+	File name: cb2.prc
+
+	This procedure is included in LSETUP.12meter

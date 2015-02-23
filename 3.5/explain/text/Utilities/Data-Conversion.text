@@ -1,0 +1,29 @@
+	UniPOPS can convert data from many of the older formats NRAO
+	has produced over the years into the format that UniPOPS likes
+	as well as into many of the older formats.  Some utilities
+	have been provided to ease the conversion of data.
+
+	.  cvt.disk-disk        Converts a disk data file into
+				another disk file.
+
+	.  cvt.disk-tape        Converts a disk data file into
+				a file on tape.
+
+	.  cvt.tape-disk        Converts a data file located on tape
+				into a file located on disk.
+
+	.  cvt.tele-recs	Converts a Green Bank telescope archive
+				tape into an SDD individual records file
+				on disk.
+
+	.  ieee2pcpops          Converts an IEEE Keep data file
+				(possibly created using one of the
+				above utilities) into a format suitable
+				to be used by PC-Pops.
+
+	.  pdfl2sdd		Converts a VAX PDFL file (on old 12-m file 
+				type) to SDD format.
+
+	.  uni2fits             Converts disk or tape files from or to 
+	   fits2uni		SDD format into or from SD-FITS format.
+	   readfits

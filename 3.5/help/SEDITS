@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'SEDITS:  (CONTINUUM) Deletes the specified series or pairs'
+PRINT 'from the On-Off scan in Array 0 and recomputes the source'
+PRINT 'temperature and RMS with the pairs deleted.'
+PRINT ' '

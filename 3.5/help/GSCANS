@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'GSCANS:  (POINTER) Indicates gains data file for TELL,'
+PRINT 'SUMMARY, SELECT, CHNGFILE and Z_CHNGFIL.'
+PRINT ' '

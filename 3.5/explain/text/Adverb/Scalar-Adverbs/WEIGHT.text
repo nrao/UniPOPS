@@ -1,0 +1,27 @@
+	(SCALAR ADVERB)
+
+	WEIGHT contains the weighting that is applied to data when
+	averaged by SUM.  Its value should be > 0.
+
+	WEIGHT is used by : SUM
+
+	WEIGHT is set to 1 by AVE.
+
+	The initial value of WEIGHT is 0.
+
+	EXAMPLE :
+
+	To average a set of scans whose numbers are stored in  ASTACK,
+	weighting each by the inverse of its RMS, define the following
+	procedure:
+
+		PROCEDURE ADDS
+		SCALAR ADD_I
+		FOR ADD_I = 1 TO ACOUNT
+		  GET ASTACK(ADD_I); RMS
+		  WEIGHT = 1./VRMS; SUM
+		  END
+		AVE PAGE SHOW
+		FINISH
+
+	Now invoke the procedure ADDS.

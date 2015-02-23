@@ -1,0 +1,19 @@
+	(REGULAR VERB)
+
+	Syntax: MBIAS(factor)
+
+	MBIAS adds the value of the argument, factor, to the data in 
+	Matrix (0) and places the result in Matrix (0).
+
+	No adverbs are used or set by MBIAS.
+
+	EXAMPLE:
+
+	You want to subtract a value of -1.0 from Matrix (1) before
+	subtracting Matrix (1)  from Matrix (0) (this uses Matrix (2) 
+	as a temporary storage for the original contents of Matrix (0)):
+
+		MCOPY(0,2); MCOPY(1,0)
+		MBIAS(-1.0);
+		MCOPY(0,1); MCOPY(2,0)
+		MMINUS

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'BEEP:  (PROC-LIBRARY) Produces a beep on your terminal.'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'L1F2:  (HEADER-GB) Offset frequency no. 2 of local'
+PRINT 'oscillator no. 1 (MHz).'
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'STACK:  (POINTER) Indicates the ASTACK array for TELL.'
+PRINT ' '

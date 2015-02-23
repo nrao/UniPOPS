@@ -1,0 +1,72 @@
+	FIVELINE is used to reduce spectral-line five-point scans.
+
+	Syntax: FIVELINE(cscan, fb)
+
+	where cscan is the center scan number (any non-integer part is 
+	ignored) and fb is the filter bank.
+
+	If fb=1, then subscans .01 (and .02 if present) will be used.
+	If fb=2, then subscans .03 (and .04 if present) will be used.
+
+	The data is assumed to be taken in the order N-S-C-E-W
+	with each scan being separated by only 1 in the integer
+	part of each scan number (i.e. if the center is scan
+	number 20, then the north scan is scan number 18, the
+	south is scan number 19, etc).
+
+	This procedure uses Array(5) through Array(9).
+
+	The data are processed to construct appropriate input to
+	the spectral line PDOC verb.
+
+	File name: fiveline.prc
+
+	There are two short hand procedures that use this procedure:
+
+	FIVEL1 is short hand for FIVELINE(cscan, 1)
+	Syntax:  FIVEL1(cscan)
+	File name: fivel1.prc
+
+	FIVEL2 is short hand for FIVELINE(cscan, 2)
+	Syntax: FIVEL2(cscan)
+	File name: fivel2.prC
+
+	These procedures are included in LSETUP.12meter
+
+	LSETUP.12meter also sets the following useful aliases
+
+	LF is aliased to FIVELINE
+	LF1 is aliased to FIVEL1
+	LF2 is aliased to FIVEL2
+
+	FIVELINE asks several questions:
+
+	For 256 channel (series) data:
+		"Average the two `RECEIVERS' (1=YES, 0=NO)"
+
+		If you answer "1" then the other filter bank data will 
+		be averaged with this filter bank data independent of 
+		the argument to fb (which otherwise would only use the 
+		single filter bank).
+
+	"USE OLD BASELINE AND INTEGRATION REGIONS (1=YES, 0=NO)"
+
+		If you answer "1" then whatever current baseline fitting 
+		and integration regions are, they will remain the same.
+		Otherwise, you will be asked to set these regions with
+		the central scan displayed on the graphics screen.
+
+	If you answer "0" to the above question, you will be asked
+	to set the 2 baseline regions.  You should indicate the end
+	points of two line segments (i.e. 4 clicks of the cursor) which
+	cover the two regions you would like to use for the baseline
+	fit.  You will then be asked to enter the integration region.
+	You should indicate the end points of the region that you
+	want to integrate over (the procedure uses MOMENT).
+
+
+	"DISPLAY EACH SCAN ? (1 = YES, 0 = NO)"
+
+		If you answer "1" to this question, the spectra will
+		be displayed with increasing offset on the graphics
+		screen (N-S-C-E-W, in order from bottom to top).

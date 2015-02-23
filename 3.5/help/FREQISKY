@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FREQISKY:  (POINTER-LINE)  Used with SAXIS to indicate that'
+PRINT 'SHOW should use as an x-axis sky frequencies in the image'
+PRINT 'sideband - Tucson only.'
+PRINT ' '

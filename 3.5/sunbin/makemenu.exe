@@ -1,0 +1,53 @@
+#! /bin/csh -f
+# @(#)makemenu.exe.sh	5.2 10/27/94
+#
+# This is now defunct and the verb that uses this disabled, so this
+# should never get executed.  I'ld like to keep this around as an
+# historical record of what we did, so I don't want to completely
+# remove it.  This stuff at the start is just to cause an ugly exit
+# in the event that someone does manage to somehow call this.
+#
+echo "MAKEMENU is disabled.  This should NEVER be used."
+echo "Report this use to a UniPOPS guru."
+exit(-1)
+#
+# Script used by POPS to start up tooltool
+# Usage: makemenu.exe inputfile outputfile progname procid
+# inputfile = name of FIFO used by POPS; outputfile = file containing
+# values of POPS variables; progname = either a c or l
+# procid = process ID of calling process
+#
+if ($#argv != 4) then
+   echo "MAKEMENU: Bad parameters for Menus" > /dev/console
+   exit(-1)
+endif
+#
+if (! -e ${popsdir}tool/procstart || ! -e ${popsdir}tool/procterm || ! -e $2) then
+   echo "MAKEMENU: Bad parameters for Menus" > /dev/console
+   exit(-1)
+endif
+#
+# AA = list of curent procedures
+set aa = `grep procedure $2 | awk -F: '{print $3}'`
+rm -f .${3}proctool
+cat ${popsdir}tool/procstart >! .${3}proctool
+if ($#aa >= 1) then
+      foreach proc ($aa)
+	 echo button $proc >> .${3}proctool
+	 echo normal \"$proc\" \{ send format\(\" $proc \(\%s\)\\n\", params\)\; >> .${3}proctool
+	 echo params \= \" \"\;\} >> .${3}proctool
+	 echo end_button >> .${3}proctool
+	 end
+endif
+cat ${popsdir}tool/procterm >> .${3}proctool
+# Create proctool file which contains gadgets for all known procedures
+#
+rm -f .${3}findfile $1
+if ($status != 0) exit($status)
+/usr/etc/mknod $1 p
+if ($status != 0) exit($status)
+ln $2 .${3}findfile
+if ($status != 0) exit($status)
+#
+exec tooltool -f ${popsdir}tool/${3}toolfile $1 $4 \
+	-WI ${popsdir}sunbin/menu.icon -WL "" &

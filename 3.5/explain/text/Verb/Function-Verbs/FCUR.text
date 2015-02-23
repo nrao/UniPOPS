@@ -1,0 +1,34 @@
+	(FUNCTION VERB)
+
+	FCUR is a function that activates the cross hair and returns a
+	value depending upon where the cross hair is located.  For SHOW
+	plots, the following applies:
+
+L------------------------- Spectral Line ------------------------------
+L-      If a frequency can be calculated from the data and header in
+L-      array (0), FCUR activates the cross hair and returns the
+L-      frequency offset from the center frequency (in MHz) for the
+L-      cross hair position of the current display.  It will not work if
+L-      the header information in Array (0) is insufficient for 
+L-	calculating frequencies.
+L------------------------- Spectral Line ------------------------------
+
+C------------------------- Continuum ----------------------------------
+C-      If a elapsed time can be calculated from the data and header in
+C-      array (0), FCUR activates the cross hair and returns the 
+C-      time offset from the start of scan (in sec.) for the cross hair
+C-      position of the current display.  It will not work if the
+C-      header information in Array (0) is insufficient for 
+C-      calculating times.  
+C------------------------- Continuum ----------------------------------
+
+	For a two-dimensional display, FCUR will return the y-axis value.
+
+	No adverbs are set or used by FCUR.
+
+	EXAMPLE:
+
+	You have displayed a scan on the graphics screen and want to
+	know the frequency offset of a certain point, so specify;
+
+		PRINT FCUR      	

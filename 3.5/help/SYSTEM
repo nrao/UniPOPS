@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SYSTEM:  (PSEUDO) Executes the specified system command.'
+print 'Syntax: SYSTEM sys_command.'
+PRINT ' '

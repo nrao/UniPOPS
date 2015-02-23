@@ -1,0 +1,30 @@
+	(REGULAR VERB)
+
+	REPLACE replaces within Array (0) up to 12 bad channels, whose
+	numbers you have stored in array BADPT, with a parabolic
+	interpolation over adjacent channels.  The verb SPIKE will help
+	you set up the BADPT array.
+
+  	ADVERBS USED:
+
+	  BDROP         # points to be ignored at beginning of data.
+	  EDROP         # points to be ignored at end of data.
+			Initial values are 0.
+
+
+	  BADPT(12)     Array of bad channels.  BASPT is set by SPIKE
+			or can be set by the user.  Initial value is 0.
+
+	No adverbs are set by REPLACE.
+
+	EXAMPLE:
+
+	You have some interference spikes in Array (0) which exceed
+	.5 degrees Kelvin, so specify:
+
+		CUTOFF=0.5		Set the temperature cutoff
+		SPIKE			Finds BADPT's
+		REPLACE			Interpolates the channels that
+					exceed CUTOFF found in BADPT
+		PAGE SHOW		Will redisplay the spectra with
+					  replaced channels.

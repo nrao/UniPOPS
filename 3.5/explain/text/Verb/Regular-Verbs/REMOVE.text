@@ -1,0 +1,38 @@
+	(REGULAR VERB)
+
+     	Syntax:  REMOVE (arraynum)
+
+	REMOVE erases the data and header information from the
+	associated array specified by arraynum.  All subsequent
+	references to this array for data will give 'Index out of
+	range' and header references will give zero or Infs.  REMOVE
+	allows any of the ten arrays to be cleared by the user for
+	experimenting with other data and header manipulations as
+	desired.
+
+	The arrays are numbered from 0 through 9.
+
+	No adverbs are used or set by REMOVE.
+
+	EXAMPLE:
+
+	You want to plot system temperature for a series of scans, so
+	define the following procedure:
+
+		PROC PLOTSYS(PLS_1,PLS_2)
+		SCALAR PLS_I, PLS_NUM
+		REMOVE (3)
+		PLS_NUM=0
+		FOR PLS_I = PLS_1 TO PLS_2
+		  GET PLS_I
+		  PLS_NUM = PLS_NUM+1
+		  H3(NOINT) = PLS_NUM
+		  D3(PLS_NUM) = H0(STSYS)
+		  END
+		COPY(3,0)
+		PAGE SHOW
+		RETURN
+		FINISH
+
+	Then type PLOTSYS(1000,1020) and you will get a plot of system
+	temperature for the specified range of scans.

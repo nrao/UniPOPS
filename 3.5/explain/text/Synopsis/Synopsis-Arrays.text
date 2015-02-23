@@ -1,0 +1,72 @@
+#if CKBK
+A-2 Array Adverbs
+-----------------
+#end
+
+In the descriptions, the sizes of array are given in parentheses after
+the adverbs' names.
+
+BADPT:   (12)  Bad channels found by SPIKE and used by REPLACE.
+
+BPARM:   (15)  Chebyshev polynomial coefficients found by BASELINE
+	       or BSHAPE and used by BMODEL or BSHOW.
+
+CENTER:  (24)  Either initial guesses for Gaussian centers or the
+	       values found by GAUSS or PEAK (channels).
+
+CLUT:   (3x32) Color-Look-Up table for 2-d color raster plots.
+
+CMARK:   (12)  Channels at which SHOW draws vertical line.
+	       X-axis values at which PLOT draws vertical lines.
+	       X-cell numbers at which LABEL draws vertical lines.
+
+CNTERR:  (24)  Errors on Gaussian centers in CENTER.
+
+CONLINE: (32)  Line types for contour levels for 2-d plots.
+
+FLEVS:   (32)  Relative number of data points FUNCLEV is place at each level.
+
+FMARK:   (12)  Frequencies relative to band center in MHz (LINE), or
+	       time relative to beginning of scan in sec (CONDAR), at
+	       which SHOW is to draw vertical lines.  Y-axis values
+	       at which LABEL draws horizontal lines.
+
+GMFRAC:   (5)  Contains the input values for GMEASURE.
+
+GOUT:   (6x5)  Contains the results of GMEASURE.
+
+GREGION: (48)  Channel nos. determining Gaussian-fit regions.
+
+HEIGHT:  (24)  Gaussian heights found by GAUSS or PEAK.
+
+HGHTERR: (24)  Errors on Gaussian heights in HEIGHT. 
+
+HWERR:   (24)  Errors in Gaussian FWHM in HWIDTH.
+
+HWIDTH:  (24)  Either initial guesses for Gaussian FWHM or the 
+	       values found by GAUSS or PEAK (channels).
+
+LEVS:    (32)  Contour levels used by 2-d plotting routines.
+
+MLIMS:  (2x5)  Set by MLIMITS to the max and min values and
+	       coordinates of Matrix (0).
+
+NREGION: (32)  Channel nos. defining baseline-fit regions.
+
+SIZE:    (2)   The results of MOMENT.  Units of SIZE(1) and (2) are
+	       K km/s and km/s for a spectrum (LINE), or K deg and deg
+	       for a scan (CONDAR), respectively.
+
+SMWGT:   (12)  Weight function used by SMOOTH.
+
+STATUS:  (32)  Flag array which contains current UniPOPS status.
+
+TMARK:   (12)  Y-values where SHOW & PLOT draw horizontal lines.
+	       Y-cell numbers where LABEL will draw horizontal lines.
+
+VMARK:   (12)  Velocities in km/s (LINE), or positions relative to scan
+	       start in deg (CONDAR), where SHOW draws vertical lines.
+	       X-axis values where LABEL will draw vertical lines.
+#if CKBK
+
+#end

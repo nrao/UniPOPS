@@ -1,0 +1,12 @@
+PRINT ' '
+PRINT 'RASTER:  Plots the contents of Matrix (0) as a color or'
+PRINT 'gray-scale raster image.'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT 'MRATIO=',MRATIO
+PRINT 'LEVS='
+print LEVS
+PRINT 'CLUT='
+print CLUT
+PRINT ' ' 

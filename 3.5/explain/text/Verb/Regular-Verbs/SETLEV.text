@@ -1,0 +1,40 @@
+	(REGULAR VERB)
+
+	Syntax:  SETLEV(start, increment, num_levs, type)
+
+	SETLEV facilitates assigning values for contour levels to the
+	array adverb LEVS.  You specify a starting level, an increment
+	between levels, the number of desired levels (between 1 and
+	32), and whether the levels are to proceed in a logarithmic or
+	linear fashion.
+
+	The increment must always be > 0.0.
+
+	The starting value can be any value for linear levels.
+
+	If logarithmic levels and if the starting value is < 0.0, then
+	the increment must be less than 1.0.  If logarithmic and the
+	starting value is > 0.0, then the increment must be > 1.0.  For
+	logarithmic levels, increment can't equal 1.0 and the starting
+	value cannot equal 0.0.
+
+	For logarithmic levels, you should use a type of level of FALSE
+	(-1).  For linear, type should be TRUE (+1).
+
+	No adverbs are used by SETLEV.
+
+	ADVERBS SET:
+
+	  LEVS(32)	Contour levels.  If you have specified
+			num_levels, then all LEVS with indices
+			greater than num_levels will be assigned a
+			the default value of LEVS (-999999).  
+
+	EXAMPLE:
+
+	You want to set up logarithmic contour  with 3 db spacing
+	starting at 1.0 and going for 10 levels.  You would type:
+
+		SETLEV(1, 10**.3, 10, FALSE)
+
+	

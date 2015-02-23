@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'FSTATUS:  Lists all open ASCII files and the file''s'
+PRINT 'attributes.'
+PRINT ' '

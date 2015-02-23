@@ -1,0 +1,134 @@
+	(REGULAR VERB)
+
+	Syntax:    CHNGONLINE on-line_file_type on-line_file_version
+
+	CHNGONLINE is for 12-m on-line spectral-line data only.  It
+	allows the user to change the assumption about unspecified
+	feed or subscan number as well as the actual on-line file
+        currently being accessed for that file type.
+
+	The 12-m has two types of spectral line data, filter
+	bank and hybrid spectrometer.  The current numbering scheme is
+	that filter bank scans have subscan numbers .01 through .04.
+        Hybrid spectrometer subscan numbers start at .11.  Continuum data
+ 	is also written to the same file as the filter bank data.
+
+        There are a number of situations where UniPOPS must make an
+	assumption about the subscan number or location of the on-line
+	data.  If you "GET" a scan without specifying the subscan number,
+	UniPOPS assumes either .01 or .11 depending on the most
+	recent CHNGONLINE use (.01 being the default at startup).
+	The same is true of the related verbs (GET0, GET1, OFF, ON,
+	GGET, etc), but is not true of CGET and CGGET which must
+        always be supplied with a valid subscan number.
+
+        In addition, SELECT, SUMMARY, and TELL currently only select from
+        or report on one type of data file.  CHNGONLINE determines
+	which type is used (the default being filter bank data at
+	startup).
+
+        During a single 12-m observing run, several on-line data files
+        may be required to hold all of the data.  CHNGONLINE allows the 
+	user to select from which of these several on-line files to retrieve 
+	data.  The default on-line_file_version at startup is the highest 
+        version for each on-line file type found in the on-line data area 
+	(indicated by the environment variable TOPDATA) for each on-line 
+	file type.
+
+        Valid 12-m on-line_file_type values are:
+
+	    HCTYPE - hybrid spectrometer 
+	    FBTYPE - filter bank
+            CONTYPE - continuum
+
+        CONTYPE is allowed only while runing condar, HCTYPE and FBTYPE
+        are allowed only while running line.
+
+        The following rules are used in interpreting on-line_file_version
+            0: use the highest (most recent) version
+            n: use version n (n between 1 and 999 inclusive)
+           -n: use version (current - n), i.e. -1 would mean use the version
+               preceding the version currently in use.
+
+        Three pointer adverbs indicate the currently opened version number
+        of each of the 3 file types:
+
+            FB_VER - the current filter bank file version number
+            HC_VER - the current hybrid spectrometer file version number.
+            CON_TYPE - the current continuum file version number
+
+        If the requested version number does not exist, a Severe error
+        occurs (error code 375).  ERROFF can therefor be used in
+        conjunction with CHNGONLINE.  If an error in version number is
+        noticed, the current status of version number does not change
+        but the default file type WILL change.
+
+        An attempt is always made to open a gains file of the same version
+        number as its corresponding pdfl file (i.e. if pdfl_hc.xyz_004 is
+        opened for access, gzfl_hc.xyz_004 should also be opened), there
+        is no error if the associated gains file is unavailable.  There is
+        no way to select a gains file having a different version number from
+        the pdfl file of the same type.
+        
+	The FILES verb indicates the current file type being used :
+	FB means that filter bank or continuum assumptions are in effect, 
+        HC means hybrid spectrometer assumptions are in effect.
+
+        Use OLFILES to obtain a listing of the currently opened on-line files.
+
+        Use CHNGVER to obtain a listing of available versions and to
+        select one of those versions.
+
+        HC_VER, FB_VER, and CON_TYPE may be altered by CHNGONLINE.
+
+	EXAMPLES:
+
+	The user is reducing filter bank data and wants to examine the
+	the hybrid spectrometer data:
+
+	   > CHNGONLINE(HCTYPE, HC_VER)
+           > GET 1234
+
+		This would return scan 1234.11
+                By using HC_VER, the current version number is not changed.
+
+		Assuming the above CHNGONLINE has not been superseeded by
+		a subsequent CHNGONLINE the following would select scan
+		from the hybrid spectrometer data file:
+
+	   > SELECT ONDATA
+
+
+         The user wants to examing filter bank data from file 003:
+
+           > CHNGONLINE(FBTYPE,3)
+
+                FB_VER would change to version 3, assuming version 3 exists.
+
+         The user wants to examine the most recent continuum data (this
+         user must be running condar):
+
+           > CHNGONLINE(CONTYPE, 0)
+
+                CON_VER would be set to the highest version number found.
+
+         HC_VER is currently set at 5, the user wants to access version 3:
+
+           > CHNGONLINE(HCTYPE,-2)
+
+                HC_VER would change to 3, assuming it exists.
+
+         Alternatively,
+    
+           > CHNGOLINE(HCTYPE,(HC_VER-2))
+
+         would have the same effect.
+
+         If the user types the following, and version 7 does not exist:
+
+           > CHNGONLINE(FBTYPE, 7)
+
+         The message for error code 375 would be displayed and the
+         default file type would be changed to filter bank.  The
+         value of FB_VER would remain the same, however.
+

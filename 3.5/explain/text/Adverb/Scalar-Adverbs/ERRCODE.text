@@ -1,0 +1,29 @@
+	(SCALAR ADVERB)
+
+	ERRCODE is an adverb which UniPOPS sets to the error code of
+	the last operation performed.  If the operation  was completed
+	successfully, ERRCODE is set to 0, otherwise it is set to a 
+	non-zero integer.  ERRCODE can be used with ERROFF to trap 
+	conditions which would normally result in termination of a loop, 
+	procedure, etc.
+
+	No verbs use or change ERRCODE.
+
+	The initial value of ERRCODE is 0.
+
+	EXAMPLE : 
+
+	You wish to trap an error created by trying to get a scan which
+	does not exist. Use the following procedure.
+
+		PROCEDURE CHKERR(CHK_I1,CHK_I2)
+		SCALAR CHK_I
+		FOR CHK_I = CHK_I1 TO CHK_I2
+		   ERROFF ; GET CHK_I ; ERRON
+		   IF ERRCODE ~= 0. THEN
+		      PRINT 'CANNOT FIND SCAN NO.'  CHK_I
+		   ELSE
+		      BASELINE KEEP 
+		   END
+		END
+		FINISH	

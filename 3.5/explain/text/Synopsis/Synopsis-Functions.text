@@ -1,0 +1,162 @@
+#if CKBK
+#def SCT A-6.
+#def DSH ----
+A-6 Function and Internal Array Verbs
+-------------------------------------
+
+#else
+#def SCT 
+#def DSH
+#end
+SCT1 Function Verbs
+DSH----------------
+
+ABS:      Returns absolute value of argument.
+
+ACOS:     Returns arc cosine (in radians) of argument.
+
+ASIN:     Returns arc sine (in radians) of argument.
+
+ATAN:     Returns arc tangent (in radians) of argument.
+
+ATAN2:    Returns arctan (in radians) of 1st argument divided
+	  by 2nd.   Syntax:  ATAN2(A, B) i.e.  arctan(A/B).
+
+C2XPIX:   Interprets the argument as a c-value and returns the 
+	  corresponding x-pixel value.
+
+CCUR:     Returns channel no. at location of crosshair for SHOW.
+          Returns x-axis value at location of crosshair for PLOT.
+          Returns x-cell no. at location of crosshair for 2-d plot.
+
+CHANTOX:  Returns x-value, in units of defined lower x-axis,
+	  that corresponds to given channel no.
+
+COMPARE:  Compares TWO strings and returns TRUE if identical,
+          else, FALSE.  Syntax: COMPARE(string1, string2)
+
+CONCAT:   Returns the concatenation of TWO strings. 
+	  Syntax: CONCAT(string1, string2)
+
+COS:      Returns the cosine of argument (in radians).
+
+COSH:     Returns the hyperbolic cos of argument (in radians).
+
+DATE:     Returns a 16-character string containing the current date.
+
+DIM:      Returns the positive difference of the TWO arguments.
+ 	  Syntax: DIM(X1, X2) and returns X1-X2 if X1>X2; else 0.
+
+EXP:      Returns the value of e raised to the specified power.
+
+FCUR:     For SHOW, returns frequency relative to band center in MHz
+	  (LINE), or time relative to beginning of scan in sec
+	  (CONDAR), at location of crosshair.  For 2-d plot, returns
+	  y-axis value at location of crosshair.
+
+FNAME:    Returns a string containing the file name corresponding to
+	  the file number given as the argument.
+
+FOPEN:    Opens the specified ASCII file using the specified
+	  properties.  Returns the unit number for the opened file.
+	  Syntax: unit=FOPEN(name,props)
+
+IFIX:     Returns the truncated integer part of the argument.
+	  Synonymous with INT.
+
+INDEX:	  Returns 1st location in a string where a 2nd string is
+	  located. Syntax: INDEX(string1, string2)
+
+INT:      Returns the truncated integer part of the argument.
+	  Synonymous with IFIX.
+
+LENGTH:   Returns no. of characters in string argument.
+
+LNBLNK:   Returns position of last non-blank character in a string.
+
+LOG:      Returns the natural (base e) logarithm of the argument.
+
+LOG10:    Returns the common (base 10) logarithm of the argument.
+
+MAX:      Returns the maximum value of the TWO arguments.
+	  Syntax:  MAX(x1, x2)
+
+MCUR:     For 2-d plot, returns z-value at location of crosshair.
+
+MIN:      Returns the minimum value of the TWO arguments.
+	  Syntax: MIN(x1, x2)
+
+MOD:      Returns the modulus of the TWO arguments.
+	  Syntax:  MOD(x1, x2) , equals the remainder of x1/x2.
+
+NINT:     Returns the nearest integer to the given parameter.
+
+RAND:     Returns a random number between -1 and 1.
+
+SIGN:     Returns absolute value of first argument times sign
+	  of second (transfer of sign).  Syntax:  SIGN(x1, x2)
+
+SIN:      Returns sine of the argument (in radians).
+
+SINH:     Returns hyperbolic sine of argument (in radians).
+
+SQRT:     Returns square root of the argument.
+
+SUBSTR:   Returns substring contained between two locations in a given
+	  string. Syntax: SUBSTR(string1, x1, x2)
+
+T2YPIX:   Interprets the argument as a t-value and returns the 
+	  corresponding y-pixel value.
+
+TAN:      Returns tangent of argument (in radians).
+
+TANH:     Returns hyperbolic tangent of argument (in radians).
+
+TCUR:     Returns y-axis value at location of crosshair for SHOW and
+	  PLOT.  Returns y-cell no. at location of crosshair for 2-d
+	  plot.
+
+TIME:     Returns an 8 character string containing the current time.
+
+VCUR:     For SHOW, returns velocity in km/s (LINE), or position
+	  relative to scan start in deg (CONDAR), at location of
+	  crosshair.  For 2-d plot, returns x-axis value at the
+	  location of crosshair.
+
+XCUR:     Returns x-axis pixel no at location of crosshair.
+
+XPIX2C:   Interprets the argument as an x-pixel value and returns the 
+	  corresponding c-value.
+
+XTOCHAN:  Returns channel no. corresponding to given x-value,
+	  entered in units of defined lower x-axis.
+
+YCUR:     Returns y-axis pixel no at location of crosshair.
+
+YPIX2T:   Interprets the argument as a y-pixel value and returns the 
+	  corresponding t-value.
+
+
+SCT2 Internal Array Verbs
+DSH----------------------
+
+ASTACK:   Returns or sets value of specified element in the stack.
+
+CD0:	  Returns value of given data point in Cube (0).
+	  Syntax:  CD0(x1, x2, x3)
+
+CH0:	  Returns value of given header parameter in Cube (0).
+
+D0 - D9:  Returns or sets value of given data point in Array (n).
+
+H0 - H9:  Returns or sets value of given header parameter in 
+	  Array (n).
+
+MD0-MD3:  Returns or sets value of given data point in Matrix (n).
+	  Syntax:  MDn(x1, x2)
+
+MH0-MH3:  Returns or sets value of given header parameter in 
+	  Matrix (n). 
+#if CKBK
+
+#end

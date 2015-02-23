@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TVANE:  (ADVERB) Ambient temperature (vane temperature) for'
+PRINT 'use in SOLVETIP.'
+PRINT ' '

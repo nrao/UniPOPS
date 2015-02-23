@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'CGGET: Retrieves the specified feed for the most recent'
+PRINT 'gains scan and places the header and data into Array 3.'
+PRINT 'Syntax: CGGET feed.'
+PRINT ' '

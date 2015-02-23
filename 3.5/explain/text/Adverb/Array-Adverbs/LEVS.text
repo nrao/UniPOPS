@@ -1,0 +1,35 @@
+	(ARRAY ADVERB of 32 elements)
+
+	LEVS is an array containing the intensities at which contour
+	levels are to be plotted by CONTOUR, QCONTOUR, HLFTNE, and 
+	RASTER. Up to 32 levels (in monotonically increasing order)
+	may be specified.
+
+	LEVS is used by : CONTOUR  HLFTNE  LABEL  QCONTOUR  RASTER						
+	LEVS is set by : AUTOLEV   SETLEV  EQHISTLEV  FUNCLEV
+
+ 	The initial values of LEVS(N) are -999999.
+
+	The user must specify the levels he or she wants drawn before
+	invoking any two-dimensional display verb.  Do not alter the
+	values in LEVS between the time you perform a two-dimensional
+	display and when you perform a LABEL. 
+
+	The first contour level beyond the highest level you wish to
+	plot, should be set equal to either DEFAULT or -999999.
+
+	EXAMPLE :
+
+	You want to plot a contour map with contours at every half
+	degrees from 1 to 3, specify :
+
+		LEVS(1) = 1
+                LEVS(2) = 1.5
+                LEVS(3) = 2
+                LEVS(4) = 2.5
+                LEVS(5) = 3
+                LEVS(6) = DEFAULT
+
+	or more conveniently, specify :
+
+		LEVS = 1, 1.5, 2, 2.5, 3, DEFAULT

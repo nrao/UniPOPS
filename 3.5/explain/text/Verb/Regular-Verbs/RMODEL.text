@@ -1,0 +1,49 @@
+	(REGULAR VERB)  
+	
+	RMODEL evaluates the last calculated sinusoidal curve and
+	replaces Array (0) with the sinusoid.  RMODEL uses the sinusoid
+	coefficients RAMPLTDE, RPHASE, and RPERIOD, which probably are
+	the results of the previous call to RIPPLE or RSHAPE.
+
+	Most often used in conjunction with RSHAPE to compute a
+	sinusoidal curve without subtracting it from the data.  It is
+	often useful to plot the curve on top of the data for
+	comparison purposes.
+
+ 	The functional form of the sinusoid at channel i is:
+
+	RAMPLTDE * cos((i-RPHASE)*2pi/RPERIOD)
+
+	ADVERBS USED:
+
+	  RAMPLTDE	The amplitude of the sinusoid.
+	  RPERIOD	The period in channels.
+	  RPHASE	The phase in channels.
+
+
+	No adverbs are set by RSHOW.
+
+
+	EXAMPLE:
+
+	To remove the same sine curve from each of twenty scans from 7238 to
+	7257 on the same source, use the following procedure:
+
+		PROCEDURE DIFMODEL(DIF_X,DIF_Y)
+		# DIF_X and DIF_Y are the 1st and last scans to work on
+		SCALAR DIF_J 
+		GET DIF_X                        
+       	 	# Get first scan in order to create model.
+       	 	RSHAPE RMODEL
+        	COPY (0,1)                       
+        	# Form the model in Array (0) and copy it to Array (1).
+        	FOR DIF_J=DIF_X TO DIF_Y;        
+		#    Get all scans wanted, difference it with the model, and show result.
+	  	     GET DIF_J; DIFF PAGE SHOW	 
+	  	     END
+		FINISH	
+
+	Now you can invoke the above procedure with something like:
+
+		DIFMODEL(7238,7257)		      
+

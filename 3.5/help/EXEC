@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'EXEC:  Execute a string of POPS commands as if it had been'
+PRINT 'typed on the command line or found at that location within' 
+PRINT 'a procedure.'
+PRINT ' '
+PRINT 'Syntax: EXEC(string)',
+PRINT ' ' 

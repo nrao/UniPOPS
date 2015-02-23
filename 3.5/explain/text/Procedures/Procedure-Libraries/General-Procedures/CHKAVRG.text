@@ -1,0 +1,49 @@
+	CHKAVRG examines the scan numbers found in the ASTACK array
+	and produces a list of scans (by scan number) which have the
+	same coordinates to within a specified tolerance.
+
+	Syntax: CHKAVRG(x_tol, y_tol)
+
+	x_tol and y_tol are pointing tolerances -- any two scans located
+	within these distances from each other are considered to be taken
+	at the same location.  x_tol and y_tol are in arcseconds and
+	cannot be zero.
+
+	The coordinates are those found the XSOURCE and YSOURCE header
+	words.
+
+	The output is written to the screen.  The sort process uses
+	the file chkavrg.temp which must not exist before using
+	this procedure.  This file is deleted at the successful
+	conclusion of CHKAVRG.
+
+	This procedure is useful if you want to see if there are any
+	duplicate positions (which are in general not dealt with by
+	most of the mapping procedures and the cube.exe utility).
+	You can reduce these by hand or use the procedure PRCSTK to
+	reduce them and save them to the current SAVE file.
+
+	The data is fetched using GET and the values in the ASTACK array.
+
+	This procedure uses the SORTSTK procedure to sort the information.
+	You should read the documentation for SORTSTK for more information
+	on what that procedure does.
+
+	File name: chkavrg.prc
+
+	This procedure is included in maps.plib
+
+	Example:
+
+	You want to make a map having pixels 30x20 arcseconds in area.
+	You have already loaded the scan numbers of the data that will
+	make up this map in to the ASTACK array (e.g. by using SELECT).
+	You want to make sure that there is no overlap of the data
+	(i.e. only at most one scan per pixel).  So you type:
+
+		> CHKAVRG(30, 20)
+
+	And the results of the procedure will be written to your
+	screen.  New positions are separated by "-------------".
+	On each line between the above string is printed the
+	scan number, x, and y positions.

@@ -1,0 +1,36 @@
+#! /bin/csh -f
+# @(#)makefile.exe.sh	5.1 06/22/94
+#
+# Makes a POPS data file or a POPS memory file in the current directory.
+# For data files, if no size is specified then simply copy EMPTY if it exists,
+# otherwise use makeempty.exe.
+#
+set noglob
+if ($#argv >= 1) then
+   if ($1 == LMEMORY) then
+	cp -i ${popsdir}sunbin/LMEMORY .
+   	if ($status != 0) goto err
+   else if ($1 == CMEMORY) then
+	cp -i ${popsdir}sunbin/CMEMORY .
+   	if ($status != 0) goto err
+   else 
+        if ( $#argv == 1 && -r ${popsdir}sunbin/EMPTY ) then
+	   cp -i ${popsdir}sunbin/EMPTY $1
+   	   if ($status != 0) goto err
+        else
+           ${popsdir}utilities/makeempty.exe $1 $2
+   	   if ($status != 0) goto err
+        endif
+   endif
+   chmod go-wr $1
+   exit(0)
+else
+   echo 'USAGE: makefile.exe filename [filesize]'
+   exit(-1)
+endif
+#
+err:
+echo " "
+echo "***ERROR***  Cannot create file"
+echo " "
+exit(-1)

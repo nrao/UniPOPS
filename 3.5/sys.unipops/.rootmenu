@@ -1,0 +1,45 @@
+#
+#	@(#)rootmenu	10.13 88/03/07 SMI
+#
+#	sunview root menu
+#
+"Shells"		MENU
+	"Command Tool"		cmdtool
+	"Shell Tool"		shelltool
+	"Graphics Tool"         gfxtool
+	"Console"               cmdtool -C
+"Shells"		END
+"Editors"               MENU
+        "Text Editor"		textedit
+        "Defaults Editor"	defaultsedit
+        "Icon Editor"		iconedit
+        "Font Editor"		fontedit
+"Editors"               END
+"Tools"            	MENU
+	"Mail Tool"             mailtool
+        "popsTOOL"   ~/3.5/sunview/popstool.exe
+        "Performance Meter"	MENU
+                "Percent CPU Used"			perfmeter -v cpu
+                "Ethernet Packets"                      perfmeter -v pkts
+                "Swapped Jobs"                          perfmeter -v swap
+                "Disk Transfers"                        perfmeter -v disk
+        "Performance Meter"	END
+        "Clock"			MENU
+                	</usr/include/images/clock.icon>        clock
+                	</usr/include/images/clock.rom.icon>    clock -r
+        "Clock"         	END
+"Tools"			END
+"Services"		MENU
+        "Redisplay All"         REFRESH
+        "Printing"      	MENU
+                "Check Printer Queue"   sh -c "echo; echo '-----------------'; echo 'Printer queue'; lpq; echo '-----------------'"
+                "Print Selected Text"   sh -c "get_selection | print ; echo 'Selection printed'."
+        "Printing"      	END
+	"Remote Login"		MENU
+		"Command Tool"  cmdtool csh -c "echo -n 'Hostname? '; exec rlogin $<"
+                "Shell Tool"    shelltool csh -c "echo -n 'Hostname? '; exec rlogin $<"
+        "Remote Login"		END
+	"Save Layout"   sh -c "mv -f $HOME/.sunview $HOME/.sunview-;toolplaces>.sunview; echo 'Screen layout saved (Previous layout in .sunview-)'"
+        "Lock Screen"           lockscreen
+"Services"      	END
+"Exit SunView"          EXIT

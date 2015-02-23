@@ -1,0 +1,19 @@
+	UniPOPS has a few utilities that will go through the on-line data
+	file and quickly reduce pointing and calibration observations.
+	These utilities are telescope and site dependent and may not exist
+	at all sites.
+
+	For data from the 140-ft telescope, the following utilities are
+	available:  
+
+	.  pointing             Reduces continuum pointing
+				measurements made with the POINT or
+				PEAK observing procedures.
+
+	.  vsst.systemp         Reduces system temperature
+				measurements made in the continuum with
+				the VSST observing procedure.
+
+	.  vsst.sourcetemp      Reduces source temperature measurements
+				made in the continuum with the VSST
+				observing procedure.

@@ -1,0 +1,49 @@
+	PSTACK is the workhorse of the spectra line averaging
+	procedures at the 12-meter.  Procedure like C1, C2,
+	CB, etc, all ultimately use PSTACK.
+
+	PSTACK uses the scan numbers in the ASTACK array to average
+	data (using the ACCUM verb) according to the arguments given.
+
+	Syntax: PSTACK(fb, polz)
+
+	fb is the filter bank (1 or 2) or IF number if hybrid spectrometer 
+	data is to be used.
+
+	polz is the polarization channel (1 or 2).
+
+	Only the integer part of the values in the ASTACK array are
+	used to construct the scan number.  There is no check for
+	duplicate scan numbers.
+
+	The choice of filter bank data or hybrid spectrometer data is
+	set by the last use of one of the FBDATA or HCDATA procedures
+	(which set a global variable, spectype).
+
+	PSTACK constructs the scan numbers according to its arguments
+	and GETs the data.  The work done with each scan is done by
+	the PRCSTACK procedure.
+
+	PSTACK is not generally invoked by the casual user.
+
+	File name: pstack.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Example:
+
+	. You are using filter bank data (set by FBDATA) and wish to
+	  average the .02 subscan numbers together.
+
+		PSTACK(1, 2)
+
+		(.02 is from the first filter bank, and is the second
+		 polarization)
+
+	. You are using filter bank data (set by FBDATA) and wish to
+	  average the .03 subscan numbers together.
+
+		PSTACK(2,1)
+
+		(.03 is from the second filter bank, and is the second
+		polarization).	

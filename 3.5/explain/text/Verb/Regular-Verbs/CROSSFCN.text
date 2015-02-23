@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	CROSSFCN computes a cross-correlation function of the contents
+	of Array (0) and Array (1).  The data in Array (0) is
+	overwritten with the results of the cross-correlation.
+
+	The number of data points in both arrays must be the same.
+
+	No adverbs are used or set by CROSSFCN.
+
+	EXAMPLE:
+
+	Your observation is rather noisy but you are sure a line
+	exists and it probably has a line-width of 5 channels.  You can
+	optimally filter the data by constructing a Gaussian of width 5
+	channels, centered within the bandpass, of height one and
+	cross-correlating the model spectra with the real one.  To do
+	this, type the following:
+
+		GET 1000; 
+		HEIGHT=1; CENTER=H0(NOINT)/2+1; HWIDTH=5
+		GMODEL COPY(0,1)
+
+	to create the model of the line.  And, then:
+
+		GET 1000; CROSSFCN PAGE SHOW
+
+	To perform the cross-correlation and to display the results.
+

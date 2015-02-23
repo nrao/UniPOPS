@@ -1,0 +1,642 @@
+5. Data Access and Manipulation
+-------------------------------
+
+This chapter tells you about UniPOPS data. It describes the data files
+available to the UniPOPS user, and their access and manipulation. You
+will be told how to find which files and scans are currently available
+to you and how to change or delete the files, or create new files. You
+will find out how to change the project code for which you can currently
+access data.  The chapter will also describe the operations of reading
+data from a disk file to a UniPOPS working array, moving and copying it
+between working arrays, and writing it out to an appropriate disk
+file.  Access to the header parameters of a scan, and its individual
+data values, are described in Sections 9.3 - 9.5. This Chapter will
+concentrate on simple one-dimensional spectra and scans. The user who
+is interested in two- or three-dimensional data (Matrices and Arrays)
+should consult Chapter 16.
+
+5.1 Data Files, their Access and Manipulation
+---------------------------------------------
+
+Presently, the UniPOPS program has simultaneous access to six data
+files on disk. These files all hold data scans (often referred to in
+this COOKBOOK as `spectra') in identical formats.  The files are,
+
+    i) the `on-line data' file available to any user with either
+       direct, or network, access to the telescope computers at NRAO
+       Green Bank or Tucson. This file contains the observational data
+       taken most recently with the telescope. Though the actual name,
+       size, and location of the file is site dependent, this should be
+       transparent to the user. This file is READ ONLY. At Green Bank,
+       when the user enters their project code at login, access within
+       the `on-line' file is restricted to just the scans taken for
+       that project.  However, the project-of-interest can be changed
+       at will via the verb CHNGPRJ (see Section 5.4.1). 
+
+       Scans in this file (and the `off-line data' file) are accessed
+       by the scan number, plus the receiver (or feed) number using the
+       scheme,
+
+		scan no. + (rx no. / 100.)
+
+       If the scan number alone is used, the first receiver (or feed)
+       is assumed.
+
+   ii) the `off-line data' file contains scans which the user has
+       previously stored in it using the KEEP or SAVE facilities (see
+       Sections 5.9 and 5.10), or has imported from tape. This file
+       can have a user-selected name, (the UniPOPS defaults are LDATA
+       and CDATA, for LINE and CONDAR respectively), and can be changed
+       at any time using the verb CHNGFILE (see Section 5.3).  This
+       file is also READ ONLY and scan access is by the same convention
+       as for the `on-line' file (see below for how ambiguities between
+       these two files are resolved during access.)
+
+  iii) The `save' file is a file where the user can READ and WRITE (or
+       OVERWRITE) scans. It can have any user-selected name, (UniPOPS
+       default LSAVE, or CSAVE), and the `save' file to be accessed can
+       again be changed by the user via CHNGFILE. Reading and writing
+       to this file is via the pair of verbs, SAVE and RECALL (see
+       Section 5.9). The `save' file can be used to store scans
+       temporarily for later recall and further processing.
+
+   iv) The  `keep' file is  a file where the user can READ and WRITE
+       (or OVERWRITE) scans.  It can have any user-selected name,
+       (UniPOPS default LKEEP, or CKEEP), and the current `keep' file
+       can again be changed by the user via CHNGFILE. Spectra are
+       written to and read from this file using the verbs KEEP and KGET,
+       respectively (see Section 5.10).  Since two scans with the same
+       scan number cannot be stored in the 'keep' file, the file is
+       most often used for storing scans that have been fully reduced.
+
+    v) The off-line `gains' file, which is relevant only to Tucson data
+       calibration. This file is READ ONLY, and can have any
+       user-selected name (UniPOPS default LGAINS). The
+       currently-accessed file can be changed via CHNGFILE.
+
+   vi) The off-line `records' file, which is relevant only to Green
+       Bank data.  This file contains individual records data
+       (which can be created using the cvt.tele-recs utility).  This
+       file is READ ONLY, and can have any user-selected name 
+       (UniPOPS default RDATA).  The currently-accessed file can
+       be changed via CHNGFILE.  The file must be in the individual
+       records flavor of the UniPOPS data format.
+      
+If you are running gbline or gbcondar, the program will attempt to
+attach the Green-Bank `on-line data' file, while tucline and tuccondar
+will attempt to attach the Tucson `on-line' files. If you are running
+cvline or cvcondar, no attempt will be made to attach any `on-line'
+file.
+
+The `off-line', `save' and `keep' files are interchangeable between
+themselves, if the user so desires. Thus, yesterday's `save' file can
+become today's `off-line data' file, and so on. Their maximum file size
+is site dependent, but it is usually 1024 scans, although bigger files
+can be easily accommodated (see Appendix D-9).
+
+If any of these six files are absent, or undefined by user choice, the
+only effect on the program will be an inability to use the verbs that
+access that particular file.
+
+5.2 Listing the Current Data Files
+----------------------------------
+
+When you start up UniPOPS, you will be shown a list of the
+currently-attached external files (see Section 2.2). The first six in
+this list are the data files, just described. This list of current
+files can always be reviewed using the pseudo verb FILES, which must
+always be the only command on the line, i.e.,
+
+	>FILES
+
+5.3 Changing the Current Data Files
+-----------------------------------
+
+To change any of the above files, (except the `on-line data' file), or
+the `printout', or `command-logging' files (see Sections 12.3 and
+16.3), the pseudo verb CHNGFILE should be used. This must be the only
+command on the line. The syntax for CHNGFILE is,
+
+	>CHNGFILE   action-type   file-interface-id   [filename]
+
+NOTE : The filename attribute is not required if the `action-type' is
+       SUBTRACT.
+
+The action-types available are the following (these can be literal
+strings or string adverbs, they should NOT be enclosed in quotes):
+
+	CREATE   - create the disk file `filename' and attach it to the
+		   specified file-interface, replacing the existing
+		   input.
+
+	SUBTRACT - remove the file currently attached to the specified 
+		   file-interface, leaving the interface unattached.
+
+	CHANGE   - replace the current file attached to the specified
+		   file-interface, with the existing disk file
+		   'filename'.
+
+The action-type need only consist of enough characters to distinguish
+between the three possible types.  For example, the character S as
+the second argument can only imply the SUBTRACT action type while
+CR and CH are needed to distinguish the other two action types.
+
+The file-interface-ids specify how you want to access the data file.
+You specify the file-interface-ids by one of two methods.  You either
+give an integer number from the following table that represents the
+desired access method.  Or, you give the name of a pointer adverb that
+already has the correct value.  The pointer adverbs are often easier to
+remember than the actual value:
+
+	ID   Pointer Adverb	Access method
+	--------------------------------------
+	 1 = DSCANS		Off-Line data file
+	 2 = KSCANS		Keep data file
+	 3 = SSCANS		Save data file
+	 4 = GSCANS		Gains data file (Tucson Only)
+	 5 = RSCANS		Individual Records data file (Green Bank Only)
+	11 = PRINTFILE		Printout file 
+	12 = LOGFILE		Command-Logging file
+
+Suppose it is desired to,
+
+	a) attach the existing file LSAVE.A02 as the `off-line' file,
+	b) detach the command-logging file completely,
+    and c) create a file LKEEP.B02, and attach it as keep file.
+
+Then type,
+
+	>CHNGFILE CHANGE DSCANS LSAVE.A02
+	>CHNGFILE SUB PRINTFILE
+	>CHNGFILE CR KSCANS LKEEP.B02
+
+(NOTE : If you just type,
+	
+	>CHNGFILE
+
+then you will be prompted by the program for the respective
+attributes.)
+
+5.4 Changing Project Code or Spectrometer Type
+----------------------------------------------
+
+5.4.1 Changing Project Code : Green Bank Only
+---------------------------------------------
+
+At Green Bank, if you have data in the `on-line' file under a number of
+different project codes, you may wish to change project codes from time
+to time without exiting from UniPOPS. The pseudo verb CHNGPRJ allows
+you to do this. CHNGPRJ takes a single attribute, namely the new
+project code.  It must be the only instruction on the command line.
+CHNGPRJ is a `site-dependent feature', so if it does not work when used
+as described here, consult the local UniPOPS guru.
+
+Suppose you are reducing data from project code A260, but wish at a
+certain point to begin looking at data you took under project code
+A270.  Then type,
+
+	>CHNGPRJ  A270
+
+From this point, data access will be permitted to the data of project
+A270, but the scans of A260 will no longer be available.
+
+A special project code of NULL indicates that the user does not want to
+access on-line data.  The FILES verb will indicate your current project
+code.
+
+5.4.2 Changing from Hybrid-Correlator to Filter-Bank Data : Tucson Only
+-----------------------------------------------------------------------
+
+At Tucson, there are always 4 files that may receive raw data from the
+telescope: sdd, gsdd, sdd_hc, and gsdd_hc (the actual names have your
+initials and the file version number appended to the above names).  The 
+first two contain either filter bank or continuum data and the last two 
+contain hybrid spectrometer data.  A typical 12-meter observing run may 
+use several files (although with the new SDD data format, files can hold
+more data so that the need for several files is not as pressing as it
+once was).   In addition, several UniPOPS verbs need to make assumptions 
+about subscan number when none is supplied (e.g. GET, GGET, SELECT, SUMMARY, 
+and TELLS) and many of the standard 12-meter procedures need to make
+similar assumptions (F, S, C1, C2, etc).  The current convention for 
+12-meter subscan numbers (the fractional part of the scan number) is that 
+subscans numbers for the filter bank data files are in the range .01 
+to .04 while the hybrid spectrometer data files are in the range .11 
+to .18.  The default subscan number is either .01 or .11.  Four verbs are 
+useful for specifying or displaying the version number and default 
+subscan number: CHNGONLINE, CHNGVER, FILES and OLFILES.
+
+To find out which raw data files are currently opened, use OLFILES.
+
+The project code displayed by the FILES verb indicates your initials
+and the type of file that is the current default for SELECT, SUMMARY,
+TELLS, etc. (FB indicates filter bank data, HC indicates hybrid
+spectrometer data).
+
+To switch from accessing filter-bank data to hybrid-correlator data,
+use the verb CHNGONLINE.  Type,
+
+	> CHNGONLINE(HCTYPE, HC_VER)
+
+HC_VER is a pointer adverb that is always set to the hybrid
+spectrometer file version number currently opened.
+
+To switch back to filter-bank data, type,
+
+	> CHNGONLINE(FBTYPE, FB_VER)
+
+FB_VER is a pointer adverb that is always set to the filter bank
+file version number currently opened.
+
+In CONDAR, the available file types are CONTYPE and CON_VER.
+
+To switch to a different version you can use CHNGONLINE if you
+know what the available version are or CHNGVER if you need a
+list of available version numbers.
+
+To switch to version 3 of the filter-bank data file, type,
+
+	> CHNGONLINE(FBTYPE, 3)
+
+To change the version of the hybrid spectrometer file currently
+opened when you don't know what versions are available type,
+
+	> CHNGVER HCTYPE
+
+You will be presented with a list of version numbers to choose from.
+
+The version numbers of the gsdd and gsdd_hc files are forced to
+be the same as the corresponding sdd and sdd_hc files.
+
+There are two standard spectral line procedures that help when switching
+between filter bank and hybrid spectrometer data: FBDATA and HCDATA.
+These also set the PROMPT adverb to indicate what the last action
+was.  For example, to switch to indicating that the filter bank data
+is the default data, type:
+
+	> FBDATA
+
+(the prompt should switch to be "LineF>").  To switch to indicating
+that the hybrid spectrometer data is the default data, type:
+
+	> HCDATA
+
+(the prompt should switch to be "LineH>").
+
+There is no way to change the initials that the program uses in 
+constructing the names of the on-line data files.  If you need to
+change initials for any reason, you must exit the program and
+log out and log back in to the computer and restart the program.
+
+
+5.5 What Data is Available on Disk ?
+------------------------------------
+
+Two verbs, TELL and SUMMARY, exist in UniPOPS to give the user a
+synopsis of the scans currently available to them in either the
+`on-line' or `off-line data' files, the `save' file, or the `keep'
+file.  TELL is the more succinct, although SUMMARY provides more
+information.
+
+5.5.1 TELL
+----------
+
+TELL takes a single attribute, which identifies the data to be listed.
+These attributes are,
+
+	TELL DISK    - prints the total number of scans in the `on-line
+		       data' file, the `off-line data' file, the `save'
+		       and `keep' files, and (when available) the
+		       `gains' file.
+
+	TELL DSCANS  - lists by number the scans presently available to
+		       the user in the `on-line data' file, and the
+		       `off-line data' file.
+
+	TELL KSCANS  - lists by number the scans in the `keep' file.
+
+	TELL SSCANS  - lists by number the scans in the `save' file.
+
+	TELL RSCANS  - lists by number the scans in the `individual records' 
+		       file (on and off-line Green Bank data only).
+
+	TELL ONDATA  - lists by number the scans in the `on-line data'
+		       file.
+
+	TELL OFFDATA - lists by number the scans in the `off-line data'
+		       file.
+
+	TELL GSCANS  - lists by number (Tucson only) the scans in the
+	 	       `gains' file.
+
+
+Suppose that a synopsis is required giving the total number of scans in
+each data file, and then a list of scan numbers for the `on-line' and
+`off-line data' files and the `keep' and `save' files, type,
+
+	>TELL DISK
+	>TELL DSCANS
+	>TELL KSCANS
+	>TELL SSCANS
+
+5.5.2 SUMMARY
+-------------
+
+SUMMARY prints a line of information for each receiver of each scan in
+a data file. This comprises, for spectral-line data: the scan no., rx
+no., source name, observing coordinates, frequency resolution, and rest
+frequency.  For continuum:  the scan no., rx no., source name,
+observing coordinates, rate of telescope motion, and integration time.
+The rx no., or receiver number, is simply the subscan number (i.e. the
+fractional part of the scan number).
+
+SUMMARY takes a single attribute, the options being DSCANS, ONDATA,
+OFFDATA, KSCANS, SSCANS, GSCANS and RSCANS, defined as for TELL above.  
+SUMMARY uses the adverbs BSCAN and ESCAN to determine the lowest and highest
+scan numbers to be listed. The defaults for BSCAN and ESCAN are both
+zero, implying the lowest and highest scan numbers in the file,
+respectively.
+
+Suppose that a summary of the scans in the `on- and off-line data' files
+is desired. Then type,
+
+	>SUMMARY DSCANS
+
+NOTE : Both TELL SSCANS and SUMMARY SSCANS will `map' the position of
+a scan to show its `save bin' position (see Section 5.9).
+
+
+5.6 The UniPOPS Data Arrays 
+---------------------------
+
+In using UniPOPS, observational data and their associated header
+parameters, (called scans or spectra in this Cookbook), are read from
+one of the attached disk files. These are then processed with the
+facilities of UniPOPS, and can be output to another (or the same in the
+case of the `save', `keep' or `off-line data'  file)  attached disk 
+file. While the scan is within UniPOPS, ten data arrays, named 
+Array (0) to Array (9), are available to the user for holding scans. 
+Scans can be read into any of the ten arrays, and moved, or copied, 
+between these arrays as desired. 
+
+The UniPOPS commands, or verbs, that perform operations on the scans
+often assume that the required data will be available in specific
+arrays, and will also write the processed data into specific arrays.
+For example, to use the verb TEMP (see Section 9.7) on Tucson data, an
+`on-scan' is expected in Array (0), an `off-scan' in Array (1), and a
+`gains' array in Array (2). The result of TEMP is placed in Array (0).
+For a complete list as to which verbs use what arrays, see Appendix E,
+which a `novice' UniPOPS user is advised to keep handy at all times.
+Often, you will move a partially processed spectrum into a particular
+array for temporary storage, and return it to a `working' array later
+for further processing.  (Note that the `save' file could also be used
+for this, but would be slower.)
+
+Scans can be read from the `on-line data' file, the `off-line data'
+file, the `save' and 'keep' file, (in Tucson) the `gains' file, and
+(for Green Bank data) the `individual records' file. Scans can be written 
+to the `save' and `keep' files. In the remainder of this chapter, we will 
+describe the operations of reading data from a disk file to a UniPOPS array, 
+moving and copying it between arrays, and writing it out to a disk file.
+
+
+
+5.7 Reading Data from On-line and Off-line Data Files
+-----------------------------------------------------
+
+The basic set of verbs used for reading data from the `on-line' and 
+`off-line data' files into Array (n) are GET0 - GET9. Each of these
+verbs takes a single attribute whose syntax is,
+
+	GETn  [-]scan-number[.(rx-number/100)]
+
+where square brackets [] denote optional extensions. The option of
+giving a negative value to the attribute is used to define precedence
+between the `on-line' and `off-line data' files, as follows,
+
+	Negative attribute = the `off-line' file is searched before the
+			     `on-line' file when looking for the
+			     demanded scan.
+
+	Positive attribute = the `on-line' file is searched before the
+			     `off-line' file.
+
+If the fractional part of the attribute is omitted, then the data for
+the first receiver is assumed to be required (for Tucson on-line
+data, see Section 5.4.2 for further information).
+
+
+Suppose that you wanted to read data for,
+
+	a) the first rx for scan 700 held in the `off-line' file into
+	   Array (0),
+	b) the third rx for scan 800 held in the `on-line' file into
+	   Array (4),
+    and c) the eleventh rx for scan 900 held in the `off-line' file
+	   into Array (9).
+
+Then type,
+
+	>GET0  -700		or  	>GET0  -700.01
+	>GET4   800.03
+	>GET9  -900.11
+
+
+A number of pseudonyms exist for GET0 and GET1. GET0 can be replaced
+by GET or ON, and GET1 by OFF, without changing the operations. The 
+commands ON and OFF exist because the verb TEMP (see Section 9.7)
+requires a total-power ON scan to be present in Array (0), and an OFF
+scan in Array (1). GET, which  is simpler to type than GET0 when
+reading data into Array (0), is the most-used read operation.
+
+It you wanted to read the first rx of scan 700 from the `on-line data'
+file into Array (0) and scan 701 into Array (1), the following command
+lines would all be equivalent,
+
+	>GET0 700;   GET1 701
+	>GET0 700;   OFF  701
+	>GET  700;   GET1 701
+	>GET  700;   OFF  701
+	>ON   700;   GET1 701
+	>ON   700;   OFF  701
+
+A Tucson-specific verb GGET copies a `gains' scan from the `on-line' or
+`off-line data' files (using the rule for file selection given above
+for GETn) and places it in Array(2). This is required for Tucson data
+by the verb TEMP (see Section 9.7). Suppose you wished to bring the
+gains data from disk for the second receiver of scan 550, and display
+it on the screen. Then type,
+
+	>GGET 550; COPY(2,0) PAGE SHOW
+
+A Green-Bank-specific verb GETIR gets an individual record from either
+the on-line individual record data or from the off-line individual
+record file (which can be constructed using the cvt.tele-recs 
+utility from a telescope archive tape).  GETIR places an individual
+record into Array (0).  This verb should be used if you need to edit 
+individual records of a scan.  It is not intended for use by new users.  
+Consult the documentation on GETIR for details.  You should also consult 
+the Green Bank staff for help as well as for information on useful 
+procedures to help in your editing.  
+
+A Tucson-specific verb GETOTF retrieves data from the on-line file
+from a row of an on-the-fly spectral-line map.  On-the-fly data is
+currently processed primarily outside of UniPOPS.  The flow of
+data from an OTF scan to a map is currently being developed.  You
+should get the most up-to-date information from the 12-meter staff.
+The GETOTF verb places one spectra from the row (or any of the 5
+ancillary information for that row) into Array (0).  Consult the
+documentation on GETOTF for details.
+
+A Tucson-specific verb GETPOLZ retrieves data from the on-line file
+from a row of data from the polarizer.  This verb is very preliminary.
+You should check with the 12-meter staff for the most up-to-date
+information.  The GETPOLZ verb places one spectra rom the row into
+Array (0).
+
+
+5.8 Reading the Latest Scan, or Partial Scan
+--------------------------------------------
+
+At the Green Bank or Tucson telescopes, it is possible to read the most
+recently-completed scan, or even the present partially-observed scan 
+(available in Green Bank only), into Array (0) via the verb CGET. CGET 
+takes a single attribute equal to the rx number of the required spectrum.
+
+Suppose that it is wished to look at the present scan in progress, or
+that just completed, for the first and fifth rx, then type,
+
+	>CGET 1; PAGE SHOW
+	>CGET 5; PAGE SHOW
+
+A similar Tucson-specific verb CGGET is available for retrieving the
+most-recently completed gains scan from the `on-line data' file into
+Array (2). Its single attribute again equals the required rx number.
+Thus, to look at the most-recently completed gains scan for the second
+receiver, type,
+
+	>CGGET 2; COPY(2,0) PAGE SHOW
+
+5.9 The Save File
+-----------------
+
+As detailed above, the `save' file is a READ/WRITE file, and hence
+offers a convenient way to store spectra, which may be recalled at a
+later time. The `save' file can be considered as consisting of many
+numbered `slots', usually called `save bins', into each of which a scan
+can be stored, and from which it can be recalled later.  The verb SAVE
+will store the scan in Array (0) into the `save bin' numbered the same
+as the contents of the adverb NSAVE. The verb RECALL will retrieve the
+scan stored in the `save bin' pointed at by NSAVE and place it in the
+Array (0).
+
+A further adverb, SPROTECT, will prevent the overwriting of an already
+full `save bin' if set equal to TRUE (its initial value). If you wish
+to overwrite the scan stored in `save bin' number 65, first type,
+
+	>SPROTECT = FALSE
+	>NSAVE = 65 ; SAVE
+
+Suppose you wish to save a partially reduced scan held in Array (0) and
+an incomplete accumulation of scans held in Array (2), and also guard
+against overwriting already-used `save bins', then type,
+
+	>SPROTECT = TRUE
+	>NSAVE = 65 ; SAVE
+	>NSAVE = 66 ; COPY(2,0) SAVE
+
+Later, when you wish to restore the `status quo', type,
+
+	>NSAVE = 66 ; RECALL COPY(0,2)
+	>NSAVE = 65 ; RECALL
+
+
+The verb CHECK will print the scan number of the spectrum held in the
+`save bin' pointed at by NSAVE, or report it empty if no spectrum is
+present. For example, to find the contents of `save bin' number 66, or
+whether it is empty, type,
+
+	>NSAVE = 66 ; CHECK
+
+
+5.10 The Keep File
+------------------
+
+The `keep' file is a READ/WRITE file. It is a convenient location to
+store both fully-processed spectra, and original data that you wish to
+export to your home institute. Further, a `keep' file can be reattached
+as the `off-line' or `save' data file. The verb KEEP will write the
+scan in Array (0) into the `keep' file.
+
+If the adverb KPROTECT is set to TRUE, then a spectrum cannot be
+written to the `keep' file if one with the same scan number is already
+present there. If you wish to overwrite a given scan in the `keep' file
+with one of the same number, then type,
+
+	>KPROTECT = FALSE
+	>KEEP
+
+To recall a scan from the 'keep' file you should use KGET which accepts
+one argument, the scan number that you want to retrieve.  The convention
+for specifying a scan number is the same as described above for the
+on-line and off-line data files.  For example, to retrieve scan
+1427.03 from the 'keep' file, type,
+
+	> KGET 1427.03
+
+
+5.11 Shifting Spectra between UniPOPS Arrays
+--------------------------------------------
+
+There is frequent need to shift data from one UniPOPS array to
+another.  The verbs COPY(m,n) and MOVE (m,n) are provided to achieve
+this. Both take two arguments, where Array (m) and Array (n) are the
+array from which the data comes and the destination array,
+respectively.  COPY leaves the same spectrum in both arrays on
+completion, while MOVE clears the array from which the spectrum is
+taken.
+
+Suppose you wish to shift a scan in Array (0) to Array (5), read scan
+700 into Array (0) and display it, and then read the original scan back
+into Array (0), leaving Array (5) cleared. Then type,
+
+	>COPY(0, 5)
+	>GET 700; PAGE SHOW
+	>MOVE(5, 0)
+ 
+
+5.12 Clearing a UniPOPS Array
+-----------------------------
+
+If you want to create your own data distribution in a UniPOPS array,
+you may prefer to start with a cleared array (as left behind by MOVE).
+The verb REMOVE(n) will completely clear Array (n).
+
+For example, if you wish to plot the system temperatures of scans 700
+to 720, they you could type,
+
+	>REMOVE(3)
+	>H3(NOINT) = 21
+	>SCALAR P, Q
+	>FOR P = 1 TO 21; Q = 699 + P; GET Q; D3(P) = H0(STSYS); END
+	>COPY(3,0) 
+	>PAGE SHOW
+
+Note that, MOVE(m,n) is equivalent to,
+
+	>COPY(m,n) 
+	>REMOVE(m)
+
+
+5.13 Getting Data from Tape into UniPOPS and Vice Versa
+-------------------------------------------------------
+
+You will often wish to read data from a magnetic tape and put it into a
+UniPOPS data file for further processing, or write data from a UniPOPS
+data file on to tape for export or storage purposes. This can be done
+to and from a number of formats, such as IEEE-Keep, PCPops, SDD, FITS,
+etc. These operations are described in detail in Appendix D of this
+Cookbook, to which we direct the user.  Reading and writing from tape
+is dealt with in Section D-11 for FITS-tapes. For other formats, you
+should read Sections D-2 for writing from disk to magnetic tape, and
+D-3 for reading from tape to disk.
+

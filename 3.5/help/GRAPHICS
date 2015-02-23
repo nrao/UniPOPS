@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'GRAPHICS:  Sends printed output to the graphics screen.'
+PRINT ' '

@@ -1,0 +1,48 @@
+	(INTERNAL-ARRAY)
+
+	Syntax:    MD0 (x-cell, y-cell) 
+		   MD1 (x-cell, y-cell)
+		   MD2 (x-cell, y-cell)
+		   MD3 (x-cell, y-cell)
+
+	MD0 through MD3 are internal-array verbs which return or set
+	the value contained within elements of the internal Matrices
+	(0) through (3).  You should always supply MD0 through MD3 with 
+	two integer-valued argument which are the x and y cell numbers 
+	that you want to either query or change in Matrices (0) through (3).
+
+	The arguments you supply MD0 through MD3 must be greater than
+	zero and must fall within the current dimensions of the matrix
+	in question.  That is, the value of the x-axis argument you
+	provide MD0 must not exceed the number of x-cells stored in
+	MH0(MNAXIS1).  Likewise, the y-axis argument cannot exceed
+	MH0(MNAXIS2)
+
+	If the verb appears to the left of an equal sign, than the
+	specified cell has its value changed to the value of the
+	expression to the right of the equal sign.
+
+	If the verb appears in a mathematical expression or as an
+	argument to a verb or procedure, then the value of the
+	specified cell is returned.
+
+	No adverbs are used or set by MD0 through MD9.
+
+	See the description of internal-array verbs for restrictions on
+	their use.
+
+	EXAMPLES:
+
+		PRINT MD0(25,12)		
+
+	Will print the data value of Matrix (0) at cell (25,12).
+
+		PRINT MD1(1,23)    		
+
+	Will print the data value of Matrix (1) at cell (1,23).
+
+		MD3(12,34) = MD0(1,13) - MD0(12,1)	
+
+	Will set the (12,34) cell of Matrix (3) to the difference
+	between the contents of the (1,13) cell of Matrix (0) and the
+	(12,1) cell of Matrix (1).

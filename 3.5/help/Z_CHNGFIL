@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'Z_CHNGFIL:  Regular verb version of CHNGFILE.  CHNGFILE is'
+PRINT 'to be preferred.'
+PRINT 'Syntax: Z_CHNGFIL(action_adverb, file_num, string).'
+PRINT ' '

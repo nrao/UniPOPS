@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CNAXIS2:  (HEADER-CUBE) The number of y-axis cells in the'
+PRINT 'Cube.'
+PRINT ' '

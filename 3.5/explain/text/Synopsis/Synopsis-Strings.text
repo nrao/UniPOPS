@@ -1,0 +1,22 @@
+#if CKBK
+A-5 String Adverbs
+------------------
+
+#end
+In the descriptions, the sizes of string adverbs are given in
+parentheses after the adverbs' names.
+
+HTITLE:   (32) A label for PLOT displays.
+
+PROMPT:   (8)  The prompt string used by UniPOPS.
+
+S_MODE:   (4)  Mode of observing for SELECT.
+
+S_OBJECT: (16) Name of object for SELECT.
+
+XTITLE:   (16) Label for the x-axis for PLOT displays.
+
+YTITLE:   (16) Label for the y-axis for PLOT displays.
+#if CKBK
+
+#end

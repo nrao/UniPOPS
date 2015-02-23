@@ -1,0 +1,9 @@
+#  @(#)unipops.sunview.sh	5.1 06/22/94
+#  Standard UniPOPS .sunview file
+#
+cmdtool    -Wp    0   0 -Ws 669 449 -WP    0   0 -Wf 255 255 150 -C  &
+mailtool   -Wp    0 130 -Ws 684 770 -WP 1088 836 -Wi -Wf 150 150 225  &
+cmdtool    -Wp  479 444 -Ws 673 388 -WP  768 836 -Wf 255 150 255  &
+cmdtool    -Wp  463   2 -Ws 689 443 -WP 1088   0 -Wi -Wf 150 255 150  & 
+clock      -Wp  820 801 -Ws 210  47 -WP 1024 836 -Wi -r -Wf 255 150 150 &
+

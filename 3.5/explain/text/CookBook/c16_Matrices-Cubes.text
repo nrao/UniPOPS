@@ -1,0 +1,1055 @@
+16. Matrices and Cubes
+----------------------
+
+A limited number of verbs exist for handling two-dimensional matrices 
+(images) and three-dimensional cubes.  This limited set permit the user 
+to take a "quick-look" at such data and perform a number of useful, 
+frequently-requested operations on them.  The direct input data for both 
+types of multi-dimensional structure is in the form of standard FITS-image 
+files (i.e. FITS files using none of the FITS extensions) located on the 
+computer disk.  Matrices can also be created by either `collapsing' cubes 
+to a single plane, or building a two-dimensional distribution from 
+one-dimensional spectra or scans.  For more sophisticated analysis and
+manipulation of multi-dimensional data, you will need to use a package
+such as AIPS on your FITS images and cubes.
+
+NOTE : The cube and matrix operations do not participate in the UNDO
+(see Section 15.4) or RECOVER (see Section 2.2) facilities.
+
+16.1 Data Storage
+-----------------
+
+16.1.1 Matrices
+---------------
+
+UniPOPS has 4 `matrices' available in its memory to hold
+two-dimensional data arrays. These are designated Matrix (0) to Matrix
+(3).  Each matrix contains a header and a data section, and these can
+be interrogated and used in exactly analogous way to the nine UniPOPS
+data arrays described in Section 5.6. The maximum number of data
+elements that can be contained in the data section of a matrix is
+102400 (i.e.  arrays such as 1024 x 100, 256 x 400, etc.)
+
+The header can be accessed through the verbs MH0 - MH3, which use the
+following adverb pointers,
+
+MNAXIS1, MNAXIS2	No. of pixels in x and y.
+MTYPE1,  MTYPE2		Strings containing the x and y axis
+			    definitions, (i.e. GALLONG, VELO, etc.)
+MPIX1,   MPIX2		The x - y pixel numbers at the reference 
+			    pixel.
+MRVAL1,  MRVAL2		The x and y values at the reference pixel.
+MDELT1,  MDELT2		The sampling intervals in x and y.
+MEQUINOX		The equinox of the coordinate system of the
+			    matrix.
+MDATE			A date associated with the matrix.
+MCOMMENT		A comment string.
+MUNDEF			The blanking (dummy) value for undefined data.
+MBUNIT                  The units for the data values (i.e. COUNTS, 
+			    DEG K, etc.)
+MOBJECT			A string containing the title of the matrix.
+MORIGIN                 A string describing the place of origin of the
+			   data in the Matrix.
+
+The functions MH0 - MH3 return the header parameters. Thus, if you want
+to find to which celestial source the current data in Matrix (2)
+applies, try typing,
+
+	>PRINT MH2(MOBJECT)
+
+Similarly, if you are going to collapse this matrix on to the y-axis,
+and place the result into one-dimensional Array (3), prepare Array (3)
+by typing,
+
+	>H3(NOINT) = MH2(MNAXIS2)
+
+The data in a matrix can be read and reset using the verbs MD0 - MD3,
+which take as their arguments the (x,y) pixel position values. Thus to
+collapse the data of Matrix (2) on to the y-axis, placing the result in
+Array (3), you can use the following procedure,
+
+	>PROCEDURE COLLAPSE
+	:SCALAR I_1
+	:SCALAR I_2
+	:H3(NOINT) = MH2(MNAXIS2)
+	:FOR I_1 = 1 TO MH2(MNAXIS2)
+	:	D3(I_1) = 0.
+	:	FOR I_2 = 1 TO MH2(MNAXIS1)
+	:		D3(I_1) = D3(I_1) + MD2(I_2,I_1)
+	:	END
+	:END
+	:RETURN
+	:FINISH
+
+
+16.1.2 Cubes
+------------
+
+UniPOPS can consider just a single data cube at a time.  At present
+only a very limited range of operations are available for cubes. The
+cube header can be interrogated as for Arrays (0) - (9), and Matrices
+(0) - (3), only here you use the verb CH0. The pointer adverbs for
+using this verb are similar to those described for matrices in Section
+16.1.1, except that the first letter of the pointer names is C, rather
+than M.  The full list of cube pointer adverbs is as follows,
+
+CNAXIS1, CNAXIS2, CNAXIS3  No. of pixels in x, y and z.
+CTYPE1,  CTYPE2,  CTYPE3   Strings containing the x, y and z axis
+			      definitions, (i.e. GALLONG, VELO, etc.)
+CPIX1,   CPIX2,   CPIX3    The (x,y,z) pixel numbers at the reference 
+			      pixel.
+CRVAL1,  CRVAL2,  CRVAL3   The x, y and z values at the reference
+			      pixel.
+CDELT1,  CDELT2, CDELT3    The sampling intervals in x, y and z.
+CDATE			   A date associated with the matrix.
+CEQUINOX		   The equinox of the coordinate system of the
+			      cube.
+CCOMMENT		   A comment string.
+CUNDEF                     The blanking (dummy) value for undefined
+			      data.
+CBUNIT                     The units for the data values (i.e. COUNTS,
+			      DEG K, etc.)
+COBJECT                    A string containing the title of the
+			      matrix.
+CORIGIN                    Character string describing place of origin
+			   of the data in the Cube.
+CTMAX                      The maximum data value in the original
+			   (unscaled) Cube.
+CTMIN                      The minimum data value in the original
+			   (unscaled) Cube.
+CTSCALE                    Scale factor by which to multiply numbers in
+			   the FITS Cube to return them to original
+			   scale.
+CTZERO                     Value subtracted from the original numbers
+			   in the Cube before they were divided by
+			   CTSCALE.
+
+
+For example, if you wish to know what source the current data cube
+applies to, try typing,
+
+	>PRINT CH0(COBJECT)
+
+You can read the data in a cube by using the verb CD0, which takes as
+its three arguments the (x,y,z) pixel position values. Thus, to find
+the largest value in a cube, you could use the procedure,
+
+	>PROCEDURE CUBE_MAX
+	:ARRAY POSN(1 TO 3)
+	:SCALAR MAX_VAL
+	:SCALAR I_1
+	:SCALAR I_2
+	:SCALAR I_3
+	:MAX_VAL = -1.E34
+	:FOR I_1 = 1 TO CH0(CNAXIS3)
+	:  FOR I_2 = 1 TO CH0(CNAXIS2)
+	:    FOR I_3 = 1 TO CH0(CNAXIS1)
+	:      IF(CD0(I_3, I_2, I_1) > MAX_VAL)THEN
+	:        MAX_VAL = CD0(I_3, I_2, I_1)
+	:        POSN(1) = I_3
+	:        POSN(2) = I_2
+	:        POSN(3) = I_1
+	:      END
+	:    END
+	:  END
+	:END
+	:PRINT 'MAX VALUE = ',MAX_VAL,' AT PIXEL (',POSN,')'
+	:RETURN
+	:END
+
+WARNING : Note that, unlike the Arrays and Matrices, the data values in
+a cube CANNOT be replaced or otherwise modified ! This is essentially a
+consequence of the data in the cube not being present as an entity in
+memory.
+
+16.2 Summarizing the Header Parameters of a Matrix or Cube
+----------------------------------------------------------
+
+Rather full documentation on the parameters of the data in Matrix (0),
+or the data in a UniPOPS cube, can be obtained using the verbs MHEADER
+and CHEADER, respectively. Thus, to obtain a listing of the parameters
+of the contents of Matrix (0), type,
+
+	>MHEADER
+
+While to do the same for a cube, type,
+
+	>CHEADER
+
+16.3 Listing the Data in a Matrix
+---------------------------------
+
+All, or part, of the data values in Matrix (0) can be listed using the
+verb MTABLE. The grid of numbers displayed have their x and y axes
+labeled by the pixel coordinates in the full matrix to aid
+identification of the individual elements. 
+
+The section of the matrix to be displayed is selected via the two
+adverb pairs, MXMIN, MXMAX and MYMIN, MYMAX which set the lower and
+upper pixel limits to be displayed for each axis, i.e. define an area
+in the matrix with bottom left-hand corner (MXMIN, MYMIN), and top
+right-hand corner (MXMAX, MYMAX). If the contents of Matrix (0) are
+produced from a cube via the SLICE verb (Section 16.4), then these
+adverbs are set to the x and y limits of the resultant matrix. If set
+to their default values of 0, then these adverbs are interpreted as the
+x and y limits of the contents of Matrix (0), if it exists. To make the
+setting of these four adverbs as simple as possible for the user, a
+verb MRANGE is provided, which takes as its arguments the limits you
+require in units of the x and y axes (MH0(MTYPE1) and MH0(MTYPE2)).
+These values are converted into nearest pixel numbers, and placed in
+MXMIN, MXMAX, MYMIN and MYMAX. 
+
+For example, suppose that you wish to list on the screen the values at
+pixels lying between galactic longitudes 10.5 and 11.0 deg, and radial
+velocities -90 and +30 km/sec (where these are the appropriate units
+for the matrix axes), from an l-v grid contained in Matrix(0). Then
+type,
+
+	>MRANGE(10.5, 11.0, -90, 30)
+	>MTABLE
+
+NOTE : To set the adverbs MXMIN, MXMAX, MYMIN and MXMAX such that the
+whole map will be processed, you can type,
+
+	>MRANGE(-DEFAULT, DEFAULT, -DEFAULT, DEFAULT)
+
+or set values outside the limits of the matrix, i.e.,
+
+	>MRANGE(-1E34, 1E34, -1E34, 1E34)
+
+As a final example, suppose that you wish to obtain a hard-copy of the
+data values in the `sub-matrix' of Matrix (0) defined by bottom-left
+and top-right pixel coordinates of (50,39) and (53,44), then type,
+
+	>MXMIN = 50; MXMAX = 53; MYMIN = 39; MYMAX = 44 
+	>PRINTER MTABLE CRT
+
+16.4 Reading in and Processing a Cube
+-------------------------------------
+
+As described in Section 16.1.2, UniPOPS can read a FITS cube
+from disk.  This FITS cube could have been prepared via the UniPOPS
+utility, cube.exe, described in detail in Appendix D-11, or imported
+from another source, such as AIPS or IRAF. The data cube is `read in'
+using the verb READCUBE, which takes the pathname of the FITS file on
+disk as its single argument. For example, if the FITS file is called
+W49A.FITS and is held in your present directory, then you can `read in'
+the cube to UniPOPS by typing,
+
+	>READCUBE('W49A.FITS')
+
+At present, only one operation is permitted on a cube in UniPOPS. This
+is to integrate (not average) the pixel values in a set of contiguous
+planes parallel to one of the faces of the cube, such as to produce a
+two-dimensional array in Matrix (0). This is achieved via the verb
+SLICE, which takes three arguments; the axis number (defined by the n
+of its CNAXISn) at right-angles to the contiguous planes, and the first
+and last of these contiguous planes as pixel values along that axis.
+
+For example, suppose that the cube currently in UniPOPS is a pulsar
+database, where the CNAXIS1 axis is a complete 1-hour sequence of
+1-minute integrations of pulse phase (CNAXIS2) versus radio frequency
+(CNAXIS3).  Then to collapse the cube along CNAXIS1 to get the dynamic
+spectrum of the pulsar over the last half-an-hour of the observations,
+type,
+
+	>SLICE(1, 31, 60)
+
+which will leave the required dynamic spectrum in Matrix(0), with
+MNAXIS1 representing pulse phase, and MNAXIS2 representing radio
+frequency.
+
+As a second example, suppose that the current UniPOPS cube is a
+spectral-line database, where the CNAXIS1 axis is radial velocity,
+CNAXIS2 is galactic longitude, and CNAXIS3 is galactic latitude.
+Further, let us imagine that CH0(CPIX3) = 1, CH0(CRVAL3) = -5., and
+CH0(CDELT3) = 0.5. If you would like to obtain a v-l matrix in Matrix
+(0), averaging over -1.25 < b < +1.25, then type,
+
+	>SLICE(3, 9, 13)
+
+
+SLICE sets the values of the adverbs MXMIN, MXMAX, MYMIN and MYMAX to
+the x and y pixel limits of the resultant array in Matrix (0).
+
+16.5 Reading, Writing and Filling a Matrix
+------------------------------------------
+
+Section 16.4 has described one way of filling Matrix (0) from a UniPOPS
+cube using the verb SLICE. Alternatively, a two-dimensional FITS file
+on disk can be read into Matrix (0) using the verb MREAD.  This takes
+the name of the FITS file on disk as its single argument. Thus, suppose
+that you want to read the two-dimensional FITS file M17.FITS from the
+subdirectory /g/jastrono/maps into Matrix (0), enter,
+
+	>MREAD('/g/jastrono/maps/M17.FITS')
+
+MREAD sets the values of the adverbs MXMIN, MXMAX, MYMIN and MYMAX to
+the x and y pixel limits of the resultant array in Matrix (0).
+
+A further way of filling a Matrix is to create it from scans available
+in either the on-line or off-line data files. For example, suppose that
+you have accumulated a set of scans numbers on the stack (Chapter 11),
+representing a continuum raster coverage in the order of increasing
+declination. You could then prepare an RA - Dec map in Matrix (2) to
+look at the results as follows,
+
+	>PROCEDURE MAKEMAP
+	:SCALAR I_1
+	:SCALAR I_2
+	:GET(ASTACK(1))
+	:MH1(NAXIS1) = H0(NOINT)
+	:MH2(NAXIS2) = ACOUNT
+	:FOR I_1 1 TO ACOUNT 
+	:   GET(ASTACK(I_1)
+	:   FOR I_2 1 TO H0(NOINT)
+	:      MD2(I_1,I_2) = D0(I_2)
+ 	:   END
+	:END
+	:RETURN
+	:FINISH
+
+Four verbs exist to help you put entire rows and columns into a matrix
+or retrieve entire rows and columns from a matrix.  These verbs
+are PUTROW, PUTCOL, GETROW and GETCOL.  They transfer all or as many of
+the elements as will fit of a row or column either into a matrix or
+from a matrix.  For example, the inner loop in the above procedure, where
+all of the values from each scan are placed into a single column, could
+be replaced by a single call to PUTCOL.  Since these four verbs
+operate on an entire row or column, they are significantly faster than
+relying on the POPS interpretor to work on each element in a row or
+column.  Using PUTCOL, the above procedure would be written as:
+
+        >PROCEDURE MAKEMAP
+        :SCALAR I_1
+        :GET(ASTACK(1))
+        :MH1(NAXIS1) = H0(NOINT)
+        :MH2(NAXIS2) = ACOUNT
+        :FOR I_1 1 TO ACOUNT
+        :   GET(ASTACK(I_1)
+	:   PUTCOL(I_1)
+        :END
+        :RETURN
+        :FINISH
+
+In this example, the entire contents of Array 0 would be copied to column
+I_1 in Matrix (0).  See the documentation on these four verbs for more
+details (EXPLAIN PUTCOL).
+
+
+Should you wish to add more complete header information to the matrix,
+including things not derivable from the single scans, then the verb
+MINIT can be used. This will initiate a question-and-answer session
+with you, that will fill in the required values. The verb takes a
+single argument, this being the number of the Matrix, (i.e. the n in
+Matrix (n)). Thus, to fill in the header of the above map in Matrix
+(2) and look at the results, type,
+
+	>MINIT(2)
+	 ......
+	 Answer the questions posed by MINIT
+	 ......
+	>MHEADER
+
+The contents of Matrix (0) can be written out to disk as a FITS file
+using the verb MWRITE. MWRITE takes a single argument, this being the
+name you wish to give the FITS file on disk, including the necessary
+path information of where to put the file should this not be the
+present directory. Thus to write a FITS image of the continuum map in
+Matrix (0) in the home directory of user jastrono with the filename
+CTA1.FITS, type,
+
+	>MWRITE('/g/jastrono/CTA1.FITS')
+
+Later, the FITS file can be read into another analysis system, or back
+into UniPOPS using the verb MREAD, as described above.
+
+16.6 Operations on UniPOPS Matrices
+-----------------------------------
+
+16.6.1 Moving Data between Different UniPOPS Matrices
+-----------------------------------------------------
+
+In analogy with the verbs COPY and MOVE for UniPOPS one-dimensional
+data arrays, (see Section 5.11), the verbs MCOPY and MMOVE will allow
+you to transfer your two-dimensional data arrays from one Matrix to
+another. Both verbs take two arguments, namely the Matrix the data is
+currently in, and the Matrix it is to be moved to. MCOPY leaves the
+original Matrix untouched by the operation, while MMOVE clears the
+original Matrix. The whole matrix is transferred by both verbs, and the
+adverbs MXMIN, MXMAX, MYMIN and MYMAX are set to the appropriate values
+for the data copied.
+
+As an example, suppose that you wish to copy the data in Matrix (0)
+into Matrices (1) and (3), leaving Matrix (0) cleared, then type,
+
+	>MCOPY(0,1)
+	>MMOVE(0,3)
+
+16.6.2 General Data Processing of Matrices
+------------------------------------------
+
+Currently, four verbs exist for general processing operations on data
+held in UniPOPS Matrices, and these are described in this subsection.
+
+16.6.2.1 MLIMITS
+----------------
+
+To find the maximum and minimum values in a sub-area of Matrix (0), use
+the verb MLIMITS. The sub-area is defined by the adverbs MXMIN, MXMAX,
+MYMIN and MYMAX. The verb will print the maximum and minimum values
+within the defined sub-area on your screen.
+
+Suppose  that you have a discrete source near the middle of your 256 x
+128 map, and wish to obtain the brightness at the pixel of the peak,
+then try typing the following,
+
+	>MXMIN = 120; MXMAX = 136; MYMIN = 56; MYMAX = 72
+	>MLIMITS
+
+MLIMITS can be useful in finding the range of values in your data to
+help you set up levels for a contour plot.
+
+16.6.2.2 ROTATE
+---------------
+
+The verb ROTATE offers various possibilities for rotating and flipping
+Matrix (0).  The original data in Matrix (0) is copied to Matrix(1), so
+before invoking ROTATE, make sure that anything you wish to keep in
+Matrix (1) has been copied to Matrix (2) or (3) !  ROTATE takes three
+arguments, all taking the values TRUE (+1), or FALSE (-1).  The first
+argument decrees whether the matrix is to be rotated about the
+"bottom-left to top-right" diagonal of the map (i.e. the x and y axes
+are to be interchanged). If this is what you want, set it TRUE, if not,
+set it FALSE. The second argument, if set TRUE, will reverse the sense
+of the x-axis (i.e. rotate the data about a vertical axis), but make no
+change about this axis if the argument is FALSE. The third argument
+does the same for the y-axis (i.e. if TRUE, the verb will rotate the
+data about a horizontal axis). The "instructions" of the first argument
+are acted upon before those of the other two arguments.
+
+Suppose you wish to rotate Matrix (0) about the "top-left to
+bottom-right" diagonal, this can be achieved by typing the following,
+(think about it !),
+
+	>ROTATE(TRUE, TRUE, TRUE)
+
+16.6.2.3 MPLUS, MMINUS, MMULTIPLY, MDIVIDE
+------------------------------------------
+
+These verbs combine the data in Matrix (1) with that in Matrix (0) and
+place the result in Matrix (0).  Each of these verbs operate element by
+element (i.e. element (i,j) in Matrix (1) is combined with element (i,j)
+in Matrix (0) and the result placed in element (i,j) of Matrix (0)) as
+opposed to true matrix math operations.  
+
+All four verbs use the value of the adverb DEFMODE to determine how
+they treat undefined values (data values equal to the value of the
+MUNDEF header word).  When DEFMODE is FALSE, the result will have an
+undefined data value at any element where either of the input values at
+that location were undefined.  When DEFMODE is TRUE, the result will
+have an undefined data value only at those locations where both the
+input values were undefined.  If only one value is undefined, the value
+of the results depends on the specific verb.  The default value for
+DEFMODE is FALSE.
+
+For all four verbs, the original contents of Matrix (0) are replaced by
+the result. 
+
+The MPLUS verb adds the data in Matrix (0) to the data in Matrix (1) 
+element by element.  If DEFMODE is TRUE and only one value is undefined
+at a location, the result at that location will be as if the undefined
+value were zero.
+
+The MMINUS verb subtracts the data in Matrix (0) from the data in 
+Matrix (1) element by element.  If DEFMODE is TRUE and only one value is
+undefined at a location, the result at that location will be as if the
+undefined value were zero.
+
+The MMULTIPLY verb multiplies the data in Matrix (1) by the data in
+Matrix (0) element by element.  If DEFMODE is TRUE and only one value
+is undefined at a location, the result at that location will be as if
+the undefined value were one.
+
+The MDIVIDE verb divides the data in Matrix (0) by the data in Matrix (1)
+element by element.  If DEFMODE is TRUE and only one value is undefined
+at a location, the result at that location will be as if the undefined
+value were one.
+
+Suppose you wish to do the following:
+
+	(Matrix(0) - Matrix(1)) / Matrix(1)
+
+or subtract each element of Matrix (1) from the corresponding element of
+Matrix (0) and divide the result by the element of Matrix (1), type,
+
+	> MMINUS; MDIVIDE
+
+#if CKBK
+
+#end
+16.6.2.4 MSCALE, MBIAS
+----------------------
+
+The verb MSCALE allows you to multiply the values in Matrix (0) by a
+constant factor, while the verb MBIAS will add a constant value to
+each element of Matrix (0).  These verbs both require one argument, the
+value to use for scaling or offset.
+
+Suppose you wish to multiply all of the values in Matrix (0) by 3.2, type,
+
+	> MSCALE(3.2)
+
+Suppose you want to add the value -10.0 to all the values in Matrix (0),
+type,
+
+	> MBIAS(-10.0)
+
+You may need to use MCOPY and Matrix (2) or Matrix (3) since MSCALE and
+MBIAS only work on Matrix (0).  For example, suppose you want to subtract
+10 from each element of Matrix(1) before subtracting each element of
+Matrix(1) from each element of Matrix (0), type,
+
+	> MCOPY(0,2); MCOPY(1,0)
+	> MBIAS(-10)
+	> MCOPY(0,1); MCOPY(2,0)
+	> MMINUS
+
+
+16.6.2.5 MSMOOTH
+----------------
+
+The verb MSMOOTH will provide two-dimensional smoothing of the data in
+Matrix (0).  The original data in Matrix (0) is copied to Matrix(1), so
+before invoking MSMOOTH, make sure that anything you wish to keep in
+Matrix (1) has been copied to Matrix (2) or (3) !  MSMOOTH takes two
+arguments. The first is a value, c (0 < c < 1), which defines the
+`severity' of the smoothing as detailed below. The second argument can
+take the values of TRUE or FALSE, such that if it is TRUE, and the
+array is defined as z(i,j), the smoothing includes only  horizontal and
+vertical nearest neighbors according to,
+
+z(i,j) = c*z(i,j) + (1-c) * (z(i-1,j)+z(i+1,j)+z(i,j-1)+z(i,j+1)) / 4
+
+While, if the second argument is FALSE, then the smoothing includes
+horizontal, vertical and diagonal nearest neighbors, according to,
+
+z(i,j) = c*z(i,j) + (1-c) * (z(i-1,j-1)+z(i-1,j)+z(i-1,j+1)+z(i,j-1)
+		         +z(i,j+1)+z(i+1,j-1)+z(i+1,j)+z(i+1,j+1)) / 8
+
+With MSMOOTH, the area smoothed within the matrix is defined by
+setting MXMIN, MXMAX, MYMIN and MYMAX appropriately. If any of the z's
+in the above definitions are undefined (i.e. if MD0(x,y) = MH0(MUNDEF)),
+then no smoothing is made for that (i,j). Similarly, no smoothing is
+made for the border cells in the matrix.
+
+Suppose that you wish to do a `quasi pill-box' smooth of the map in
+Matrix (0), but you already have a valuable map in Matrix (1), although
+Matrix (2) is empty, try typing,
+
+	>MMOVE(1,2)
+	>C = 0.5
+	>MSMOOTH(C, FALSE)
+
+16.6.2.6 MFILL
+--------------
+
+Often a matrix will contain `holes' where data do not exist, those
+pixels containing just the blanking (dummy) value, MH0(MUNDEF). For
+example, interference may have been present at those points in a
+continuum raster and you have edited it out, or a few grid points in a
+spectral coverage may have been omitted due to time constraints during
+observations. MFILL is a verb that will try to interpolate the
+most-probable values at these positions of undefined brightness for the
+array in Matrix (0).  The original data in Matrix (0) is copied to
+Matrix(1), so before invoking MFILL, make sure that anything you wish
+to keep in Matrix (1) has been copied to Matrix (2) or (3) !
+
+The verb MFILL takes a single argument which defines the RADIUS, in
+units of grid cells, within which the interpolation will consider
+nearest-neighbor points. Of course, RADIUS must be greater than, or
+equal to, one pixel width. For each undefined point, the algorithm
+searches along both the x- and y-axes, and the diagonals, through the
+point and finds the nearest neighbor pairs (if any) possessing valid
+data at distances of less than or equal to RADIUS for each of these
+directions. An approximate value at the undefined point is computed via
+linear interpolation for any of the four directions having a valid data
+pair.  Then the weighted mean of the interpolated values is taken, with
+weights assigned proportional to the distances between the `nearest
+neighbor pairs'. If no valid `adjacent pairs' are found, the undefined
+point is left undefined.
+
+While a large value of RADIUS will fill in more holes, a smaller value
+gives greater assurance that the filled-in value bears a reasonable
+relation to reality. The interpolated values themselves are not used in
+filling in other undefined points. The area over which the operation is
+applied is defined by the adverbs MXMIN, MXMAX, MYMIN and MYMAX, but no
+values are filled in for the border cells of the matrix.
+
+Suppose that you have a few `data holes' in Matrix (0) due to editing-out
+interference. Further, suppose that these holes lie within the region
+with bottom left-hand, and top right-hand, corners given by pixels
+(27,35), (93,117). If the largest holes occupy only two `adjacent'
+undefined points, you can interpolate their values by typing,
+
+	>MXMIN = 27; MYMIN = 35; MXMAX = 93; MYMAX = 117
+	>RADIUS = 2
+	>MFILL(RADIUS)
+
+16.6.2.7 MFFT, MIFFT and Holographic Data Reduction
+---------------------------------------------------
+
+A few verbs have been added to UniPOPS that were meant for the
+reduction of holographic data.
+
+The verbs MFFT and MIFFT take the complex fast-Fourier transform or
+inverse transform of the contents of Matrices (0) and (1) and return
+their results to the same matrices.  The input Matrix (0) and (1) are
+assumed to contain real and imaginary data.  Both matrices must have
+the same dimensions -- you will get faster response if the dimensions
+are a power of two.
+
+Two other verbs, HOLWINDOW and HOLFITFOC, are meant only for
+holographic data reduction and probably would have no other uses.  They
+are presented here solely for the sake of completeness.
+
+HOLWINDOW convolve the data in Matrices (0) and (1) with various
+functions and stores the results back in the same matrices.  Both
+matrices should have the same dimensions.  HOLWINDOW takes a single
+argument which indicates what convolution function you want to use.
+The values of the possible arguments and their corresponding functions
+are:
+
+#if CKBK
+
+#end
+    -----------------------------------------------------------------------
+    Arg   Function				  Name
+    -----------------------------------------------------------------------
+     1 	     1.	  			       Rectangular [No convolution]
+     2	     G/pi 			       Bartlet
+     3	     [ 1 - cos(G) ] / 2		       Hanning
+     4	     0.54 - 0.46*cos(G)		       Hamming
+     5	     0.42 - .5*cos(G) + 0.08*cos(2*G)  Blackman
+    -----------------------------------------------------------------------
+    where G = pi*(r-1)/(R-1); r = radius of a pixel from center of matrix,
+    R = radius of corner pixel from center.
+
+ 
+HOLFITFOC assumes that Matrix (0) represents the surface errors of a
+telescope and fits to the data an error pattern due to offsets in
+radial and lateral focus or pointing.  HOLFITFOC removes the error
+pattern from the data and places the results back into Matrix (0).  It
+also places the fitted error pattern into Matrix (1) and uses data
+Array(1) for temporary storage.
+   
+
+16.6.3 Clearing a Matrix
+------------------------
+
+The verbs MBLANK and MREMOVE should be used to clear a UniPOPS Matrix.
+MBLANK takes the Matrix number as its single argument, and erases all
+data values from that Matrix. The header of the Matrix is left
+untouched, while the date values are all set to the undefined (dummy)
+value.  Suppose that you wish to retain the header of the array in
+Matrix (2), but set the data values to the number 1.0E10. Then type,
+
+	>MH2(MUNDEF) = 1.0E10
+	>MBLANK(2)
+
+MREMOVE goes one step further. If you want to remove both header and
+data, say to create your own two-dimensional array, then this can be
+achieved with the verb MREMOVE. It takes a single argument which is the
+number of the Matrix (n) to be left void. This is exactly like the
+operation of the verb REMOVE for the one-dimensional UniPOPS data
+Arrays (see Section 5.12).  Note that the verb MMOVE(m,n) is equivalent
+to,
+
+	>MCOPY(m,n)
+	>MREMOVE(m)
+
+16.7 Display of Two-Dimensional Data
+------------------------------------
+
+A data array held in Matrix (0) can be displayed on your workstation
+screen in a number of different and complimentary ways. These are,
+
+	i) Contour plots produced by the verbs CONTOUR or QCONTOUR.
+
+	ii) Half-tone displays obtained with the verb HLFTNE. Such
+	    displays plot a set of dots, the number of dots plotted per
+	    matrix grid cell being related to the data value at that
+	    position.
+
+	iii) A color or grey-scale raster plot produced with the verb
+	     RASTER.
+
+16.7.1 Common Adverbs to All Two-Dimensional Plots
+--------------------------------------------------
+
+Certain adverbs are used by all of these dispay options. These are,
+
+	a) For each option, the area of Matrix (0) to be displayed is
+	   determined by the values contained in the four adverbs
+	   MXMIN, MXMAX, MYMIN and MYMAX.
+
+	b) The adverb MRATIO sets the ratio for x-to-y pixel dimensions
+	   on the display. The default is 1, which gives square pixel
+	   dimensions.
+
+	c) The array adverb LEVS contains the brightnesses at which
+	   contours will be plotted (CONTOUR or QCONTOUR), the `shade'
+	   of dots changed for a half-tone display (HLFTNE), or the
+	   color or gray shade changed (RASTER). The levels must be
+	   entered in LEVS in ascending order, and up to 32 levels can
+	   be specified.
+
+	   LEVS can be specified by the user, remembering to set the
+	   array element beyond the last level to DEFAULT.
+
+	   See Section 16.7.3 for verbs that can assist in setting LEVS.
+
+16.7.2 Preparing to Display Two-Dimensional Data
+------------------------------------------------
+
+The more complicated two-dimensional displays that you may wish to
+produce often require an element of `prototyping' to get things just
+right. You can reduce the computing time for these iterations by using
+the COPYOFF/COPYON facility (see Section 15. ). Thus, when initiating
+`prototyping', type (say),
+
+	>COPYOFF 
+	>Your plotting commands
+
+When you are satisfied with your latest version and wish to take a hard
+copy, type,
+
+	>COPYON 
+	>Your plotting commands
+	>GCOPY
+
+16.7.3 Setting the LEVS Array
+-----------------------------
+
+The following verbs are available to help you set LEVS using different
+criteria:  AUTOLEV, SETLEV, EQHISTLEV, and FUNCLEV.
+
+The verb AUTOLEV can be invoked to help you set up the LEVS
+array. It takes a single argument defining the number of
+levels to be set. AUTOLEV finds the maximum and minimum data
+values within the specified region of the matrix, and
+assigns the values of LEVS such as to give equal increments
+between levels. Thus, if you wish to plot 10 levels in your
+display, type the following to set the levels and inspect
+them,
+
+	>AUTOLEV(10)
+	>PRINT LEVS 
+
+An alternative, and more general, way in which you can set
+LEVS is with the verb SETLEV. This verb takes 4 arguments.
+The first two are a starting level, and an increment between
+levels.  The third argument (0 < arg_3 < 33) is the number
+of levels to be set.  If the fourth argument equals TRUE
+(+1), then the levels are linear (equally spaced in value).
+If this argument is FALSE (-1), then the levels are
+logarithmic. The increment (arg_2) must always be positive.
+The starting level (arg_1) can take any value for linear
+levels, irrespective of the value of arg_2.  For logarithmic
+levels,
+
+	1) If arg_1 < 0., then arg_2 must be < 1.
+
+	2) If arg_1 > 0., then arg_2 must be > 1.
+
+	3) Arg_1 must never equal 0., and arg_2 must never
+	   equal 1.
+
+Suppose that you wish to set 10 levels, starting at 1.0, and
+going up in steps of 3 dB. Then type,
+
+	>SETLEV(1.0, 10.**0.3, 10, FALSE)
+
+
+The EQHISTLEV verb sets the values of LEVS so that an equal number of the
+data points in the specified region of Matrix (0) occur between each level
+(i.e. an equal histogram).  EQHISTLEV takes three arguments.  You specify 
+the mimimum and maximum data values over which you want to have an 
+equal histogram and the number of levels in LEVS that you wish to use.  If 
+you use the adverb DEFAULT for either of the minimum or maximum data 
+values then EQHISTLEV will use the corresponding value from the data.
+
+Suppose that you wish to have 15 levels in the equal histogram covering
+the range from 10.0 to the maximum value in the data.  Then type,
+
+	>EQHISTLEV(10.0, DEFAULT, 15)
+
+Finally, FUNCLEV sets LEVS such that there are a certain fraction of
+data points in the specified region of Matrix (0) between each level.
+The relative number of data points between each level is given by the
+array adverb FLEVS, which you must set prior to using FUNCLEV.  FUNCLEV
+takes two arguments, the minimum and maximum data values in Matrix (0)
+that are used in setting LEVS.
+
+Suppose that you want 10 levels with the relative number of data
+points between each level having the following ratio:
+
+	1:2:3:4:5:6:6:7:4:2
+
+(i.e. twice as many data points between levels two and three as between
+levels one and two, 1.5 times as many data points between levels three 
+and four as between levels two and three, etc).
+
+First, assign to FLEVS the appropriate values:
+
+	> FLEVS = 1,2,3,4,5,6,6,7,4,2,DEFAULT
+
+(the use of DEFAULT assigns a default value to the eleventh element which
+guarantees that only the 10 elements you set will be used)
+
+Note that what counts is the ratio of FLEVS values and not the individual
+values.  That is, FLEVS=1,2,3,DEFAULT is equivalent to FLEVS=5,10,15,DEFAULT.
+
+Next, run FUNCLEV to set LEVS based on FLEVS and the actual data in
+Matrix (0), 
+
+	> FUNCLEV(min, max)
+
+For color intensity maps, something like the following produces pleasing
+displays:
+
+	> { FLEVS@ = 32-@ }
+	> FUNCLEV(DEFAULT, DEFAULT)
+
+
+16.7.4 Contour Plots
+--------------------
+
+The simplest contour plots are obtained using the verb QCONTOUR. This
+differs from the verb CONTOUR (see below) in that you can specify
+neither the line type nor the labeling used for each contour level. If
+working on a color screen, you can, however, chose the color for all
+contours via a call to COLOR or RSTCOLOR (see Section ) before
+plotting.
+
+Suppose that you want to plot 10 contours with QCONTOUR, starting at
+1.0 with intervals of 2.0, for the area of Matrix (0) defined by bottom
+left-hand corner (1, 10), top right-hand corner (10, 20). Then type,
+
+	>MXMIN = 1; MXMAX = 10; MYMIN = 10; MYMAX = 20
+	>SETLEV(1.0, 2.0, 10, TRUE)
+	>QCONTOUR 
+
+The verb CONTOUR is somewhat more complicated to use than QCONTOUR, but
+allows you the flexibility to specify the line types and labeling used
+for each contour level. The line types that can be used (as for PLOT,
+SHOW, VCTR and RESHOW) are detailed in Appendix I.  , and are specified
+using the array adverb CONLINE, which should contain as many entries as
+there are in the array adverb LEVS (see Section 16.7.1). The absolute
+value of the n-th entry in CONLINE defines the line type for the n-th
+contour level and is effectively the argument of a call to the verb
+LINETYPE, (see Section 6.6 and Appendix I). The sign of an entry in
+CONLINE determines whether the contour line is to be labeled. If the
+n-th entry is < 0, the n-th level will be labeled, while if the entry
+is >= 0, it will not be labeled.  Contour labeling is affected by the
+current character size (see CHARSIZE in Section 6.4, and STATUS in
+Appendix H).  On a color screen, the color for all contours can be set
+via a call to the verbs COLOR or RSTCOLOR (see Section 6.6).
+
+If you wish to repeat the plot made above with QCONTOUR, but with every
+other level ticked and thick, and every fourth level labeled, then
+type,
+
+	>MXMIN = 1; MXMAX = 10; MYMIN = 10; MYMAX = 20
+	>SETLEV(1.0, 2.0, 10, TRUE)
+	>CONLINE = 0, 103, 0, -103, 0, 103, 0, -103, 0, 103
+	>CONTOUR LABEL
+
+16.7.5 Half-Tone Displays
+-------------------------
+
+To obtain a half-tone display of the data in Matrix (0), you set up the
+adverbs MXMIN, etc., and LEVS exactly as for QCONTOUR and CONTOUR (see
+Section 16.7.3).
+
+Thus, suppose that you wanted to make a half-tone displays with 10
+levels starting at 1.0 with intervals of 2.0, for the area of Matrix
+(0) defined by bottom left corner (1, 10), top right corner (10, 20).
+Then type,
+
+	>MXMIN = 1; MXMAX = 10; MYMIN = 10; MYMAX = 20
+	>SETLEV(1.0, 2.0, 10, TRUE)
+	>HLFTNE 
+
+16.7.6 Color and Gray-Scale Displays
+------------------------------------
+
+To make a color or gray-scale display of the data in Matrix (0), you
+should use the verb RASTER. If your workstation cannot handle color
+graphics, RASTER makes an attempt to arrange its levels of gray-scale
+shading to `mimic' color.
+
+The colors to be used are specified in the 3 x 32 element,
+two-dimensional adverb array CLUT, where the second index corresponds
+to the index in the array adverb LEVS used by RASTER. The first index
+provides three elements into which you encode the color for a
+particular level using the coding described for the verb COLOR in
+Section 6.6 and Appendix I. Thus, for the n-th level in LEVS(n) you
+must specify the red value or the hue in CLUT(1,n), the green value or
+the intensity in CLUT(2,n), and the blue value or the saturation in
+CLUT(3,n).
+
+#if CKBK
+
+#end
+The UniPOPS verb SETCLUT eases the setting up of CLUT. It allows you to
+select one of six color tables, these being as follows,
+
+	1	Gray-scale (White to Black)
+	2	Gray-scale (Black to White)
+	3	Blue through Green to Red
+	4	Red through Green to Blue
+	5	Blue through Purple to Brown
+	6	Brown through Purple to Blue
+
+SETCLUT has two arguments. The first is the identification number of
+the chosen color table, while the second is the number of levels (0 <
+arg_2 < 33).
+
+Suppose that you want to make a color display with 10 levels starting
+at 1.0 with intervals of 2.0, for the area of Matrix (0) defined by
+bottom left-hand corner (1, 10), top right-hand corner (10, 20).
+Further you want the color sequence to pass from red through green
+to blue. Then type,  
+
+	>MXMIN = 1; MXMAX = 10; MYMIN = 10; MYMAX = 20
+	>SETLEV(1.0, 2.0, 10, TRUE)
+	>SETCLUT(4,10)
+	>RASTER 
+
+16.7.7 Finishing and Annotating the Display
+-------------------------------------------
+
+There are two further operations that can be applied to your plot once
+the basic display has been made. Firstly, you will almost certainly
+want to draw and label the axes, add documentary annotations, and label
+the levels.  This is achieved by invoking the verb LABEL. Before
+calling LABEL, you will have to set up the adverbs you need to tailor
+the operation to your requirements. The array adverb LEVS should be
+left as it was for the display verb, as should the array adverb CLUT
+(for a RASTER plot).  If the adverb SLABEL is set to 1 or 2,
+documentary annotations will be added to the display and the tick marks
+on the axes will be labeled.  If SLABEL = 0, then no documentation
+will be generated, and the tick marks will remain unlabeled.
+
+A series of adverbs allow the user of LABEL to draw lines across the
+display.  These are ZLINE, CMARK, FMARK, TMARK and VMARK, which (as
+detailed in Section 6.2) have other significances for one-dimensional
+display.  Setting ZLINE to TRUE will draw a horizontal line
+representing the x-axis, i.e. at a y-value of y = 0. Each of the adverb
+quartet CMARK, FMARK, TMARK, and VMARK is a 12-element array adverb.
+They allow you to draw n lines of a specific type, as detailed
+immediately below. To use these, fill the first n elements of the
+relevant adverb, setting the (n+1)-th element to DEFAULT. The lines
+will be drawn on calling LABEL. The meanings of these four array
+adverbs here are,
+
+	CMARK	--  A vertical line is drawn through pixels whose x
+		    pixel (cell) number is CMARK(i).
+
+	TMARK   --  A horizontal line is drawn through pixels whose y
+		    pixel (cell) number is TMARK(i).
+
+	VMARK   --  A vertical line is drawn  at the true x-value of
+		    VMARK(i).
+
+	FMARK   --  A horizontal line is drawn at the true y-value of
+		    FMARK(i).
+
+The verb FLAG will also draw and label a vertical line through the x
+value given as its single argument. Thus if the x-axis of your present
+two-dimensional plot represents galactic longitude, and you wish to
+draw a vertical, labeled line at x = -10.0 deg, type,
+
+	>FLAG(-10.0)
+
+A further way to annotate your display is provided by the verb
+PLOTDOTS. This verb will draw dots or plusses wherever in Matrix (0) a
+defined or undefined data value exists. It takes one argument that
+controls its mode of operation as follows,
+
+   0 or 1 = Plot dots at the positions of all undefined data.
+   2      = Plot plus-signs at the positions of all undefined data.
+  -1      = Plot dots at the positions of all defined data.
+  -2      = Plot plus-signs at the positions of all defined data.
+
+Thus, suppose that you have produced a two-dimensional contour plot,
+and now wish to label the axes, add documentation and a contour look-up
+table, draw horizontal lines at y grid points 23 and 57 and vertical
+lines at x grid points 5, 26 and 134, plus putting plus-signs wherever
+there is dummy data. Then type,
+
+	>SLABEL = 1
+	>CMARK = 5 26 134 DEFAULT
+	>TMARK = 23 57 DEFAULT
+	>ZLINE = FALSE
+	>FMARK = DEFAULT; VMARK = DEFAULT
+	>LABEL
+	>PLOTDOTS(2)
+
+16.7.8 The Cross hairs (Cursors) and Two-Dimensional Displays
+-------------------------------------------------------------
+
+	As with other UniPOPS displays (see Section 6.3), the
+cross hairs (cursors) can be activated and used to determine positions
+and brightnesses at any point on two-dimensional displays and feed
+values into UniPOPS adverbs. The mouse is used to control the operation
+of these verbs, as detailed in Section 6.3. However, their meanings and
+results are somewhat different to the one-dimensional case, as follows,
+
+	CROSSHAIR  - Prints on the screen the (x,y) pixel coordinates,
+		     the x and y values, and the brightness (z-value)
+		     at the cursor position.  Which of these values are
+		     displayed is determined by the value of the adverb
+		     CROSSFLG.
+	CCUR	   - This function returns a value equal to the x pixel
+		     coordinate of the vertical cursor.
+	TCUR       - This function returns a value equal to the y pixel
+		     coordinate of the horizontal cursor.	
+	VCUR 	   - This function returns a value equal to the x value
+		     of the vertical cursor.
+	FCUR 	   - This function returns a value equal to the y value
+		     of the horizontal cursor.
+	CLICK	   - Allows you to set adverbs to the values that would
+		     have been returned by all of the cursor function
+		     verbs with a single verb using a single click of a
+		     mouse button.
+
+Thus, suppose for your plotted image you wished to put the x pixel
+coordinate and the x value (might be galactic longitude) at the point
+of peak brightness into into the already-declared adverbs X_PIX and
+X_LONG, then type,
+
+	>X_PIX = CCUR; X_LONG = VCUR
+	
+Move the cross hairs to the brightness peak, and then click left or
+right twice.  Or alternatively, the following would achieve the same
+result with a single click of a mouse button:
+
+	> CLICK; X_PIX = XCLICK; X_LONG = VCLICK
+
+and move the cross hairs to the brightness peak and click left or
+right once.
+
+A further cursor function verb, MCUR, has been created specifically for
+two-dimensional image plots and returns the value of the brightness
+underneath the cross hairs. MCUR activates the cross hairs, and these can
+be moved to the required position on the display, where  clicking
+either of the mouse buttons 1 or 3 will return the value of brightness
+at the nearest pixel. For example, if you wish to know the brightness
+at the peak position in your display, type,
+
+	>PRINT MCUR
+
+and move the cross hairs that then appear to the peak, clicking left or
+right once there.

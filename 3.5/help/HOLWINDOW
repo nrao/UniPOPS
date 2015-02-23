@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'HOLWINDOW:  For holographic data reduction.  Convolves the'
+PRINT 'data in Matrices 0 and 1 with a specified function placing'
+PRINT 'the results back into these matrices.  Syntax:'
+PRINT 'HOLWINDOW(function).'
+PRINT ' '

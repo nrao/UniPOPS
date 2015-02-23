@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'AVE:  Divides the accumulated data in internal ACCUM array'
+PRINT 'by the sum of the weight factors and places the averaged'
+PRINT 'data in Array (0).'
+PRINT ' '

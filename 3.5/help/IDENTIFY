@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'IDENTIFY:  (PSEUDO) Searches through help files for a '
+PRINT 'particular topic.  '
+print 'Syntax: IDENTIFY, IDENTIFY topic, or IDENTIFY topic deg'
+PRINT ' '

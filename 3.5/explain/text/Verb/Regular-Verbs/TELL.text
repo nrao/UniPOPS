@@ -1,0 +1,64 @@
+	(REGULAR VERB)
+	
+	Syntax:    TELL pointer  
+	
+	TELL is an informational verb which requires a pointer.  The
+	permitted pointers of TELL are as follows:
+
+		TELL ACCMD-- prints the number of scans you have last
+			     averaged and the scan numbers used in the
+			     average.
+
+		TELL DISK--- Gives total number of scans in the on-line
+			     data file, on-line gains file (Tucson 12-m
+			     on-line file only), off-line data file,
+			     'keep' file, 'save' file, 'gains' file and
+			     individual records on-line and off-line
+			     files (Green Bank only).  If the 'gains' file 
+			     or individual records file is unavailable,
+			     no information will be displayed about
+			     that file.
+
+		TELL DSCANS- lists the scans by number in the on-line
+			     data file, and the off-line data file.
+
+		TELL GSCANS- lists the scans by number in the 'gains'
+			     file.
+
+		TELL KSCANS- lists the scans by number in the 'keep'
+			     file.
+
+		TELL RSCANS- lists the scans by number in the individual
+			     records files (on and off-line).
+
+		TELL OFFDATA - lists the scans by number in the off-line 
+			     data file.
+
+		TELL ONDATA- lists the scans by number in the on-line
+			     data file and the on-line gains file
+			     (Tucson 12-m on-line file only).
+
+		TELL SSCANS- lists the scans by number in the 'save'
+			     file.
+
+		TELL STACK-- lists the numbers that are contained in
+			     the internal ASTACK array.  The number of
+			     elements in the list is equal to ACOUNT.
+			     Maximum stack size is 5120.
+
+		TELL STAT -- Summarizes the current state of the STATUS
+			     array in a more user-friendly way than
+			     simply printing out the values of the 
+			     array.
+
+
+	No adverbs are used or set by TELL.
+
+	EXAMPLE:
+
+	You want to know what scans are in your off-line data file so
+	you type:
+
+		TELL OFFDATA
+
+	and a list will be generated.

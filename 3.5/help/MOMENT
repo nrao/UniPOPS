@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MOMENT:  Calculates the zeroth and first moments of the'
+PRINT 'data in Array 0 and places the results in SIZE.'
+PRINT ' '
+PRINT 'BMOMENT, EMOMENT=',BMOMENT, EMOMENT
+PRINT 'SIZE=',SIZE
+PRINT ' ' 

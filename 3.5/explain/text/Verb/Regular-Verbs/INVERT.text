@@ -1,0 +1,16 @@
+	(REGULAR VERB)
+
+	INVERT flips the order of the data values in Array (0)
+	end-to-end.
+
+	If you decide INVERT should not have been invoked, a second
+	INVERT will restore the status quo.
+
+	No adverbs are used or set by INVERT.
+
+	EXAMPLE:
+
+	You want to see a spectrum in the reverse direction, so
+	specify;
+
+		INVERT PAGE SHOW

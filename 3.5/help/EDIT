@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'EDIT:  (PSEUDO) Allows one to edit the specified file using'
+PRINT 'a system editor.  Syntax: EDIT filename'
+PRINT ' '

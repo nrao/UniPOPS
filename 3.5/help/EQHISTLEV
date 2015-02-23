@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'EQHISTLEV:  (VERB) Assigns to the LEVS array adverb, values'
+PRINT 'so that an equal number of data points occur between each'
+PRINT 'level (i.e. an equal histogram).'
+PRINT ''
+PRINT 'Syntax: EQHISTLEV(min_level, max_level, num_levs)'
+PRINT ' '
+PRINT 'LEVS=',LEVS
+PRINT ' ' 

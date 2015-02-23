@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'HISTORY:  (PSEUDO) Lists the last few commands that the'
+PRINT 'user has issued.'
+PRINT ' '

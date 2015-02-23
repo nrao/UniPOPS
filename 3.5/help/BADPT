@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BADPT:  (ARRAY-12) Bad channels found by SPIKE and used by'
+PRINT 'REPLACE.'
+PRINT ' '

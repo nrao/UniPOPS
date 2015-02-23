@@ -1,0 +1,14 @@
+Class 5 :  Environment                        
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Ambient Temperature                           | TAMB     |  R*8   | C
+Ambient Pressure                              | PRESSURE |  R*8   | cm-Hg
+Ambient relative humidity                     | HUMIDITY |  R*8   | % 
+Index of Refraction                           | REFRAC   |  R*8   | 
+Dew Point                                     | DEWPT    |  R*8   | C
+Mm of Water                                   | MMH2O    |  R*8   | mm
+#if RFRNC CKBK
+
+
+#end

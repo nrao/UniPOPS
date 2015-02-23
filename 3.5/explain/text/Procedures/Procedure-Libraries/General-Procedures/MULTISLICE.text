@@ -1,0 +1,24 @@
+	MULTISLICE produces multiple raster maps of slices through a
+	cube on a single page of the graphics screen.
+
+	Syntax: MULTISLICE(axis, first, dx, nmapx, nmapy)
+
+	Where 
+		axis is the axis along which slices are taken (1, 2, or 3)
+
+		first is the cell number at which to start the slicing
+
+		dx is the width of a slice in cells (>=1)
+
+		nmapx, nmapy = number of raster maps on a page of graphics
+			screen in the x and y direction, the total number
+			of maps produced will be nmapx*nmapy
+
+	You must set LEVS and CLUT as appropriate before calling.
+
+	You should also consider setting values for MRATIO, MXMIN, MXMAX
+	MYMIN and MYMAX.  See the documentation for RASTER for more
+	details about the display as well as the documentation for
+	READCUBE and SLICE for information about accessing FITS cubes.
+
+	File name: multislice.prc

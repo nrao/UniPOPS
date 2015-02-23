@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'GDISPLAY:  Uses the Gaussian parameters in HEIGHT, CENTER,'
+PRINT 'and HWIDTH and displays the sum of the Gaussians.'
+PRINT ' '
+PRINT 'NGAUSS,SLABEL=',NGAUSS,slabel
+PRINT 'HEIGHT='; print HEIGHT
+PRINT 'CENTER='; print CENTER
+PRINT 'HWIDTH='; print HWIDTH
+PRINT ' ' 

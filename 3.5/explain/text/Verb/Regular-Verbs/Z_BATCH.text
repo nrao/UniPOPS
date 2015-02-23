@@ -1,0 +1,46 @@
+	(REGULAR VERB)
+
+	Z_CHNGFIL and Z_SYSTEM are regular-verb versions of CHNGFILE
+	and SYSTEM.  They should be used only under rare
+	circumstances.
+
+     .  The syntax for Z_CHNGFIL is:
+
+		Z_CHNGFIL(action_type, file_number, file_name)
+
+	where action_type is a literal constant or string adverb which
+	has the value of one of the following:
+
+		 CHANGE		SUBTRACT	CREATE
+
+	File_number is a real constant, scalar adverb or pointer
+	adverb with a value of
+
+		1	2	3	4	5	11	12
+
+	these numbers correspond to the values of the pointer adverbs
+		
+	   DSCANS  KSCANS  SSCANS  GSCANS  RSCANS PRINTFILE LOGFILE
+
+
+	and file_name is a literal constant or string adverb that
+	contain the legal name of a data file (see FILES or CHNGFILE
+	for more details about).
+
+
+     .  The syntax for Z_SYSTEM is:
+
+	Z_SYSTEM(unix_command)
+
+	where  string3 is a literal constant or string adverb which has
+	the value of any UNIX command.
+
+	No adverbs are used or set by Z_CHNGFIL or Z_SYSTEM.
+
+	EXAMPLE:
+
+		HTITLE="CHANGE"
+		Z_CHNGFIL(HTITLE, 2, 'KEEP.ORION')
+
+		Z_SYSTEM('ls *.prc')
+

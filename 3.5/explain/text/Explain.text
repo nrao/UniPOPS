@@ -1,0 +1,30 @@
+This is the root of the hierarchy for the EXPLAIN facility.
+
+The documentation is scrolled one page at a time.  To advance to a new
+page hit the space bar.
+
+At the prompt below, enter the name of any of the listed subtopics and
+the documentation for that subtopic will be displayed as well as a
+listing of further subtopics.
+
+You can also enter the name of any subtopic that you know exists but is
+not listed or you can specify a subtopic of a topic by typing something
+like: TOPIC/SUBTOPIC
+
+If you type DONE, you will exit the EXPLAIN facility.
+
+If you enter two dots (i.e., ..), the previous EXPLAIN documentation
+will be shown.
+
+If you enter one dot (i.e., .), the present EXPLAIN documentation will
+be repeated.
+
+If you type help or HELP, this document will be listed.
+
+If you type P, the present EXPLAIN documentation will be printed.
+
+Sorry, but no wild cards are allowed in specifying topics but
+minimum-match is supported and the case of topic names is unimportant.
+
+Please report to us if any EXPLAIN documentation you need is not
+available.

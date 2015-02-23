@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'SUMMARY:  Summarizes the data in the "save", "keep",'
+PRINT '"gains", "record", or off-line or on-line data files.'
+PRINT 'BSCAN, ESCAN specify the range of scans to be summarized.'
+PRINT 'Syntax: SUMMARY file_ptr'
+PRINT ' '
+PRINT 'BSCAN, ESCAN=',BSCAN, ESCAN
+PRINT ' ' 

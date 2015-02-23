@@ -1,0 +1,16 @@
+	(STRING ADVERB of length 32 characters)
+
+	HTITLE is used to label the output of PLOT.  It is a title that
+	is placed right above the plot.
+
+	HTITLE is used by :    PLOT     
+
+	No verbs change HTITLE
+
+	The initial value of HTITLE is blanks.
+
+ 	EXAMPLE :
+
+ 	To set the label of PLOT to "This is a TEST plot", specify;
+
+		HTITLE = 'This is a TEST plot'

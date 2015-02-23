@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'INT:  (FUNCTION) Returns the truncated integer part of the'
+PRINT 'given parameter.  Synonymous with IFIX.'
+PRINT ' '

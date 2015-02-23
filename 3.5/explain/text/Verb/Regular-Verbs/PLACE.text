@@ -1,0 +1,52 @@
+	(REGULAR VERB)
+
+        Syntax:    PLACE (x_pixel,y_pixel)
+
+	PLACE moves the cursor on the graphics screen to the position
+	commanded by x_pixel and y_pixel for a subsequent VCTR, CHAR or
+	DOCUMENT commands, where x_pixel and y_pixel are defined as
+	follows:
+
+	   x_pixel        One of 1024 horizontal points on the
+			     graphics screen.
+	   y_pixel        One of 800 vertical points on the
+			     graphics screen.
+                   
+	No adverbs are used by VCTR.
+       
+	Note that each character on the graphics screen is about 25
+	pixels high and 14 wide.
+
+	No adverbs are used by VCTR.
+
+	ADVERBS SET:
+
+	STATUS(31)   x-pixel number where the next string will be
+		     printed when in GRAPHICS mode and is determined by
+		     the last PLACE command and by the program.
+
+	STATUS(32)   y-pixel number where the next string will be
+		     printed when in GRAPHICS mode and is determined by
+		     the last PLACE command and by the program.
+
+	EXAMPLE:
+
+	.  You want to plot a label at pixel location (300,200), type:
+
+		PLACE (300,200)
+		CHAR ('X-AXIS LABEL')
+
+	    (The lower left corner of the first X will be placed at
+	    pixels [300,200].)
+
+	 .  You want to change where DOCUMENT will print its text line;
+	    type:
+
+		GRAPHICS
+		PLACE (30,300)
+		DOCUMENT THIS IS A COMMENT WHICH WILL GO TO THE GRAPHICS SCREEN
+		CRT 
+
+	    (The lower left corner of the first T will be located at
+	    pixels [30,300].)
+            

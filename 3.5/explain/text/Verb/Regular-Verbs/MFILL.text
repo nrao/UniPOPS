@@ -1,0 +1,57 @@
+	(REGULAR VERB)
+
+	Syntax:  MFILL(distance)
+
+	MFILL takes the contents of Matrix (0), copies them to
+	Matrix(1), and interpolates the matrix at any undefined
+	values, placing the results into Matrix (0).
+
+	MFILL takes a single argument which defines the radius, in
+	units of grid cells, within which the interpolation will
+	consider nearest-neighbor points. Radius must be greater than,
+	or equal to, one pixel width.  For each undefined point, the
+	algorithm searches along both the x- and y-axes, and the
+	diagonals, through the point and finds the nearest neighbor
+	pairs (if any) possessing valid data at distances of less than
+	or equal to radius for each of these directions. An approximate
+	value at the undefined point is computed via linear
+	interpolation for any of the four directions having a valid
+	data pair.  Then the weighted mean of the interpolated values
+	is taken, with weights assigned proportional to the distances
+	between the 'nearest neighbor pairs'.  If no valid 'adjacent
+	pairs' are found, the undefined point is left undefined.
+
+	While a large value of radius will fill in more holes, a
+	smaller value gives greater assurance that the filled-in value
+	bears a reasonable relation to reality. The interpolated values
+	themselves are not used in filling in other undefined points.
+	The area over which the operation is applied is defined by the
+	adverbs MXMIN, MXMAX, MYMIN and MYMAX, but no values are filled
+	in for the border cells of the matrix.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be processed.
+
+
+	No adverbs are set by MFILL.
+
+	If Matrix (1) contains something, you may want to MMOVE
+	the matrix to somewhere else before using MFILL.
+
+	EXAMPLE:
+
+	Suppose that you have a few 'data holes' in Matrix (0) due to
+	editing-out interference. Further, suppose that these holes lie
+	within the region with bottom left-hand, and top right-hand,
+	corners given by pixels (27,35), (93,117). If the largest holes
+	occupy only two 'adjacent' undefined points, you can
+	interpolate their values by typing,
+
+		MXMIN = 27; MYMIN = 35; MXMAX = 93; MYMAX = 117
+		MFILL(2)
+

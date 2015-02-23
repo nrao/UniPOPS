@@ -1,0 +1,145 @@
+	(REGULAR VERB)
+
+	Syntax:  SAXIS(lower, upper) 
+
+	SAXIS sets up the units of the lower and upper x-axis for SHOW
+	and other verbs.
+
+	You must supply two arguments to SAXIS which respectively
+	indicate the desired lower and upper axis.  The way you can
+	specify the axis type is through pointer adverbs.  The
+	following tables describe the pointer adverbs you may want to
+	use with SAXIS:
+
+L------------------------- Spectral Line --------------------------------
+L-
+L-	Pointer 	Type of axis
+L-	-------------------------------------------------------------
+L-	CHANNEL 	channel number
+L-	FREQOFF		frequency offset
+L-	FREQRST		rest frequency
+L-	FREQSKY		sky frequency
+L-	FREQIRST	rest frequency  (image sideband -- 12m only)
+L-	FREQISKY	sky frequency (image sideband -- 12m only) 
+L-	VELHEAD		velocity (in the units defined in the header)
+L-	VELRADI		velocity, radio definition
+L-	VELOPTI		velocity, optical definition
+L-	VELRELT		velocity, full relativistic definition
+L-	VELLINR		velocity, linear or equi-spaced channels
+L-	-------------------------------------------------------------
+L-
+L-	The default is FREQOFF and VELHEAD on the lower and upper axis.
+L-
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	Pointer 	Type of axis
+C-	-------------------------------------------------------------
+C-	SAMPLE		sample number
+C-	TIMEOFF		time offset since start of scan
+C-	TIMELST		LST 
+C-	TIMEUT		UT
+C-	POS_OFF		position offset since start of scan
+C-	POSXOFF		position offset since start of scan along the
+C-				x-axis of the observing coordinate system
+C-	POSYOFF		same for the y-axis of the coordinate system
+C-	POSX		position along the x-axis of the observing
+C-				coordinate system
+C-	POSY		same for the y-axis of the coordinate system
+C-	-------------------------------------------------------------
+C-
+C-	The default is TIMEOFF and POS_OFF on the lower and upper axis.
+C-
+C------------------------- Continuum ------------------------------------
+
+	The chosen lower x-axis is very important to UniPOPS and will
+	be the units of calculations for:
+
+	CHANTOX		FLAG		GDISPLAY	GMEASURE
+	GPARTS		MOMENT		PEAK		SHOW
+	TABLE		XRANGE		XTOCHAN		
+		
+	If the scans on which these verbs act do not have sufficient
+	header information, UniPOPS may not be able to calculate
+	quantities for your requested x-axis.  In these cases, UniPOPS
+	produces a warning message and will revert to using channel or
+	sample numbers for its calculations.
+
+	Some but not all of the powers of SAXIS can be mimiced with the
+	CC, CV, CF, VC, VV, VF, FC, FV, and FF verbs.
+
+	To return either axis to its default units, use the pointer
+	adverb DEFAULT as the corresponding argument to SAXIS.
+	SAXIS(DEFAULT, DEFAULT) therefor returns both axes to their 
+	default units.
+
+	No adverbs are used by SAXIS:
+
+	ADVERBS SET:
+
+	STATUS(1) :  Units of the lower  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.
+
+		     Values (Spectral Line): 1 = channels 
+		    		 	     2 = frequency offset
+					     3 = velocity (header definition)
+					     4 = radio velocity
+					     5 = optical velocity
+					     6 = relativistic velocity
+					     7 = linear velocity
+					     8 = rest frequency
+					     9 = sky frequency
+					    10 = image rest frequency
+					    11 = image sky frequency
+
+		     Values (Continuum): 1 = sample 
+		    		 	 2 = time offset
+					 3 = position offset
+					 4 = X position offset
+					 5 = Y position offset
+					 6 = X position
+					 7 = Y position
+					 8 = LST
+					 9 = UT
+
+	STATUS(2) :  Units of the upper  x-axis  for  SHOW as
+		     determined by the last CC, CV, CF, FF, FV, FC, VV,
+		     VC, VF, or SAXIS command.  Values are the
+		     same as STATUS(1)	
+
+	EXAMPLES:
+
+	.  You are processing continuum data and want sample number as
+	   your lower x-axis and LST on the upper so:
+
+		SAXIS(SAMPLE, TIMELST)
+
+	.  The VF verb is equivalent for spectral-line data to:
+
+		SAXIS(VELHEAD, FREQOFF)
+
+	   and, for continuum data, to:
+
+		SAXIS(POS_OFF, TIMEOFF)
+
+
+	.  You are processing spectral-line data of a
+	   highly-red-shifted galactic CO profile and want to use
+	   MOMENT or GMEASURE to find out the integrated intensity in
+	   the rest-frame of the galaxy.  Assuming that the telescope
+	   control system has provided sufficient and correct header
+	   information, you can type:
+
+		SAXIS(VELRELT, VELOPTL)  
+		MOMENT   		
+
+			or
+
+		SAXIS(VELRELT, VELOPTL)  
+		GMEASURE 1234)
+
+	   [Note:  The type of upper x-axis specified is not used in the
+	   calculations used by MOMENT and GMEASURE so we have picked
+	   a reasonable upper x-axis.]
+

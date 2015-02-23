@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MCUR:  (FUNCTION) For 2-d plot, returns z-value at location'
+PRINT 'of crosshair.'
+PRINT ' '

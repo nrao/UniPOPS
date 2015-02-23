@@ -1,0 +1,519 @@
+	This documents the ways to create, edit, and install
+	procedures, as well as giving suggestions on how to write one.
+
+	But, before creating your own procedure, you should investigate
+	the procedures located in the UniPOPS procedure libraries --
+	maybe someone has already solved your problem, or a similar
+	one.  To find out what procedures exist in the procedure
+	library, type PRCDIR and UniPOPS will generate a listing of
+	their names.  To find out what these library procedures do,
+	consult the documentation under Procedure-Libraries.
+
+Creating a Procedure
+--------------------
+
+	The best way to write a procedure is through the use of the
+	EDIT verb.  The syntax for creating a file on disk that will
+	contain a procedure is something like:
+
+		EDIT name.prc
+
+	We suggest that you use lower case for the name of the file,
+	that you add the extension .prc to the file name, and that you
+	make the name of the file identical to what the procedure's
+	name will be.  Without the .prc extension, the PRCDIR verb
+	will not be able to recognize the file as one containing a
+	procedure.
+
+	Be careful to not use the same name as one of an existing
+	procedure when creating a new procedure.  If name.prc exists in
+	the listing produced by PRCDIR, then that file will be edited
+	(it will be copied to your current directory if it is found is
+	one of the two possible alternate directories searched by
+	PRCDIR).  See the documentation for EDIT for more details.
+
+	The system editor you will use depends upon what is available
+	on the current computer system.  When you log onto your account
+	for the first time, you should be given a list of available
+	editors and you will be asked to pick one.  See the system's
+	administrator for help about changing your default editor.
+
+	[Note: We strongly recommend that you never define or edit a
+	procedure within UniPOPS itself.  That is, never use the PROC,
+	PROCEDURE or POPSEDIT commands from within UniPOPS.]
+
+
+Procedure Names
+---------------
+
+	The name of a procedure follows the conventions for the names
+	of adverbs and verbs.  That is, give it a name that starts with
+	a character out of the set { A-Z a-z }, include subsequent
+	characters only from the set { A-Z a-z 0-9 _ }, and the name
+	you give must be 10 characters or shorter in length; upper case
+	and lower case characters are equivalent in the names of
+	procedures.  It is a good practice to make the name of the
+	procedure reminiscent of what function the procedure will
+	perform.  The name must not be the same as that of any existing
+	adverb or verb.  If you name a procedure the same as an
+	existing procedure, the new procedure will overwrite the old.
+	The name should also be the same as the name of the file
+	containing the procedure definition (minus the .prc
+	extension).
+
+	For example, you want to create a procedure that automates
+	Gaussian fitting so you decide to call it GAUSSFIT and store it
+	in a file by the name of gaussfit.prc.
+
+
+#if RFRNC
+
+#end
+First Line in a Procedure Definition
+------------------------------------
+
+	After EDIT brings up a system editor, the user will enter as
+	the first line of the file the UniPOPS commands for defining
+	the name of the procedure and its list of dummy parameters.
+
+	Dummy parameters in UniPOPS serve the same role as the
+	parameter list do in subroutine and function definitions in
+	Fortran and C.  That means that the first line in the file
+	must look like one of the following:
+
+		procedure name 
+		procedure name 
+		proc name 
+		PROC name
+		procedure name ( parameter list) 
+		procedure name ( parameter list)
+		proc name ( parameter list)
+		PROC name ( parameter list)
+
+	In our Gaussian fitting example above, we could start the gaussfit.prc
+	file with the line:
+
+		PROC GAUSSFIT(NUMGAUSS)
+
+	where we assuming that GAUSSFIT will be passed a single argument (the
+	number of Gaussians to fit).
+
+
+Dummy Parameter Lists
+---------------------
+
+	A dummy parameter list is only needed if the procedure takes
+	and processes values passed as arguments.  If the procedure
+	does not need arguments, then the list is not needed.  A
+	parameter list is enclosed in parenthesis and each parameter in
+	the list is separated from the others by commas.  Examples of
+	dummy parameter lists are:
+
+		(X1)
+		(DDD_1, DDD_2, CC_3)
+		(F2, F3)
+
+	Each parameter represents the passing of a single-valued,
+	real-valued argument to the procedure.  You cannot pass arrays
+	or strings to procedures through argument lists.
+
+
+Dummy Parameter Names
+---------------------
+
+	The names you choose for dummy parameters must follow the same
+	convention as that for naming any operator or operand.  You are
+	free to choose whatever name you want for a dummy parameter.
+
+	Dummy parameters should be considered equivalent to scalar
+	adverbs that are only known to the procedure that has them in
+	its parameter list.  That is, dummy parameters are local to the
+	procedure that has them in its parameter list.  For example,
+	the two procedures:
+
+		PROC GAUSSFIT(NUMGAUSS)
+	and
+		PROC PLOTGAUSS(NUMGAUSS)
+
+	use the same name for their dummy parameter but the parameters
+	are completely independent of one another (i.e., the value of
+	NUMGAUSS in GAUSSFIT is independent of the value of NUMGAUSS in
+	PLOTGAUSS).
+
+	If you choose to use a parameter name that is identical to that
+	of an existing procedure, verb, or adverb (i.e., any symbol
+	known globally by UniPOPS), then you will not be able to make a
+	reference to that global symbol within the procedure.  Instead,
+	if you reference that name within the procedure, you will be
+	referencing the value of the dummy parameter (i.e., the local
+	symbol).
+
+	When you call a procedure that has a dummy parameter list, you
+	must supply a set of arguments that satisfies the procedure's
+	parameter lists (i.e., if the procedure has a four dummy
+	parameters, then you are required to call the procedure with a
+	list of four single-valued, real-valued arguments).
+	Automatically, the call to the procedure assigns the values of
+	the supplied arguments to the dummy parameters (i.e., exactly
+	like Fortran or C does).
+
+	Within the procedure, you can use the value of the dummy
+	parameters or change their values as you need to.  When the
+	procedure is completed (see discussion of RETURN statement
+	below), the current values of the dummy parameters are assigned
+	back to any adverb that was in the argument list that you
+	supplied when you called the procedure.
+
+
+Passing Adverb Values to Procedures NOT through Argument Lists
+--------------------------------------------------------------
+
+	Procedures can also use and set the values of any global
+	adverb. 
+
+	[ NOTE: A global adverb is any adverb that has been created
+	while at the ">" prompt, explicitly created as a global within
+	a procedure definition, or supplied as a built-in adverb by
+	UniPOPS.  A local adverb is any adverb that is known only
+	by the procedure in which it is defined -- two procedures
+	can use local adverbs with the same name but the two
+	local adverbs are completely independent of each other]
+
+	That is, not all adverbs used or set by a procedure need to be
+	passed as arguments -- only those which you want to be unique
+	for the procedure in question.  This is similar to Fortran
+	where variables are passed to subroutines either through
+	argument lists or through common blocks.  Which adverbs you
+	pass as arguments or as global symbol depends upon what you
+	want the procedure to do -- i.e., the same principles you use
+	to decide whether to supply a Fortran subroutine with variables
+	through parameter lists or through common blocks also apply to
+	whether you should pass adverb values to procedures through
+	parameter lists or as global symbols.
+
+	As mentioned above, arguments in a call to a procedure cannot
+	be arrays or strings.  So, if a procedure needs to alter or use
+	the value of a string or array adverb, make sure the adverb is
+	global and your procedure can then do what it needs to to the
+	adverb.
+
+
+Contents of Procedures
+----------------------
+
+	After the initial line in the procedure definition, you can
+	then begin typing in the series of UniPOPS commands (verbs,
+	calls to other procedures, mathematical and logical
+	expressions, loops and conditional statements, etc.) which are
+	to be performed by the procedure.  The procedure can use and
+	change the values of its arguments as needed.
+
+	In addition, you can create adverbs known only locally to the
+	procedure (i.e., local symbols) by using the ARRAY, STRING,
+	SCALAR, POINTER, and ALIAS verbs.  You can also create global
+	symbols by using the GLOBAL verb.  See the documentation for
+	these verbs for a discussion on how to use them.
+
+	The procedure should contain at least one RETURN statement.
+
+	At the end of the procedure, the user should terminate it with
+	a FINISH statement.  The FINISH statement must be the last line
+	in the procedure and must be the ONLY thing on the line.
+	
+	Here is an example of what the contents of our gaussfit.prc
+	file might look like: 
+
+	   PROC GAUSSFIT(NUMGAUSS)
+	   # Sets up parameters for fitting GAUSS_NUM Gaussians to the contents
+	   # of array (0)
+	   #
+	   SCALAR GAUSS_I, GAUSS_A, GAUSS_B
+	   #
+	   IF NUMGAUSS < 1 | NUMGAUSS > 24 THEN
+	      PRINT 'Bad parameter', NUMGAUSS
+	      RETURN
+	   END
+	   NGAUSS = NUMGAUSS
+	   FOR GAUSS_I = 1 TO NGAUSS
+  	      PRINT 'Click on Max'
+   	      CENTER(GAUSS_I)=CCUR
+   	      PRINT 'Click on Half widths'
+   	      GAUSS_A=CCUR; GAUSS_B=CCUR; HWIDTH(GAUSS_I)=ABS(GAUSS_A - GAUSS_B)
+	      END
+	   PRINT 'Click on range of channels to fit'
+	   GAUSS_A=CCUR; GAUSS_B=CCUR
+	   BGAUSS=MIN(GAUSS_A, GAUSS_B); EGAUSS=MAX(GAUSS_A, GAUSS_B)
+	   RETURN
+	   FINISH
+
+Procedure Writing Style
+-----------------------
+
+	We suggest the following writing styles when creating
+	procedures.
+
+	Use comments as needed.  A comment is any line that begins with
+	a hash (#) character.
+
+	Indent the contents of loops and conditional constructs to make
+	the procedure easier to read.  You may use the <tab> key to
+	accomplish this.
+
+	Remember, minimum-match cannot be used within a procedure.
+	Completely spell out all verb and adverb names.
+
+	Make your procedures as simple as possible; break up
+	complicated tasks into multiple procedures.
+
+	Add as many checks for bad parameter or adverb values as
+	possible.
+
+	Avoid using Array-Math whenever possible.  Use ERROFF
+	judiciously and only in very rare cases.
+
+	Use one disk file for only one procedure.  Do not place more
+	than one procedure in a file.
+
+#if RFRNC
+
+#end
+Regular Procedures and Function Procedures
+------------------------------------------
+
+	You can place the RETURN statement in the procedure where ever
+	you require one but we suggest that at least one should exist.
+	When UniPOPS encounters a RETURN during execution of the
+	procedure, control will be passed back to the command line
+	interpretor or, if the procedure was called from another
+	procedure, back to the calling procedure -- the values of any
+	arguments to the procedure are updated at this time.
+
+	Although a procedure will run correctly without a RETURN
+	statement (in which case, the FINISH is interpreted as
+	equivalent to RETURN and then a FINISH), we highly suggest that
+	one is included as a part of good procedure writing style.
+
+	The format of the RETURN statement will determine whether the
+	procedure is a regular or function procedure.  A regular
+	procedure is similar to a Fortran subroutine while a function
+	procedure is similar to a Fortran function in that it returns a
+	value.
+
+	If nothing follows the RETURN, then the procedure is a regular
+	one.  If you place a mathematical expression, name of a scalar
+	or string adverb, or an element of an array adverb after the
+	RETURN, then the procedure acts like a function which will
+	return the value of the expression, string or scalar adverb, or
+	array element.  Examples of the RETURN statement one can use in
+	a function procedure are:
+
+		RETURN  SIN(SINC_X)/SINC_X
+		RETURN  X
+		RETURN NREGION(13)
+		RETURN 3
+		RETURN 'Hello'
+		RETURN HTITLE
+
+	An example of a regular procedure is:
+
+		PROC XX
+		# Clears the graphics screen and plots the current data
+		#
+		PAGE SHOW
+		RETURN
+		FINISH
+
+	An example of a function procedure is:
+
+		PROC SINC(SINC_X)
+		#  Returns the SINC(X) -- X must be in Radians
+		#
+		IF SINC_X = 1 THEN
+		   RETURN 1
+		ELSE
+		   RETURN SIN(SINC_X)/SINC_X
+		END
+		FINISH
+
+	To use XX, you just type its name.  To use SINC, you should
+	supply it with an argument and it should be used either in a
+	PRINT statement or in a mathematical expression.  For example:
+
+		XX
+		PRINT SINC(13)
+		X = SINC(I) + 1/SINC(1.234)
+
+#if RFRNC
+
+#end
+Recursive Calls to Procedures
+-----------------------------
+
+	In principle, you can write a procedure that either calls
+	itself or that calls a second procedure that calls the first.
+	That is, you can recursively call procedures.  However, there
+	will be a limit to the number of recursive calls you can make
+	(the number will depend upon what the procedure does) and
+	adverb values are not re-initialized for each procedure call.
+
+	For example:
+
+		PROC FACTORIAL(X)
+		# Function that returns the Factorial of its argument
+		SCALAR A
+		IF X <= 1 THEN
+			RETURN 1
+		ELSE
+			RETURN X * FACTORIAL(X-1)
+		END
+		FINISH
+
+	is an example of a function procedure that uses recursion.  To use it,
+	type, for example,  PRINT FACTORIAL(30). 
+
+
+Installing Procedures
+---------------------
+
+	Once you have finished writing your file that contains the
+	procedure definition, you should save the file to disk and exit
+	the editor.  You can then install the procedure into UniPOPS
+	using the UniPOPS BATCH command.
+
+	NOTE:  One must install procedures in a bottom-up fashion.
+	That is, if a procedure calls another procedure, you must
+	install the called procedure first and then the main
+	procedure!!  It doesn't matter the order in which you created,
+	with the EDIT command, the disk files containing the procedures
+	but it does matter the order in which they are installed.
+
+	To install a procedure, you use the BATCH command.  The syntax
+	is
+
+		BATCH name.prc
+
+	where name.prc is the name of the file you created with the
+	editor.  In our example above, you would type
+
+		BATCH gaussfit.prc
+
+	UniPOPS will then start executing the commands in the specified
+	file.  Since the first line in the file contains a PROC or
+	PROCEDURE command, the interpretor is placed into compile mode
+	and subsequent lines in the file are read, compiled, linked,
+	and stored under the name given on the PROC or procedure line
+	(i.e., the procedure is defined but DOES NOT run).
+
+	If a syntactical error occurs while reading in a procedure, you
+	will be given an error message describing the error and the
+	reading of the batch file will terminate.  UniPops will add a
+	FINISH where ever the error occurred and you will be given a
+	prompt so that you can issue your next command.  If the prompt
+	is a ':', then you are still in compile mode and you should
+	exit compile mode and get back to execute mode by typing a
+	FINISH.
+
+	After an error, you should probably edit the file containing
+	the procedure definition in order to repair the problem and
+	re-'BATCH' the file (see the section below concerning editing
+	procedures).
+
+	If no error occurs and the file contains a proper FINISH, then
+	UniPOPS will again accept commands from the keyboard and will
+	be in its 'execute' mode (i.e., > prompt).  If the file doesn't
+	contain a proper FINISH, you'll stil be in 'edit' mode and you
+	should type a 'FINISH' command by hand to exit 'edit' mode and
+	return to 'execute' mode.
+
+
+Listing Procedures
+------------------
+
+	Once installed, a procedure can be listed by the LIST command.
+	Its command syntax is :
+
+		LIST <name>
+
+	where <name> is the name of the procedure (i.e., the name on
+	the PROC or PROCEDURE line in the procedure file) and NOT the
+	name of the disk file.  For example:
+
+		LIST GAUSSFIT
+
+	and you will get the example given above.
+
+	If you want to look at the contents of the file on disk, use the
+	TYPE command.  For example, you could type:
+
+		 TYPE gaussfit.prc
+
+	and the contents of the gaussfit.prc file will be displyed by UniPOPS
+	for you.
+
+	To get a listing of the names of all installed procedures, type:
+
+		HELP PROC
+
+	To get a listing of the names of all procedure files in your
+	account (file with extensions of .prc) and in the procedure
+	libraries, type: 
+
+		PRCDIR
+
+
+Editing a Procedure
+-------------------
+
+	If you need to change a procedure, we suggest that you should
+	NOT use the POPSEDIT facility but instead use the EDIT
+	facility.  Again, you should type, for example,
+
+		EDIT  gaussfit.prc
+
+	to edit the specified disk file containing the procedure
+	definition.  Using the system editor, you should make your
+	changes, store the file back on disk, and exit the editor.
+
+	Then you should reinstall the procedure using the BATCH command
+	again.  That is, type, for example:
+
+		BATCH gaussfit.prc
+
+	If you haven't changed the name of the procedure, and if the
+	procedure already exists, UniPOPS will warn you that the
+	procedure exists already and will ask you whether or not to
+	overwrite the old procedure.  If you say yes, the old copy of
+	the procedure is overwritten with the new.  If you do not want
+	to overwrite, you will be asked if you want to continue reading
+	in commands from the disk file.  In this case, you probably
+	should NOT continue reading in from the file.
+
+
+Destroying Procedures
+---------------------
+
+	If you have installed a procedure and want to get rid of it,
+	you should use the SCRATCH facility.  The command syntax is:
+
+		SCRATCH name
+
+	where name is the name of the procedure as given on the PROC or
+	PROCEDURE line.  For example, to scratch the GAUSSFIT
+	procedure, type:
+
+		SCRATCH GAUSSFIT
+
+	SCRATCH first looks for any procedure that may use the
+	procedure you are trying to scratch.  If any are found, UniPOPS
+	will list them for you and will not scratch the procedure; if
+	no references are found, the procedure is scratched and can no
+	longer be used.  You must eliminate all references to the
+	procedure you want to scratch before UniPOPS will allow you to
+	scratch it.  Note that scratching a procedure does not remove
+	the disk file that may contain the definition of the procedure --
+	if you want to eliminate the disk file you must use the Unix
+	'rm' command.
+
+	To regain the memory space occupied by the procedure, use the
+	COMPRESS command after using SCRATCH.
+

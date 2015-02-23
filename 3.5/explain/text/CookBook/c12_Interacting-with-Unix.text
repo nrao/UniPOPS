@@ -1,0 +1,429 @@
+12. Interacting with the System
+-------------------------------
+
+UniPOPS has an intimate association with the UNIX operating system.
+Indeed, many UNIX facilities can be used directly from UniPOPS,
+although often these are called under pseudonyms.
+
+
+12.1 Dealing with Disk Files
+----------------------------
+
+i) The pseudo verb DIR will give a directory listing of disk files, and
+   is essentially a pseudonym for the UNIX command 'ls -l | more'. Its
+   syntax is,
+
+	>DIR [ file-name ]
+
+   Suppose it is desired to see which disk files in the present
+   directory have the extension .exe, then type,
+
+	>DIR *.exe
+
+
+ii) The contents of a disk text file can be listed using the pseudo
+    verb TYPE, which is a pseudonym for the UNIX command 'more'. The
+    syntax is,
+
+	>TYPE [ file-name ]
+
+    Suppose it is desired to see the contents of a disk text file in
+    the present area called xx.prc, then type,
+
+	>TYPE xx.prc
+
+
+iii) The pseudo verb EDIT will allow the user to create a new disk text
+     file, or to edit an existing one. The syntax is,
+
+	>EDIT [ file-name ]
+
+     Suppose it is desired to create a file, (or edit an existing
+     file), named facto.prc, type,
+
+	>EDIT facto.prc
+
+     This will start up the editor of your choice (determined by the value
+     of the popseditor enviroment variable when you started up the program,
+     popseditor is usually defined in a file called .unipops in your home 
+     directory, see Appendix M), and create the new file, or edit the 
+     existing file. After preparing the file, exit the editor in the normal 
+     way.
+
+     In order to make it easy to edit copies of the standard procedures
+     that are distributed with UniPOPS, if the file name you specify is
+     the name of a file in one of the procedure directories, that file is
+     copied to your local directory before starting up the editor.
+     If this happens, an informational message appears in your UniPOPS
+     window (or terminal if working from a simple terminal).
+
+
+iv) A further pseudo verb LASER permits the printing of disk text files
+    directly on to the system laser printer from UniPOPS. The syntax
+    is,
+
+	>LASER [ file-name ]
+
+    Suppose it is desired to print the UniPOPS printout file,
+    LPRINTOUT, then type,
+
+	>LASER LPRINTOUT
+
+
+NOTE : If the file-name option is omitted from the command line when
+using any of the above four pseudo verbs, then the verb itself will
+prompt you for the name. UNIX wild cards are allowed in file-names used
+with these verbs.
+
+
+12.2 Invoking Other UNIX Commands
+---------------------------------
+
+Although other UNIX commands have no specific UniPOPS equivalents,
+they can still be called from inside the program using the pseudo
+verb SYSTEM. The syntax for SYSTEM is,
+
+	>SYSTEM UNIX-command
+
+Suppose you wish to locate the disk file containing that procedure you
+prepared for fitting baselines, try typing,
+
+	>SYSTEM  grep  baseline  *.prc
+
+
+12.3 Redirecting Text Output in UniPOPS
+---------------------------------------
+
+When the user starts up UniPOPS, the text output appears in the
+standard (CRT) text window. This can be directed to the graphics screen
+by typing,
+
+	>GRAPHICS
+
+It can also be directed to an interfaced disk file, called the
+`printout file'. To achieve this type,
+
+	>PRINTER
+
+The text output is returned to the standard text window, by typing,
+
+	>CRT
+
+A little explanation of manipulating the `printout file' is
+appropriate. This will accumulate all output directed to it following
+the invocation of PRINTER, till a subsequent CRT or GRAPHICS. The name
+of the current `printout file' is listed in the FILES table at login,
+and can be seen at any time by using the pseudo verb FILES (see
+Section 5.2). To change the present `printout file' for another, the
+pseudo verb CHNGFILE is used (see Section 5.3). For this operation, the
+file-interface-id code for the `printout file' is 11.  The pointer adverb
+PRINTFILE is equal to 11 and may be simpler to remember.  Suppose that you
+wish to create a new file LPO and attach this in place of the present
+`printout file', then type,
+
+	>CHNGFILE CREATE 11 LPO
+   or
+        >CHNGFILE CREATE PRINTFILE LPO
+
+The `printout file' can be directed to the printer using the pseudo
+verb LASER (see above). However, an even simpler way to direct the
+current `printout file' to the printer is via the verb OUTPUT. Just
+type,
+
+	>OUTPUT
+
+
+12.4 Making Copies of the Text and Graphics Screens
+---------------------------------------------------
+
+Separate UniPOPS verbs exist for making hardcopies of the graphics and
+text screens. To make a copy of the graphics screen, type,
+
+	>GCOPY
+
+GCOPY will send the current display directly to the laser printer.
+
+
+The last twenty lines of text in the text window can similarly be sent
+to the laser printer by typing,
+
+	>TCOPY
+
+
+12.5 Reading From and Writing To Text Files
+-------------------------------------------
+
+With the release of Version 3.1 of UniPOPS, the user has been given
+greater powers in reading from and writing to text (ASCII) files.  In
+most ways, the powers are comparable to those found in Fortran 77 or
+C.
+
+12.5.1 Opening, Closing, and Positioning Text Files
+---------------------------------------------------
+
+The first thing you must do in order to use a text file is to open the
+file for access using the FOPEN function verb.
+
+FOPEN opens a file for subsequent reads or writes by FREAD and FPRINT,
+respectively.  It is a function and returns a value which indicates a
+unit number or file pointer that you need to use in all subsequent
+actions (writing, reading, closing, etc.) on the file.  In powers, it
+is close to the fopen command found in C.
+
+The only types of files that can be opened are text, sequential access
+files.  No binary or direct-access files are allowed.  Up to 10 files
+can be simultaneously opened (if the operating system allows).
+
+FOPEN takes two arguments, a file name and a parameter describing how
+you want to access the file (access mode).
+
+You specify the file name either by using a string or a string adverb
+which contains the name of the desired file.  The case of the string is
+important.
+
+Through the access mode, you can specify whether you want to create a
+new file, read or write to an existing file, whether to position the
+file at its start or end, etc.  To specify the desired mode, you use a
+set of pointer adverbs.  There are three categories of access
+possibilities; within each category, you can pick only one of the
+possible choices.  The full list of possibilities and their
+corresponding pointer adverbs are:
+
+		File Access
+	----------------------------------
+	Type			Adverb
+	----------------------------------
+	Read and Write		RW	[Default]
+	Read Only		RO
+	Write Only		WO
+	----------------------------------
+
+
+		File Positioning
+	----------------------------------
+	Type			Adverb
+	----------------------------------
+	Rewind (At start	REW	[Default]
+	   of file)
+	End-of-File		EOF
+	----------------------------------
+
+
+		File Existence
+	----------------------------------
+	Type			Adverb
+	----------------------------------
+	Unknown (may or may	UNK	[Default]
+	   not already exist)
+	Old (exist)		OLD
+	New (doesn't exist)	NEW
+	Scratch (temporary)	SCR			
+	----------------------------------
+
+That is, you can pick one from the list RW, RO, or WO; one from the
+list REW or EOF; and one from the list UNK, OLD, NEW, or SCR.  You
+create combinations of the access categories by summing together the
+adverbs that correspond to the desired mode.  If, for example, you want
+to open an existing file named Blah with read-only privileges, and
+position it at its end, you would type:
+
+	> SCALAR UNIT 
+	> UNIT=FOPEN("Blah", OLD+RO+EOF)
+
+Note how we have stored the unit number returned by FOPEN into an
+adverb that we can use latter.  Also note that the "Blah" is exactly
+how the name of the file is stored on the disk.  If you specify a
+access mode of DEFAULT, you will choose all three default modes (RW,
+UNK, and REW).  If the default mode for a particular category is
+desired, then you need not specify a mode for that category (i.e., if
+you want REW, RO, and OLD, you can simply specify RO+OLD and REW will
+be assumed for you).  If you want to open a scratch file, you should
+specify an empty string as a file name.  The scratch file will be
+deleted when you close the file (with FCLOSE) or when you exit
+UniPOPS.  Of course, a scratch file cannot be accessed for RO.
+Likewise, ambiguous modes like RO+RW, UNK+SCR, etc. wont be allowed.
+ 
+Once a file is opened, you cannot change your access mode without
+closing and re-opening the file.
+
+Other examples of the use of FOPEN are:
+
+	UNIT = FOPEN('garbage', RW+EOF+OLD)
+
+	UNIT = FOPEN('blah', DEFAULT)
+
+	PRINT FOPEN(' ', SCR)
+
+	X = RW+REW+NEW; FILE="Orion.CO"
+	UNIT = FOPEN(FILE, X)
+
+
+To reposition a file to its beginning after it is opened, you can use
+the FREWIND verb.  It takes one argument, the unit number of the
+file you want to rewind.  For example:
+
+	> FREWIND(50)
+
+
+To close an open file, you would use FCLOSE which also takes a unit
+number as an argument.  For example:
+
+	> FCLOSE(UNIT)
+
+To find out what files are opened and what modes where specified, type,
+
+	> FSTATUS
+
+and a table will be generated describing the opened files.
+
+To print the name of an opened file (in this example, UNIT is the unit
+number returned by a call to FOPEN) and to place that name into a string 
+adverb, type:
+
+       > STRING MYFILE
+       > PRINT FNAME(UNIT)
+       > MYFILE = FNAME(UNIT)
+
+
+
+12.5.2 Writing to Files
+-----------------------
+
+To write to an opened file, you should use the FPRINT verb which is
+very similar to the Fortran 77 write commands.  The verb takes a unit
+number, a format specification, and a list of things you want to print
+to the file.  The basic structure of how you should use these verb is:
+
+		> FPRINT(unit, format) list
+
+The unit number you specify should be that of an opened file (i.e., the
+number returned by the FOPEN verb when you opened the file).  Or, you
+can also specify a unit number of -1 to specify standard output
+(depends upon whether CRT, GRAPHICS, or PRINTER are in affect) or a
+unit number of zero for standard error (usually your CRT).
+
+The 'list' for FPRINT contains a set of expressions, adverb names,
+constants, array references, etc. whose values you want to print to the
+file.  The list need not exist.
+
+The format specification must be either a character string or a string
+adverb.  A blank format indicates list-directed input.  If you want
+explicit control of the writing format, you should provide a string
+that contains a format specification.  The rules for constructing
+format specifications are extremely close to those of Fortran 77;
+Appendix L describes the possible format specifications and how they
+differ from Fortran 77.
+
+
+12.5.3 Reading from Files
+-------------------------
+
+To read from an opened file, you should use the FREAD verb which is
+very similar to the Fortran 77 read commands.  The verb takes a unit
+number, a format specification, and a list of things you want to read
+from the file.  The basic structure of how you should use these verb
+is:
+
+		> FREAD(unit, format) list
+
+The unit number you specify should be that of an opened file (i.e., the
+number returned by the FOPEN verb when you opened the file).  Or, you
+can also specify a unit number of -1 to specify standard input (either
+the CRT, or the current file that you are BATCHING).
+
+The 'list' for FREAD contains a set of adverb names, whose values you
+want to set using values stored in the file. The list need not exist.
+
+The format specification must be either a character string or a string
+adverb.  A blank format indicates list-directed input.  If you want
+explicit control of the reading format, you should provide a string
+that contains a format specification.  The rules for constructing
+format specifications are extremely close to those of Fortran 77;
+Appendix L describes the possible format specifications and how they
+differ from Fortran 77.
+
+
+12.5.4 Internal Reading and Writing
+-----------------------------------
+
+Like C and Fortran 77, UniPOPS allows internal input and output whereby
+you can read values from or to string adverbs.  The two verbs that
+accomplish this are SREAD and SPRINT, respectively.  They are similar
+in usage to FREAD and FPRINT except instead of specifying a unit number
+you specify a string adverb.  That is, the general syntax for SREAD and
+SPRINT are:
+
+	 > SREAD(string, format) list
+
+	 > SPRINT(string, format) list
+
+This is identical in power to internal reads in F77, the ENCODE/DECODE
+in VMS Fortran, or the 'sprintf/sscanf' functions in C.  Except for a
+few restrictions, the format and list specifications for these verbs
+are identical to those you can use with FREAD and FPRINT (see App. L)
+
+
+12.5.5 Reading and Writing Examples
+-----------------------------------
+
+Here is a few examples of how to use FREAD, FPRINT, SREAD, and SPRINT
+
+	FREAD(UNIT,' ') BDROP, EDROP
+
+		Reads the value of BDROP or EDROP using a default
+		floating point specification from the file attached
+		to the specified unit number.
+
+	FREAD(-1, ' I3 / L3 / 10(F10.4, G15.5.3) '  ) LEVS
+
+		Reads from standard input the values of array adverb
+		LEVS (which has 32 values).  The first value is read as
+		an integer from its own line, the second as a logical
+		from its own line.  The next line contains the next 20
+		values of LEVS, the 1st, 3rd, 5th read with an F
+		specification, the others with a G.  The format is
+		exhausted but not all values of LEVS have been read
+		in.  The format is rescanned to the open parenthesis
+		and the last ten values are read in the same way as the
+		previous line.
+
+	FPRINT(UNIT,' ') BDROP, EDROP
+
+		Prints the value of BDROP or EDROP using a default
+		floating point specification to the file attached
+		to the specified unit number.
+
+	FPRINT(-1, ' I3 / L3 / 10(F10.4, G15.5.3) '  ) LEVS
+
+		Prints to standard output the values of array adverb
+		LEVS (which has 32 values).  The first value is printed
+		as an integer on its own line, the second as a logical
+		on its own line.  The next line contains the next
+		20 values in LEVS, the 1st, 3rd, 5th printed with
+		an F specification, the others with a G.  The format
+		is exhausted but not all values of LEVS has been 
+		printed out.  The format is rescanned to the open
+		parenthesis and the last ten values are printed
+		in the same way as the previous line.
+
+	FPRINT(0,' ') "This is an error message"
+
+		Prints the above string onto the standard error.
+
+	SPRINT(HTITLE,' "Source declination = ", I3.3,I2.2,F4.1') DD,MM,SS
+
+		HTITLE will be overwritten.  It will contain the
+		words: "Source declination = " (without the quotation
+		marks), followed by the values of the adverbs
+		DD, MM, and SS printed using I specification for DD and
+		MM  and F specification for SS.
+
+	SREAD(HTITLE,'21x,I3,I2,F4') DD,MM,SS
+
+		The values of DD, MM, and SS will be obtained from the
+		string HTITLE.  We ignore the first 21 columns of
+		HTITLE and read DD from the next 3 using I
+		specification, MM from the next 2 using I
+		specification, and SS from the next 4 using F
+		specification.
+

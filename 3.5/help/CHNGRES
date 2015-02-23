@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'CHNGRES:  Changes the resolution of the data in Array 0'
+PRINT 'to the value of NEWRES.'
+PRINT ' '
+PRINT 'NEWRES=',NEWRES
+PRINT ' ' 

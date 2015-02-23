@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'INVERT:  Flips the data in Array 0 end-to-end.'
+PRINT ' '

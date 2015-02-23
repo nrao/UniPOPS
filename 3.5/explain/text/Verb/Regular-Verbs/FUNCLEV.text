@@ -1,0 +1,76 @@
+	(REGULAR VERB)
+
+	Syntax: FUNCLEV(min, max)
+
+	FUNCLEV sets the 32-element array adverb, LEVS, such that each
+	level has a certain fraction of the total number of data points.
+	The relative number of data points in each level is given by
+	the array adverb FLEVS, which MUST be set prior to using
+	FUNCLEV.  The data points used are those found in the region
+	of Matrix (0) described by MXMIN, MXMAX, MYMIN, and MYMAX.
+
+	min and max are the minimum and maximum values over which you
+	want FUNCLEV to set LEVS based on FLEVS.
+
+	If either or both of min or max are DEFAULT, FUNCLEV will use
+	either or both of the minimum or maximum values in matrix 0.
+
+	ADVERB USED:
+
+	FLEVS		32-element array giving the relative number of 
+			data points at each level.
+
+        MXMIN, MXMAX    Limits in cell numbers along the x-axis
+                        for which Matrix (0) values will be processed.
+
+        MYMIN, MYMAX    Limits in cell numbers along the y-axis
+                        for which Matrix (0) values will be processed.
+
+	ADVERB SET:
+	
+	LEVS	32-element array used by CONTOUR, RASTER, QCONTOUR, HLFTNE,
+		and RASTER.
+
+
+	EXAMPLES:
+
+	You want 10 levels with the relative number of data points
+	between each level to follow the ratio: 
+		1:2:3:4:5:6:6:7:4:2
+	(i.e. twice as many data points between levels 2 and three as
+	between levels 1 and 2, etc.)
+
+	First, assign FLEVS the values
+
+		> FLEVS = 1,2,3,4,5,6,6,7,4,2,DEFAULT
+
+	(the DEFAULT assigns a default value to the eleventh element
+	which guarantees that only the 10 elements you set will be used)
+
+	(Note that what counts in the ratio of FLEVS values and not
+	the values themselves.  That is FLEVS=1,2,3,DEFAULT is
+	equivalent to FLEVS=5,10,15,DEFAULT.)
+
+	Then, run FUNCLEV
+
+		> FUNCLEV(min, max)
+
+	where min and max are values appropriate for the data to be
+	displayed (or use DEFAULT for both of them if you want all the
+	data to be used).
+
+	
+	For color intensity maps, something like the following produces
+	pleasing displays:
+
+		> { FLEVS@ = 32-@ }
+		> FUNCLEV(DEFAULT, DEFAULT)
+
+	Note: the first line above is an example of array math, it
+	is equivalent to FLEVS = 31,30,29,28,27,...,1,0 but is much
+	faster to type and avoids the problem of running out of room
+	on the command line,  which could have been avoided by typing:
+
+	> FLEVS = 31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,\
+	14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
+

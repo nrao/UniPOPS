@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'SELECT:  Places a selection of scan numbers in the stack'
+PRINT 'array, chosen via certain user-specified selection'
+PRINT 'criteria.  Syntax : SELECT attribute'
+PRINT ' '
+PRINT 'ACOUNT=',ACOUNT
+PRINT ' ' 

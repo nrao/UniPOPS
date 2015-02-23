@@ -1,0 +1,7 @@
+# @(#)gb.nrao.prepare.unipops	5.2 02/29/96
+#
+# Green Bank version of prepare.unipops
+#
+set EDITORS = (emacs textedit vi)
+set WINDOWS = (openlook tvtwm twm mwm)
+#

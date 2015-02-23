@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'H9:  (INTERNAL-ARRAY) Returns/sets the value of the  '
+PRINT 'specified header parameter in Array 9.'
+PRINT ' '

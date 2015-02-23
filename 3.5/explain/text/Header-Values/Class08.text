@@ -1,0 +1,20 @@
+Class 8 :  Engineering Parameters             
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Antenna Aperture  Efficiency                  | APPEFF   |  R*8   |
+Antenna Beam Efficiency                       | BEAMEFF  |  R*8   |
+Antenna Gain                                  | ANTGAIN  |  R*8   |
+Rear Spill & Scat Efficiency                  | ETAL     |  R*8   |
+Forward Spill & Scat Efficiency               | ETAFSS   |  R*8   |
+#if RFRNC CKBK
+
+
+
+
+
+
+
+
+
+#end

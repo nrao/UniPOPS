@@ -1,0 +1,43 @@
+#if CKBK
+Appendix A : UniPOPS Verb, Adverb and Symbol Synopsis
+             ----------------------------------------
+#end
+
+Alphabetical listings follow for all commands, verbs, adverbs, symbols,
+etc., which UniPOPS understands.
+
+The descriptions are very brief and are meant as a quick reference
+only.  For a full description, see the longer on-line EXPLAIN files in
+UniPOPS, the Cookbook, or the Reference Manual.
+
+The commands are divided into the following categories:
+
+.  Scalar Adverbs -- Single value variables
+
+.  Array Adverbs -- Multiple value variables.
+
+.  Keyword Adverbs -- Header keywords to be used to set or retrive
+		      header values.
+
+.  Pointer Adverbs  -- Pointer variables used by some commands.
+
+.  String Adverbs -- Character string adverbs used by some commands.
+
+.  Function and Internal-Array Verbs -- Math, graphics, data, and
+					header functions.
+
+.  Pseudo Verbs -- Verbs which cannot be executed from within a
+		   procedure, must be executed in execute mode, and
+		   must be the only commands on the command line.
+
+.  Regular Verbs  -- General and data analysis commands -- arranged by
+		     topic.
+
+.  Operators -- Logical.
+
+.  Operators -- Mathematical.
+
+.  Syntax -- Symbols with special syntactical meanings.
+#if CKBK
+
+#endif

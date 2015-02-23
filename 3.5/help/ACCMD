@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'ACCMD:  (POINTER) Indicates the list of accumulated scans'
+PRINT 'for TELL.'
+PRINT ' '

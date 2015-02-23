@@ -1,0 +1,34 @@
+	DBREF assumes the contents of Array (0) contains a
+	Switched-Power scan of the form:
+
+		{ [Sig-Ref]/Ref } * Tsys_sig,
+
+	and replaces Array (0) with
+
+		{ [Ref-Sig]/Sig } *Tsys_ref
+
+	where Ref is the reference spectrum, Sig is the signal
+	spectrum, and Tsys_sig and Tsys_ref are the signal and
+	reference system temperatures, respectively.
+
+	DBREF is useful for processing double-beam-switched or
+	frequency-switched data.
+
+	File name: dbref.prc
+
+	No adverbs are used by DBREF.
+
+	ADVERBS SET:	FACT
+
+	DBREF uses Array (0) and places its results in Array (0).
+
+	EXAMPLE:
+
+	You have two scans for both parts of a double-beam-switched
+	observation.  To average the two, try the following:
+
+		GET 1200.01             <-  The 2nd half of the
+					     observation
+		DBREF ACCUM
+		GET 1199.01 ACCUM AVE   <-   Average in the 1st half.
+

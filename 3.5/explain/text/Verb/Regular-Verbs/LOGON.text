@@ -1,0 +1,26 @@
+	(REGULAR VERB)
+
+	LOGON and LOGOFF turn on and off the command logging facilities
+	by which all commands are placed in your command logging file.
+	LOGOFF is the default mode.
+
+	No adverbs are used by LOGON or LOGOFF.
+
+	ADVERB SET:
+
+	STATUS(16) : Whether or not command logging is in effect and
+		     determined by the last LOGON or LOGOFF commands.
+
+		     Values: 1 (or TRUE) if LOGON is in effect; -1 (or
+		     FALSE) if LOGOFF is in effect.
+
+	EXAMPLE:
+
+	You want to start keeping a record of the commands you type,
+	so specify:
+
+		LOGON		Commands will be stored in your LOG file
+
+	When recording is no longer necessary, specify:
+
+		LOGOFF

@@ -1,0 +1,16 @@
+	(FUNCTION VERB)
+
+	MCUR is a function that activates the cross hair and returns the
+	z value at the nearest cell of a two-dimensional display.
+
+	No adverbs are set or used by MCUR.
+
+	EXAMPLE:
+
+	You have a contour plot on the screen and want to know what the
+	height is of a certain peak so you type:
+
+		PRINT MCUR
+
+	The cross hair is turned on and you position it over the peak
+	you are interested in.

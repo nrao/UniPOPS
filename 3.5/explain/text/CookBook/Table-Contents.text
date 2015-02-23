@@ -1,0 +1,264 @@
+
+Table of Contents
+-----------------
+
+1. Introduction.
+	1.1 Using the Cookbook
+	1.2 Obtaining a Copy of UniPOPS
+
+2. Getting Started
+	2.1 Your Computer Account
+	2.2 Logging In and Starting-Up UniPOPS
+		2.2.1 Logging In
+		2.2.2 Setting a Password
+		2.2.3 Starting-Up UniPOPS
+	2.3 The UniPOPS Prompt
+	2.4 Possible Snags during Start-up 
+	2.5 Logging Out
+
+3. UniPOPS Syntax
+	3.1 The Command Line
+	3.2 Verbs, Procedures and Adverbs
+		3.2.1 Verbs and Procedures
+			3.2.1.1 Setting Aliases for Verb and 
+				 Procedure Names
+		3.2.2 Adverbs : Built-In and User-Defined	
+			3.2.2.1 Scalar Adverbs
+			3.2.2.2 Array Adverbs
+			3.2.2.3 String Adverbs
+			3.2.2.4 Keyword Adverbs
+			3.2.2.5 Pointer Adverbs
+			3.2.2.6 Destroying User-Defined Adverbs
+	3.3 Setting Adverbs
+	3.4 Uses of Adverbs
+	3.5 Command Arguments
+	3.6 Names of Operators and Operands
+	3.7 Command Modes
+		3.7.1 `Execute Mode' 
+		3.7.2 `Compile Mode'
+		3.7.3 `Input Mode'
+	3.8 Special Characters
+	3.9 Control Characters
+	3.10 Recalling and Re-executing Commands
+		3.10.1 Listing Old Commands
+		3.10.2 History Substitution
+	
+4. On-line Assistance in UniPOPS
+	4.1 The HELP Facility
+	4.2 The EXPLAIN Facility
+	4.3 When all else fails !
+	4.4 Consulting the UNIX On-line Help Manual
+	4.5 Sending Feedback to the UniPOPS System Manager
+	4.6 Information on the Current Status of your UniPOPS Session
+	4.7 WHATIS Facility
+
+5. Data Access and Manipulation
+	5.1 Data Files, their Access and Manipulation
+	5.2 Listing the Current Data Files
+	5.3 Changing the Current Data Files
+	5.4 Changing Project Code or Spectrometer Type
+		5.4.1 Changing Project Code : Green Bank Only
+		5.4.2 Changing from Hybrid-Correlator to Filter-Bank 
+		      Data : Tucson Only
+	5.5 What Data is Available on Disk ?
+		5.5.1 TELL
+		5.5.2 SUMMARY
+	5.6 The UniPOPS Data Arrays 
+	5.7 Reading Data from On-line and Off-line Data Files
+	5.8 Reading the Latest Scan, or Partial Scan
+	5.9 The Save File
+	5.10 The Keep File
+	5.11 Shifting Spectra between UniPOPS Arrays
+	5.12 Clearing a UniPOPS Array
+	5.13 Getting Data from Tape into UniPOPS and Vice Versa
+
+6. Data Display
+	6.1 Clearing the Screen
+	6.2 Customizing the Display
+	6.3 Using the Cross Hairs (Cursors)
+		6.3.1 CROSSHAIR
+		6.3.2 CCUR, FCUR, TCUR, VCUR, XCUR and YCUR
+		6.3.3 CLICK
+	6.4 Annotating the Display
+	6.5 Superposition of Multiple Scans on one Plot
+	6.6 The Use of Color in Displays
+	6.7 Defining Line Types for Displays
+	6.8 Plotting Multiple Scans on a Page
+	6.9 Plotting Graphs
+	6.10 Problems with Your Graphics Screen
+
+7. Baseline and Gaussian Fitting to Scans
+	7.1 Defining the Region over which a Baseline is to be Fitted
+	7.2 Correcting a DC-Offset
+	7.3 Fitting, Removing and Assessing a Polynomial Baseline
+	7.4 Fitting a Sinusoidal Baseline
+	7.5 Subtracting a `Running Median'
+	7.6 Quantitative Evaluation of the Modified Scan
+	7.7 Fitting Gaussians to Scans
+	7.8 Setting up the Parameters (Adverbs) for GAUSS
+	7.9 The Operation of Fitting Gaussians
+	7.10 Displaying the Fitted Gaussians
+	7.11 Applying the Solutions from GAUSS
+	7.12 Summary of Options for fitting Baselines and Gaussians
+
+8. Changing the Resolution of a Scan
+	8.1 Boxcar Smoothing
+	8.2 Hanning Smoothing
+	8.3 Gaussian Smoothing
+	8.4 Smoothing with an Arbitrary Function
+	8.5 The Cross-Correlation of Arrays and Optimal-Filtering
+
+9. General Analysis
+	9.1 Obtaining Information on a Scan
+	9.2 Summarizing the Parameters of a Scan
+	9.3 Interrogating and Updating the Scan Header
+	9.4 Listing the Data in a Scan
+	9.5 Replacing Data Values
+	9.6 Scaling or Adding a Constant to the Data
+	9.7 Simple Math Manipulation of Scans
+	9.8 Reversing a Scan
+	9.9 Taking a Fourier Transform
+	9.10 Dealing with Bad and Interfered Channels
+	9.11 The Integrated Properties of a Feature
+		9.11.1 Deriving Parameters for a Galaxy Spectrum
+	9.12 Processing Frequency-Switched Data
+	9.13 Converting To and From Channel Numbers
+	9.14  Equatorial-Galactic Coordinate Conversion
+
+10. Averaging Scans
+	10.1 Averaging Scans with Default Weighting
+	10.2 Averaging Scans with User-Specified Weights
+	10.3 Averaging Scans with Frequency, Velocity or Position Offsets
+	10.4 Using the Stack when Averaging Data
+
+11. The Stack -- Why, When, How
+	11.1 Putting Scan Numbers on the Stack
+	11.2 Listing the Contents of the Stack
+	11.3 Emptying the Stack
+	11.4 Deleting a Scan Number from the Stack
+	11.5 The Power of the Stack
+	11.6 Selecting Sets of Scans
+		11.6.1 SELECT INFO
+		11.6.2 SELECT ONDATA, SELECT OFFDATA, SELECT KSCANS, 
+			 SELECT SSCANS, and SELECT RSCANS
+
+12. Interacting with the System
+	12.1 Dealing with Disk Files
+	12.2 Invoking Other UNIX Commands
+	12.3 Redirecting Text Output in UniPOPS
+	12.4 Making Copies of the Text and Graphics Screens
+	12.5 Reading From and Writing to Text Files
+		12.5.1 Opening, Closing, and Positioning Text Files
+		12.5.2 Writing to Files
+		12.5.3 Reading from Files
+		12.5.4 Internal Reading and Writing
+		12.5.5 Reading and Writing Examples
+
+13. Procedures - How, Why, When
+	13.1 The General Structure of a Procedure
+	13.2 Defining a Procedure
+	13.3 The Declaration of Variables in Procedures
+	13.4 Conditional Branching in Procedures
+	13.5 Loops in Procedures
+	13.6 Calling Procedures from Procedures
+	13.7 Returning  a Value -- Procedures as Functions
+	13.8 Entering, Listing and Editing a Procedure directly into
+	     Memory
+	13.9 Procedures defined as Disk Files
+	13.10 Storing a Copy of the UniPOPS Memory 
+	13.11 Procedures and the UniPOPS Memory
+
+14. Mathematical and Logical Expressions in UniPOPS
+	14.1 The Operators
+		14.1.1 Mathematical and Logical Operators
+		14.1.2 Function and Internal Array Verbs
+		14.1.3 Manipulating Character Strings
+		14.1.4 Function Procedures
+	14.2 The Operands
+		14.2.1 Real Constants
+		14.2.2 Logical Constants
+		14.2.3 Literal Constants
+		14.2.4 References to Adverbs
+	14.3 Expressions
+	14.4 Array Mathematics
+	14.5 The Verb PRINT
+
+15. Optional Facilities
+	15.1 The Scrolling of the Text Window
+	15.2 Trapping Errors in Loops and Procedures
+	15.3 Logging UniPOPS Commands
+	15.4 Correcting the Effects of a Wrong Command
+	15.5 Making Hardcopies
+
+16. Matrices and Cubes
+	16.1 Data Storage
+		16.1.1 Matrices
+		16.1.2 Cubes
+	16.2 Summarizing the Header Parameters of a Matrix or Cube
+	16.3 Listing the Data in a Matrix
+	16.4 Reading in and Processing a Cube
+	16.5 Reading, Writing and Filling a Matrix
+	16.6 Operations on UniPOPS Matrices
+		16.6.1 Moving Data between Different UniPOPS Matrices
+		16.6.2 General Data Processing of Matrices
+			16.6.2.1 MLIMITS
+			16.6.2.2 ROTATE
+			16.6.2.3 MPLUS, MMINUS, MMULTIPLY, MDIVIDE
+			16.6.2.4 MSCALE, MBIAS
+			16.6.2.5 MSMOOTH
+			16.6.2.6 MFILL
+			16.6.2.7 MFFT, MIFFT, and Holographic Data Reduction
+		16.6.3 Clearing a Matrix
+	16.7 Display of Two-Dimensional Data
+		16.7.1 Common Adverbs to All Two-Dimensional Plots
+		16.7.2 Preparing to Display Two-Dimensional Data
+		16.7.3 Setting the LEVS Array
+		16.7.4 Contour Plots
+		16.7.5 Half-Tone Displays
+		16.7.6 Color and Gray-Scale Displays
+		16.7.7 Finishing and Annotating the Display
+		16.7.8 The Cross Hairs (Cursors) and Two-Dimensional 
+			Displays
+
+17. Specific Continuum Features
+	17.1 Atmospheric Tipping Scans
+	17.2 The Digital BackEnd (DBE) at the 12-m Telescope
+		17.2.1 FIXDBE
+		17.2.2 SWITCHED
+		17.2.3 TOTALPWR
+		17.2.4 CALDBE
+		17.2.5 ZERO 
+	17.3 Continuum On-Off Data
+		17.3.1 AVG and AVGD
+		17.3.2 Evaluating and Editing On-Off Data
+	17.4 Five-Point Maps from the 12-m Telescope
+
+Appendix A : UniPOPS Verb, Adverb and Symbol Synopsis
+
+Appendix B : Useful UNIX Commands
+
+Appendix C : Sun Windows (SunView and OpenLook)
+
+Appendix D : Associated Utilities
+
+Appendix E : Verbs and Associated Data Arrays
+
+Appendix F : Error Messages
+
+Appendix G : The SDD File Format
+
+Appendix H : The Adverb STATUS
+
+Appendix I : The HIS Color-Coding System
+
+Appendix J : Character Sets
+
+Appendix K : History Substitution
+
+Appendix L : Format Specifications
+
+Appendix M : Environment Variables
+
+Glossary
+
+Index

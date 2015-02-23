@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'OSHIFT:  (ADVERB) The amount by which RAP has overlapped a'
+PRINT 'frequency switched spectrum (channels).'
+PRINT ' '

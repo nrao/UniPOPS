@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'SMOOTH:  Smoothes the data in Array 0 using the smoothing'
+print 'function described by SMWGT and stores results back into 0.'
+PRINT ' '
+PRINT 'SMWGT='; print SMWGT
+PRINT ' ' 

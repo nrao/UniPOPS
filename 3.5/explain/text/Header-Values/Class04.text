@@ -1,0 +1,25 @@
+Class 4 :  Positions                          
+--------------------------------------------------------------------------
+Description				      | Keyword  |  Size  | Units
+--------------------------------------------------------------------------
+Epoch                                         | EPOCH    |  R*8   | Years
+Commanded Source X                            | XSOURCE  |  R*8   | Degrees
+Commanded Source Y                            | YSOURCE  |  R*8   | Degrees
+Commanded Reference X                         | XREF     |  R*8   | Degrees
+Commanded Reference Y                         | YREF     |  R*8   | Degrees
+Commanded Epoch Right Ascension               | EPOCRA   |  R*8   | Degrees
+Commanded Epoch Declination                   | EPOCDEC  |  R*8   | Degrees
+Commanded Galactic Longitude                  | GALLONG  |  R*8   | Degrees
+Commanded Galactic Latitude                   | GALLAT   |  R*8   | Degrees
+Commanded Azimuth                             | AZ       |  R*8   | Degrees
+Commanded Elevation                           | EL       |  R*8   | Degrees
+Indicated X Position                          | INDX     |  R*8   | Degrees
+Indicated Y Position                          | INDY     |  R*8   | Degrees
+Descriptive Origin(1)                         | DESORG   |  R*8   | Degrees
+Descriptive Origin(2)                         | DESORG+1 |  R*8   | Degrees
+Descriptive Origin(3)                         | DESORG+2 |  R*8   | Degrees
+Coordinate System Code                        | COORDCD  |  C*8   |
+#if RFRNC CKBK
+
+
+#end

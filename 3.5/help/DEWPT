@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'DEWPT:  (HEADER-GB) Dew point (deg C).'
+PRINT ' '

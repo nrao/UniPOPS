@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'FMARK:  (ARRAY-12) Frequencies relative to band center in'
+PRINT 'MHz (LINE), or time relative to beginning of scan in sec'
+PRINT '(CONDAR), at which SHOW is to draw vertical lines.  Y-axis'
+PRINT 'values at which LABEL draws horizontal lines.'
+PRINT ' '

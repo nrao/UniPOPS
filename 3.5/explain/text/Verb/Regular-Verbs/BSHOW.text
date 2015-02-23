@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	BSHOW displays a polynomial baseline for Array (0) without
+	altering the data in Array (0).  A SHOW display must have been
+	previously performed.  It uses the results of the last BSHAPE
+	or BASELINE or the current values of BPARM.
+
+	ADVERBS USED:
+
+	    BPARM(15)   Contains the Chebyshev coefficients of the
+			polynomial.  Initial values are 0.
+
+	EXAMPLE:
+	
+	You want to see the baseline for the displayed scan over a 
+	selected baseline region, so specify:
+
+		 BSHAPE
+		 BSHOW
+
+	  

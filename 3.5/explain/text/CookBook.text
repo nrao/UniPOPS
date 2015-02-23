@@ -1,0 +1,12 @@
+	The following make up the various chapters and appendices of
+	the UniPOPS Cookbook.  The Cookbook is provided here in case a
+	hard copy is unavailable to you or if you prefer to reference
+	it as EXPLAIN files.   You can print out a copy of the Cookbook
+	by typing the following Unix commands:
+
+		cd ${popsdir}sunbin
+		make -f Makeman cookbook
+  
+	Note: the Cookbook is about 200 pages long so keep your printer
+	supplied with paper.
+

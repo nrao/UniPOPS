@@ -1,0 +1,8 @@
+%!PS-Adobe-2.0 EPSF-1.2
+% @(#)poststart	5.1 06/22/94
+%%Creator: UniPops
+%%Title: UniPops
+%%BoundingBox: 0 0 612 774
+%%EndComments
+%%EndProlog
+ /c{setrgbcolor}def  /m{moveto} def /v{lineto currentpoint stroke moveto}def /hc {/Courier-Bold findfont 2 1 roll scalefont setfont}def /bx {newpath moveto lineto lineto lineto closepath fill} def 1 setlinejoin 1 setlinecap 1 setlinewidth 590 30 translate 90 rotate 0.7 0.7 scale 22 hc newpath gsave

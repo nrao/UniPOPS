@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'POINTS:  Sets up the SHOW and PLOT commands so that they'
+PRINT 'will plot points for their display.'
+PRINT ' '

@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'LOGON:  Turns on the command logging facility.'
+PRINT ' '

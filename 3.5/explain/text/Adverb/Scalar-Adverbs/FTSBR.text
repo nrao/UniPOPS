@@ -1,0 +1,24 @@
+C------------------------- Continuum --------------------------------
+C-	(SCALAR ADVERB)
+C-
+C-      FTSBR specifies, for data from the 12-m telescope, the ratio of
+C-      the 'warm-spillover' and ambient temperatures to be used by
+C-      methods 1 and 3 of SOLVETIP.  You should change FTSBR to a
+C-	value somewhat close to 1 but greater than zero.
+C-
+C-	FTSBR is used by : SOLVETIP
+C-
+C-	No verbs change FTSBR.
+C-
+C-	The initial value of FTSBR is 0.95.
+C-
+C-	EXAMPLE :
+C-
+C-	You want to use algorithm 1 for fitting a model to your sky-tip
+C-	data from the 12-m telescope, and you think the temperature of
+C-	the atmosphere is about 90 percent that of the 'warm
+C-	spillover', so you specify :
+C-
+C-		TYPETIP = 1; FTSBR = 0.90; SOLVETIP
+C-
+C------------------------- Continuum --------------------------------

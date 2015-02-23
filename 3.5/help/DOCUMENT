@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'DOCUMENT:  (PSEUDO) Echoes the specified text.'
+print 'Syntax: DOCUMENT anything'
+PRINT ' '

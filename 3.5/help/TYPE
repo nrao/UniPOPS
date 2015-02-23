@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'TYPE:  (PSEUDO) Lists the contents of the specified disk'
+PRINT 'text file.  Syntax: TYPE filenames'
+PRINT ' '

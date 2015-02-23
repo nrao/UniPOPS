@@ -1,0 +1,22 @@
+	(REGULAR VERB)
+
+C-------------------------- Continuum ------------------------------------
+C-
+C-	Syntax: SEDITS(first, last)
+C-
+C-	SEDITS deletes the specified series or pairs from the on-off
+C-	scan in Array (0) and recomputes the source temperature and
+C-	RMS with the pairs deleted.   The results are stored back
+C-	into Array (0).
+C-
+C-	No adverbs are used or set by SEDITS
+C-
+C- 	EXAMPLE:
+C-
+C-      To delete the third and fourth on-off pairs of the current contents
+C-	of Array (0), type :
+C-
+C-		 SEDITS(3,4)
+C-
+C------------------------- Continuum ------------------------------------
+

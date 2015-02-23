@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'REMOVE: Deletes data and header from the specified Array.'
+print 'Syntax: REMOVE(array_num)'
+PRINT ' '

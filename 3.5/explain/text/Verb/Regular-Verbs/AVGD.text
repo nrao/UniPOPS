@@ -1,0 +1,22 @@
+	(REGULAR VERB)
+
+C------------------------- Continuum ------------------------------------
+C-
+C-	AVGD computes the mean source temperature and standard
+C-	deviation of the mean of the digital backend continuum On-Off
+C-	data in Array (0).  It works only for data taken with the
+C-	12-meter telescope.
+C-
+C-	No adverbs are used or set by AVGD
+C-
+C-	EXAMPLE:
+C-
+C-	You have a continuum On-Off observation.  To process the data,
+C-	type:
+C-
+C-		GET 5000; AVGD
+C-
+C-	and the results will be printed on your text screen.
+C-
+C------------------------- Continuum ------------------------------------
+

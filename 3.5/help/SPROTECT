@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'SPROTECT:  (ADVERB) If TRUE, then SAVE will not overwrite'
+print 'scans in the "save" file; else, SAVE may overwrite scans.'
+PRINT ' '

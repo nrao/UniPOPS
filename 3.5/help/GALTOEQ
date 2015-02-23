@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'GALTOEQ:  Transforms the given galactic coordinates into'
+PRINT '1950 RA and DEC.  Syntax: GALTOEQ(DDD.ddddd, SDD,ddddd).'
+PRINT ' '

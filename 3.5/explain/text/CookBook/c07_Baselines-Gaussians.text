@@ -1,0 +1,642 @@
+7. Baseline and Gaussian Fitting to Scans
+-----------------------------------------
+
+The two operations described in this chapter are very common in
+spectral-line and continuum analysis.  Indeed, it is a rare observation
+for which the observer does not need to subtract the slopes and
+baseline curvature impressed on his measurement by the astronomical
+background emission, standing waves from the telescope structure, and
+drifts or mismatches in the receiver system. The user must try to
+define `off-line' segments of a spectrum, or `off-source' regions in a
+continuum scan, and fit an analytic function to the data in those parts
+of the scan which they believe should be flat.  In UniPOPS, the
+possibilities exist to fit either just a DC-offset, Chebyshev
+polynomials of up to 12-th order, or a sinusoid to the baseline. The
+fitting of a sinusoid is especially handy in the presence of standing
+waves.
+
+7.1 Defining the Region over which a Baseline is to be Fitted
+-------------------------------------------------------------
+
+In defining the region over which the baseline is to be fitted for a
+scan held in Array (0), two possibilities exist. These require the
+setting of different combinations of adverbs.
+
+	i) Often a spectral feature, or continuum source, is
+	   sufficiently localized that one can fit a baseline to just
+	   two regions, one at each end of the scan. Probably you will
+	   want to drop a few points at each end of the scan as being
+	   unreliable. In this case, you can set your baseline region
+	   via the four adverbs,
+
+		BDROP, EDROP = the number of points to ignore at the
+			       beginning and end of the scan,
+			       respectively. (Initial values = 0.)
+		BBASE, EBASE = the number of points, excluding BDROP
+			       and EDROP, over which to fit the
+			       baseline at each end of the scan.
+			       (Initial values are 50.)
+
+	   The values for these four adverbs can be set "by eye", or by
+	   using the vertical cursor of the graphics screen. A simple
+	   Procedure to achieve the latter is,
+
+		>PROCEDURE BASESET
+		:BDROP = CCUR
+		:BBASE = CCUR - BDROP
+		:EDROP = H0(NOINT) - CCUR 
+		:EBASE = H0(NOINT) - CCUR - EDROP 
+		:RETURN
+		:FINISH
+
+	ii) In more complex cases, you may have several well-separated
+	    lines within the spectrum, or multiple continuum sources
+	    within the scan, and wish to fit the baseline to
+	    `unconfused' segments lying between these.  This can be
+	    achieved for up to 16 such segments using the array adverb
+	    NREGION. Unless NREGION(1) = 0., this array will supersede
+	    the use of EDROP, BDROP, BBASE and EBASE, described above.
+
+	    You may set NREGION "by eye", and, if so, we recommend
+	    doing this as follows,
+
+		>NREGION = 10,30,40,50,78,82,105,128
+
+	    This will set the first eight elements of the array to the
+	    specified channel numbers and elements NREGION (9) to (32)
+	    to zero. Note that the order which the regions are entered
+	    does NOT need to be that of increasing channel number,
+	    however it is more likely that you will set NREGION
+	    correctly if do order the values.  Each pair of values
+	    defines a region.  The only requirement is that the regions
+	    do not overlap.  The presence of commas is important to
+	    include zeros in the rest of the array. If you were to
+	    enter the channel numbers individually, i.e.,
+
+		>NREGION(1) = 10 ; NREGION(2) = 30
+		>NREGION(3) = 40 ; NREGION(4) = 50
+		>NREGION(5) = 78 ; NREGION(6) = 82
+	 	>NREGION(7) = 105 ; NREGION(8) = 128
+	
+	    then it is safest to add NREGION(9) = 0, (or an initial
+           
+		 >NREGION = 0 
+	or
+		 >NREGION = DEFAULT
+	
+	    command) as the array is assumed to hold sensible values up
+	    to the first element containing a zero. 
+
+	    However, the simplest and most accurate way of setting
+	    NREGION is by a short Procedure that uses the vertical
+	    cursor (see Section 6.3) to set NREGION for N_R baseline
+	    segments,
+
+		>PROCEDURE NRSET(N_R)
+		:SCALAR N_I
+		:NREGION = DEFAULT 
+		:IF N_R < 1 THEN; ? 'ILLEGAL ARGUMENT !'; RETURN; END
+		:N_R = MIN(16,N_R)
+		:FOR N_I = 2 TO N_R * 2 BY 2
+		:	NREGION(N_I - 1) = CCUR
+		:	NREGION(N_I) = CCUR
+		:	END
+		:RETURN
+		:FINISH
+
+
+When displaying a scan, (see Chapter 6), the adverb BMARK is a switch
+which, if set to TRUE, permits you to draw boxes that illustrate where
+the most-recently computed baseline made its fit. For details, see
+Section 6.2.
+
+7.2 Correcting a DC-Offset
+--------------------------
+
+Having set the region over which you wish the baseline to be fitted, a
+number of possibilities exist. If the scan has a rather flat baseline
+already, it may only be necessary to subtract a DC-offset from the
+scan. If so, this is most simply achieved by using the verb DCBASE.
+Just type,
+
+	>DCBASE
+
+and the DC-offset will be calculated over your defined region for
+baseline fitting, and subtracted from the data in Array (0). Any slope
+or curvature on the scan will, of course, remain.
+
+The same effect could be got by using the verb BASELINE (see below),
+with the adverb NFIT set to zero, i.e.,
+
+	>NFIT = 0
+	>BASELINE
+
+
+An alternative scheme for subtracting a DC-offset is by using the verb
+PCBASE. PCBASE subtracts a constant value from the data in Array (0),
+such that a specified percentage of the data points in your defined
+region for baseline fitting become negative.  This percentage is
+entered into the adverb DCPCT (initial value 10).  Suppose that you
+wish to remove a constant value from the data in Array (0) such that
+forty percent of the resulting data values in your defined reference
+region are less than zero, then type,
+
+	>DCPCT = 40
+	>PCBASE PAGE SHOW
+
+
+7.3 Fitting, Removing and Assessing a Polynomial Baseline
+---------------------------------------------------------
+
+If the baseline of a scan is artificially curved, it is possible to fit
+a Chebyshev polynomial to those data points in Array (0) within the
+line- or source-free region defined as detailed in Section 7.1., and
+then subtract the fitted polynomial from all the data in the Array.
+
+First, it must be decided which order of polynomial is to be fitted,
+and this value is set in the adverb NFIT. (NOTE : NFIT = 0 is
+appropriate for a DC-offset). The verb BASELINE is then invoked to fit
+and remove the required baseline, the coefficients of the best-fit
+Chebyshev polynomial being placed in the array adverb BPARM.
+
+For example, if it is necessary to fit and remove a fifth-order
+polynomial from a spectrum, (where the line-free region has already
+been defined), and the corrected scan displayed, type,
+
+	>NFIT = 5
+	>BASELINE PAGE SHOW
+
+However, it may often be preferred to see how well the fitted
+polynomial approximates the data before subtraction is effected. In
+this case, it is possible to fit, but not subtract, the polynomial
+using the verb BSHAPE, plotting the proposed baseline over the spectrum
+with the verb BSHOW. For this, type,
+
+	>PAGE SHOW  
+	>NFIT = 5 ; BSHAPE
+	>BSHOW
+
+
+One further operation can be performed with a baseline after BSHAPE or
+BASELINE have been invoked. The verb BMODEL takes the most-recently
+computed coefficients for a Chebyshev polynomial, stored in the array
+adverb BPARM, and replaces the data in Array (0) with the values of the
+polynomial at the center of each channel . This can be useful, for
+example, for subtracting the same baseline from many scans. Suppose
+that it is required to,
+
+	i)   average the twenty scans 1000 to 1019, 
+	ii)  define a line-free region (using the PROCEDURE BASEFIT
+	     detailed above), 
+	iii) fit the best 5-th order Chebyshev polynomial over that
+	     region to the average scan,
+	iv)  subtract this polynomial from each individual scan and
+	     display each for 10 sec,
+	v)   finally leave the average scan, with polynomial subtracted
+	     in Array (0) and on the screen.
+
+To achieve this task, the following Procedure could be employed.
+
+	>PROCEDURE GROUPBASE(FIRST_SCAN, NO_OF_SCNS, FIT_ORDER)
+	# FIRST_SCAN = the scan number for the first scan in the set.
+	# NO_OF_SCNS = the number of consecutive scans in the set.
+	# FIT_ORDER = the order of the Chebyshev polynomial to be fitted.
+	:SCALAR SCAN_I
+	:IF NO_OF_SCNS < 1 THEN
+	:	PRINT 'LESS THAN ONE SCAN NOT ALLOWED.'
+	:	RETURN
+	:	END
+	:SCLEAR
+	:NREGION = 0
+	:BDROP = 0 ; EDROP = 0
+	:FOR SCAN_I = FIRST_SCAN TO (FIRST_SCAN + NO_OF_SCNS - 1)
+	:	GET SCAN_I ; ACCUM 
+	:	END
+	:AVE
+	:PAGE SHOW
+	:BASESET
+	#BASESET = the region-setting Procedure defined in Sec. 7.1
+	:NFIT = FIT_ORDER 
+	:BASELINE COPY(0,2) BMODEL COPY(0,1) 
+	:FOR SCAN_I = FIRST_SCAN TO (FIRST_SCAN + NO_OF_SCNS - 1)
+	:	GET SCAN_I ; DIFF PAGE SHOW PAUSE(10) 
+	:	END 
+	:COPY(2,0) PAGE SHOW 
+	:RETURN 
+	:FINISH
+
+
+7.4 Fitting a Sinusoidal Baseline
+---------------------------------
+
+When fitting a sinusoidal baseline, an equivalent set of verbs exist
+to those used in fitting a Chebyshev polynomial. The equivalences are,
+
+	Chebyshev Polynomial			Sinusoid
+	--------------------			--------
+
+	     BASELINE				 RIPPLE
+	     BSHAPE				 RSHAPE
+	     BSHOW 				 RSHOW
+	     BMODEL				 RMODEL
+
+The verb RIPPLE will fit a sinusoid to the region of the scan held
+in Array (0) defined to be line- or source-free, and subtract this
+sinusoid from the data.  It is IMPORTANT to note that before using
+RIPPLE or RSHAPE, a DCBASE operation (or its equivalent) should be
+performed on the scan.  Before fitting a sinusoid, it is then only
+necessary to place a guess of the `wavelength' (in channels) of the
+sinusoid into the adverb RPERIOD. In the fitting process, this
+`wavelength', and the phase and amplitude of the sinusoid will be
+optimized, and their values stored in the scalar adverbs RPERIOD
+(replacing your initial guess), RAMPLTDE, and RPHASE.  The associated
+one-sigma errors of these fitted values are stored in the scalar
+adverbs RPERERR, RAMPERR, and RPHAERR.  It is also possible to 
+provide initial values for RAMPLTDE and RPHASE to help guide the
+fitting routine.  The adverb NITER indicates the number of
+iterations that RIPPLE will use in fitting the data before
+stopping (the default value is 8).  The value of the adverbs
+RFIXPER, RFIXAMP, and RFIXPHA can be used to control which parameters
+are held fixed during the fitting process.
+
+For most users it will be sufficient to leave the values of the
+RFIX parameters at their default values and simply supply a value
+for RPERIOD, letting the fitting routine choose initial guesses
+to the amplitude and phase of the sinusoid.  User requiring
+more flexibility (perhaps because the default behavior of RIPPLE
+is not able to fit the data) should consult the on-line documentation
+for RIPPLE ("EXPLAIN RIPPLE") or the UniPOPS Reference Manual.
+
+RSHAPE, RSHOW and RMODEL are used in just the same way as BSHAPE, BSHOW
+and BMODEL for Chebyshev polynomial fits. For example, if the data in
+the line-free region of a spectrum appears to contain a sinusoid of
+about 100 channels `wavelength', then to fit and remove this baseline
+ripple, and display the result, type,
+
+	> RPERIOD = 100
+	> RIPPLE PAGE SHOW
+
+
+If it is only required to fit the sinusoid without subtraction, and
+display the sinusoid superposed on the DC-offset removed data, first
+define the line- or source-free region, and then type,
+
+	>DCBASE
+	>PAGE SHOW 
+	>RPERIOD = 100 ; RSHAPE
+	>RSHOW
+
+
+Similarly, RIPPLE and RMODEL could take the place of BASELINE and
+BMODEL in PROCEDURE GROUPBASE defined above (remembering to add a
+DCBASE before RIPPLE, and to replace NFIT by RPERIOD).
+
+
+7.5 Subtracting a `Running Median'
+----------------------------------
+
+Should you wish to perform the non-linear operation of subtracting a
+"running median" from each position of the scan in Array (0), this can
+be achieved by using the verb MDBASE. MDBASE computes the median value
+for the data within a region consisting of an odd-number of points
+centered on each position. The value of the (odd) number of points to
+be considered is stored in the adverb MDBOX (initial value 11). MDBOX
+should contain a number that is larger than the width of any feature
+that you are interested in.  The effect of the operation is to pass a
+high-pass filter over the data. Note that the median value depends only
+weakly on the presence of of a small number of `spikes' in the data.
+
+Suppose that you have a scan containing two narrow emission features,
+each of five channels width, and an extended (say, 30-channel wide)
+feature.  If you are interested in only the narrow features, you could
+try the following,
+
+	>MDBOX = 19; MDBASE
+	>PAGE SHOW
+
+
+7.6 Quantitative Evaluation of the Modified Scan
+------------------------------------------------
+
+Once a baseline of one of the above varieties has been subtracted from
+the data, the noise on the scan can be evaluated quantitatively using
+the verb RMS. RMS both displays the root-mean-squared value of the data
+in the line-free region of Array (0), and stores the same value in the
+adverb VRMS.
+
+For example, to compute the rms value in the fitted region following
+the subtraction of a fitted baseline, just type,
+
+	>RMS
+
+Until RMS (or the 12-m telescope continuum verbs ZERO, SWITCHED, and
+TOTALPWR; see Section 17.2) is invoked again, the previous value in 
+VRMS can be consulted by typing, for example,
+
+	>PRINT 'RMS = ' VRMS
+
+
+7.7 Fitting Gaussians to Scans
+------------------------------
+
+After subtracting the best-fit baseline from the data, a scan is then
+ready for further analysis. An operation that is often applied to
+scans, in order to quantify their parameters, is the fitting of one
+or more Gaussians to each spectral feature or source. In UniPOPS,
+Gaussian fitting is achieved by using the verb GAUSS, which will fit
+either positive or negative Gaussians (or both simultaneously). GAUSS
+will fit up to 24 Gaussians simultaneously.
+
+7.8 Setting up the Parameters (Adverbs) for GAUSS
+-------------------------------------------------
+
+To use GAUSS, you are required to define the region of the scan over
+which the fit is to be attempted. The situation here is analogous to
+that described in Section 7.1 for baseline fitting. If the feature to
+be fitted is localized to a single region of the scan, then the region
+is defined by the adverbs BGAUSS (Beginning channel) and EGAUSS (Ending
+channel). The initial values are BGAUSS = 1, EGAUSS = 256. An example
+is given below where these are set by the screen cross hairs using
+procedure SETGAUSS. If you wish to fit a number of features
+simultaneously, where these are well separated in the scan, BGAUSS and
+EGAUSS can be superseded by the array adverb GREGION. This has 48
+elements and allows the simultaneous fitting of up to 24 Gaussians in 
+separate segments of the scan. It is used in exact analogy to array
+adverb NREGION in baseline fitting, as described in Section 7.1.  The
+setting of GREGION is also identical to the setting of NREGION, and a
+trivial modification of the procedure NRSET given above will provide a
+procedure for setting GREGION using the screen cursor.
+
+The adverb NITER defines the maximum number of iterations which GAUSS
+will make in attempting convergence before abandoning the process. The
+initial value is NITER = 8.
+
+Further, you should also specify the adverb NGAUSS, the number of
+Gaussians to be fitted, and give initial estimates for the positions of
+the line centers and the full-widths half-maximum of the features (both
+in channels) for the NGAUSS Gaussians.
+
+You must supply initial guesses for the center(s), FWHM width(s) , and
+sometimes the height(s) of the Gaussians by giving values to the first
+NGAUSS elements of array adverbs CENTER, HWIDTH, and HEIGHT.  Whether
+or not you need to supply values to HEIGHT depends upon which Gaussian
+quantities you want GAUSS to fit and which you want to GAUSS to hold
+fixed.  The units of CENTER and HWIDTH should be channel number and
+that of HEIGHT that of the y-axis.  HEIGHT's, if you need to supply
+them, can be positive or negative but not zero; CENTER's and HWIDTH's
+must be > 0; no two elements of HWIDTH can be equal if their
+corresponding CENTER's are equal.  After the fit, the best-fit values
+are returned in the same adverb arrays; 1 sigma errors to the fitted
+quantities will be found in the first NGAUSS elements of the adverb
+arrays HGHTERR, HWERR, and CNTERR.
+
+
+You should also supply TRUE or FALSE values to the six adverbs, FIXH,
+FIXHW, FIXC FIXRELH, FIXRELHW, and FIXRELC so as to tell GAUSS what
+quantities you want to hold fixed and what you want GAUSS to fit.
+All six adverbs have default values of FALSE.  The following table
+describes how each adverb controls the action taken by GAUSS.
+
+------------------------------------------------------------------------
+Adverb  Value    Usage
+------------------------------------------------------------------------
+FIXH     TRUE    If you know the heights of the Gaussians and want
+		 GAUSS to hold their values constant.  You must supply
+		 values to HEIGHT.  The input and output values of
+		 HEIGHT will be identical.
+
+	 FALSE   [Default] If you want GAUSS to fit the values of the
+		 heights; you need not supply values to HEIGHT in this
+		 case.  GAUSS will return to HEIGHT the best-fit values
+		 for the heights of the Gaussians.
+
+FIXC     TRUE    If you know the centers of the Gaussians and want
+		 GAUSS to hold their values constant.  You must supply
+		 values to CENTER.  The input and output values of
+		 CENTER will be identical.
+
+	 FALSE   [Default] If you want GAUSS to fit the values of the
+		 centers; you must supply initial guesses to CENTER.
+		 GAUSS will return to CENTER the best-fit values for
+		 the Gaussian centers.
+
+FIXHW    TRUE    If you know the widths of the Gaussians and want
+		 GAUSS to hold their values constant.  You must supply
+		 values to HWIDTH.  The input and output values of
+		 HWIDTH will be identical.
+
+	 FALSE   [Default] If you want GAUSS to fit the values of the
+		 widths; you must supply initial guesses to HWIDTH.
+		 GAUSS will return to HWIDTH the best-fit values for
+		 the Gaussian widths.
+
+FIXRELH  TRUE    If you know the relative heights of the
+		 Gaussians but not the absolute heights.  You must
+		 supply values for HEIGHT that represent your best
+		 guesses to the heights.  GAUSS will use these values
+		 of HEIGHT(i) as initial guesses, will fit for a
+		 uniform scale factor, and will return to HEIGHT your
+		 initial guesses multiplied by the fitted scale factor.
+
+	 FALSE   [Default] If you don't know the relative heights,
+		 of the Gaussians.
+
+FIXRELC  TRUE    If you know the relative separations of the
+		 Gaussians but not an overall offset for the complete
+		 pattern of Gaussians.  You must supply values for
+		 CENTER that represent your best guesses to the values
+		 of the Gaussian centers.  GAUSS will use these values
+		 of CENTER(i) as initial guesses, will fit for an
+		 overall offset to the pattern of Gaussians, and will
+		 return to CENTER your input values adjusted by the
+		 fitted offset.
+
+	 FALSE   [Default] If you don't know the relative separations,
+		 of the Gaussians.
+
+FIXRELH  TRUE    If you know the relative widths of the
+		 Gaussians but not an overall scale factor for the
+		 widths to apply to each Gaussian.  You must supply
+		 values for HWIDTH that represent your best guesses to
+		 the values of the widths.  GAUSS will use these values
+		 of HWIDTH(i) as initial guesses, will fit for an
+		 overall scale factor for the widths, and will return
+		 to HWIDTH your input values multiplied by the fitted
+		 factor.
+
+	 FALSE   [Default] If you don't know the relative widths,
+		 of the Gaussians.
+---------------------------------------------------------------------------
+
+There are various restrictions in which combinations of adverbs you can
+set TRUE or FALSE.  You can either look at the EXPLAIN or Reference
+Manual documentation on GAUSS for more details; or, GAUSS will tell you
+if you have set a wrong combination of values to these FIX... adverbs.
+
+If you are going to fit just a single, simple Gaussian, the task of
+setting up these adverbs is eased by  using the verb PEAK. PEAK will
+find the maximum in the scan, neglecting BDROP and EDROP channels at
+each end of the scan. It then sets HEIGHT(1), CENTER(1) and HWIDTH(1)
+appropriately, and BGAUSS and EGAUSS to CENTER(1) - HWIDTH(1) and
+CENTER(1) + HWIDTH(1), respectively. If the scan contains a number of
+well-separated features, but it is only required to set up
+Gaussian-fitting parameters for one of these, which is not the most
+intense, set BDROP and EDROP appropriately to isolate the required line
+before invoking PEAK. Suppose you want to prepare to fit a line
+centered at channel 800 in your 1024-channel spectrum, but that there
+is a stronger line at channel 200, type,
+
+	>BDROP = 400 ; EDROP = 0
+	>PEAK
+
+
+If you are trying to fit hyper-fine components to your data you should
+probably set FIXRELC to TRUE, FIXC to FALSE, and assign values to
+CENTER that represent where you think the hyper-fine components should
+lie in your spectra.  Furthermore, if you also believe that all
+components should have the same intrinsic line widths, but don't know
+what the width will be, you should set FIXRELHW to TRUE, FIXHW to
+FALSE, and assign to HWIDTH a guess for the value of the widths.  And,
+if you can assume that the ratio of the heights of the components will
+follow a known pattern, assign a value of TRUE to FIXRELH, FALSE to
+FIXH, and assign to HEIGHT the expected height ratios.
+
+If one is fitting a more complex feature, which needs the presence of
+several Gaussians to decompose it satisfactorily, then it is probably
+most satisfactory to set many of the parameters for GAUSS (BGAUSS,
+EGAUSS, NGAUSS, CENTER and HWIDTH, say) using a procedure that employs
+the screen and its cursors. Such a procedure is,
+
+
+	>PROCEDURE SETGAUSS(GAUSS_NUM)
+	:SCALAR GAUSS_I
+	:IF GAUSS_NUM < 1 THEN
+	:	PRINT 'LESS THAN ONE GAUSSIAN NOT ALLOWED'
+	:	RETURN
+	:	END
+	:IF GAUSS_NUM > 24 THEN
+	:	PRINT 'MORE THAN 24 GAUSSIANS NOT ALLOWED'
+	:	RETURN
+	:	END
+	:NGAUSS = GAUSS_NUM
+	:CENTER = 0 ; HWIDTH = 0 ; HEIGHT = 0
+	:PRINT 'CLICK ON ENDS OF REGION OVER WHICH TO FIT.'
+	:BGAUSS = CCUR
+	:EGAUSS = CCUR
+	:IF BGAUSS > EGAUSS THEN
+	:	GAUSS_I = EGAUSS
+	:	EGAUSS  = BGAUSS
+ 	:	BGAUSS  = GAUSS_I
+	:	END
+	:FOR GAUSS_I = 1 TO NGAUSS
+	:	PRINT 'CLICK ON PEAK, POSITIONING VERTCAL CURSORS FIRST.'
+	:	CENTER(GAUSS_I) = CCUR
+	:	PRINT 'CLICK ON HALF POWER POINTS.'
+	:	HWIDTH(GAUSS_I) = ABS(CCUR - CCUR)
+	:	END
+	:RETURN
+	:FINISH
+
+Do not forget to also set NITER, FIXC, FIXHW, etc.!
+
+
+7.9 The Operation of Fitting Gaussians
+--------------------------------------
+
+Provided that the scan has been satisfactorily `baselined', and the
+parameters (adverbs) for the application of GAUSS set up as just
+described, the NGAUSS Gaussians can be optimized simply by typing,
+
+	>GAUSS
+
+Unless the message `FIT FAILED' appears on the screen, convergence will
+have been achieved. Should the fit have failed, try increasing NITER
+and/or refining the estimates of CENTER and HWIDTH, plus BGAUSS and
+EGAUSS or GREGION. Following convergence, the parameters of the best
+fit can be found as the NGAUSS sets of values in CENTER, HEIGHT and
+HWIDTH. The errors on these parameters are stored in the adverbs HWERR,
+HGHTERR, and CNTERR and can be interrogated using the PRINT command
+(see Section 14.5).
+
+
+7.10 Displaying the Fitted Gaussians
+------------------------------------
+
+There are two ways of displaying the results of GAUSS. The verb GPARTS
+evaluates each of the NGAUSS Gaussians separately and displays these on
+top of the original scans, which must have been plotted previously.
+Thus, after a successful application of GAUSS, the following can be
+typed,
+
+	>PAGE SHOW
+	>GPARTS
+
+GPARTS will also print the values of CENTER, HEIGHT and HWIDTH on the
+Graphics screen. CENTER and HWIDTH will be printed in the units of the
+lower x-axis.
+
+
+Alternatively, the verb GDISPLAY evaluates the sum of the NGAUSS
+Gaussians and plots the result on top of the original scan , which must
+have been plotted previously. Thus, after a successful application of
+GAUSS, the following can be typed,
+
+	>PAGE SHOW
+	>GDISPLAY
+
+
+7.11 Applying the Solutions from GAUSS
+--------------------------------------
+
+Following a successful application of GAUSS, the verb GMODEL will
+evaluate the sum of the NGAUSS Gaussians and replace the original data in
+Array (0) with this sum.  To perform this operation and display the
+result, type,
+
+	>PAGE SHOW
+	>GMODEL RLINE RESHOW
+
+
+Alternatively, following GAUSS, the verb RESIDUAL can be invoked to
+evaluate the sum of the NGAUSS Gaussians and subtract this from the
+original data in Array (0). To perform this operation and display the
+result, type,
+
+	>PAGE SHOW
+	>RESIDUAL RLINE RESHOW
+
+
+7.12 Summary of Options for fitting Baselines and Gaussians
+-----------------------------------------------------------
+
+The following table summarizes the equivalent verbs that exist in
+UniPOPS for fitting Chebyshev-polynomial or sinusoidal baselines, or 
+Gaussians.
+
+____________________________________________________________________
+|  Chebyshev Baseline   |   Sinusoidal Baseline  |   Gaussian Fit  |
+--------------------------------------------------------------------
+|	BSHAPE		|	RSHAPE		 |	GAUSS	   |
+|-----------------------|------------------------|-----------------|
+|	BASELINE	|	RIPPLE		 |  GAUSS RESIDUAL |
+|-----------------------|------------------------|-----------------|
+|	BMODEL		|	RMODEL		 |	GMODEL	   |
+|-----------------------|------------------------|-----------------|
+|	BSHOW		|	RSHOW		 |	GPARTS	   |
+|      			|			 |   or GDISPLAY   |
+--------------------------------------------------------------------
+
+The equivalent adverbs for the three different classes of fitting
+operations are,
+
+____________________________________________________________________
+|  Chebyshev Baseline   |   Sinusoidal Baseline  |   Gaussian Fit  |
+--------------------------------------------------------------------
+|     BDROP, EDROP      |     BDROP, EDROP	 |  BGAUSS, EGAUSS |
+|     BBASE, EBASE	|     BBASE, EBASE	 |  		   |
+|-----------------------|------------------------|-----------------|
+|    	NREGION		|	NREGION		 |	GREGION	   |
+|-----------------------|------------------------|-----------------|
+|	BPARM		|   RPERIOD, RAMPLTDE,   | HEIGHT, CENTER, |
+|			|	 RPHASE          |	HWIDTH	   |
+--------------------------------------------------------------------

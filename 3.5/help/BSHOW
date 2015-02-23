@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'BSHOW:  Uses the polynomial baseline coefficients in BPARM'
+PRINT 'and displays a model of the fitted baseline.'
+PRINT ' '
+PRINT 'BPARM='; print BPARM
+PRINT ' ' 

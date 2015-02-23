@@ -1,0 +1,68 @@
+L------------------------- Spectral Line --------------------------------
+L-	(ARRAY ADVERB of 6 by 5 elements)
+L-
+L-      GOUT is a two-dimensional array that contains the results of
+L-	the last use of GMEASURE.
+L-
+L-	GOUT is not used by any verb.
+L-
+L-	GOUT is set by : GMEASURE
+L-
+L-	Initial values of GOUT(N,M) are 0.
+L-
+L-      If you have provided an argument to GMEASURE that is between 1
+L-	and 5 digits long, then the following elements of GOUT are set
+L-	by GMEASURE to the described value:
+L-
+L-		GOUT(i, 1) = Method code for i-th estimate.
+L-		GOUT(i, 2) = Centroid for the i-th estimate.
+L-		GOUT(i, 3) = Width for the i-th estimate.
+L-		GOUT(i, 4) = Centroid error (modes 4 & 5 only) for the
+L-			     i-th estimate.
+L-		GOUT(i, 5) = The value in GMFRAC(i) for the i-th
+L-			     estimate.
+L-
+L- 	where i = 1 to the number of digits in the argument to GMEASURE.
+L-
+L-	In addition, the following elements of GOUT are always set by
+L-	GMEASURE to the described values:
+L-
+L-		GOUT(6, 1) = Peak flux value within region of
+L-			     interest.
+L-		GOUT(6, 2) = The flux integral.
+L-		GOUT(6, 3) = RMS value as found initially in adverb
+L-			     VRMS.
+L-		GOUT(6, 4) = Starting channel number used by GMEASURE.
+L-		GOUT(6, 5) = Ending channel number used by the
+L-			     GMEASURE.
+L-
+L-	You should study the documentation for GMEASURE for more details.
+L-
+L-	EXAMPLE :  
+L-
+L-	If you invoked GMEASURE as follows,
+L-
+L-		GMFRAC = 0.5, 0.2, 0.825, 0.915
+L-		GMEASURE(2145)
+L-
+L-      Then elements (1,1), (1,2), ... (1,5) of GOUT will report
+L-	the results of method 2 (i.e., the first digit in the argument
+L-	to GMEASURE).
+L-
+L-	Elements (2,1), (2,2), ... (2,5) of GOUT will report the
+L-	results of method 1 (the second digit in the argument).
+L-
+L-	Elements (3,1), (3,2), ... (3,5) of GOUT will report the
+L-	results of method 4 (the third digit in the argument).
+L-
+L-	Elements (4,1), (4,2), ... (4,5) of GOUT will report the
+L-	results of method 5 (the fourth digit in the argument).
+L-
+L-	Elements (5,1), (5,2), ... (5,5) of GOUT will be zero (only 4
+L-	digit argument supplied to GMEASURE so only 4 methods will be
+L-	tried.
+L-
+L-	And, elements (6,1), (6,2), ... (6,5) of GOUT will have values
+L-	as described above.
+L-
+L------------------------- Spectral Line --------------------------------

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MOVE: Moves data and header from one specified Array to'
+PRINT 'another.  Syntax:  MOVE(from, to).'
+PRINT ' '

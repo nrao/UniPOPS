@@ -1,0 +1,153 @@
+15. Optional Facilities
+-----------------------
+
+Five optional facilities exist allowing the user the possibilities of,
+
+	a) Controlling the text-window scrolling characteristics. 
+	b) Trapping errors in a loop or procedure.
+	c) Logging your UniPOPS commands in a disk file.
+	d) Undoing the actions of the previous one or two commands.
+	e) Turning on or off the ability to make hardcopies.
+
+These facilities will now be described in the above order.
+
+15.1 The Scrolling of the Text Window
+-------------------------------------
+
+The pair of verbs FULLOFF and FULLON will toggle the scrolling of the
+text window between `always-scroll' and `page-at-a-time' modes
+respectively. With FULLON in force, the screen stops scrolling each
+time that the text-screen page is full, and the program waits until you
+strike <CR> for the next page, c or C to return to FULLOFF, t or T for
+a TCOPY (see Section 12.4) copy of the present text-screen window, or
+<CTRL-C> to return to the command-level prompt.
+
+FULLOFF is the login default.
+
+
+15.2 Trapping Errors in Loops and Procedures
+--------------------------------------------
+
+The pair of verbs ERROFF and ERRON allow different handling of any
+errors detected in a loop, procedure, etc., which would normally result
+in their termination. ERRON, the default setting, will indeed result in
+the termination of the current loop or procedure.  However, with ERROFF
+in effect, UniPOPS will not terminate the loop or procedure on
+encountering an error, but will set the adverb ERRCODE to a non-zero
+integer, and continue after switching ERRON into effect. ERRCODE can be
+IMMEDIATELY tested by the user, and appropriate action taken. When an
+operation is completed successfully, ERRCODE is set to 0.
+
+Suppose that you wish to examine all scans between 1000 and 1020,
+printing the header for those that are present, and warning of those
+that are not. Then prepare the procedure,
+
+	>PROC SCANCHK(SCANA, SCANB)
+	:SCALAR I_Z
+	:FOR I_Z = SCANA TO SCANB
+	:	ERROFF
+	: 	GET I_Z
+	: 	ERRON
+	:	IF ERRCODE ~= 0. THEN
+	:		PRINT 'NO SCAN NUMBER' I_Z
+	:	ELSE
+	:		HEADER
+	:	END
+	:END
+	:FINISH
+
+To check the scans, now type,
+
+	>SCANCHK(1000, 1020)
+
+
+15.3 Logging UniPOPS Commands
+-----------------------------
+
+Using the verbs LOGON and LOGOFF, it is possible to log in an external
+file the UniPOPS commands that you enter.  This `command-logging' file
+can be reread and executed in UniPOPS later using the BATCH command
+(see Section 13.9).  The `command-logging' file will accumulate all
+UniPOPS commands given after invocation of the verb LOGON, up to, and
+including, the next use of the verb LOGOFF. If the file already
+contains commands from a previous use of LOGON, the new commands will
+be appended to the end of the file.
+
+The name of the current `command-logging' file is listed in the FILES
+table at login, and can be seen at any time by using the pseudo verb
+FILES (see Section 5.2). To change the present `command-logging' file
+for another, the pseudo verb CHNGFILE is used (see Section 5.3). For
+this operation, the file-interface-id code for the `command-logging'
+file is 12.  The pointer adverb LOGFILE has the value of 12 and can
+be used in place of the 12 (it may be easier to remember LOGFILE than
+remember that the correct file-interface-id code for the command-logging
+file is 12.  Suppose that you wish to create a new file CLF and attach
+this in place of the present `command-logging' file, then type,
+
+	>CHNGFILE CREATE 12 CLF
+   or
+	>CHNGFILE CREATE LOGFILE CLF
+
+The `command-logging' file can be directed to the printer using the
+pseudo verb LASER (see Section 12.1). 
+
+Suppose you know that you are about to enter a set of commands that you
+will want to run again the next time that you use UniPOPS. You could
+save these in a new `command-logging' file called NEXT.TIME by typing,
+
+	>CHNGFILE CREATE 12 NEXT.TIME
+	>LOGON
+	>The set of commands that you will rerun .........
+	> LOGOFF
+	>CHNGFILE CHANGE 12 LCMDLOG
+	
+Now, next time that you run UniPOPS, and wish to repeat the above set
+of commands, type,
+
+	>BATCH NEXT.TIME
+
+
+15.4 Correcting the Effects of a Wrong Command
+----------------------------------------------
+
+The pseudo verb UNDO tries to undo (usually successfully) the action of
+the previous command line. A second invocation of UNDO will undo the
+action of the command line before that. It is not possible to undo to
+any deeper level. However, before UNDO will function, the verb UNDOON
+must be in effect.  UNDOON is the default at login. The UNDO facility
+can be turned off via the verb UNDOOFF. UniPOPS will run somewhat
+faster with UNDOOFF, although UNDO can be a very useful feature if you
+are worried about entering a disastrously-wrong command !
+
+Suppose that after invoking the verbs HANNING and BASELINE you wish to
+return to the situation before these commands were used. Type,
+
+	>UNDOON 	(Either sometime previously, or as login default)
+	>HANNING
+	>BASELINE
+	>UNDO		(Undoes the BASELINE command)
+	>UNDO		(Undoes the HANNING command)
+
+Note that UNDO will not undo any action which has updated a disk file (i.e.
+EDIT, SAVE, KEEP, STORE. etc.), or the two- and three-dimensional
+operations detailed in Chapter 16.
+
+15.5 Making Hardcopies
+----------------------
+
+The verb pair COPYON and COPYOFF allow you to turn on or off the
+ability to make hardcopies with GCOPY or TCOPY, (see Section 12.4).
+COPYOFF will speed up most graphical display routines. The UniPOPS
+default condition is COPYON.
+
+Suppose that you wish to make a number of `trial runs' of the
+two-dimensional contour plot program QCONTOUR (Section 16.7.5), before
+taking your final hardcopy. To save yourself time, your first `trial
+run' should look like,
+
+	>COPYOFF QCONTOUR LABEL
+
+When you are sure that your plot parameters are those you want for the
+hardcopy, type,
+
+	>COPYON QCONTOUR LABEL GCOPY

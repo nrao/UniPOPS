@@ -1,0 +1,28 @@
+	(SCALAR ADVERB)
+
+	YMINP and YMAXP are used to set the Y scaling of the PLOT
+	verb.  YMINP equals the lowest y-value that will appear on the
+	graph while YMAXP is the highest.
+
+	YMINP and YMAXP is used by :    PLOT
+
+	No verbs change YMINP and YMAXP
+
+	The initial values of YMINP and XMAXP are 0.0.
+
+	If YMINP equals YMAXP then the plot will be automatically
+	scaled in the y direction.  If YMINP is greater than YMAXP then
+	the y-axis will increase to the left on the display else it
+	will increase to the right.
+
+ 	EXAMPLES :
+
+	.    To expand the scale with PLOT, specify;
+
+		YMINP = -1; YMAXP = -100
+
+	.    You followed the directions in example (1) and now
+	     everything is coming out to the same scale. To get back to
+	     automatic scaling, specify :
+
+		YMAXP = YMINP

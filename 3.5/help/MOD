@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'MOD:  (FUNCTION) Returns the modulus of the two given'
+PRINT 'parameters.  Syntax:  MOD(x1, x2) is the same as the'
+print 'remainder of x1/x2.'
+PRINT ' '

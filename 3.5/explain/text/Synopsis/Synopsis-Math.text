@@ -1,0 +1,29 @@
+#if CKBK
+A-10 Mathematical Operators
+---------------------------
+
+#end
+The following are infix operators: 	+ (addition) 	- (subtraction) 
+				  	/ 		**
+					*		=
+
+The following are prefix operators:     - (unary) 	+ (unary)
+
+(An infix operator is one that is placed between, and works on, two
+operands, while a prefix operator is placed before the single operand
+that it works on.)
+
+* :  Multiplication operator.
+
+** : Exponentiation  operator.
+
++ :  Addition operator or unary plus.
+
+- :  Subtraction operator or unary minus.
+
+= :  Assignment operator.
+
+/ :  Division operator.
+#if CKBK
+
+#end

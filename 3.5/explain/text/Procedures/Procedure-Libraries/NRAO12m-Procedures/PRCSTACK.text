@@ -1,0 +1,19 @@
+	PRCSTACK lies at the core of PSTACK, which in turn is the workhorse
+	of the 12-meter spectral-line averaging procedures.
+
+	It works on whatever data is already in Array (0) and it is
+	shorthand for "fshift; shift; accum".
+
+        If you want to change how the averaging is done for all of the
+	averaging procedures, make that change to this core procedure
+	(e.g. you want to apply the OSB verb to each scan before
+	 the ACCUM).
+
+	This procedure should never be invoked by the casual user.
+
+	File name: prcstack.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Adverb set:	ASHIFT
+

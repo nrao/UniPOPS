@@ -1,0 +1,68 @@
+#! /bin/csh -f
+#  @(#)makegraph2.exe.sh	5.1 06/22/94
+#
+# Loops creating graphics windows until the graphics window dies a natural
+# death (status = 0), a prescribed death (status = 6), or a fatal death 
+# (status < 0)
+#
+if ($#argv != 5) then
+    echo 'MAKEGRAPH2: Bad parms' $argv 
+    exit(-1)
+endif
+
+set numdth = 0
+set nummax = 5
+set time_try = `date +\%H\%M\%S`
+set timemax = 10
+# set up a counter for how may tries will be atempted before
+# quiting.  Also set up the time for trying beyond which a death
+# of the graphics will reset the counter to zero.
+loop:
+
+  if ($5 == "S" || $5 == "s") then
+     if ($4 == "l" || $4 == "L") then
+        popstool.exe scgraphics.exe $1 $2 $3 -Wi -WL LinePlot \
+				-Wl LinePlot  -Ws 870 620
+        set death = $status
+      else
+        popstool.exe scgraphics.exe $1 $2 $3 -Wi -WL ContPlot \
+				-Wl ContPlot -Ws 870 620
+        set death = $status
+      endif
+   else
+      if ($4 == "l" || $4 == "L") then
+         xgraphics.exe $1 $2 $3 -iconic -name LinePlot -geometry 580x448-20+5
+         set death = $status
+      else
+         xgraphics.exe $1 $2 $3 -iconic -name ContPlot -geometry 580x448-5-5
+         set death = $status
+      endif
+   endif
+#
+  if ($death <= 0 || $death == 6 || $death > 64) then
+	if ($death != 0) then
+            echo " "
+	    echo 'Graphics window has died: Return code = ' $death 
+        endif
+	exit(0)
+  else
+        echo " "
+	echo 'Graphics window has died: Return code = ' $death 
+	if ($numdth > $nummax) then
+	    echo " "
+	    echo "Have tried $numdth times with no success... giving up..."
+	    echo 'You may need to Ctrl-C at this point\!\!'
+	    echo " "
+	    exit(1)
+	else
+  	    echo 'Trying to start a new graphics window....' 
+	    set time_death = `date +\%H\%M\%S`
+	    @ time_diff = $time_death - $time_try
+	    if ($time_diff > $timemax) then
+		set numdth = 0
+	    else
+	        @ numdth = $numdth + 1
+	    endif
+	    set time_try = $time_death
+	    goto loop
+  endif

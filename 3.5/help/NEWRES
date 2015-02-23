@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'NEWRES:  (ADVERB) New resolution to which CHNGRES is'
+PRINT 'to smooth data (channels).'
+PRINT ' '

@@ -1,0 +1,10 @@
+	These procedures are not telescope dependent.  In most cases
+	they do not require data from a radio telescope.  The
+	documentation for the specific procedure or group of
+	procedures will indicate what file name you should supply
+	to BATCH to install these procedures into UniPOPS as well as the
+	syntax for their use.
+
+	You may also wish to examine the documentation for the telescope
+	dependent procedures.  In many cases, these procedures can
+	be used in other circumstances with minor modifications.

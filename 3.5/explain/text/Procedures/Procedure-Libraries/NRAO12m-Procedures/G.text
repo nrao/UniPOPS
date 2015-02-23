@@ -1,0 +1,25 @@
+	G displays a gains (calibration) scan.
+
+	Syntax: G(xscan)
+
+	Where xscan is the full scan number (including subscan number).
+
+	GGET, the verb that accesses the gains file (on-line as well
+	as off line) places the gains data into Array(2).  Only
+	data in Array(0) can be displayed using SHOW.
+
+	This procedure (G) uses GGET to get the data, copies it
+	from Array(2) to Array(0) and uses SHOW to display the data.
+
+	File name: g.prc
+
+	This procedure is included in LSETUP.12meter
+
+	Example:
+
+	You want to see what the gains data for scan 452.03 looks like:
+
+		G(452.03)
+
+	Array(0) and Array(2) will BOTH contain a copy of the gains
+	data having a scan number equal to 452.03.

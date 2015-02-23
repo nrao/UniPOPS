@@ -1,0 +1,8 @@
+# @(#)tuc.nrao.edu.prepare.unipops	5.1 06/22/94
+#
+# Tucson (downtown) version of prepare.unipops
+#
+set EDITORS = (edt emacs textedit vi)
+set WINDOWS = (openlook)
+set popsproc2 = ~obs/uniprocs/
+#

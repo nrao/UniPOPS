@@ -1,0 +1,29 @@
+	(ARRAY ADVERB of 12 elements)
+
+	TMARK is the array containing the intensities at which SHOW
+	draws horizontal lines.  It also may contain the y-axis values
+	at which PLOT draws horizontal lines.  For two-dimensional
+	displays, TMARK contains the y-cell numbers at which LABEL will
+	draw horizontal lines.  Up to 12 different values may be
+	specified.
+
+	TMARK is used by : LABEL     PLOT	SHOW   
+
+	No verbs change TMARK.
+
+	The initial values of  TMARK(N) are -999999,  which means that
+	no horizontal lines will be drawn.  
+
+	EXAMPLES:
+
+	You want to draw a horizontal line at 1.2 K on your next SHOW display,
+	so you type:
+
+		TMARK(1) = 1.2;  SHOW
+
+	You want to reset TMARK to its default values so that no horizontal
+	lines will be drawn, so you type:
+
+		TMARK = DEFAULT
+	or
+		TMARK = -999999

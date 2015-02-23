@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'BDROP:  (ADVERB) Number of channels at beginning of data to'
+PRINT 'be ignored.'
+PRINT ' '

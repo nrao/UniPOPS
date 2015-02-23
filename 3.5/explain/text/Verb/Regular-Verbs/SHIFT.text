@@ -1,0 +1,41 @@
+	(REGULAR VERB)
+
+	SHIFT shifts the data in Array (0) by the number of channels
+	specified by the value of adverb ASHIFT and stores the results
+	back into Array (0).  The verbs FSHIFT and VSHIFT can be used
+	to determine a value for ASHIFT (they set ASHIFT).
+
+	If ASHIFT is an integer number of channels, the data is simply
+	moved that number of channels.  If ASHIFT contains a fractional
+	part that differs from an integer by more than 1% of a channel
+	width, then SHIFT will use a cubic-spline interpolation to
+	effect the fraction of a channel shift.
+
+	A negative value of ASHIFT indicates that the data will be
+	moved to lower channel numbers while a positive ASHIFT
+	indicates that the data will be moved to higher channel
+	numbers.  If ASHIFT = 0, SHIFT will do nothing.
+
+	ADVERBS USED:
+
+        ASHIFT         The number of channels by which the
+                       data in Array (0) is to be shifted.
+
+        The values of ASHIFT and the scan number of the data are stored
+        in an internal array.  These values can be displayed with the
+        LISTSHIFT verb.  The internal array can hold up to the last 
+        5120 scan/ashift pairs.  SCLEAR resets this array.
+
+	EXAMPLE:
+
+	You want to average four scans where the velocity scales are 
+        slightly offset.  Specify:
+
+	     SCLEAR
+	     GET 7238 ACCUM			Accums to internal ACCUM array.
+	     GET 7239 VSHIFT SHIFT ACCUM	Aligns velocities, and
+	     GET 7240 VSHIFT SHIFT ACCUM	accums.
+	     GET 7241 VSHIFT SHIFT ACCUM
+	     AVE PAGE SHOW			Averages internal array and
+						places results in Array(0)
+						and displays the average.

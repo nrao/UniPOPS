@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'DUMP:  Dumps the contents of the specified range of the'
+PRINT 'internal CORE array -- a debugging tool only.  Syntax:'
+print 'DUMP(start_word, num_words)'
+PRINT ' '

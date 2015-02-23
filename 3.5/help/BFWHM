@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'BFWHM:  (HEADER-TUC) Beam half-width at half maximum'
+print '(arcsec).'
+print ' '
+PRINT 'Note that this is contrary to what the name implies.'
+PRINT ' '

@@ -1,0 +1,20 @@
+	C1P2 is shorthand for:
+
+	SCLEAR; PSTACK(1,2); AVE; ALL; PAGE; SHOW
+
+	The internal accum array is first cleared.  Then it ACCUMes the 
+	first subscan number (.03 for filter bank data or .12 for hybrid 
+	spectrometer data) of all the scan numbers in the ASTACK array.  
+	The result of this ACCUM is then AVEd (averaged, divided by 
+	the sum of the weights), BDROP and EDROP are set to 0 (ALL), and 
+	the result displayed after clearing the graphics screen (PAGE; SHOW).
+
+	Any non-integer fraction of the scan numbers is ignored
+	by PSTACK.  There is no check on duplicate scan numbers.
+
+	See the documentation for any of the individual steps for
+	more information.
+
+	File name: c1p2.prc
+
+	This procedure is included in LSETUP.12meter

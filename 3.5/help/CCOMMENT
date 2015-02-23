@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CCOMMENT:  (HEADER-CUBE) A user-supplied comment for the'
+PRINT 'cube (54 characters).'
+PRINT ' '

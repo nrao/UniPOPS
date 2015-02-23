@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FREAD:  Reads from the ASCII file specified by the given'
+PRINT 'unit, using the given format, and alters the values of the'
+PRINT 'adverbs in the provided list.  Syntax: FREAD(unit,fmt) list'
+PRINT ' '

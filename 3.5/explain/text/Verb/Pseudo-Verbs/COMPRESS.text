@@ -1,0 +1,47 @@
+      	(PSEUDO VERB)
+
+	COMPRESS returns all unavailable memory space for your future
+	use.  Space becomes 'unavailable' whenever you overwrite or
+	edit a procedure or when you have SCRATCHed a procedure or
+	adverb.
+
+	COMPRESS comes in handy if you are close to or have exceeded
+	your limits on memory space (listed with the CORE verb).
+
+	If memory is ever exceeded, you will get the "BLEW CORE" error
+	message -- the error message appears worse than what has
+	really happened, no real damage has been done, you have simply
+	run out of memory for new procedures and adverbs.  After exceeding 
+	memory, you can regain some of your memory space by either:
+
+		compressing your memory space -- see COMPRESS;
+		scratching unneeded adverbs or procedures (and then
+		    COMPRESSing) -- SCRATCH; 
+		re-thinking the problem you are trying to
+		    tackle.
+
+	COMPRESS can be used only in execute mode and must be the only
+	thing on the command line.
+
+	No adverbs are used or set by COMPRESS.
+
+	EXAMPLE:
+
+	You type
+
+		CORE
+
+	and the program will produce something like the following:
+
+	        SPACE USED/AVAILABLE FOR:
+	     PROGRAMS   VARIABLES     SOURCE
+	   32000/32766  1509/32766    11/32766
+	  (   99%          5%          0%)
+
+	which indicates that you are running out of memory for storing
+	programs.  So, to reclaim any 'unavailable' space, type:
+
+		COMPRESS
+
+	and UniPOPS will try to get back for your use as much memory
+	space as possible.

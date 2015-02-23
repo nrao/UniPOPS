@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FIXC:  (ADVERB) If FALSE, then GAUSS will try to find better'
+print 'estimates to the guesses in CENTER; else, GAUSS will assume'
+print 'the values in CENTER are not to be changed.'
+PRINT ' '

@@ -1,0 +1,37 @@
+	(REGULAR VERB)
+
+	GDISPLAY evaluates the parameters of NGAUSS Gaussians and
+	displays their sum.  GDISPLAY is used either after GAUSS to
+	create and display the fitted Gaussians separately or by itself
+	to create and display a particular Gaussian or set of
+	Gaussians.   A SHOW display must have been previously
+	performed.
+
+	GDISPLAY  will also displays the values of HEIGHT, CENTER, and
+	HWIDTH on the graphics screen, the last two quantities in the
+	units of the lower x-axis.
+
+	ADVERBS USED:
+
+          NGAUSS        # of Gaussians.  Initial value is 1.
+			Maximum value is 24.
+
+          CENTER(24)    The center channels of the Gaussians.
+          HEIGHT(24)    The heights of the Gaussians.
+          HWIDTH(24)    FWHM of the Gaussians.
+			Initial values are 0.
+
+	  SLABEL        If SLABEL = 1 or 2, then the plot will be
+			documented with height, center, and half-width
+			values. If SLABEL = 0, no documentation will be
+			generated.  Initial value is 1.
+
+	No adverbs are set by GDISPLAY.
+
+	EXAMPLE:
+
+	You have fit a pair of Gaussians to scan 16370.  To display the
+	sum of the Gaussians, specify;
+
+			GDISPLAY
+

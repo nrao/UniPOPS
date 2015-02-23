@@ -1,0 +1,8 @@
+PRINT ' '
+PRINT 'MLIMITS:  Finds the maximum and minimum values in'
+PRINT 'Matrix (0) and places the values and locations in MLIMS.'
+PRINT ' '
+print 'MXMIN,MXMAX', mxmin,mxmax
+print 'MYMIN,MYMAX', mymin,mymax
+print 'MLIMS', mlims
+PRINT ' '

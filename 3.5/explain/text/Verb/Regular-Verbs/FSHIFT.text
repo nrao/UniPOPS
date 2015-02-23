@@ -1,0 +1,34 @@
+	(REGULAR VERB)
+
+L------------------------- Spectral Line --------------------------------
+L-	FSHIFT calculates the number of channels by which the data in
+L-	Array (0) is offset in rest frequency from that in the internal
+L-	ACCUM array.  The number of channels found is stored in adverb
+L-	ASHIFT
+L-
+L-	Note that both Array (0) and the internal ACCUM array must 
+L-	contain a scan.
+L------------------------- Spectral Line --------------------------------
+
+C------------------------- Continuum ------------------------------------
+C-	Always sets adverb ASHIFT to zero.
+C------------------------- Continuum ------------------------------------
+
+	No adverbs are used by FSHIFT.
+
+	ADVERB SET:
+
+	   ASHIFT :     The number of channels by which the data
+			in Array (0) is out of alignment with that in
+			internal array.
+
+	EXAMPLE:
+
+	You want to average scans but they all were taken at different
+	frequencies.  You specify:
+
+		FSHIFT SHIFT 
+
+	before using ACCUM or SUM to average the data.
+	
+

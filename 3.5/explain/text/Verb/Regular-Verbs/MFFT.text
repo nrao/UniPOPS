@@ -1,0 +1,21 @@
+	(REGULAR VERB)
+
+	MFFT performs a two-dimensional fast Fourier transform for the
+	real data in Matrix (0) and and imaginary data in Matrix (1)
+	stores the real part of the result in Array (0) and the
+	imaginary part in Array (1).
+
+        No adverbs are used or set by MFFT
+
+	EXAMPLE:
+
+	You want to take the FFT of the data in Matrices (0) and (1)
+	so type:
+
+		MFFT
+
+	and you can use CONTOUR to display the results.
+
+
+         
+	    

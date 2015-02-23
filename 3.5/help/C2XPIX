@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'C2XPIX:  (FUNCTION) Returns the x-pixel value corresponding'
+print 'to the given c-value (channel for SHOW, x-axis value for'
+print 'PLOT, x-cell number for 2-dim display) valid for the last'
+print 'plot generated.  Syntax: x-pixel=C2XPIX(c-value)'
+PRINT ' '

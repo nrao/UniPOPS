@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'GET2: Retrieves the data and header for the specified scan '
+PRINT 'and feed from the off-line or on-line data files and places '
+PRINT 'them in Array 2.  Syntax: GET2 scan_num.feed_num'
+PRINT ' '

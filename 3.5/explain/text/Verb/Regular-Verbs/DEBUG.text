@@ -1,0 +1,29 @@
+	(REGULAR VERB)
+
+	Syntax:    DEBUG TRUE
+		   DEBUG FALSE
+
+	DEBUG turns on or off the printing of diagnostic information.
+	If the argument to DEBUG has a value of TRUE (+1), the
+	diagnostic input is turned on, else it is turned off.  The 
+	debugging information is extremely cryptic and will only be 
+	valuable to a UniPOPS guru.
+
+	No adverbs are used by DEBUG
+
+	ADVERB SET:
+
+	STATUS(20) : Whether or not debugging is enabled and is set by
+		     the last DEBUG TRUE or DEBUG FALSE command.
+
+		     Values: 1 (or TRUE) if DEBUG TRUE is in effect; -1
+		     (or FALSE) if DEBUG FALSE is in effect.
+
+
+	. To turn on the diagnostics, type:
+
+		DEBUG TRUE
+
+	.  To turn off the diagnostics, type:
+
+		DEBUG FALSE

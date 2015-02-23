@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CTMAX:  (HEADER-CUBE) The maximum data value in the'
+PRINT 'original (unscaled) Cube.'
+PRINT ' '

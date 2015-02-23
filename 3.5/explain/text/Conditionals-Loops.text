@@ -1,0 +1,491 @@
+	UniPOPS has IF-THEN-END and IF-THEN-ELSE-END conditional
+	statements as well as FOR-TO-END, FOR-TO-BY-END, and WHILE-END
+	loop constructs.  UniPOPS does not have CASE or UNTIL
+	statements nor does it have an ELSEIF construct.  These may be
+	mimiced with IF, FOR, or WHILE statements.  There is no GOTO
+	statement (and none should ever be needed).
+
+
+Conditional Statements
+---------------------- 
+
+	The IF-THEN-END and IF-THEN-ELSE-END constructions provide for
+	the conditional execution of a group of statements.
+
+	If included within a procedure (i.e., while in compile mode),
+	the construct may extend across many lines and, along with
+	loops, can be nested to what ever level is necessary.  But if
+	you want to use the construct while in execute mode, the IF
+	construct cannot extend beyond a single command line though
+	nesting is allowed.
+
+	The following describes what multi-line and single-line
+	conditional statements look like.
+
+
+	a.  IF-THEN-END (Multi-Line; Compile Mode Only)
+	-----------------------------------------------
+	A multi-line IF-THEN-END conditional construct can only occur
+	in procedure definitions (in compile mode) and should be
+	patterned as follows:
+
+	IF <exp> THEN
+		statement 1
+		statement 2
+		...
+		statement n
+	END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If <exp> is true (+1), then all of the statements are
+	executed; if false (-1), all the statements are skipped and
+	execution will continue after the END statement.
+
+	Example:
+
+		IF X>1 THEN
+		   PRINT 'HELLO'
+		   X=X+1; Y=ATAN(X)
+		END
+
+		(Indenting was used to show the structure of the logic
+		and is recommended but is not necessary.)
+
+
+	b.  IF-THEN-END (Single-Line; Compile or Execute Modes)
+	-------------------------------------------------------
+	A single-line IF-THEN-END conditional construct should be
+	patterned as follows:
+
+	IF <exp> THEN; statements 1 -> n; END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS commands.  The END statement must be
+	present.  If <exp> is true (+1), then all of the statements are
+	executed; if false (-1), all the statements are skipped and
+	execution will continue after the END statement.  Note the use
+	of semi-colons (;) to delineate the various sub-statements.
+
+	Example:
+
+		IF X>1 THEN; PRINT 'HELLO'; X=X+1; Y=ATAN(X); END
+
+
+	c.  IF-THEN-ELSE-END (Multi-Line; Compile Mode Only)
+	----------------------------------------------------
+	A multi-line IF-THEN-END conditional construct can only occur
+	in procedure definitions (in compile mode) and should be
+	patterned as follows:
+
+	IF <exp> THEN
+		statement 1
+		statement 2
+		...
+		statement n
+	ELSE
+		statement a
+		statement b
+		...
+		statement z
+	END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If the <exp> is true (+1), then the 1 through n
+	statements are executed and the 'a' through 'z' statements are
+	skipped; if false (-1), the 1 through n statements are skipped
+	and the 'a' through 'z' statements are executed.
+
+	Example:
+
+		IF X>1 THEN
+		   PRINT 'HELLO'
+		   X=X+1; Y=ATAN(X)
+		ELSE
+		   PRINT 'GOODBYE'
+		   X=X-1; Y=TAN(X)
+		END
+
+		(Indenting was used to show the structure of the logic
+		and is recommended but is not necessary.)
+
+
+	d.  IF-THEN-ELSE-END (Single-Line; Compile or Execute Modes)
+	------------------------------------------------------------
+	A single-line IF-THEN-ELSE-END conditional construct should be
+	patterned as follows:
+
+	IF  <exp> THEN; statements 1 -> n; ELSE; statements a -> z; END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If the <exp> is true (+1), then the 1 through n
+	statements are executed and the 'a' through 'z' statements are
+	skipped; if false (-1), the 1 through n statements are skipped
+	and the 'a' through 'z' statements are executed.  Note the use
+	of semi-colons (;) to delineate the various sub-statements.
+
+	Examples:
+
+	  > IF X>1 THEN; PRINT 'HELLO'; ELSE; PRINT 'GOODBYE'; END
+
+	  >IF X>1 THEN;\
+	     PRINT 'HELLO';\
+	  ELSE;\
+	     PRINT 'GOODBYE';\
+	  END
+
+	The second example is equivalent to the first.  It illustrates
+	the use of the continuation character,'\'.  Note that all of the
+	semi-colons in the first example are also in the second example.
+	Also remember that the full command line can not exceed 160
+	characters.
+
+
+	e. Nested IF Structures
+	-----------------------
+	IF statements can be nested to what ever degree is necessary.
+
+	For example, in a procedure definition, you could type:
+
+	IF X > 1 THEN
+		IF Y = 3 & (X ~= P) THEN
+		   PRINT 'Hello'
+		ELSE
+		   PRINT 'GoodBye'
+		   IF GH | HJ THEN; GH = ~ HJ; END
+		END
+	END
+
+	(Indenting was used to show the structure of the logic and is
+	recommended but is not necessary.)
+
+	While in execute mode, your nested IF's cannot extend beyond
+	a single command line.  That is:
+
+		IF X>1 THEN; IF X=2 THEN; PRINT X; ELSE PRINT X-1; END; \
+			ELSE PRINT X+10; END
+
+	(Note use of '\' to indicate line continuation.)
+
+
+	f. Case Structure or ELSEIF Structure
+	-------------------------------------
+	A proper case-like structure or the ELSEIF found in most
+	computer languages must be mimiced with a series of nested IF
+	statements.  An example in a procedure definition is:
+
+	IF XFLAG=1 THEN
+		PRINT 'XFLAG=1'
+	ELSE 
+		IF XFLAG=2 THEN
+			PRINT 'XFLAG=2'
+		ELSE
+			IF XFLAG=3 THEN
+				PRINT 'XFLAG=3'
+			ELSE
+				PRINT 'XFLAG>3'
+			END
+		END
+	END
+
+	(Indenting was used to show the structure of the logic and is
+	recommended but is not necessary.)
+
+	The following kind of structure, and variations of it, is WRONG
+	and must be avoided:
+
+	IF XFLAG=1 THEN
+		PRINT 'XFLAG=1'
+	ELSE IF XFLAG=2 THEN
+		PRINT 'XFLAG=2'
+		END
+	ELSE IF XFLAG=3 THEN
+		PRINT 'XFLAG=3'
+		END
+	ELSE
+		PRINT 'XFLAG>3'
+	END
+
+Loops
+-----
+
+	There are two kinds of loop constructs in UniPOPS.  The
+	FOR-TO-END and FOR-TO-BY-END constructs are for definite loops
+	while the WHILE construct if for indefinite loops.  A definite
+	loop is one which will occur a predetermined number of times
+	while the number of times an indefinite loop will be executed
+	cannot be determined beforehand.
+
+	If included within a procedure (i.e., while in compile mode),
+	the construct may extend across many lines and, along with
+	conditional statements, can be nested to what ever level is
+	necessary.  But if you want to use the construct while in
+	execute mode, the FOR or WHILE constructs cannot extend beyond
+	a single command line though you can nest constructs.
+
+	The following describes what multi-line and single-line
+	loop statements look like.
+
+
+	a.  FOR-TO-END  (Multi-Line; Compile Mode Only)
+	-----------------------------------------------
+	A multi-line FOR-TO-END loop construct can only occur in
+	procedure definitions (in compile mode) and should be patterned
+	as follows:
+
+	FOR index = <exp1> TO <exp2>
+	    statement 1
+	    statement 2
+	    ...
+	    statement n
+	    END
+
+	where index is the name of an existing scalar adverb or element
+	of an array adverb, <exp1> and <exp2> must be valid arithmetic
+	expressions.  <exp1> and <exp2> are the lower and upper range
+	of the loop index.  
+
+	The statements 1 through n are ALWAYS executed at least once.
+
+	At the END statement, 1 is added to index and, if the index is
+	less than or equal to <exp2> then statements 1 through n are
+	executed again.  This continues until the loop index exceeds
+	the value of <exp2>.  The loop is executed int(<exp2>-<exp1>)+1
+	times.
+
+	The user SHOULD NOT change the value of the loop index within
+	the loop but can use its value whenever desired.  The value of
+	the loop index after the loop has been exhausted will be 
+	<exp1>+int(<exp2>-<exp1>)+1.
+
+	Remember that the POPS interpreter uses IEEE 32-bit floating
+	point values for all arithmetic, including loop values.
+	Although the loop is executed int(<exp2>-<exp1>)+1 times, it
+	is important to remember that the value of the loop variable
+	is not necessarily an integer.
+
+	Example:
+
+		FOR I = 1 TO Y*10
+			PRINT SQRT(I); PRINT Y-COS(I)
+			BDROP = Y*100
+			END
+
+	(Indenting was used to show the structure of the logic and is
+	recommended but is not necessary.)
+
+
+	b.  FOR-TO-END  (Single-Line; Compile or Execute Modes)
+	-------------------------------------------------------
+
+	A single-line FOR-TO-END loop construct should be patterned as
+	follows:
+
+	FOR index = <exp1> TO <exp2>; statements 1 -> n; END
+
+	where index is the name of an existing scalar adverb or element
+	of an array adverb, <exp1> and <exp2> must be valid arithmetic
+	expressions.  <exp1> and <exp2> are the lower and upper range
+	of the loop index.  
+
+	The statements 1 through n are always executed at least once.
+
+	At the END statement, 1 is added to index and, if the index is
+	less than or equal to <exp2> then statements 1 through n are
+	executed again.  This continues until the loop index exceeds
+	the value of <exp2>.  The loop is executed int(<exp2>-<exp1>)+1
+	times.
+
+	The user SHOULD NOT change the value of the loop index within
+	the loop but can use its value whenever desired.  The value of
+	the loop index after the loop has been exhausted will be 
+	<exp1>+int(<exp2>-<exp1>)+1.
+
+	Example:
+
+		FOR I = 1 TO Y*10; PRINT SQRT(I); PRINT Y-COS(I); END
+
+
+	c.  FOR-TO-BY-END  (Multi-Line; Compile Mode Only)
+	--------------------------------------------------
+	A multi-line FOR-TO-BY-END loop construct can only occur in
+	procedure definitions (in compile mode) and should be patterned
+	as follows:
+
+	FOR index = <exp1> TO <exp2> BY <exp3>
+	    statement 1
+	    statement 2
+	    ...
+	    statement n
+	    END
+
+	where index is the name of an existing scalar adverb or element
+	of an array adverb, <exp1>, <exp2>, and <exp3> must be valid
+	arithmetic expressions.  <exp1> and <exp2> are the lower and
+	upper range of the loop index.  
+
+	The statements 1 through n are always executed at least once.
+
+	if <exp3> is greater than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is less than or equal to <exp2> then statements 1
+		through n are executed again.  This continues until the
+		loop index exceeds the value of <exp2>.
+
+	If <exp3> is less than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is greater than or equal to <exp2> then the
+		statements 1 through n are executed again.  This
+		continues until the loop index is less than <exp2>.
+
+	The loop is executed 1+int(<exp2>-<exp1>/<exp3>) times.  The
+	user SHOULD NOT change the value of the loop index within the
+	loop but can use its value whenever desired.   The value of the
+	loop index after the loop has been exhausted will be 
+	<exp1>+<exp3>*{int(<exp2>-<exp1>/<exp3>)+1}.  
+
+	Example:
+
+		FOR I = 100 TO Y*10 BY -1
+			PRINT SQRT(I); PRINT Y-COS(I)
+			BDROP = Y*100
+			END
+
+	(Indenting was used to show the structure of the logic and is
+	recommended but is not necessary.)
+
+
+	d.  FOR-TO-BY-END (Single-Line; Compile or Execute Modes)
+	---------------------------------------------------------
+	A single-line FOR-TO-BY-END loop construct should be patterned
+	as follows:
+
+	FOR index = <exp1> TO <exp2> BY <exp3>; statements 1 -> n; END
+
+	where index is the name of an existing scalar adverb or element
+	of an array adverb, <exp1> and <exp2> must be valid arithmetic
+	expressions.  <exp1> and <exp2> are the lower and upper range
+	of the loop index.  
+
+	The statements 1 through n are always executed at least once.
+
+	if <exp3> is greater than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is less than or equal to <exp2> then statements 1
+		through n are executed again.  This continues until the
+		loop index exceeds the value of <exp2>.
+
+	If <exp3> is less than zero, then:
+
+		At the END statement, <exp3> is added to index.  If the
+		index is greater than or equal to <exp2> then the
+		statements 1 through n are executed again.  This
+		continues until the loop index is less than <exp2>.
+
+	The loop is executed 1+int(<exp2>-<exp1>/<exp3>) times.  The
+	user SHOULD NOT change the value of the loop index within the
+	loop but can use its value whenever desired.   The value of the
+	loop index after the loop has been exhausted will be
+	<exp1>+<exp3>*{int(<exp2>-<exp1>/<exp3>)+1}.  Note the use of
+	semi-colons (;) to delineate the various sub-statements.
+
+	Example:
+
+		FOR I = 100 TO Y*10 BY -1; BDROP = Y*100; END
+
+
+	e. Nested FOR Loops
+	-------------------
+	As with most computer languages, you can nest FOR statements to
+	whatever level desire.  An example in a procedure definition
+	would be:
+
+	FOR I=1 TO 10
+		PRINT I; FOR J = I TO I**2; PRINT J; END
+		FOR J = 1 TO 10
+			FOR K = 1 TO 5
+				PRINT ARRAYX(J,K)**I
+				END
+			END
+		END
+
+	(Indenting was used to show the structure of the logic and is
+	recommended but is not necessary.)
+
+	In execute mode, you could type:
+
+		FOR X = 1 TO 3; FOR I = 1 TO 5; PRINT X**I, X, I; END; END
+
+
+	f.  WHILE (Multi-Line; Compile Mode Only)
+	-----------------------------------------
+	The WHILE construct provides for conditional looping through a
+	group of statements.    A multi-line WHILE loop construct can
+	only occur in procedure definitions (in compile mode) and
+	should be patterned as follows:
+
+	WHILE <expr>
+		statement 1
+		statement 2
+		...
+		statement n
+	END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If the <exp> is true (+1), then the 1 through n
+	statements are executed over and over again until <exp> is
+	false; whenever <exp> if false (-1), all the statements are
+	skipped and execution will continue after the END statement.
+	One usually cannot calculate the number of times the loop will
+	execute before it is terminated.  Since <exp> is evaluated at the
+	start of the loop, the statements in the loop may never be
+	executed (unlike FOR loops in UniPOPS, where the loop is always
+	executed at least once).
+
+	Example:
+
+		WHILE X < 10
+			PRINT X**2
+			X = X + 1
+		END
+
+	Like FOR and IF constructs, multi-line WHILE constructs can be
+	nested to whatever level desired within procedures.
+
+
+	g.  WHILE (Single-Line; Compile or Execute Modes)
+	-------------------------------------------------
+	The WHILE construct provides for conditional looping through a
+	group of statements.  It typical usage is:
+
+	WHILE <expr>; statements 1 -> n; END
+
+	where <exp> is a valid logical expression -- one that returns a
+	single value of either true (+1) or false(-1). The statements
+	may be any UniPOPS command.  The END statement must be
+	present.  If the <exp> is true (+1), then the 1 through n
+	statements are executed over and over again until <exp> is
+	false; whenever <exp> if false (-1), all the statements are
+	skipped and execution will continue after the END statement.
+	One usually cannot calculate the number of times the loop will
+	execute before it is terminated.  Note the use of semi-colons
+	(;) to delineate the various sub-statements.
+
+	Example:
+
+		WHILE X < 10; PRINT X**2; X = X + 1; END
+
+	Like FOR and IF constructs, single-line WHILE constructs can be
+	nested to whatever level desired both in execute mode or in
+	procedure definitions.

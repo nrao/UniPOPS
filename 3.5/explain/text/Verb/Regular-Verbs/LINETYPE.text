@@ -1,0 +1,120 @@
+	(REGULAR VERB)
+
+	Syntax:     LINETYPE(line_num)
+
+	LINETYPE allows you to define the line types for PLOT, SHOW,
+	VCTR, RESHOW, BSHOW, RSHOW, GPARTS and GDISPLAY.  The line_num 
+	code is the sum of three numbers:  the tickness code, the dash 
+	code, and the tick-mark code.
+
+	The thickness codes are:
+
+	0,1 - Thin (DEFAULT)
+	2 - Slightly thick
+	3 - Medium thick
+	4 - Thick
+	5 - very thick
+
+	The dash codes are:
+
+	0 - No dashes (DEFAULT)
+	10 - Large dashes and spaces
+	20 - Small dashes and spaces
+	30 - Large dashes and small spaces
+	40 - Large dash, small space, small dash, small space
+	50 - Large dash, small space, small dash, small space, small dash,
+		small space
+	60 - Very small dashes and spaces
+	70 - Small dashes and large spaces
+	80 - Small dashes and very large spaces
+	90 - Very large dash, moderate space, small dot, moderate space
+
+	The tick-mark codes are:
+
+	0 - No tick marks (DEFAULT)
+	100 - Up/left going large ticks
+	200 - Up/left going small ticks
+	300 - Down/right going large ticks
+	400 - Down/right going small ticks
+	500 - Up/right going large arrows
+	600 - Up/right going small, closely spaced arrows
+	700 - Down/left going small, widely spaced arrows
+	800 - Up/right going small, widely spaced double arrows
+	900 - Inverted V's
+
+	For example, to specify a slightly thick, dot-dash line with no
+	ticks, the line-type code would be:  42 (0 + 40 + 2).  The code
+	of the default line type is 0.  In principle, 500 different
+	line types are possible.  Line types 0 and 1 are the same.
+	Line type 1 exists to allow for labeled thin lines with no
+	dashes or tick-marks (see CONTOUR and CONLINE).
+
+	The current character size (see CHARSIZE) will alter the
+	spacing between dashes and ticks and the length of ticks.
+
+	To return the linetype to its default value, use the pointer
+	adverb DEFAULT as the argument.
+
+	No adverbs are used by LINETYPE.
+
+	ADVERBS SET:
+
+	STATUS(6) :  Present line type as determined by the last call
+		     to LINETYPE.  
+
+		     Values represent exactly what was the parameter to
+		     the call to LINETYPE.
+
+	EXAMPLE:
+
+	You want to overlay two plots of the scans in Arrays (0) and
+	Array (1) with the second plot using line-type 652 (small
+	arrows, dash-dot-dot, slightly-thick), so you type:
+
+		LINETYPE(0)		   Sets default line type
+		PAGE SHOW		   Draws contents of Array (0)
+		COPY(1,0)		   Copies Array (1) to (0)
+		LINETYPE(652)		   Defines line types
+		CHARSIZE(5)		   Make the arrows and dashes smaller
+					     than normal
+		RESHOW			   Draw second plot
+		LINETYPE(0); CHARSIZE(11)  Resets defaults
+
+	The following procedure will display and make hardcopies of
+	25 different line types
+
+		PROC LTYP2
+		SCALAR II, K
+		PAGE; GRAPHICS
+		II=10
+		FOR K = 0 TO 900 BY 100
+	   		LINETYPE (K)
+	  		PLACE(1,II+20); PRINT 'TYPE = ', K
+	  		PLACE(1,II); VCTR(1020,II)
+	   		II = II + 70
+	  		END
+		GCOPY; PAGE; GRAPHICS
+		II=50
+		FOR K = 1 TO 5
+	   		LINETYPE (K)
+	   		PLACE(1,II+20); PRINT 'TYPE = ', K
+	   		PLACE(1,II); VCTR(1020,II)
+	   		II = II + 70
+	   		END
+		GCOPY; PAGE; GRAPHICS
+		II=50
+		FOR K = 0 TO 90 BY 10
+	   		LINETYPE (K)
+	   		PLACE(1,II+20); PRINT 'TYPE = ', K
+	   		PLACE(1,II); VCTR(1020,II)
+	   		II = II + 70
+	   		END
+		GCOPY; CRT
+		RETURN
+		FINISH
+
+
+	You want to return to using the default linetype:
+
+		LINETYPE(DEFAULT)
+	     

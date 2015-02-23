@@ -1,0 +1,28 @@
+	(SCALAR ADVERB)
+
+	RAMPLTDE contains the user's first guess of the amplitude of a
+	sinusoidal baseline that one wishes to fit to the data in 
+	Array (0).
+
+	The value for the amplitude is refined by RIPPLE or RSHAPE if
+	the value of RFIXAMP is less than zero.
+
+	If RFIXAMP is greater than zero, the value of RAMPLTDE will not
+	be changed by RIPPLE or RSHAPE.
+
+	If RFIXAMP is equal to zero, the value of RAMPLTDE will be
+	ignored by RIPPLE or RSHAPE which will attempt to guess an
+	appropriate value.
+
+        The form of the sinusoid is (at channel i):
+
+		RAMPLTDE * cos((i-RPHASE)*2pi/RPERIOD)
+
+
+	RAMPLTDE is used by : RIPPLE, RMODEL, RSHAPE, and RSHOW.
+
+	RAMPLTDE may be set by : RIPPLE and RSHAPE.
+
+	The initial value of RAMPLTDE is 0.
+
+	

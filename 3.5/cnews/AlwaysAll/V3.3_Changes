@@ -1,0 +1,426 @@
+The following documents significant changes which have been made to the
+system since the printing of Version 3.1 of the Cookbook.  There was no
+external release of Version 3.2.
+
+I. Data Format Changes.
+
+The UniPOPS data format, SDD - Single Dish Data, was changed.  The new
+data format was implemented during the Fall of 1993.  The change involved
+the bootstrap and index portions of the format.  Most of the 16-bit
+integers were replaced with 32-bit integers.  Some reorganization of the
+fields in an index entry also occurred.  A description of the new format
+and the old format can be found in Appendix G of the UniPOPS Cookbook and
+Section 2.7 of the UniPOPS Reference Manual.  This information is also
+available through the EXPLAIN verb under the topic name "SDD".
+
+The primary advantage of switching to the new format is that files are
+now capable of holding more scans.  We have also added a utility, expandsdd,
+that will allow you to expand the index of an existing SDD file.  Previously,
+when the index capacity was reached, your only option was to create a new
+file with a larger index (if you were not already at the maximum allowable
+size in the old format) and tediously copy the file scan by scan.  The
+new expandsdd utility eliminates this problem.
+
+This version (and all future version of UniPOPS) can read both the
+new format as well as the old format of SDD files transparently to
+the user.  However, access rates are slightly faster for files using
+the new SDD format.  You can use the makeindex.exe utility to remake the
+index of an SDD file in the new format.  Simply type the following at
+a Unix prompt for each file you wish to convert:
+
+	makeindex.exe file_name
+
+where "file_name" is the actual name of the file.
+
+There is a new flavor of SDD file, the individual records SDD file.
+This flavor is used to hold Green Bank individual records data (it may
+be expanded in the future to hold 12-meter individual record data).  
+The new flavor is indicated by a 1 in the "Type of SDD file" field 
+in the bootstrap record of an SDD file (normal SDD files have a zero 
+in this field).  See the SDD documentation for more information on
+this bootstrap change.  This flavor of SDD file can only be attached
+as an RSCANS file (file type 5) with the CHNGFILE verb.   Individual
+records files are read only.  They can be accesses using the new
+GETIR verb (which also accesses any on-line individual records information).
+SUMMARY and SELECT can also be used to summarize and select this type
+of data using the RSCANS pointer as the argument.  The new utility 
+cvt.tele-recs will convert a telescope archive tape from the 140-ft 
+into an individual records SDD file.
+
+There are 3 new SDD header words that have been added since
+version 3.1.  These are:
+
+	NORECORD   -  The number of "records" for this scan number.
+		      Where "records" refers to the number of individual
+                      records for Green Bank individual record data or
+                      the number of on-the-fly spectra in this single
+                      row of an on-the-fly map (Tucson OTF spectral line
+		      mode data).
+
+	RECORDID   -  The specific record number corresponding to this
+                      data where a record has the same meaning as described
+                      above.
+
+        PHASEID    -  The specific phase number corresponding to this
+                      data.  This is only used by individual records
+                      data.
+
+The FITS image reader (mread) and writer (mwrite) as well as the
+cube reader (readcube) and writer (cube.exe) all now understand the
+FITS keyword EQUINOX.  This is intended to hold the equinox of the
+coordinate system used in the FITS image or cube.  The value of that
+FITS keyword is stored in the matrix header word MEQUINOX or the cube
+header word CEQUINOX.  In addition, the matrix header word MOBJECT and
+the cube header word COBJECT can now hold up to 16 characters (any
+additional characters found in an input FITS file are ignored).
+
+                      
+II. Multi-plot Cursor
+
+If you plot multiple graphs on the same screen with, for example, 
+RASTER, SHOW, PLOT, etc., all cross hair and cursor verbs (CROSSHAIR,
+CLICK, MCUR, FCUR, CCUR, etc.) will return appropriate values for any
+of the plots.  Just call the desired cursor routine, center the cursor
+within the plot for which you want information, move it to the feature
+of interest, and click away.  The following restrictions apply:
+
+(a) Although you can plot an indefinite number of plots on the same page,
+you'll only be able to use the cursor routines on any of the last 64 
+plots.  If this proves to be too severe a limitation, let us know since
+it would be simple for us to raise this limit in a future release.
+
+(b) If you overlap plots, the cursor routines will return the values for
+the first drawn plot.
+
+(c) MCUR (and the MCLICK adverb set by CLICK) will only return
+a value if you pick a matrix plot and if it is the last plot that
+you have drawn to the screen.  Likewise, CROSSHAIR will only return
+the value of the matrix at the location at which you click if and only
+if the matrix you are clicking on was the last thing that you plotted.
+
+(d) Routines like BSHOW, RSHOW, GPARTS, GDISPLAY, and GMEASURE will
+only work on the last drawn plot, which must have been a SHOW or
+RESHOW plot.
+
+(e) FLAG and FULLGRID will only work on the last drawn plot, regardless
+of its type.
+
+(f) LABEL will only work on the last drawn plot, which must have been
+a 2-D plot (RASTER, CONTOUR, HLFTNE, etc.).
+
+
+II. New Verbs.
+
+The following verbs have been added.  Some information summarizing 
+these new verbs follows this listing.  See the EXPLAIN on-line help
+facility and the new 3.3 version of the cookbook for details.
+
+	CLICK		C2XPIX		DATE		EXEC
+	EQHISTLEV	FNAME		FUNCLEV		GETCOL
+	GETIR		GETOTF		GETROW		INT
+	MBIAS		MDIVIDE		MMINUS		MMULTIPLY
+	MPLUS		MSCALE		PUTCOL		PUTROW
+	TIME		T2YPIX		XPIX2C		YPIX2T
+
+CLICK lets you use the graphics cursor to set seven new adverbs with
+the single click of the left or right mouse button.  These seven 
+adverbs (CCLICK, FCLICK, MCLICK, TCLICK, VCLICK, XCLICK, and YCLICK)
+correspond to the values that would have been returned using the
+cursor function verbs (CCUR, FCUR, MCUR, TCUR, VCUR, XCUR, and YCUR).
+For example, suppose you wish to put the location of the peak of a
+feature and the magnitude of that peak into adverbs.  Previously, this 
+would have required a use of CCUR (to return the channel number of the 
+peak of the feature) and TCUR (to return the height of the peak).  
+Now, a single use of CLICK would set CCLICK and TCLICK (and the 
+other 5 adverbs) to values appropriate to that position (you would 
+then use CCLICK and TCLICK as the values you needed).
+
+C2XPIX, XPIX2C, T2YPIX and YPIX2C are function verbs that convert the
+argument from one coordinate system to another.  The XPIX and YPIX
+coordinate system refers to the coordinates of the graphics screen
+while the C and T coordinate system refers to the coordinates of the
+data being plotted.  C2XPIX converts a c-value (channel number for
+SHOW, x-axis value for PLOT, and x-cell number for a matrix display)
+into the corresponding x-pixel value of the graphics window.  XPIX2C
+converts an x-pixel value into a c-value.  T2YPIX converts a t-value
+(temperature or y-axis value for SHOW, y-axis value for PLOT, and
+y-cell number for a matrix display) into the corresponding x-pixel
+value of the graphics window.  YPIX2T convert an x-pixel value into
+a t-value.
+
+DATE and TIME are function verbs that return the current system date
+and time as strings.  For example, PRINT TIME would print out the
+current system time.
+
+EXEC is a new verb takes a string argument which can consist of any
+valid POPS commands and executes it.  The real power of this verb is
+that it can be used within a procedure to execute a string of POPS
+commands.  Since this string can be a global string adverb which can
+vary between executions of the procedure that uses EXEC, you can
+alter the behavior of that procedure on-the-fly (i.e. without having to
+recompile the procedure).
+
+EQHISTLEV and FUNCLEV are new ways to help you set the LEVS array for
+use by the 2-D display verbs.  EQHISTLEV allows you to set an equal
+histogram display (equal number of points between each contour level)
+while FUNCLEV allows you to set the ratio of the number of points between
+each contour level for all contour levels (i.e. you can control the
+ratio in effect at each level through the use of the new FLEVS array
+adverb).
+
+FNAME is a function verb that returns the file name of the indicated
+file unit number, which must already be opened.  Files are either opened
+by calls to FOPEN or through CHNGFILE (i.e. this will also return the
+name of the basic files controlled by CHNGFILE).
+
+GETCOL, GETROW, PUTCOL and PUTROW are verbs which transfer data between
+Matrix (0) and Array (0).  GETCOL takes the indicated column of Matrix (0)
+and places it in Array (0) while GETROW does the same for the indicated
+row of Matrix (0).  PUTCOL and PUTROW transfer data values in the
+other direction.
+
+GETIR is the verb used to fetch the indicated individual record and
+phase for a given scan from both the on-line and off-line individual
+records data.  This form of data, which is described briefly above, is
+currently only available for Green Bank data.
+
+GETOTF is used to fetch a specific spectra from a 12-meter spectral
+line on-the-fly scan or mapping row.  Further analysis of OTF scans
+is done with a procedure and/or a stand alone program.  You should consult
+the 12-meter staff for the latest developments.
+
+INT is a new synonym for the function verb IFIX.
+
+MBIAS, MSCALE, MPLUS, MMINUS, MMULTIPLY, and MDIVIDE are the matrix
+equivalents of the verbs BIAS, SCALE, PLUS, MINUS, MULTIPLY, and DIVIDE.
+BIAS and SCALE work on Matrix (0) while the other four verbs combine 
+Matrix (1) and Matrix (0) and leave the result in Matrix (0).
+
+
+III. Altered Verbs
+
+The behavior or syntax of the following commands has changed.  As with the
+new verbs, you should consult the on-line EXPLAIN documentation or the
+new Cookbook.
+
+	ACCUM		BATCH		BSHOW		CHNGFILE
+	CROSSHAIR	DIFF		DIVIDE		EDIT
+	GDISPLAY	GPARTS		LINETYPE	MINUS
+	MLIMITS		MULTIPLY	PLUS		RAP
+	RESHOW		RIPPLE		RSHOW		SUM
+	TELL
+
+ACCUM, RAP, SUM, PLUS, MINUS, DIFF, MULTIPLY, and DIVIDE have all
+been changed to use the new DEFMODE adverb (also used by the new
+verbs MPLUS, MMINUS, MMULTIPLY, and MDIVIDE).  DEFMODE indicates how
+these verbs, which combine values from two arrays, two locations in
+the same array or two matrices, should deal with undefined or otherwise
+invalid data values.  The default value of DEFMODE is FALSE.  When
+DEFMODE is FALSE, these verbs all put an undefined value at any
+location where either of the input values at that location are undefined.
+If DEFMODE is TRUE then these verbs will put an undefined value at any
+location where both of the input values are undefined and will put
+some real value there when only one of the input values are undefined.
+For the specific behavior when DEFMODE is TRUE, you should consult the
+documentation for each verb.
+
+BATCH has been changed in two ways.  It now informs you of the filename
+it is reading.  Since BATCH searches in your current directory as well as 
+up to two additional directories, this feature is useful if you need to 
+know what file is being read by BATCH.  BATCH also deals with errors during
+compilation of a procedure (known as edit mode) which often occur while
+a procedure is being debugged in a more graceful way.  Previously, you 
+were simply left in edit mode and had to type FINISH to return to the 
+normal execute mode.  Now, when BATCH detects that an error has occurred 
+during compilation, BATCH will supply FINISH for you.  You should
+always be returned to execute mode whenever BATCH finishes, even after 
+an error.
+
+BSHOW, GDISPLAY, GPARTS, RESHOW, and RSHOW now use the current
+line type setting (set by LINETYPE) in addition to the other verbs
+that also use the current line type setting: PLOT, SHOW, VCTR and the
+2-D display verbs.
+
+The codes for line thickness used as input to LINETYPE were change to
+allow one to have labeled think lines with no dashes and no tick marks.
+The new line thickness codes are:
+
+	0,1 - Thin (DEFAULT)
+	2   - Slightly thick
+	3   - Medium thick
+	4   - Thick
+	5   - Very thick
+
+CROSSHAIR was changed to use the new CROSSFLG adverb.  CROSSHAIR can
+display up to 5 values at each location when a mouse button is clicked.
+CROSSFLG controls which of those 5 values are actually displayed.
+You can now limit the amount of information to the values you are
+interested in so that the screen does not become as cluttered as fast 
+as it would if all 5 values were always displayed.
+
+CHNGFILE is now somewhat easer to use.  New pointer adverbs exists
+for all file types and you only need to type in the minimum
+number of characters to distinguish the argument for the second and 
+third arguments.  For example, suppose you want to attach the existing
+file MySaveFile as the `save' file.  Previously you would have typed:
+
+	> CHNGFILE CHANGE 3 MySaveFile
+
+Now, you can type:
+
+	> CHNGFILE CH SSCANS MySaveFile
+
+where CH is recognized as being CHANGE (since the only possible alternatives
+are CHANGE, CREATE, and SUBTRACT) and SSCANS is a pointer adverb having
+the value of 3.  SSCANS may be simpler to remember than that 3 is
+the file type for the save file.
+
+EDIT will now give you a copy of a file from another directory if the
+filename you type is found there.  This feature makes it simple to
+edit and alter any of the standard procedures distributed with
+UniPOPS.  Simply type "EDIT filename", where filename is the name of
+the file containing the standard procedure (now given in the documentation
+for that procedure) and a copy of that file will be placed in your
+current directory.  Your edit session will then start up with you
+editing your copy of that file.  As before, if no file of that name exists
+in any of the standard locations, a new, empty file will be created for
+you to edit.
+
+MLIMITS now sets the array adverb MLIMS to the values that it
+finds.  See the documentation for a description of what each element
+of MLIMS corresponds to.
+
+RIPPLE has been completely rewritten to be more robust.  The adverbs,
+RPERIOD, RAMPLTDE, and RPHASE are now used to hold the initial guesses
+for the period, amplitude and phase (only the period must be supplied) 
+as well as the fitted results.  The errors of the fitted parameters can 
+now be found in RPERERR, RAMPERR, and RPHAERR.  The adverbs RFIXPER, 
+RFIXAMP, and RFIXPHA are used to control which parameters are held fixed, 
+which are allowed to vary and what the initial guesses for each parameter 
+should be (user supplied or let the algorithm determine an initial value).
+See the documentation on RIPPLE for complete details.  The array
+adverb RPARM is no longer used and has been eliminated.
+
+TELL has a new option, TELL STAT.  This summarizes the contents of
+the STATUS array.
+
+
+IV.  MENUS
+
+The MENUS facility has been eliminated.  It relied on a public
+domain package that was only available for SunView and it was seldom,
+if ever, used.
+
+V.  Procedures
+
+There are quite a number of new procedures, too many to mention here.
+Many of these are provided to users of the 12-meter (and are specific
+to that telescope).  A few are specific to users of the 140-ft.  You
+should consult the documentation for more information.  In the following
+short table, the word in the first column is the topic name that you
+should give to EXPLAIN to learn more about that topic and a short 
+description of that topic is given in the second column.  This is
+not a complete list, only a list of the more interesting topics.
+
+		topic name		description
+                ----------              -----------
+		Procedures		The top level topic.  You can 
+					start here to get to all of the
+					other information on procedures.	
+
+		Procedure-Libraries	Information on the procedures that
+					are supplied with UniPOPS.
+
+		General-Procedures	Information on all of the 
+					procedures intended for general use.
+
+		GreenBank-Procedures	Information on procedures specific
+					to data from a Green Bank telescope.
+
+		NRAO12m-Procedures	Information on procedures specific
+					to data from the NRAO 12-meter.	
+
+		Mapping			A set of procedures useful in
+					making 2-D maps and 3-D cubes
+					from 1-D data.
+
+		cubeinput.prc		One of the "mapping" procedures.
+					It is a "front end" to the cube.exe
+					utility that makes it easier to
+					convert a `save' file into a
+					FITS cube.
+
+		Tiles			A set of procedures useful for
+					producing tiled displays, where
+					individual spectra are displayed
+					as tiles on the graphics screen
+					in relation to their relative
+					position on the sky.
+
+		LSETUP.12meter		The standard procedures used
+				 	to reduce spectral line data at
+					the 12-meter.
+
+		CSETUP.12meter		The standard procedures used
+					to reduce continuum data at
+					the 12-meter.
+
+VI. New Utilities
+
+The following utilities are new in version 3.3:
+
+	makeoldindex.exe	makeoldrecindex.exe	makerecindex.exe
+	expandsdd		mergesdd
+	pdfl2sdd
+	cvt.tele-recs
+
+makeoldindex.exe, makeoldrecindex.exe, and makerecindex.exe are all related
+to the makindex.exe which is used to rebuild the index of an SDD file.
+makerecindex.exe will rebuild the index of an individual records SDD
+file.  makeoldindex.exe and makeoldrecindex.exe will rebuild the index
+in the old, pre version 3.3, format of SDD file.  This may be necessary
+if you need to use an older version of UniPOPS or if you have some
+software of your own that can currently only read the original SDD format.
+The current version of UniPOPS can read both the new and old formats
+transparently to the user (although access rates will be slightly higher
+for the new format).  makeindex.exe can always be use to convert an
+old format index into a new format index.
+
+expandsdd allows you to expand the size of the index area of an
+existing SDD file so that you can store more data in it.  The syntax
+of this utility is:
+
+	expandsdd file_name size
+
+where file_name is the name of the SDD file and size is the number of
+scans that you want file_name to be able to hold after expansion.
+NOTE: expandsdd replaces the current file with a new file having the
+data of the old file and the new index.  Since it is possible that an
+undetected error may occur during expansion, it is a good idea if you
+make a copy of the original file before using expandsdd to protect
+your data in case of a problem.
+
+mergesdd allows you to combine two SDD files into a third, new SDD file.
+The syntax of this utility is:
+
+	mergesdd input_file_1 input_file_2 new_SDD_file
+
+where input_file_1 and input_file_2 are the names of the two existing
+SDD files that you wish to merge and new_SDD_file is the name of the
+new SDD file that you want to create having the contents of the 
+first two files.  There is no risk of the input files being overwritten.
+The output file must not exist prior to using mergesdd.  If it does exist,
+mergesdd will exit without doing any work.
+
+The pdfl2sdd utility replaces the cvtpdfl2sdd.exe utility.  It is used
+to convert from the old 12-meter pdfl format to the UniPOPS SDD format.
+Its syntax is simply:
+
+	pdfl2sdd pdfl_file new_SDD_file
+
+where pdfl_file is the name of the pdfl file and new_SDD_file is the
+name of the new SDD file that will hold the converted data.
+
+cvt.tele-recs is a new utility that is similar in use to cvt.tape-disk.
+It converts an archive telescope tape from the 140-ft into an
+individual records format SDD file.

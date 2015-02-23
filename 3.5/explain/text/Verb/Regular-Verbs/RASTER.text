@@ -1,0 +1,92 @@
+	(REGULAR VERB)
+
+	RASTER will produce a color or gray-scale raster map of the
+	contents of Matrix (0).  For those graphics and color devices
+	which cannot handle color displays, an attempt will be made to
+	use levels of shading to mimic color.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX	Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be processed.
+
+	MYMIN, MYMAX	Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be processed.
+
+	MRATIO          Aspect ratio of x to y axis that you want for
+			the display.  Initial value is 1.
+
+	LEVS(32)        Levels at which various 'contours' will
+			be plotted.  The values of LEVS must be in
+			ascending order.  If you want n contour levels,
+			then you should specify the default value
+			(-999999) for the n+1 level.
+
+	CLUT(3x32)	Color-Look-Up-Table for color or gray-scale
+			levels.
+
+	ADVERBS SET:
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLOTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+	Colors are specified in CLUT using the same coding fashion as
+	described under COLOR.  For example, for color level n, you
+	must specify a value of red or hue to CLUT(1,n), green or
+	intensity to CLUT(2,n), and a value of blue or saturation to
+	CLUT(3,n).
+
+	If, for example, you specify 10 contour levels, then any Matrix
+	cell with a data value exceeding the value of LEVS(10) will be
+	colored the same as [ CLUT(1,10), CLUT(2,10), CLUT(3,10) ].
+	Any data value less than LEVS(1) will remain the background
+	color.  Any data value between LEVS(1) and LEVS(2) will be
+	colored according to [CLUT(1,1), CLUT(2,1), CLUT(3,1) ]; any
+	data value between LEVS(2) and LEVS(3) will be colored
+	according to [CLUT(1,2),CLUT(2,2),CLUT(3,2)]; and so on.
+
+	Note that some complicated COLOR plots may take a long time
+	to produce, especially if the hardcopy device does not support
+	color output; you can save yourself same time by specifying
+	COPYOFF before starting a RASTER plot if you are certain that
+	you will not want a hardcopy of the RASTER plot.
+
+	EXAMPLE:
+
+	You want to produce a RASTER plot of the data in Matrix (0).
+	You could type:
+
+		MXMIN=1; MXMAX=10	Specify the limits of the
+		MYMIN=10; MYMAX=20	matrix that you want to plot (i.e.,
+					you want to plot a sub-matrix of
+					Matrix (0).
+		LEVS = 1.0, 2.5, 4.0, 5.5, 7., DEFAULT
+					Sets up 5 contour levels.
+
+		FOR I = 1 TO 5; CLUT(2,I) = 4; END
+					Specifies that all colors will be
+					of medium intensity.
+		FOR I = 1 TO 5; CLUT(3,I) = 6; END
+					Specifies that all colors will be
+					of vivid saturation.
+		FOR I = 1 TO 5; CLUT(3,I) = (I-1)*8; END
+					Specifies hues of red, orange, yellow,
+					green, and blue.
+		RASTER LABEL		Draws the RASTER map and 
+					labels the resulting plot.
+
+	Another way to set up the levels (LEVS) is with the AUTOLEV or
+	SETLEV verbs.  To set up a Color-Look-Up-Table (CLUT) one can
+	use the SETCLUT verb.  The following steps would produce the
+	same exact display as above:
+
+		
+		MXMIN=1; MXMAX=10; MYMIN=10; MYMAX=20
+		AUTOLEV(1, 1.5, 5, TRUE)
+		SETCLUT(4, 5)
+		RASTER LABEL

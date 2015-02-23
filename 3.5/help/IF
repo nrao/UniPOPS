@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'IF:  Specifies the start of an IF-THEN-END or'
+PRINT 'IF-THEN-ELSE-END logical construct.'
+PRINT ' '

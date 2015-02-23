@@ -1,0 +1,52 @@
+	ANNOTATE places a character string on the graphics screen
+	at the location you indicate with a mouse-button click.
+
+	Syntax:  ANNOTATE
+
+	You will be asked for the text to placed on the screen, it must
+	be no longer than 60 characters.  You MUST surround the text
+	with quotation marks if it contains any spaces (multiple words).
+
+	The graphics cursor will be turned on and you will be asked to
+	click the mouse button to indicate where you would like the
+	text to appear.
+
+	The text is placed horizontally with the first character centered
+	on the location you indicated with the mouse-button click.
+
+	File name: annotate.prc
+
+	This procedure is included in LSETUP.12meter and CSETUP.12meter.
+
+	No adverbs are used.
+
+	Adverbs set: 	XCLICK		YCLICK
+
+	Example:
+
+	You wish to place the text "Feature 3" next to some feature that
+	you wish to draw attention to that is currently being displayed
+	on the graphics screen.  You type:
+
+		ANNOTATE
+
+		And the program responds with:
+
+		"Enter the text you wish to appear on the graphics screen."
+		"It must be surrounded by quotation marks"
+		"#"
+
+		So you respond after the hash symbol with (don't forget to
+		surround the text with quotation marks):
+
+		"Feature 3"
+
+		And the program responds by turning on the graphics cursor
+		and informing you:
+
+		"Using the cursor, click where you would like this to appear"
+		"Hit button 1 or 3 to get coordinates"
+
+		The text, "Feature 3", then appears where you indicated.
+
+

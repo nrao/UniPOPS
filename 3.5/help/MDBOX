@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'MDBOX:  (ADVERB) The number of channels over which mean'
+PRINT 'intensities are calculated and then removed by MDBASE.'
+PRINT ' '

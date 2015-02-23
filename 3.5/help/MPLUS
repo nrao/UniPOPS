@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'MPLUS:  Adds the data in Matrix 1 to that in Matrix 0'
+PRINT 'and places the results in Matrix 0.  The shape of each'
+PRINT 'matrix must be the same.'
+PRINT ' '
+PRINT 'DEFMODE=',DEFMODE
+PRINT ' '

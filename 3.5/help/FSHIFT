@@ -1,0 +1,9 @@
+PRINT ' '
+PRINT 'FSHIFT:  (LINE)  Calculates the freq. difference between'
+PRINT 'the scans in Arrays (0) & internal ACCUM array, storing'
+PRINT 'this (in chans.) in ASHIFT.'
+PRINT ' ' 
+PRINT '(CONTINUUM) Sets ASHIFT to zero.'
+PRINT ' '
+PRINT 'ASHIFT=',ASHIFT
+PRINT ' ' 

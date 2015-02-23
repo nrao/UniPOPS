@@ -1,0 +1,6 @@
+PRINT ' '
+PRINT 'MTABLE:  Lists out the data in Matrix (0).'
+PRINT ' '
+PRINT 'MXMIN,MXMAX=',MXMIN,MXMAX
+PRINT 'MYMIN,MYMAX=',MYMIN,MYMAX
+PRINT ' ' 

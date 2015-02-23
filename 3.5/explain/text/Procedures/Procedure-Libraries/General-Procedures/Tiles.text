@@ -1,0 +1,29 @@
+	There are three procedures which can be used to produce
+	"tiled" displays.  Or a display where individual spectra
+	are displayed as "tiles" on the graphics screen and the location
+	of the tiles is related to the location of the line of sight
+	on the sky of that data.  See the documentation on each
+	individual procedure for more details.
+
+	All of these procedures can be installed by BATCHing in the
+	file "tile.plib".
+
+	TILEPREP
+
+		Prepares the global adverbs for use by the two other
+		tiling procedures.  This is where you set up the mapping
+		from sky coordinates to graphics screen coordinates.
+
+	TILEPLACE
+
+		This is what actually places the individual plot (or
+		tile) on the graphics screen at the appropriate location.
+
+	TILESAVES
+
+		This uses the current save file and the data found
+		therein starting at NSAVE=1 and extending up through
+		NSAVE=MAXNSAVE, a global adverb.  It calls TILEPREP
+		to set things up appropriately and TILEPLACE to place
+		the individual tiles for each saved scan.
+

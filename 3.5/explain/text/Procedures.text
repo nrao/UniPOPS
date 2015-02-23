@@ -1,0 +1,16 @@
+	A PROCEDURE is a series of UniPOPS commands which are gathered
+	together and executed by reference to the name of the PROCEDURE.
+	In most ways, they are like subroutines and functions found within
+	most computer languages.
+
+	They can contain conditional statements and loops; mathematical
+	expressions, calls to VERBS and other PROCEDUREs.  Parameters
+	can be passed to the PROCEDURE.  Some PROCEDUREs can act like
+	functions in that they will return a value.  
+
+	UniPOPS has libraries of PROCEDUREs that other users have found
+	helpful; each user can also create their own customized 
+	PROCEDUREs.   If a user thinks that their PROCEDURE is worth
+	consideration for inclusion in the library, please submit the
+	PROCEDURE and appropriate documentation to the computer staff
+	using the REPORT facility.

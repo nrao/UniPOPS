@@ -1,0 +1,42 @@
+	(ARRAY ADVERB of 32 elements)
+
+	CONLINE is an array containing the line types you want CONTOUR
+	to use for each contour level. Up to 32 line types may be
+	specified although only those line types which have a
+	corresponding legitimate contour level in LEVS will be used.
+
+	CONLINE is used by : CONTOUR
+			      
+	No verbs change CONLINE.
+
+ 	The initial values of CONTOUR(N) are 0.0 (solid, thin line)
+
+	The user must specify the line types he or she wants CONTOUR to
+	draw before invoking CONTOUR.  You use the same conventions as
+	LINETYPE for specifying the types of lines to draw at each
+	contour level (see LINETYPE).  If you specify a negative line
+	type for any contour level, then that contour level will be
+	labeled with the value of the contour height.
+
+	EXAMPLE :
+
+	You want to plot a contour map with contours at every half
+	degrees from 1 to 3.5, specify :
+
+		LEVS = 1, 1.5, 2, 2.5, 3, 3.5, DEFAULT
+
+	You want every 3rd level to be labeled; the 1st, 3rd, and 5th
+	to be dashed (line type 20); and the 2nd, 4th, and 6th to be
+	thick and with close tick marks (line type 103).  You specify:
+
+		CONLINE = 20, 103, -20, 103, 20, -103
+
+	Now you can evoke CONTOUR.
+
+	To set the line types back to their default values, type:
+
+		CONLINE = 0
+
+	or
+
+		CONLINE = DEFAULT

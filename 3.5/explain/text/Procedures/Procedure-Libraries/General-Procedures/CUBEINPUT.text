@@ -1,0 +1,89 @@
+	CUBEINPUT generates a file that contains appropriate inputs to
+	cube.exe (i.e. it anticipates the questions that cube.exe asks
+	and writes a file with appropriate answers).  This makes it
+	much simpler to generate FITS cubes.
+
+	Syntax:  CUBEINPUT(dx, dy)
+
+	Where dx and dy are the increments in the x and y directions
+	between pixels on the sky (in seconds of arc).
+
+	CUBEINPUT writes appropriate inputs for cube.exe to translate
+	the first MAXNSAVE scans in the current save file to a FITS
+	cube.
+
+	MAXNSAVE, a global adverb, must be set before using this procedure.
+
+	The inputs for cube.exe are written to a file named "cube.input"
+	in the current directory.  This file will be overwritten each
+	time this procedure is used.
+
+	After using CUBEINPUT to generate cube.input, you can run cube.exe
+	from within UniPOPS using the SYSTEM verb by typing:
+
+		SYSTEM cube.exe < cube.input
+
+	or from a Unix prompt by typing:
+
+		cube.exe < cube.input
+
+
+	DOCAR is a global adverb that should be set before using this
+	procedure.  It controls which projection cube.exe uses to convert
+	the sky coordinates to pixels in the cube.  If DOCAR=FALSE, the
+	default case when CUBEINPUT is first BATCHed into the program,
+	then cube.exe uses the GLS (global sinusoid, this is the same
+	as the COSV correction, it corrects the X coordinate by the
+	cosine of the Y coordinate).  If DOCAR=TRUE, then a pure
+	Cartesian projection is used (X and Y are mapped directly to
+	the pixels in the cube without any non-linear transformation).
+
+	Only the absolute values of dx and dy are used.
+
+	Velocity always increases with increasing pixel value in the cube.
+
+	If the x-coordinate is RA, it always increases with decreasing
+	pixel value in the cube.  All other sky coordinates always
+	increase with increasing pixel value in the cube.
+
+	You should read the documentation on cube.exe for further
+	information.  The procedure listing is heavily commented to make
+	it easier to modify should you wish to choose different options
+	for cube.exe.  You should be aware that cube.exe does not do any
+	data averaging.  Existing values at any pixel in the cube are
+	overwritten when any new value is placed into that pixel.
+
+	File name: cubeinput.prc
+
+	This procedure is included in maps.plib
+
+	Example:
+
+	You have a SAVE data set having spacings of 20 arc-seconds in X and
+	30 arc-seconds in Y.  This data set is stored in the current save
+	file starting at NSAVE=1 and extending through NSAVE=120.  You are
+	certain that there are no two scans closer in position than
+	the above stated spacings (no overlap) and that there are no
+	gaps in the SAVE file over the above range.  To convert this data
+	set into a cube, you would type (your inputs are indicated after
+	the ">" prompt, for this example, the input SDD file
+	name is MyCube.SDD, and you choose the output file to be
+	MyCube.FITS, which you enter when requested)
+
+		> MAXNSAVE=120
+		> DOCAR=FALSE
+		> CUBEINPUT(20,30)
+		Input sdd file (save file) MyCube.SDD
+		Enter name of cube file : MyCube.FITS
+		... < various values appear as cubeinput works > ...
+		Inputs written to cube.input.
+		To use, type the following at the UniPOPS prompt :
+		system cube.exe < cube.input
+		> system cube.exe < cube.input
+		... and cube.exe does its work ...
+
+	You may wish to save the output of cube.exe to a file so that
+	you can examine it later.
+
+		> system cube.exe < cube.input > cube.log
+		

@@ -1,0 +1,150 @@
+Appendix L : Format Specifications
+----------------------------------
+
+The following describes the format specifications you can use with the
+SREAD, SPRINT, FREAD, and FPRINT verbs.  The PRNTFMT verb takes a
+similar format specification but is described in greater detail with
+the documentation for PRNTFMT.
+
+The format specifications follow all of the rules of Fortran 77, plus
+some extensions and restriction.  Probably you should look at a Fortran
+77 manual if you are unfamiliar with format specifications used in that
+language.  The following table gives a list of what can be used in a
+format specification:
+
+		 	UniPOPS Output Format Specifiers
+-------------------------------------------------------------------
+Specifier			Fortran 77	UniPOPS Extension
+-------------------------------------------------------------------
+Blank Control (see note)	BN, BZ			B
+
+Carriage control (see note)	space, 0, 1		$
+
+Character Edit (see note)	nH....,  rAw, 		rA, "....."
+				   '....'
+
+Floating Point			rFw.d, rEw.d.Ee,	rE.w.d.e, rG.w.d.e,
+				rDw.dEe, rGw.dEe	rD.w.d.e
+
+Integer Edit (see note)		rI.w.m
+
+Logical Edit (see note)		rLw
+
+Position Control (see note)	nX, /, Tc, TLn,
+				   TRn	
+
+Scale Control			pP			P
+
+Sign Control (see note)		S, SP, SS
+
+Terminate a format		:
+
+Repeat pattern			r(.....)
+
+-------------------------------------------------------------------
+where:  c = column number (must be present and > 0)
+	d = number of digits (significant or after the decimal point;
+		see default value below; must be >= 0)
+        e = number of digits in printed exponential (see default value
+       		below; must be >= 0)
+	m = number of preceding zeros (see default value below; >= 0)
+	n = number of characters (must be present and > 0)
+	p = integer scale factor (if not present, assumed to be zero;
+		can be < 0)
+	r = repeat counter (if not present, assumed to be 1; must be > 0) 
+	w = field width (see defaults value below; must be >= 0)
+
+NOTES:  c, d, e, m, n, p, r, and w must be specified as integers.  
+
+	B, BN and BZ are only used when reading.
+
+        The nH, '....', ".....", $, S, SP, and SS are only used when
+	writing.
+
+	UniPOPS has no logical or integer constants, adverbs, or
+	expressions.  If you are reading and specify an I or L format
+	specifier, than UniPOPS converts the value read in as an
+	integer or logical into a scalar value that is then stored into
+	the adverb.  If you are writing, UniPOPS converts the scalar
+	value of the item to be printed into an integer or logical
+	value before printing its value out.  This is NOT what F77 does
+	when you try to print a floating-point value item with an I or
+	L specification.
+
+	You cannot use the / specification in SPRINT or SREAD.
+
+-------------------------------------------------------------------
+
+See a Fortran 77 manual for a description of how to use the format
+specifiers given in the second and third columns.  The UniPOPS
+extensions to Fortran 77 are those commonly found and are:
+
+	(1) The P specification is identical to 0P.
+
+	(2) The B specification is identical to BZ.
+
+	(3) The $ specification will suppress the carriage return at the
+		end of printed line.
+
+	(4) The program will calculate a field width for you with the
+		A specification.
+
+	(5) Strings can be enclosed in double quotes as well as
+		single.
+
+	(6) The rE.w.d.e, rG.w.d.e, rD.w.d.e are identical in purpose
+		to the rE.w.dEe, rG.w.dEe, rD.w.dEe specifications.
+
+The only UniPOPS restriction is that the '+' carriage control specifier
+is NOT supported.
+
+Unlike Fortran 77, you do not need to enclose the complete format
+specification in parenthesis -- UniPOPS provides the opening and
+closing parenthesis for you.
+
+An error message will be generated if you try to print out or read in a
+string using anything but the rAw or rA specifications.  Likewise, as
+error message will be generated if you try to read or write using an A
+specification anything but a string.
+
+As in F77, you need not specify all of the suffixes for I, L, F, D, E,
+or G.  That is, you can eliminate, in the following order, the
+following descriptors:  e (or m), d, w.  The default values used by
+UniPOPS for these descriptors are:
+
+		Default m, w, d, or e Field Descriptors
+	-------------------------------------------------
+	Descriptor	m	w	d	e
+	-------------------------------------------------
+	I		0	7
+	L			2
+	E, D, G			15	7	2
+	F			15	7
+	-------------------------------------------------
+
+If the input or output list is not exhausted but the format
+specifications are, than the format specification is rescanned using
+the same rules as F77 (rescan point is either the beginning of the
+format specification or the last level zero open parenthesis.
+
+A blank format specification indicates list-directed input and output.
+
+Examples:
+
+	' I3 / L3 / 10(F10.4, G15.5.3) '  <- Not usable with SREAD or SPRINT
+
+	'21x,I3,I2,F4'
+
+	'1PG10.3E2'	
+
+	'F10.3'	
+	
+	'E20.4	'
+
+	'10X,F20.3'
+
+	'SP F15.7'			<- Output only	
+
+	' '				<- List-directed IO
+
+	' "Source declination = ", I3.3,I2.2,F4.1'

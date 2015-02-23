@@ -1,0 +1,13 @@
+PRINT ' '
+PRINT 'CLICK:  (VERB) Sets seven adverbs with a single click of'
+PRINT 'the mouse using the location of the cursor on the graphics'
+PRINT 'screen.'
+PRINT ' '
+PRINT 'MCLICK=',MCLICK
+PRINT 'CCLICK=',CCLICK
+PRINT 'FCLICK=',FCLICK
+PRINT 'TCLICK=',TCLICK
+PRINT 'XCLICK=',XCLICK
+PRINT 'YCLICK=',YCLICK
+PRINT 'VCLICK=',VCLICK
+PRINT ' ' 

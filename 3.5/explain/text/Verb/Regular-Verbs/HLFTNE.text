@@ -1,0 +1,59 @@
+	(REGULAR VERB)
+
+	HLFTNE will produce a half-tone display of the contents of
+	Matrix (0).  A half-tone displays is simply a plot which uses a
+	set of dots, the numbers of dots is related to the data value
+	of each cell of the matrix.
+
+	ADVERBS USED:
+
+	MXMIN, MXMAX    Limits in cell numbers along the x-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MYMIN, MYMAX    Limits in cell numbers along the y-axis
+			for which Matrix (0) values will be
+			processed.
+
+	MRATIO          Ratio of x to y axis that you want for the
+			display.  Initial value is 1.
+
+	LEVS(32)        Levels at which various 'shades' of dots will
+			be plotted.  Used in the same way as one would
+			specify contour levels.
+
+	If, for example, you specify 10 contour levels, then any Matrix
+	cell with a data value exceeding the value of LEVS(10) will be
+	completely shaded in by HLFTNE.  Any data value less than
+	LEVS(1) will remain unshaded.  Any data value between LEVS(1)
+	and LEVS(2) will be 10 % shaded; any data value between LEVS(2)
+	and LEVS(3) will be 20 % shaded; and so on.
+
+	ADVERBS SET:
+
+	STATUS(21) : What the last type of plot was.  This is set by
+		     the last SHOW, PLOT, CONTOUR, QCONTOUR, RASTER,
+		     PLOTDOTS or HLFTNE commands.
+
+		     Values :  -1 = None; 0 = SHOW; 1 = PLOT; 2 =
+		     HLFTNE 3 = RASTER; 4 = CONTOUR or QCONTOUR; 5 =
+		     PLOTDOTS.
+
+	Save yourself some time by specifying COPYOFF before starting
+	if you are certain that you will not need a hard copy of the
+	half-tone display.
+
+	EXAMPLE:
+
+	You want to produce a HLFTNE plot of the data in Matrix (0).
+	You could type:
+
+		MXMIN=1; MXMAX=10	Specify the limits of the
+		MYMIN=10; MYMAX=20	matrix that you want to plot (i.e.,
+					you want to plot a sub-matrix of
+					Matrix (0).
+		AUTOLEV(5)		Sets up 5 contour levels which
+					span the full z extent of
+					specified sub-matrix.
+		HLFTNE LABEL		Draws the half-tone display and 
+					label the resulting plot.

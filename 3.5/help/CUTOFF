@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'CUTOFF:  (ADVERB) y-axis value at which SPIKE is to'
+print 'determine bad channels.'
+PRINT ' '

@@ -1,0 +1,7 @@
+PRINT ' '
+PRINT 'CF:  (LINE) Sets the lower x-axis to channel numbers and '
+PRINT 'the upper to frequency for SHOW'
+PRINT ' '
+PRINT 'CF:  (CONTINUUM) Sets the lower x-axis to channel numbers'
+PRINT 'and the upper to time for SHOW'
+PRINT ' '

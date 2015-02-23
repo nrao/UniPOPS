@@ -1,0 +1,5 @@
+PRINT ' '
+PRINT 'FREQRES:  (HEADER-LINE) Frequency resolution (MHz).'
+PRINT ' '
+PRINT 'FREQRES:  (HEADER-CONT) Scale Factor (K/count or K/Volt).'
+PRINT ' '

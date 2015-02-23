@@ -1,0 +1,3 @@
+PRINT ' '
+PRINT 'L1:  (HEADER-GB) Frequency of local oscillator no. 1 (MHz).'
+PRINT ' '

@@ -1,0 +1,4 @@
+PRINT ' '
+PRINT 'GREGION:  (ARRAY-48) Channel numbers which are to determine'
+print 'Gaussian regions.'
+PRINT ' '
